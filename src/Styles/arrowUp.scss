@@ -1,0 +1,23 @@
+.arrow_up {
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+  border-radius: 50%;
+  @include displayCenter(center, center);
+  background-color: $brand__color;
+  cursor: pointer;
+  box-shadow: $box_shadow_two;
+  transition: all 0.3s ease-in-out;
+  .icon {
+    transition: all 0.3s ease-in-out;
+    color: $white__color;
+    font-size: 28px;
+  }
+}
+.hide {
+  display: none;
+}

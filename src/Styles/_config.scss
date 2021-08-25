@@ -1,0 +1,74 @@
+// Sass Variables
+$primary: #f3f5f9;
+$secondary: #defff4;
+$brand__color: #06397e;
+$white__color: #fafafa;
+
+$font__gray: #848e9c;
+$font__black: #333333;
+
+$transition: all 0.5s ease-in-out;
+
+$box_shadow_one: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+  rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+$box_shadow_four: 0px 0px 4px 2px #ff8800;
+$box_shadow_two: 0px 1px 4px 3px rgba(0, 0, 0, 0.1);
+$box_shadow_three: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+
+
+// Sass Mixins
+@mixin displayCenter($align, $justify) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
+// responsive breakpoints
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+// Sass Mixins
+@mixin displayCenter($align, $justify) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin image($object-fit) {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: $object-fit;
+}
+
+@mixin mQ($width) {
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin setBackground($background) {
+  background-color: $background;
+  color: setTextColor($background);
+}
+
+@mixin normalFont($font_size) {
+  font-weight: normal !important;
+  font-family: $font-book !important;
+  @if $font_size {
+    font-size: $font_size;
+  }
+}
+// end of Mixins
+
+// functions
+@function setTextColor($color) {
+  @if (lightness($color) > 70%) {
+    @return $font__black;
+  } @else {
+    @return $primary;
+  }
+}

@@ -1,0 +1,150 @@
+.capital__token {
+  border: 1px solid rgba(28, 33, 45, 0.12);
+  border-radius: 10px;
+  margin: 30px 0;
+  padding: 20px;
+  hr {
+    background-color: #888888;
+  }
+  &__header {
+    @include displayCenter(center, space-between);
+    &__left {
+      p {
+        margin-bottom: 0;
+        font-weight: 400;
+        font-size: 14px;
+        text-align: left;
+        &:first-child {
+          font-size: 16px;
+        }
+      }
+    }
+    &__right {
+      p {
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: right;
+      }
+    }
+  }
+  &__box {
+    border: 1px solid rgba(28, 33, 45, 0.12);
+    height: 100%;
+    border-radius: 10px;
+    background-color: $primary;
+
+    &__header {
+      padding: 20px 20px 0 20px;
+      @include displayCenter(center, space-between);
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(28, 33, 45, 0.12);
+      &__left {
+        margin-bottom: 20px;
+
+        p {
+          margin-bottom: 0;
+          font-weight: 400;
+          font-size: 14px;
+          &:last-child {
+            font-size: 16px;
+          }
+        }
+      }
+      &__right {
+        margin-bottom: 20px;
+        button {
+          margin: 0 5px;
+          width: 150px;
+          text-align: center;
+          padding: 10px 0;
+        }
+      }
+    }
+    &__body {
+      padding: 20px 30px;
+      display: flex !important;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      height: fit-content;
+      p {
+        text-align: center;
+        font-weight: 400;
+        font-size: 14px;
+        margin: 20px 0 20px 0;
+      }
+      div {
+        margin-top: 20px;
+      }
+      button {
+        min-width: 360px;
+        margin: auto;
+        display: block !important;
+      }
+    }
+  }
+
+  // right side box_shadow_one
+  &__box__two {
+    height: 100%;
+    @include displayCenter(center, space-between);
+    align-items: inherit;
+    flex-direction: column;
+    &__top {
+      border: 1px solid rgba(28, 33, 45, 0.12);
+      border-radius: 10px;
+      padding: 20px;
+      background-color: $primary;
+      margin-bottom: 20px;
+      p {
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+
+    &__bottom {
+      background-color: $primary;
+      border: 1px solid rgba(28, 33, 45, 0.12);
+      border-radius: 10px;
+      padding: 20px 10px 0 10px;
+
+      p {
+        margin-bottom: 0;
+        font-weight: 400;
+        padding-left: 10px;
+      }
+    }
+  }
+}
+
+// unstack input
+.unstack__input {
+  @include displayCenter(center, space-between);
+  //   flex-wrap: wrap;
+  margin: 10px 0;
+  .input-group {
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #ffffff;
+    margin-right: 10px;
+    input {
+      background-color: transparent;
+      border: 0;
+      &:focus {
+        outline: none;
+      }
+    }
+    .input-group-text {
+      background-color: transparent;
+      color: #2fa6f2;
+      font-weight: 500;
+      border: 0;
+      border-left: 2px solid rgba(221, 221, 221, 0.733);
+    }
+  }
+  button {
+    padding: 12px 30px !important;
+  }
+}

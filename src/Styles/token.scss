@@ -1,0 +1,17 @@
+.token {
+  padding: 100px 0 30px 0;
+  .nav-tabs {
+    border: 0;
+    .nav-link {
+      border: 0 !important;
+      border-bottom: 2px solid rgb(221, 221, 221) !important;
+      color: $font__black !important;
+      border: radius 0 !important;
+    }
+    .active {
+      color: $brand__color !important;
+      border: 0;
+      border-bottom: 2px solid $brand__color !important;
+    }
+  }
+}

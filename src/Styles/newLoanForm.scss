@@ -1,0 +1,105 @@
+.modal {
+  .modal-content {
+    .modal__header {
+      padding: 20px;
+      background-color: $brand__color;
+      color: $primary;
+      @include displayCenter(center, space-between);
+      .close__btn {
+        min-width: 30px;
+        min-height: 30px;
+        cursor: pointer;
+        border-radius: 50%;
+        padding: 5px;
+        transition: $transition;
+        &:hover {
+          background-color: $font__gray;
+        }
+      }
+    }
+    .modal__body {
+      padding: 20px;
+      form {
+        .input__wrapper {
+          border: 1px solid rgb(221, 221, 221);
+          margin-bottom: 30px;
+          position: relative;
+          border-radius: 10px;
+          padding: 15px 10px;
+          label {
+            position: absolute;
+            top: -10px;
+            z-index: 2;
+            left: 10px;
+            padding: 0 8px;
+            font-size: 12px;
+            background-color: #ffffff;
+            color: $font__gray;
+            font-weight: 400;
+          }
+          input {
+            width: 100%;
+            border: 0;
+            margin-top: -20px;
+            padding-left: 7px;
+            font-size: 15px;
+            &:focus {
+              box-shadow: none;
+              outline: none !important;
+            }
+          }
+          .react-date-picker {
+            width: 100%;
+            .react-date-picker__calendar {
+              z-index: 3;
+            }
+            .react-date-picker__wrapper {
+              border: 0;
+            }
+          }
+        }
+        .select__wrapper {
+          margin-bottom: 30px;
+          .css-2b097c-container {
+            max-width: inherit !important;
+            position: relative;
+            width: 100% !important;
+            z-index: 3;
+          }
+        }
+        .last__child {
+          input {
+            margin-top: 0 !important;
+          }
+          .input-group-text {
+            padding: 0;
+            background-color: transparent;
+            border: 0;
+          }
+          .second_text {
+            font-size: 14px;
+            color: $font__gray;
+          }
+          .css-2b097c-container {
+            width: 150px;
+          }
+          .css-yk16xz-control,
+          .css-1pahdxg-control {
+            border-color: transparent !important;
+            box-shadow: none !important;
+            background-color: transparent !important;
+            border-right: 0px !important;
+            border-radius: 0 !important;
+            font-size: 12px !important;
+            color: $brand__color !important;
+
+            &:hover {
+              border-color: transparent !important;
+              border-right: 0px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

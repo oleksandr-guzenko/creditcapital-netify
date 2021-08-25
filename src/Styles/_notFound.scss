@@ -1,0 +1,27 @@
+.notfound {
+  min-height: 80vh;
+  @include displayCenter(center, center);
+  .__wrapper {
+    text-align: center;
+    h1 {
+      font-size: 150px;
+    }
+    h4 {
+      font-size: 30px;
+    }
+    button {
+      margin: 30px 0 10px 0;
+      svg {
+        transition: $transition !important;
+        margin-right: 15px;
+        font-size: 20px;
+      }
+      &:hover {
+        color: $primary !important;
+        svg {
+          transform: translateX(-5px);
+        }
+      }
+    }
+  }
+}

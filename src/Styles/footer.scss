@@ -1,0 +1,74 @@
+footer {
+  .footer__top {
+    background-color: $primary;
+    margin-bottom: 20px;
+    &__left {
+      padding: 50px 0 50px 50px;
+      p {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+      }
+      .loan {
+        text-transform: uppercase;
+      }
+      h4 {
+        font-size: 22px;
+        font-weight: 700;
+      }
+    }
+    &__right {
+      position: relative;
+      height: 100%;
+      .btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-weight: 500;
+        background-color: $brand__color;
+        float: right;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $white__color;
+        font-size: 16px;
+        border-radius: 0 !important;
+        padding: 10px 35px;
+        transition: all 0.5s ease-in-out;
+        border: 0 !important;
+        &:focus,
+        &:active {
+          outline: none !important;
+          box-shadow: none;
+        }
+        &:hover {
+          box-shadow: $box_shadow_one;
+        }
+        span {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+  .footer__bottom {
+    background-color: $primary;
+    color: $font__black;
+    padding: 25px 15px;
+    &__left {
+      p,
+      a {
+        margin: 0 !important;
+        font-size: 14px;
+        font-weight: 400 !important;
+        color: $font__gray;
+        text-decoration: none;
+      }
+    }
+    &__right {
+      float: right;
+      img {
+        margin: 0 10px;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+.banner {
+  padding: 100px 0 30px 0;
+  .section__one {
+    background-color: rgb(255, 255, 255);
+    .banner__one__box {
+      border: 1px solid rgb(221, 221, 221);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 15px;
+      @include displayCenter(center, space-between);
+      transition: $transition;
+      &:hover {
+        box-shadow: $box_shadow_three;
+        border-color: transparent;
+      }
+      p {
+        font-size: 14px;
+        margin-bottom: 5px !important;
+      }
+      h5 {
+        font-size: 20px;
+        font-weight: 700 !important;
+      }
+      &__left {
+        text-align: left !important;
+      }
+      div {
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+  .section__two {
+    padding: 20px 0;
+    .box__wrapper {
+      border: 1px solid rgb(221, 221, 221);
+      border-radius: 10px;
+      margin-bottom: 15px;
+      padding: 20px;
+      transition: $transition;
+      &:hover {
+        box-shadow: $box_shadow_three;
+        border-color: transparent;
+      }
+    }
+    .banner__two__box {
+      p {
+        font-size: 14px;
+        margin-bottom: 5px !important;
+      }
+      h5 {
+        font-size: 22px;
+        font-weight: 600;
+      }
+    }
+    .separate__Sec {
+      text-align: center;
+      h5 {
+        font-size: 18px;
+      }
+    }
+    @include mQ($sm) {
+      .one__Sec {
+        .banner__two__box {
+          text-align: center;
+          h5 {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+  
+}

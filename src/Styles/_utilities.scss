@@ -1,0 +1,203 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Circular Std' !important;
+  font-weight: normal !important;
+  font-style: normal;
+  background-color: #ffffff;
+  scroll-behavior: smooth;
+}
+.container-fluid {
+  padding: 0 50px !important;
+}
+
+.section__titles {
+  font-size: 23px;
+  font-style: normal;
+  line-height: 29px;
+  letter-spacing: 0em;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 15px !important;
+}
+.txt__brand {
+  color: $brand__color !important;
+}
+.txt__black {
+  color: $font__black !important;
+}
+.txt__gray {
+  color: $font__gray !important;
+}
+
+svg {
+  vertical-align: middle !important;
+}
+
+// table active tabs
+.active__amount {
+  background-color: $secondary !important;
+  color: green;
+  padding: 8px 25px;
+  border-radius: 5px;
+  text-align: center;
+  user-select: none;
+  margin-bottom: 0 !important;
+}
+.paid__amount {
+  background-color: $primary;
+  color: $brand__color;
+  padding: 8px 25px;
+  border-radius: 5px;
+  text-align: center;
+  user-select: none;
+  margin-bottom: 0 !important;
+}
+// .tooltip {
+//   .tooltip__inner {
+//     background-color: $brand__color !important;
+
+//     .tooltip__title {
+//       color: red;
+//       color: $primary;
+//       font-weight: 700;
+//       float: left;
+//     }
+//     .tooltip__text {
+//       color: $primary;
+//       font-size: 8px;
+//       float: left;
+//     }
+//   }
+// }
+
+// buttons
+.btn_brand {
+  border: 0;
+  background-color: $brand__color;
+  color: $primary;
+  display: inline-block;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 10px 55px;
+  transition: $transition;
+  &:hover {
+    box-shadow: $box_shadow_one;
+    background-color: #06387eea;
+    transform: translateY(-2px);
+  }
+}
+.btn__brand__secondary {
+  background-color: #232d3a !important;
+  color: $primary !important;
+  border-radius: 10px !important;
+}
+.btn_brand_disabled {
+  background-color: #acbdd4 !important;
+  color: $white__color !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  &:hover {
+    transform: translateY(0) !important;
+  }
+}
+
+// arrow down button
+
+.play-down {
+  transform: rotate(90deg);
+  color: $font__black;
+}
+.toggle__play__down {
+  transform: rotate(-90deg);
+}
+
+// react -select
+.css-1okebmr-indicatorSeparator {
+  display: none;
+}
+
+.select__wrapper {
+  border: 1px solid rgb(221, 221, 221);
+  min-width: 200px;
+  position: relative;
+  border-radius: 10px;
+  padding: 5px 0 0 0;
+  margin: 10px 0;
+  .select__label {
+    position: absolute;
+    top: -10px;
+    z-index: 2;
+    left: 10px;
+    padding: 0 8px;
+    font-size: 12px;
+    background-color: #ffffff;
+    color: $font__gray;
+    font-weight: 400;
+  }
+  .css-2b097c-container {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 10px;
+    color: $font__black;
+  }
+  .css-yk16xz-control,
+  .css-1pahdxg-control {
+    border-color: transparent !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+
+    &:hover {
+      border-color: transparent !important;
+    }
+  }
+  .css-g1d714-ValueContainer {
+    padding: 2px 14px;
+    color: $font__black;
+  }
+}
+
+// charts
+
+.apexcharts-menu-icon {
+  display: none;
+}
+#chart {
+  margin-top: -20px;
+}
+// .css-26l3qy-menu {
+//   display: block !important;
+//   font-size: 12px !important;
+//   color: $brand__color !important;
+// }
+
+// gradient__circle
+.gradient__circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  @include displayCenter(center, center);
+  background: linear-gradient(#1cca96, #491cca);
+  position: relative;
+  user-select: none;
+  font-size: 11px;
+  z-index: 1 !important;
+  &::after {
+    position: absolute;
+    content: '';
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    right: 3px;
+    background: linear-gradient(#ffffff, #ffffff);
+    border-radius: 50%;
+    z-index: -1 !important;
+  }
+}
