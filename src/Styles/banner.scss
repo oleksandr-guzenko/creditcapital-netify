@@ -37,7 +37,7 @@
       border: 1px solid rgb(221, 221, 221);
       border-radius: 10px;
       margin-bottom: 15px;
-      padding: 20px;
+      padding: 18px;
       transition: $transition;
       &:hover {
         box-shadow: $box_shadow_three;
@@ -59,6 +59,7 @@
     }
     .separate__Sec {
       text-align: center;
+      padding: 20px;
       h5 {
         font-size: 18px;
       }

@@ -24,7 +24,9 @@
     "react-select": "^4.3.1",
     "react-table": "^7.7.0",
     "uuid": "^8.3.2",
-    "web-vitals": "^1.1.2"
+    "walletlink": "^2.1.8",
+    "web-vitals": "^1.1.2",
+    "web3": "^1.5.2"
   },
   "scripts": {
     "start": "react-scripts start",

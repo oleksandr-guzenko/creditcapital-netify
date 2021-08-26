@@ -3,9 +3,54 @@ import {Col, Container, Row} from 'react-bootstrap'
 import LiquidityHistory from './LiquidityHistory'
 import LiquidityInput from './LiquidityInput'
 
+import getContracts from '../../Redux/Blockchain/contracts'
+
 const LiquidityPool = () => {
   const [depositPrice, setDepositPrice] = useState('')
   const [withdrawPrice, setWithdrawPrice] = useState('')
+  const {usdc, cpt, Buycpt, web3} = getContracts()
+  const connectToMetaMask = () => {
+    if (typeof window.ethereum !== 'undefined') {
+      const add = window.ethereum
+        .request({
+          method: 'eth_requestAccounts',
+        })
+        .then((res) => {
+          if (res[0]) {
+            depositToken(res[0])
+          }
+        })
+        .catch((err) => console.log(err.message))
+    } else {
+      alert('Please Install Metamask')
+    }
+  }
+
+  const depositToken = async (userAddress) => {
+    try {
+      const price = web3.utils.toWei(depositPrice.toString())
+
+      await usdc.methods
+        .approve(Buycpt._address, price)
+        .send({from: userAddress})
+
+      const transaction = await Buycpt.methods
+        .buyToken(price)
+        .send({from: userAddress})
+
+      const transactionEvents = transaction.events.BuyToken.returnValues
+
+      const usdcAm = web3.utils.fromWei(
+        transactionEvents?.usdcAmount?.toString()
+      )
+      alert(
+        `Transaction Success ${transactionEvents?.tokentype} USDC: ${usdcAm}`
+      )
+    } catch (error) {
+      console.log(error?.message)
+    }
+  }
+
   return (
     <div className='liquidity__pool'>
       <Container>
@@ -38,6 +83,7 @@ const LiquidityPool = () => {
                 <div className='liquidity__pool__box__btn'>
                   <button
                     disabled={!depositPrice}
+                    onClick={connectToMetaMask}
                     className={
                       !depositPrice
                         ? 'btn_brand btn_brand_disabled'
