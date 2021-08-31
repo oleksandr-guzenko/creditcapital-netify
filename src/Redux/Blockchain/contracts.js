@@ -1,8 +1,31 @@
 import Web3 from 'web3'
+import WalletLink from 'walletlink'
+import CC_LOGO from '../../Assets/CC_Logo.svg'
 
-const getContracts = () => {
+export const walletLink = new WalletLink({
+  appName: 'Credit Capital',
+  appLogoUrl: CC_LOGO,
+  darkMode: 'true',
+})
+
+export const ethereum = walletLink.makeWeb3Provider(
+  `${process.env.REACT_APP_ETH_JSONRPC_URL}`,
+  process.env.REACT_APP_CHAIN_ID
+)
+
+const getContracts = (walletType) => {
   let web3
-  web3 = new Web3(window.ethereum)
+  switch (walletType) {
+    case 'MetaMask':
+      web3 = new Web3(window.ethereum)
+      break
+    case 'Coinbase':
+      web3 = new Web3(ethereum)
+      break
+    default:
+      web3 = new Web3(process.env.REACT_APP_ETH_JSONRPC_URL)
+      break
+  }
 
   const usdc = new web3.eth.Contract(
     [
@@ -705,18 +728,409 @@ const getContracts = () => {
     '0x169Bc696602f04B3C92D80217c9bB0B440C28009'
   )
 
-  const Buycpt = new web3.eth.Contract(
+  const liquidityPool = new web3.eth.Contract(
+    [
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '_owner',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_capl',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_usdc',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: 'address',
+            name: 'oldOwner',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'OwnerChanged',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'OwnerNominated',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: 'bool',
+            name: 'isPaused',
+            type: 'bool',
+          },
+        ],
+        name: 'PauseChanged',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'user',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'Withdrawn',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'user',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'deposited',
+        type: 'event',
+      },
+      {
+        inputs: [],
+        name: 'acceptOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        name: 'balanceOf',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'cancelWithdraw',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'capl',
+        outputs: [
+          {
+            internalType: 'contract IERC20',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'claim',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'coolDownPeriod',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'deposit',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'lastPauseTime',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'minimumWithdraw',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '_owner',
+            type: 'address',
+          },
+        ],
+        name: 'nominateNewOwner',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'nominatedOwner',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'owner',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'paused',
+        outputs: [
+          {
+            internalType: 'bool',
+            name: '',
+            type: 'bool',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        name: 'requestedAmount',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        name: 'requestedTime',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'bool',
+            name: '_paused',
+            type: 'bool',
+          },
+        ],
+        name: 'setPaused',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'percentage',
+            type: 'uint256',
+          },
+        ],
+        name: 'updateCharges',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'NewPeriod',
+            type: 'uint256',
+          },
+        ],
+        name: 'updateCoolDownPeriod',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'usdc',
+        outputs: [
+          {
+            internalType: 'contract IERC20',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'withdraw',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'withdrawCharges',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+    '0x8745744292c8dC47B4AD459c7148f01567Ee1355'
+  )
+
+  const depositUSDC = new web3.eth.Contract(
     [
       {
         inputs: [
           {
             internalType: 'address',
             name: '_usdc',
-            type: 'address',
-          },
-          {
-            internalType: 'address',
-            name: '_cpt',
             type: 'address',
           },
         ],
@@ -737,12 +1151,6 @@ const getContracts = () => {
             internalType: 'uint256',
             name: 'usdcAmount',
             type: 'uint256',
-          },
-          {
-            indexed: false,
-            internalType: 'string',
-            name: 'tokentype',
-            type: 'string',
           },
         ],
         name: 'BuyToken',
@@ -794,6 +1202,25 @@ const getContracts = () => {
         type: 'function',
       },
       {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        name: 'depositeduser',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
         inputs: [],
         name: 'owner',
         outputs: [
@@ -817,25 +1244,6 @@ const getContracts = () => {
         inputs: [
           {
             internalType: 'address',
-            name: '',
-            type: 'address',
-          },
-        ],
-        name: 'tokenBoughtUser',
-        outputs: [
-          {
-            internalType: 'uint256',
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        inputs: [
-          {
-            internalType: 'address',
             name: 'newOwner',
             type: 'address',
           },
@@ -846,14 +1254,15 @@ const getContracts = () => {
         type: 'function',
       },
     ],
-    '0xb6AB860E5a48308c702ccdc880e0DCcDBe19Ad75'
+    '0xa1b7D0c9b357016d66c9c973cceD58300E01300A'
   )
 
   return {
     usdc,
     cpt,
-    Buycpt,
+    liquidityPool,
     web3,
+    depositUSDC,
   }
 }
 

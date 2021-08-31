@@ -1,0 +1,60 @@
+.buy__cpt__modal {
+  padding: 20px;
+  @include mQ($sm) {
+    padding: 20px 10px;
+  }
+  .buy__cpt__header {
+    text-align: center;
+    &__tile {
+      h4 {
+        font-size: 25px;
+        font-weight: 700;
+      }
+    }
+    &__close {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+      cursor: pointer;
+      min-width: 30px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: $transition;
+      svg {
+        font-size: 25px;
+      }
+      &:hover {
+        background-color: $brand__color;
+        svg {
+          color: $primary;
+        }
+      }
+    }
+  }
+  &__instructions {
+    margin: 30px 0 20px 0;
+    @include displayCenter(center, space-between);
+    flex-wrap: wrap;
+    p {
+      @include normalFont(14px);
+      margin: 0;
+    }
+    &__left {
+      @include displayCenter(center, center);
+      h6 {
+        margin: 0;
+        margin-left: 10px;
+      }
+    }
+    &__right {
+    }
+  }
+}
+.buy__token__modal {
+  .modal-dialog {
+    max-width: 600px;
+  }
+}

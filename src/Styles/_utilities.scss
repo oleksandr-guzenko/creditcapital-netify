@@ -14,6 +14,9 @@ body {
 .container-fluid {
   padding: 0 50px !important;
 }
+a {
+  text-decoration: none !important;
+}
 
 .section__titles {
   font-size: 23px;
@@ -199,5 +202,25 @@ svg {
     background: linear-gradient(#ffffff, #ffffff);
     border-radius: 50%;
     z-index: -1 !important;
+  }
+}
+.update__spinner {
+  animation: spinner linear 1s infinite;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(240deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

@@ -6,6 +6,7 @@ $white__color: #fafafa;
 
 $font__gray: #848e9c;
 $font__black: #333333;
+$font-book: 'Circular Std Book';
 
 $transition: all 0.5s ease-in-out;
 
@@ -14,8 +15,9 @@ $box_shadow_one: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
 $box_shadow_four: 0px 0px 4px 2px #ff8800;
 $box_shadow_two: 0px 1px 4px 3px rgba(0, 0, 0, 0.1);
 $box_shadow_three: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-
+$box_shadow_four: 0px 0px 4px 2px #06397e;
+$box_shadow_five: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+$box-shadow-six: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
 // Sass Mixins
 @mixin displayCenter($align, $justify) {

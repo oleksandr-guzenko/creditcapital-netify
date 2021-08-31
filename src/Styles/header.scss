@@ -44,7 +44,16 @@
         padding: 8px 15px;
         margin: 0 10px;
         user-select: none;
+        cursor: pointer;
         @include displayCenter(center, center);
+        .user__id {
+          width: 80px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          text-decoration: none;
+          color: $white__color;
+        }
 
         .nav-link {
           padding: 0;

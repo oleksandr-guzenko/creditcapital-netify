@@ -1,0 +1,39 @@
+.metaMaskNotFound {
+  @include mQ($sm) {
+    h4 {
+      font-size: 20px !important;
+    }
+  }
+  .metaMask__body {
+    @include displayCenter(center, center);
+    flex-direction: column;
+    img {
+      width: 100px;
+      margin-top: 50px;
+    }
+    h5 {
+      margin-top: 20px;
+      @include normalFont(20px);
+    }
+    svg {
+      font-size: 50px;
+    }
+    .download {
+      border: 1px solid rgb(196, 196, 196);
+      border-radius: 33px;
+      padding: 8px 60px;
+      transition: $transition;
+      color: $font__black;
+
+      &:hover {
+        box-shadow: $box_shadow_one;
+        transform: translateY(-2px);
+      }
+    }
+    @include mQ($sm) {
+      h5 {
+        font-size: 16px;
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+.successModal {
+  .success__body {
+    // @include displayCenter(center, center);
+    // flex-direction: column;
+    text-align: center;
+
+    .normalText {
+      @include normalFont(14px);
+    }
+    .info {
+      font-size: 15px;
+      margin: 30px 0 20px 0;
+    }
+    h4 {
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+    h6 {
+      @include normalFont(15px);
+      @include displayCenter(center, center);
+      flex-wrap: wrap;
+      .big {
+        font-size: 18px;
+        margin: 0 5px;
+        font-family: 'Circular Std' !important;
+        font-weight: 700 !important;
+      }
+    }
+    .user__id {
+      background-color: #f8f8f9;
+      position: relative;
+      p {
+        cursor: pointer;
+        @include normalFont(14px);
+        user-select: none;
+        padding: 10px;
+        margin-top: 10px;
+        svg {
+          margin-left: 10px;
+          font-size: 18px;
+        }
+      }
+      &:hover {
+        .toolt {
+          visibility: visible;
+        }
+      }
+      @include mQ(390px) {
+        p {
+          font-size: 10px;
+        }
+      }
+    }
+    .note {
+      @include normalFont(14px);
+    }
+  }
+}

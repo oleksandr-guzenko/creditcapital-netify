@@ -1,55 +1,46 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Col, Container, Row} from 'react-bootstrap'
 import LiquidityHistory from './LiquidityHistory'
 import LiquidityInput from './LiquidityInput'
 
-import getContracts from '../../Redux/Blockchain/contracts'
-
 const LiquidityPool = () => {
   const [depositPrice, setDepositPrice] = useState('')
+  const [depositErrors, setDepositErrors] = useState(false)
   const [withdrawPrice, setWithdrawPrice] = useState('')
-  const {usdc, cpt, Buycpt, web3} = getContracts()
-  const connectToMetaMask = () => {
-    if (typeof window.ethereum !== 'undefined') {
-      const add = window.ethereum
-        .request({
-          method: 'eth_requestAccounts',
-        })
-        .then((res) => {
-          if (res[0]) {
-            depositToken(res[0])
-          }
-        })
-        .catch((err) => console.log(err.message))
+  const [withdrawErrors, setWithdrawErrors] = useState(false)
+
+  // Deposit
+  const handleDepositPriceChange = (number) => {
+    setDepositPrice(number.value)
+  }
+  const submitDepositLiquidityPool = (e) => {
+    e.preventDefault()
+  }
+  // Withdraw
+
+  const handleWithdrawPriceChange = (number) => {
+    setWithdrawPrice(number.value)
+  }
+  const submitWithdrawLiquidityPool = (e) => {
+    e.preventDefault()
+  }
+
+  //  Error handling
+  useEffect(() => {
+    if (depositPrice == 0 || depositPrice == '.') {
+      setDepositErrors(true)
     } else {
-      alert('Please Install Metamask')
+      setDepositErrors(false)
     }
-  }
+  }, [depositPrice])
 
-  const depositToken = async (userAddress) => {
-    try {
-      const price = web3.utils.toWei(depositPrice.toString())
-
-      await usdc.methods
-        .approve(Buycpt._address, price)
-        .send({from: userAddress})
-
-      const transaction = await Buycpt.methods
-        .buyToken(price)
-        .send({from: userAddress})
-
-      const transactionEvents = transaction.events.BuyToken.returnValues
-
-      const usdcAm = web3.utils.fromWei(
-        transactionEvents?.usdcAmount?.toString()
-      )
-      alert(
-        `Transaction Success ${transactionEvents?.tokentype} USDC: ${usdcAm}`
-      )
-    } catch (error) {
-      console.log(error?.message)
+  useEffect(() => {
+    if (withdrawPrice == 0 || withdrawPrice == '.') {
+      setWithdrawErrors(true)
+    } else {
+      setWithdrawErrors(false)
     }
-  }
+  }, [withdrawPrice])
 
   return (
     <div className='liquidity__pool'>
@@ -69,30 +60,33 @@ const LiquidityPool = () => {
                     </h6>
                   </div>
                 </div>
-                <LiquidityInput
-                  price={depositPrice}
-                  setPrice={setDepositPrice}
-                />
-                <div className='liquidity__pool__box__bottom'>
-                  <div></div>
-                  <div>
-                    <p>Receive: 0.0000 CPT ($0.0000)</p>
-                    <p>Price impact: 0.0000%</p>
+                <form onSubmit={submitDepositLiquidityPool}>
+                  <LiquidityInput
+                    price={depositPrice}
+                    handlePriceChange={handleDepositPriceChange}
+                    errors={depositErrors}
+                  />
+                  <div className='liquidity__pool__box__bottom'>
+                    <div></div>
+                    <div>
+                      <p>Receive: 0.0000 CPT ($0.0000)</p>
+                      <p>Price impact: 0.0000%</p>
+                    </div>
                   </div>
-                </div>
-                <div className='liquidity__pool__box__btn'>
-                  <button
-                    disabled={!depositPrice}
-                    onClick={connectToMetaMask}
-                    className={
-                      !depositPrice
-                        ? 'btn_brand btn_brand_disabled'
-                        : 'btn_brand'
-                    }
-                  >
-                    Deposit
-                  </button>
-                </div>
+                  <div className='liquidity__pool__box__btn'>
+                    <button
+                      disabled={depositErrors}
+                      type='submit'
+                      className={
+                        depositErrors
+                          ? 'btn_brand btn_brand_disabled'
+                          : 'btn_brand'
+                      }
+                    >
+                      Deposit
+                    </button>
+                  </div>
+                </form>
               </div>
             </Col>
             <Col xs={12} sm={12} md={12} lg={6} xl={6} className='mb-3'>
@@ -106,32 +100,35 @@ const LiquidityPool = () => {
                     </h6>
                   </div>
                 </div>
-                <LiquidityInput
-                  price={withdrawPrice}
-                  setPrice={setWithdrawPrice}
-                />
-                <div className='liquidity__pool__box__bottom withdraw'>
-                  <div>
-                    <p>
-                      *Note:Withdraw amount after cool down period of 24 hrs
-                    </p>
+                <form onSubmit={submitWithdrawLiquidityPool}>
+                  <LiquidityInput
+                    price={withdrawPrice}
+                    handlePriceChange={handleWithdrawPriceChange}
+                    errors={withdrawErrors}
+                  />
+                  <div className='liquidity__pool__box__bottom withdraw'>
+                    <div>
+                      <p>
+                        *Note:Withdraw amount after cool down period of 24 hrs
+                      </p>
+                    </div>
+                    <div>
+                      <p>Receive: 0.0000 CPT ($0.0000)</p>
+                    </div>
                   </div>
-                  <div>
-                    <p>Receive: 0.0000 CPT ($0.0000)</p>
+                  <div className='liquidity__pool__box__btn'>
+                    <button
+                      disabled={withdrawErrors}
+                      className={
+                        withdrawErrors
+                          ? 'btn_brand btn_brand_disabled'
+                          : 'btn_brand'
+                      }
+                    >
+                      Withdraw
+                    </button>
                   </div>
-                </div>
-                <div className='liquidity__pool__box__btn'>
-                  <button
-                    disabled={!withdrawPrice}
-                    className={
-                      !withdrawPrice
-                        ? 'btn_brand btn_brand_disabled'
-                        : 'btn_brand'
-                    }
-                  >
-                    Withdraw
-                  </button>
-                </div>
+                </form>
               </div>
             </Col>
           </Row>
