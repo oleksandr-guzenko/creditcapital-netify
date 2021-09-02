@@ -42,10 +42,10 @@ const SuccessMessage = ({show, handleClose}) => {
               <h4 className='info'>
                 Deposited Amount Successfully Transferred to Treasury Wallet
               </h4>
-              <h4>{USDCAmount?.toFixed(2)}USDC</h4>
+              <h4>{Number(USDCAmount)?.toFixed(2)} USDC</h4>
               <h4 className='mt-1'>
-                {(USDCAmount / 2)?.toFixed(2)} CPT{' '}
-                {(USDCAmount / 2)?.toFixed(2)} CRT
+                {Number(USDCAmount / 2)?.toFixed(2)} CPT{' '}
+                {Number(USDCAmount / 2)?.toFixed(2)} CRT
               </h4>
               <div className='user__id'>
                 <p className='txt__gray id'>
