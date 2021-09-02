@@ -16,6 +16,8 @@ export const liquidityDepositAction = (price) => async (dispatch, getState) => {
     const {
       profile: {walletType},
     } = getState()
+
+    
     const {usdc, cpt, liquidityPool, web3} = getContracts(walletType)
     dispatch({
       type: LIQUIDITY_DEPOSIT_REQUEST,
