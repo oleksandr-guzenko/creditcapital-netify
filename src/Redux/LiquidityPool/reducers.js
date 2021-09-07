@@ -12,10 +12,9 @@ const initialState = {
   liquidityLoading: false,
   liquidityError: false,
   transactionHashID: '',
-  tokenAmount: '',
-  usdcAmount: '',
-  tokenType: '',
+  caplAmount: '',
   temporaryUSDC: '',
+  typeOfTransaction: '',
 }
 
 export const liquidityPoolReducer = (state = initialState, action) => {
@@ -26,7 +25,8 @@ export const liquidityPoolReducer = (state = initialState, action) => {
         ...state,
         liquidityLoading: true,
         liquidityError: false,
-        temporaryUSDC: action.payload,
+        temporaryUSDC: action.payload.amount,
+        typeOfTransaction: action.payload.typeOfTransaction,
       }
     case LIQUIDITY_DEPOSIT_SUCCESS:
     case LIQUIDITY_WITHDRAW_SUCCESS:
@@ -35,9 +35,7 @@ export const liquidityPoolReducer = (state = initialState, action) => {
         liquidityLoading: false,
         liquidityError: false,
         transactionHashID: action.payload.transactionHashID,
-        tokenAmount: action.payload.tokenAmount,
-        usdcAmount: action.payload.usdcAmount,
-        tokenType: action.payload.tokenType,
+        caplAmount: action.payload.tokenAmount,
         temporaryUSDC: '',
       }
     case LIQUIDITY_DEPOSIT_FAIL:
@@ -46,13 +44,13 @@ export const liquidityPoolReducer = (state = initialState, action) => {
         ...state,
         liquidityLoading: false,
         liquidityError: action.payload,
-        temporaryUSDC: '',
       }
     case CLEAR_TRANSACTION_HISTORY:
       return {
         ...state,
         transactionHashID: '',
         liquidityLoading: false,
+        liquidityError: false,
       }
 
     default:

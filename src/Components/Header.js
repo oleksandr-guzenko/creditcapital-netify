@@ -10,9 +10,11 @@ import Coinbase from '../Assets/coinbase_Wallet.svg'
 import Wallet from '../Assets/wallet.svg'
 
 // redux imports
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
+import {getProfileInformation} from '../Redux/Profile/actions'
 
 const Header = () => {
+  const dispatch = useDispatch()
   // Redux State
   const {userAddress, walletType} = useSelector((state) => state.profile)
 
@@ -28,6 +30,7 @@ const Header = () => {
   useEffect(() => {
     if (userAddress) {
       closeWalletsModal()
+      dispatch(getProfileInformation())
     }
   }, [userAddress])
   return (

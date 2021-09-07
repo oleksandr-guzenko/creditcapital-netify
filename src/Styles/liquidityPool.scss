@@ -42,6 +42,12 @@
         h6 {
           font-weight: 400;
           text-align: right;
+          margin: 0;
+          padding: 0;
+          @include displayCenter(center, flex-end);
+          .loader {
+            margin: -30px 10px 0 0;
+          }
         }
       }
       &__middle {
@@ -113,7 +119,7 @@
       }
       .withdraw {
         p {
-          margin: 10px 0;
+          margin-bottom: 0;
         }
       }
       &__btn {

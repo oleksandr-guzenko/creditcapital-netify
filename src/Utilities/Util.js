@@ -4,3 +4,8 @@
 //   const finalAdd = `${add1}....${add2}`
 //   return finalAdd
 // }
+export const numberFormate = (number) => {
+  return Number(number)?.toLocaleString(navigator.language, {
+    minimumFractionDigits: 2,
+  })
+}

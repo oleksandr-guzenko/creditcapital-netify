@@ -11,7 +11,6 @@
       transition: $transition;
       &:hover {
         box-shadow: $box_shadow_three;
-        border-color: transparent;
       }
       p {
         font-size: 14px;
@@ -41,7 +40,6 @@
       transition: $transition;
       &:hover {
         box-shadow: $box_shadow_three;
-        border-color: transparent;
       }
     }
     .banner__two__box {

@@ -72,7 +72,7 @@ const LiquidityInput = ({price, handlePriceChange, errors}) => {
           USDC
         </InputGroup.Text>
         <NumberFormat
-          disabled={false}
+          disabled={errors}
           thousandsGroupStyle='thousand'
           value={price}
           decimalSeparator='.'

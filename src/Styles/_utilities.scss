@@ -78,6 +78,31 @@ svg {
 //   }
 // }
 
+// tooltip{
+.toolt {
+  background-color: #06387ee1;
+  color: $primary;
+  padding: 5px 10px;
+  visibility: hidden;
+  position: absolute;
+  font-size: 13px;
+  top: -10px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  &::after {
+    position: absolute;
+    content: '';
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+
+    border-color: #06387ed5 transparent transparent transparent;
+  }
+}
+
 // buttons
 .btn_brand {
   border: 0;
