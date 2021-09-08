@@ -140,6 +140,7 @@ const LiquidityPool = () => {
           <div className='liquidity__pool__wrapper'>
             <h4 className='section__titles'>Liquidity Pool</h4>
             <p>Earn yield on your adding liquidity, and get extra rewards</p>
+
             <Row>
               <Col xs={12} sm={12} md={12} lg={6} xl={6} className='mb-3'>
                 <div className='liquidity__pool__box'>
@@ -258,6 +259,7 @@ const LiquidityPool = () => {
                 </div>
               </Col>
             </Row>
+            
             <hr />
             <LiquidityHistory />
           </div>

@@ -95,11 +95,14 @@ const Banner = () => {
       <div className='banner'>
         <div className='section__two'>
           <Container>
-            <div className='box__wrapper text-center'>
+            <div className='box__wrapper banner__two__box text-center treasury'>
               <Row>
                 <Col xl={6} lg={6}>
-                  <form onSubmit={submitDepositLiquidityPool}>
-                    <h5 className='mb-2'>Send Amount to Treasury Wallet</h5>
+                  <form
+                    onSubmit={submitDepositLiquidityPool}
+                    className='treasury'
+                  >
+                    <h5 className='mb-4'>Send Amount to Treasury Wallet</h5>
                     <LiquidityInput
                       price={depositPrice}
                       handlePriceChange={handleDepositPriceChange}
@@ -116,8 +119,8 @@ const Banner = () => {
                   </form>
                 </Col>
                 <Col xl={6} lg={6}>
-                  <h5>Funds deposited in Treasury wallet</h5>
-                  <h5 className='mt-3'>
+                  <Image src={ImgTwo} alt='' className='mb-3' />
+                  <h5>
                     {depositedLoading ? (
                       <ReactLoading
                         type='bars'
@@ -127,11 +130,14 @@ const Banner = () => {
                         className='m-auto'
                       />
                     ) : depositedAmount ? (
-                      `${numberFormate(depositedAmount)} USDC`
+                      `$${numberFormate(depositedAmount)}`
                     ) : (
-                      '0 USDC'
+                      '$0'
                     )}
                   </h5>
+                  <p className='txt__gray'>
+                    Funds deposited in Treasury wallet
+                  </p>
                 </Col>
               </Row>
             </div>

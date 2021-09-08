@@ -142,3 +142,62 @@
     padding: 10px 30px;
   }
 }
+
+.treasury {
+  .liquidity__pool__box__middle {
+    @include displayCenter(center, space-between);
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 15px 0;
+    .css-2b097c-container {
+      min-width: 100px;
+      .css-yk16xz-control {
+        border: 0;
+        background-color: transparent;
+        box-shadow: none;
+        font-size: 12px !important;
+        color: $brand__color !important;
+        &:hover {
+          border-color: transparent;
+        }
+      }
+    }
+    .css-yk16xz-control,
+    .css-1pahdxg-control {
+      border-color: transparent !important;
+      box-shadow: none !important;
+      background-color: transparent !important;
+      border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
+      border-radius: 0 !important;
+      font-size: 12px !important;
+      color: $brand__color !important;
+
+      &:hover {
+        border-color: transparent !important;
+        border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
+      }
+    }
+    input {
+      background-color: transparent;
+      border: 0;
+      &:focus {
+        outline: none;
+      }
+    }
+    .input-group-text {
+      background-color: transparent;
+      color: #2fa6f2;
+      font-weight: 500;
+      border: 0;
+      border-left: 2px solid rgba(221, 221, 221, 0.733);
+    }
+    .cpt {
+      font-size: 14px;
+      border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
+      img {
+        margin-right: 3px;
+      }
+    }
+  }
+}
