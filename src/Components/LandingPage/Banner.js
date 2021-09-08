@@ -98,7 +98,7 @@ const Banner = () => {
             <Row>
               <Col xl={6} lg={6}>
                 <div className='box__wrapper text-center h-100'>
-                  <h4>Deposited Amount</h4>
+                  <h5>Deposited Amount</h5>
                   <h5 className='mt-3'>
                     {depositedLoading ? (
                       <ReactLoading
