@@ -95,29 +95,9 @@ const Banner = () => {
       <div className='banner'>
         <div className='section__two'>
           <Container>
-            <Row>
-              <Col xl={6} lg={6}>
-                <div className='box__wrapper text-center h-100'>
-                  <h5>Deposited Amount</h5>
-                  <h5 className='mt-3'>
-                    {depositedLoading ? (
-                      <ReactLoading
-                        type='bars'
-                        color='#06397e'
-                        height={30}
-                        width={30}
-                        className='m-auto'
-                      />
-                    ) : depositedAmount ? (
-                      `${numberFormate(depositedAmount)} USDC`
-                    ) : (
-                      '0 USDC'
-                    )}
-                  </h5>
-                </div>
-              </Col>
-              <Col xl={6} lg={6}>
-                <div className='box__wrapper text-center'>
+            <div className='box__wrapper text-center'>
+              <Row>
+                <Col xl={6} lg={6}>
                   <form onSubmit={submitDepositLiquidityPool}>
                     <h5 className='mb-2'>Send Amount to Treasury Wallet</h5>
                     <LiquidityInput
@@ -134,9 +114,27 @@ const Banner = () => {
                       Deposit
                     </button>
                   </form>
-                </div>
-              </Col>
-            </Row>
+                </Col>
+                <Col xl={6} lg={6}>
+                  <h5>Funds deposited in Treasury wallet</h5>
+                  <h5 className='mt-3'>
+                    {depositedLoading ? (
+                      <ReactLoading
+                        type='bars'
+                        color='#06397e'
+                        height={30}
+                        width={30}
+                        className='m-auto'
+                      />
+                    ) : depositedAmount ? (
+                      `${numberFormate(depositedAmount)} USDC`
+                    ) : (
+                      '0 USDC'
+                    )}
+                  </h5>
+                </Col>
+              </Row>
+            </div>
           </Container>
         </div>
         <div className='section__two'>
