@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Col, Container, Image, Row} from 'react-bootstrap'
 import {v4 as uuid} from 'uuid'
+import ReactLoading from 'react-loading'
 import {useLocation} from 'react-router-dom'
 
 //
@@ -8,7 +9,7 @@ import LiquidityInput from './LiquidityInput'
 import LoadingModal from '../Modals/LoadingModal'
 import SuccessMessage from '../Modals/SuccessMessage'
 import {useDispatch} from 'react-redux'
-import {treasuryWalletAction} from '../../Redux/Root/actions'
+import {treasuryInfo, treasuryWalletAction} from '../../Redux/Root/actions'
 
 // icon Images
 import ImgOne from '../../Assets/Investor/one__inv.svg'
@@ -19,14 +20,18 @@ import ImgFive from '../../Assets/Investor/Token_burned.svg'
 
 //
 import {useSelector} from 'react-redux'
+import {numberFormate} from '../../Utilities/Util'
 
 const Banner = () => {
   const {pathname} = useLocation()
   const [showSection, setShowSection] = useState(false)
 
   //
+
   const dispatch = useDispatch()
-  const {loading, tranHash} = useSelector((state) => state.root)
+  const {loading, depositedAmount, depositedLoading, tranHash} = useSelector(
+    (state) => state.root
+  )
   const {userAddress} = useSelector((state) => state.profile)
   const [depositPrice, setDepositPrice] = useState('')
   const [showLoader, setShowLoader] = useState(true)
@@ -39,6 +44,12 @@ const Banner = () => {
       setShowSuccess(false)
     }
   }, [tranHash])
+
+  useEffect(() => {
+    if (userAddress) {
+      dispatch(treasuryInfo())
+    }
+  }, [userAddress, tranHash])
 
   const handleDepositPriceChange = (number) => {
     setDepositPrice(number.value)
@@ -85,7 +96,27 @@ const Banner = () => {
         <div className='section__two'>
           <Container>
             <Row>
-              <Col className='m-auto' xl={6} lg={6}>
+              <Col xl={6} lg={6}>
+                <div className='box__wrapper text-center h-100'>
+                  <h4>Deposited Amount</h4>
+                  <h5 className='mt-3'>
+                    {depositedLoading ? (
+                      <ReactLoading
+                        type='bars'
+                        color='#06397e'
+                        height={30}
+                        width={30}
+                        className='m-auto'
+                      />
+                    ) : depositedAmount ? (
+                      `${numberFormate(depositedAmount)} USDC`
+                    ) : (
+                      '0 USDC'
+                    )}
+                  </h5>
+                </div>
+              </Col>
+              <Col xl={6} lg={6}>
                 <div className='box__wrapper text-center'>
                   <form onSubmit={submitDepositLiquidityPool}>
                     <h5 className='mb-2'>Send Amount to Treasury Wallet</h5>

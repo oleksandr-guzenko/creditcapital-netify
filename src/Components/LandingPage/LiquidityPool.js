@@ -12,8 +12,10 @@ import LiquidityInput from './LiquidityInput'
 import {useDispatch, useSelector} from 'react-redux'
 import {
   liquidityDepositAction,
+  liquidityWithdrawAction,
   clearTransactionHistory,
 } from '../../Redux/LiquidityPool/actions'
+import {getProfileInformation} from '../../Redux/Profile/actions'
 
 const LiquidityPool = () => {
   // Redux State
@@ -81,7 +83,7 @@ const LiquidityPool = () => {
     setWithdrawPrice(number.value)
   }
   const submitWithdrawLiquidityPool = (e) => {
-    dispatch(liquidityDepositAction(depositPrice, 'withdraw'))
+    dispatch(liquidityWithdrawAction(withdrawPrice, 'withdraw'))
 
     e.preventDefault()
   }
@@ -123,6 +125,13 @@ const LiquidityPool = () => {
       setBalanceError(false)
     }
   }, [profileLoading, availableBalance, userAddress])
+
+  //
+  useEffect(() => {
+    if (userAddress) {
+      dispatch(getProfileInformation())
+    }
+  }, [userAddress, transactionHashID])
 
   return (
     <>

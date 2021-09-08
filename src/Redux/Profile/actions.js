@@ -23,6 +23,20 @@ import getContracts, {ethereum, walletLink} from '../Blockchain/contracts'
 
 // Test Network
 
+// const data = [
+//   {
+//     chainId: '0x13881',
+//     chainName: 'Polygon Testnet',
+//     nativeCurrency: {
+//       name: 'MATIC',
+//       symbol: 'MATIC',
+//       decimals: 18,
+//     },
+//     rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
+//     blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+//   },
+// ]
+
 const data = [
   {
     chainId: '0x13881',
@@ -32,7 +46,7 @@ const data = [
       symbol: 'MATIC',
       decimals: 18,
     },
-    rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
+    rpcUrls: ['https://matic-mumbai.chainstacklabs.com/'],
     blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
   },
 ]
@@ -46,6 +60,7 @@ export const checkAndAddNetwork = () => async () => {
       params: [{chainId: data[0]?.chainId}],
     })
   } catch (error) {
+    console.log(error)
     if (error?.code === 4902) {
       try {
         await window.ethereum.request({

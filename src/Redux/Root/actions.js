@@ -2,6 +2,8 @@ import {
   TREASURY_WALLET_REQUEST,
   TREASURY_WALLET_SUCCESS,
   TREASURY_WALLET_FAIL,
+  TREASURY_INFO_SUCCESS,
+  TREASURY_INFO_REQUEST,
 } from './constants'
 
 import getContracts from '../Blockchain/contracts'
@@ -33,7 +35,6 @@ export const treasuryWalletAction = (amount) => async (dispatch, getState) => {
       transaction.events.Deposited.returnValues.usdcAmount.toString()
     )
 
-
     dispatch({
       type: TREASURY_WALLET_SUCCESS,
       payload: {tranHash, usdcAmount},
@@ -43,5 +44,29 @@ export const treasuryWalletAction = (amount) => async (dispatch, getState) => {
       type: TREASURY_WALLET_FAIL,
       payload: error?.message,
     })
+  }
+}
+
+export const treasuryInfo = () => async (dispatch, getState) => {
+  try {
+    const {
+      profile: {walletType, userAddress},
+    } = getState()
+
+    const {web3, depositUSDC} = getContracts(walletType)
+    dispatch({
+      type: TREASURY_INFO_REQUEST,
+    })
+
+    const amount = await depositUSDC.methods.tokenBoughtUser(userAddress).call()
+
+    const transaction = web3.utils.fromWei(amount.toString(), 'ether')
+
+    dispatch({
+      type: TREASURY_INFO_SUCCESS,
+      payload: transaction,
+    })
+  } catch (error) {
+    console.error(error?.message)
   }
 }

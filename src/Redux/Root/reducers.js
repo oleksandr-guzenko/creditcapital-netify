@@ -2,6 +2,8 @@ import {
   TREASURY_WALLET_REQUEST,
   TREASURY_WALLET_SUCCESS,
   TREASURY_WALLET_FAIL,
+  TREASURY_INFO_SUCCESS,
+  TREASURY_INFO_REQUEST,
 } from './constants'
 
 const initialState = {
@@ -10,6 +12,8 @@ const initialState = {
   error: false,
   USDCAmount: '',
   tranHash: '',
+  depositedAmount: null,
+  depositedLoading: false,
 }
 
 export const defaultReducer = (state = initialState, action) => {
@@ -20,6 +24,17 @@ export const defaultReducer = (state = initialState, action) => {
         error: false,
         loading: true,
         DummyUsdc: action.payload,
+      }
+    case TREASURY_INFO_REQUEST:
+      return {
+        ...state,
+        depositedLoading: true,
+      }
+    case TREASURY_INFO_SUCCESS:
+      return {
+        ...state,
+        depositedAmount: action.payload,
+        depositedLoading: false,
       }
     case TREASURY_WALLET_SUCCESS:
       return {
