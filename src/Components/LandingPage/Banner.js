@@ -29,9 +29,13 @@ const Banner = () => {
   //
 
   const dispatch = useDispatch()
-  const {loading, depositedAmount, depositedLoading, tranHash} = useSelector(
-    (state) => state.root
-  )
+  const {
+    loading,
+    depositedAmount,
+    depositedLoading,
+    tranHash,
+    totalDepositedAmount,
+  } = useSelector((state) => state.root)
   const {userAddress} = useSelector((state) => state.profile)
   const [depositPrice, setDepositPrice] = useState('')
   const [showLoader, setShowLoader] = useState(true)
@@ -118,7 +122,7 @@ const Banner = () => {
                     </button>
                   </form>
                 </Col>
-                <Col xl={6} lg={6}>
+                <Col xl={3} lg={3} md={6}>
                   <Image src={ImgTwo} alt='' className='mb-3' />
                   <h5>
                     {depositedLoading ? (
@@ -137,6 +141,27 @@ const Banner = () => {
                   </h5>
                   <p className='txt__gray'>
                     Funds deposited in Treasury wallet
+                  </p>
+                </Col>
+                <Col xl={3} lg={3} md={6}>
+                  <Image src={ImgOne} alt='' className='mb-3' />
+                  <h5>
+                    {depositedLoading ? (
+                      <ReactLoading
+                        type='bars'
+                        color='#06397e'
+                        height={30}
+                        width={30}
+                        className='m-auto'
+                      />
+                    ) : totalDepositedAmount ? (
+                      `$${numberFormate(totalDepositedAmount)}`
+                    ) : (
+                      '$0'
+                    )}
+                  </h5>
+                  <p className='txt__gray'>
+                    Total Funds deposited in Treasury wallet
                   </p>
                 </Col>
               </Row>

@@ -13,6 +13,7 @@ const initialState = {
   USDCAmount: '',
   tranHash: '',
   depositedAmount: null,
+  totalDepositedAmount: null,
   depositedLoading: false,
 }
 
@@ -33,8 +34,9 @@ export const defaultReducer = (state = initialState, action) => {
     case TREASURY_INFO_SUCCESS:
       return {
         ...state,
-        depositedAmount: action.payload,
+        depositedAmount: action.payload.transaction,
         depositedLoading: false,
+        totalDepositedAmount: action.payload.totalTreasury,
       }
     case TREASURY_WALLET_SUCCESS:
       return {
