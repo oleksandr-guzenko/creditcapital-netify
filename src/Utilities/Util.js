@@ -9,3 +9,15 @@ export const numberFormate = (number) => {
     minimumFractionDigits: 2,
   })
 }
+export const formateDate = (milliSeconds) => {
+  const newDate = new Date(milliSeconds * 1000)
+  const [years, months, days, hours, minutes, seconds] = [
+    newDate.getFullYear(),
+    newDate.getMonth() + 1,
+    newDate.getDate(),
+    newDate.getHours(),
+    newDate.getMinutes(),
+    newDate.getSeconds(),
+  ]
+  return [years, months, days, hours, minutes, seconds]
+}

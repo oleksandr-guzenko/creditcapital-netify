@@ -6,6 +6,10 @@ import {
   LIQUIDITY_WITHDRAW_REQUEST,
   LIQUIDITY_WITHDRAW_SUCCESS,
   LIQUIDITY_WITHDRAW_FAIL,
+  COOL_DOWN_PERIOD,
+  CLAIM_WITHDRAW_REQUEST,
+  CLAIM_WITHDRAW_SUCCESS,
+  CLAIM_WITHDRAW_FAIL,
 } from './constants'
 
 const initialState = {
@@ -15,6 +19,10 @@ const initialState = {
   caplAmount: '',
   temporaryUSDC: '',
   typeOfTransaction: '',
+  coolDownPeriod: [],
+  claimLoading: false,
+  claimStatus: '',
+  claimError: false,
 }
 
 export const liquidityPoolReducer = (state = initialState, action) => {
@@ -45,12 +53,36 @@ export const liquidityPoolReducer = (state = initialState, action) => {
         liquidityLoading: false,
         liquidityError: action.payload,
       }
+    case COOL_DOWN_PERIOD:
+      return {
+        ...state,
+        coolDownPeriod: action.payload,
+      }
     case CLEAR_TRANSACTION_HISTORY:
       return {
         ...state,
         transactionHashID: '',
         liquidityLoading: false,
         liquidityError: false,
+      }
+    case CLAIM_WITHDRAW_REQUEST:
+      return {
+        ...state,
+        claimLoading: true,
+        claimError: false,
+      }
+    case CLAIM_WITHDRAW_SUCCESS:
+      return {
+        ...state,
+        claimLoading: false,
+        claimStatus: action.payload,
+        claimError: false,
+      }
+    case CLAIM_WITHDRAW_FAIL:
+      return {
+        ...state,
+        claimLoading: false,
+        claimError: action.payload,
       }
 
     default:

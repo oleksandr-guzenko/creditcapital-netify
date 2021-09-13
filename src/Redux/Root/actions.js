@@ -4,6 +4,8 @@ import {
   TREASURY_WALLET_FAIL,
   TREASURY_INFO_SUCCESS,
   TREASURY_INFO_REQUEST,
+  TREASURY_AMOUNT_REQUEST,
+  TREASURY_AMOUNT_SUCCESS,
 } from './constants'
 
 import getContracts from '../Blockchain/contracts'
@@ -55,7 +57,7 @@ export const treasuryInfo = () => async (dispatch, getState) => {
       profile: {walletType, userAddress},
     } = getState()
 
-    const {usdc, web3, depositUSDC} = getContracts(walletType)
+    const {web3, depositUSDC} = getContracts(walletType)
     dispatch({
       type: TREASURY_INFO_REQUEST,
     })
@@ -63,12 +65,32 @@ export const treasuryInfo = () => async (dispatch, getState) => {
     const amount = await depositUSDC.methods.tokenBoughtUser(userAddress).call()
     const transaction = web3.utils.fromWei(amount.toString(), 'ether')
 
-    const balance = await usdc.methods.balanceOf(treasuryWalletAddress).call()
+    dispatch({
+      type: TREASURY_INFO_SUCCESS,
+      payload: transaction,
+    })
+  } catch (error) {
+    console.error(error?.message)
+  }
+}
+
+export const totalTreasuryAmount = () => async (dispatch, getState) => {
+  try {
+    const {
+      profile: {walletType},
+    } = getState()
+
+    const {web3, depositUSDC} = getContracts(walletType)
+    dispatch({
+      type: TREASURY_AMOUNT_REQUEST,
+    })
+
+    const balance = await depositUSDC.methods.AMOUNT_RAISED().call()
     const totalTreasury = web3.utils.fromWei(balance.toString(), 'ether')
 
     dispatch({
-      type: TREASURY_INFO_SUCCESS,
-      payload: {transaction, totalTreasury},
+      type: TREASURY_AMOUNT_SUCCESS,
+      payload: totalTreasury,
     })
   } catch (error) {
     console.error(error?.message)

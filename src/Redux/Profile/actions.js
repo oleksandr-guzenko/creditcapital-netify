@@ -53,12 +53,13 @@ const data = [
 
 // actions
 
-export const checkAndAddNetwork = () => async () => {
+export const checkAndAddNetwork = () => async (dispatch) => {
   try {
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{chainId: data[0]?.chainId}],
     })
+    dispatch(getProfileInformation())
   } catch (error) {
     console.log(error)
     if (error?.code === 4902) {
@@ -67,6 +68,7 @@ export const checkAndAddNetwork = () => async () => {
           method: 'wallet_addEthereumChain',
           params: data,
         })
+        dispatch(getProfileInformation())
       } catch (addError) {
         console.error(addError?.message)
       }

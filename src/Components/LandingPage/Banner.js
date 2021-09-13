@@ -9,7 +9,11 @@ import LiquidityInput from './LiquidityInput'
 import LoadingModal from '../Modals/LoadingModal'
 import SuccessMessage from '../Modals/SuccessMessage'
 import {useDispatch} from 'react-redux'
-import {treasuryInfo, treasuryWalletAction} from '../../Redux/Root/actions'
+import {
+  totalTreasuryAmount,
+  treasuryInfo,
+  treasuryWalletAction,
+} from '../../Redux/Root/actions'
 
 // icon Images
 import ImgOne from '../../Assets/Investor/one__inv.svg'
@@ -35,6 +39,7 @@ const Banner = () => {
     depositedLoading,
     tranHash,
     totalDepositedAmount,
+    totalDepositedLoading,
   } = useSelector((state) => state.root)
   const {userAddress} = useSelector((state) => state.profile)
   const [depositPrice, setDepositPrice] = useState('')
@@ -54,6 +59,9 @@ const Banner = () => {
       dispatch(treasuryInfo())
     }
   }, [userAddress, tranHash])
+  useEffect(() => {
+    dispatch(totalTreasuryAmount())
+  }, [tranHash])
 
   const handleDepositPriceChange = (number) => {
     setDepositPrice(number.value)
@@ -146,7 +154,7 @@ const Banner = () => {
                 <Col xl={3} lg={3} md={6}>
                   <Image src={ImgOne} alt='' className='mb-3' />
                   <h5>
-                    {depositedLoading ? (
+                    {totalDepositedLoading ? (
                       <ReactLoading
                         type='bars'
                         color='#06397e'
