@@ -7,7 +7,7 @@ import NumberFormat from 'react-number-format'
 // images
 import USDC from '../../Assets/money/usdc.svg'
 
-const LiquidityInput = ({price, handlePriceChange, errors}) => {
+const LiquidityInput = ({price, handlePriceChange, errors, typeOfToken}) => {
   // const [selectedValue, setSelectedValue] = useState('')
 
   // const {Option} = components
@@ -67,10 +67,22 @@ const LiquidityInput = ({price, handlePriceChange, errors}) => {
             CPT
           </InputGroup.Text>
         )} */}
-        <InputGroup.Text className='border-0 txt__brand cpt'>
-          <Image src={USDC} height='15px' width='15px' alt='' />
-          USDC
-        </InputGroup.Text>
+        {typeOfToken === 'USDC' ? (
+          <InputGroup.Text className='border-0 txt__brand cpt'>
+            <Image src={USDC} height='15px' width='15px' alt='' />
+            USDC
+          </InputGroup.Text>
+        ) : typeOfToken === 'CAPL' ? (
+          <InputGroup.Text className='border-0 txt__brand cpt'>
+            CAPL
+          </InputGroup.Text>
+        ) : typeOfToken === 'CRET' ? (
+          <InputGroup.Text className='border-0 txt__brand cpt'>
+            CRET
+          </InputGroup.Text>
+        ) : (
+          ''
+        )}
         <NumberFormat
           disabled={errors}
           thousandsGroupStyle='thousand'

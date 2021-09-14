@@ -26,8 +26,14 @@ const LiquidityPool = () => {
   const {userAddress, availableBalance, profileLoading} = useSelector(
     (state) => state.profile
   )
-  const {liquidityLoading, transactionHashID, liquidityError, coolDownPeriod} =
-    useSelector((state) => state.liquidity)
+  const {
+    liquidityLoading,
+    transactionHashID,
+    liquidityError,
+    coolDownPeriod,
+    coolDownPeriodLoading,
+    isAvailableForClaim,
+  } = useSelector((state) => state.liquidity)
 
   const [depositPrice, setDepositPrice] = useState('')
   const [depositErrors, setDepositErrors] = useState(false)
@@ -46,8 +52,8 @@ const LiquidityPool = () => {
 
   const handleCloseAndClearValue = () => {
     setShowSuccessModal(false)
-    dispatch(clearTransactionHistory())
     clearInputValues()
+    dispatch(clearTransactionHistory())
   }
 
   useEffect(() => {
@@ -78,7 +84,7 @@ const LiquidityPool = () => {
   }
   const submitDepositLiquidityPool = (e) => {
     e.preventDefault()
-    dispatch(liquidityDepositAction(depositPrice, 'deposit'))
+    dispatch(liquidityDepositAction(depositPrice, 'deposit', 'USDC'))
   }
   // Withdraw
 
@@ -86,8 +92,7 @@ const LiquidityPool = () => {
     setWithdrawPrice(number.value)
   }
   const submitWithdrawLiquidityPool = (e) => {
-    dispatch(liquidityWithdrawAction(withdrawPrice, 'withdraw'))
-
+    dispatch(liquidityWithdrawAction(withdrawPrice, 'withdraw', 'CAPL'))
     e.preventDefault()
   }
 
@@ -130,7 +135,7 @@ const LiquidityPool = () => {
   }, [profileLoading, availableBalance, userAddress])
 
   useEffect(() => {
-    if (userAddress) {
+    if (userAddress && transactionHashID !== '') {
       dispatch(getProfileInformation())
     }
   }, [userAddress, transactionHashID])
@@ -181,6 +186,7 @@ const LiquidityPool = () => {
                       price={depositPrice}
                       handlePriceChange={handleDepositPriceChange}
                       errors={balanceError}
+                      typeOfToken='USDC'
                     />
                     <div className='liquidity__pool__box__bottom'>
                       <div>
@@ -239,15 +245,17 @@ const LiquidityPool = () => {
                       price={withdrawPrice}
                       handlePriceChange={handleWithdrawPriceChange}
                       errors={balanceError}
+                      typeOfToken='CAPL'
                     />
                     <div className='liquidity__pool__box__bottom withdraw'>
                       <div>
-                        {/* {coolDownPeriod?.length > 0 && (
-                          <Timer
-                            setEnableClaim={setEnableClaim}
-                            countDownTime={coolDownPeriod}
-                          />
-                        )} */}
+                        {!coolDownPeriodLoading &&
+                          coolDownPeriod?.length > 0 && (
+                            <Timer
+                              countDownTime={coolDownPeriod}
+                              setEnableClaim={setEnableClaim}
+                            />
+                          )}
                         {balanceError && (
                           <p className='text-danger danger text-start'>
                             Please fund your wallet with USDC
@@ -262,7 +270,7 @@ const LiquidityPool = () => {
                       </div>
                     </div>
 
-                    {/* {coolDownPeriod?.length === 0 && ( */}
+                    {(coolDownPeriod?.length > 0 || !isAvailableForClaim) && (
                       <div className='liquidity__pool__box__btn'>
                         <button
                           disabled={withdrawErrors}
@@ -275,23 +283,29 @@ const LiquidityPool = () => {
                           Withdraw
                         </button>
                       </div>
-                    {/* )} */}
+                    )}
                   </form>
-                  {/* {coolDownPeriod?.length > 0 && (
+                  {((isAvailableForClaim && coolDownPeriod?.length <= 0) ||
+                    enableClaim) && (
                     <div className='liquidity__pool__box__btn'>
                       <button
                         onClick={claimFunds}
-                        disabled={!enableClaim}
-                        className={
-                          !enableClaim
-                            ? 'btn_brand btn_brand_disabled'
-                            : 'btn_brand'
-                        }
+                        // disabled={
+                        //   !coolDownPeriodLoading &&
+                        //   coolDownPeriod?.length > 0
+                        // }
+                        // className={
+                        //   !coolDownPeriodLoading &&
+                        //   coolDownPeriod?.length > 0
+                        //     ? 'btn_brand btn_brand_disabled'
+                        //     : 'btn_brand'
+                        // }
+                        className='btn_brand'
                       >
                         Claim
                       </button>
                     </div>
-                  )} */}
+                  )}
                 </div>
               </Col>
             </Row>

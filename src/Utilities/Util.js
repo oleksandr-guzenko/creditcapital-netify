@@ -21,3 +21,9 @@ export const formateDate = (milliSeconds) => {
   ]
   return [years, months, days, hours, minutes, seconds]
 }
+
+export const calculatePercentage = (totalAmount, percentage) => {
+  const percentageAmount = (Number(percentage) / 100) * Number(totalAmount)
+  const result = Number(totalAmount) - percentageAmount
+  return result
+}

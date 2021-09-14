@@ -11,6 +11,11 @@ const initialState = {
   walletType: '',
   availableBalance: null,
   profileError: '',
+  totalRewardsEarned: 0,
+  cptBalance: 0,
+  crtBalance: 0,
+  cptLPBalance: 0,
+  crtLPBalance: 0,
 }
 
 export const profileReducer = (state = initialState, action) => {
@@ -31,6 +36,11 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         profileLoading: false,
         availableBalance: action.payload.availableBalance,
+        totalRewardsEarned: action.payload.totalRewardsEarned,
+        cptBalance: action.payload.cptBalance,
+        crtBalance: action.payload.crtBalance,
+        cptLPBalance: action.payload.cptLPBalance,
+        crtLPBalance: action.payload.crtLPBalance,
       }
     case PROFILE_FAIL:
       return {

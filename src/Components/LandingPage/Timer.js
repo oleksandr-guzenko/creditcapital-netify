@@ -11,15 +11,15 @@ const SaleTimer = ({countDownTime, setEnableClaim}) => {
       const info = setInterval(() => {
         const results = intervalToDuration({
           start: new Date(),
-          //   end: new Date(
-          //     countDownTime[0],
-          //     countDownTime[1],
-          //     countDownTime[2],
-          //     countDownTime[3],
-          //     countDownTime[4],
-          //     countDownTime[5]
-          //   ),
-          end: new Date(2021, 9, 13, 14, 7, 55),
+          end: new Date(
+            countDownTime[0],
+            countDownTime[1],
+            countDownTime[2],
+            countDownTime[3],
+            countDownTime[4],
+            countDownTime[5]
+          ),
+          // end: new Date(2021, 9, 13, 14, 7, 55),
         })
         if (
           results.years === 0 &&

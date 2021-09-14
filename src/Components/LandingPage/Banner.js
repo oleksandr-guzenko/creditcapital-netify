@@ -118,6 +118,7 @@ const Banner = () => {
                     <LiquidityInput
                       price={depositPrice}
                       handlePriceChange={handleDepositPriceChange}
+                      typeOfToken='USDC'
                     />
                     <button
                       className={

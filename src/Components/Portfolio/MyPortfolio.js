@@ -1,13 +1,33 @@
-import React from 'react'
-import {Col, Container, Row} from 'react-bootstrap'
+import React, {useEffect} from 'react'
+import {Container} from 'react-bootstrap'
 import PortfolioCard from './PortfolioCard'
+import {numberFormate} from '../../Utilities/Util'
+
+// Svgs
 import card_one from '../../Assets/portfolio/card_one.svg'
 import card_two from '../../Assets/portfolio/card_two.svg'
 import card_three from '../../Assets/portfolio/card_three.svg'
 import card_four from '../../Assets/portfolio/card_four.svg'
 import card_five from '../../Assets/portfolio/card_five.svg'
+// Redux Imports
+import {useDispatch, useSelector} from 'react-redux'
+import {getProfileInformation} from '../../Redux/Profile/actions'
 
 const MyPortfolio = () => {
+  // Redux State
+  const dispatch = useDispatch()
+  const {
+    userAddress,
+    availableBalance,
+    profileLoading,
+    cptBalance,
+    crtBalance,
+  } = useSelector((state) => state.profile)
+  useEffect(() => {
+    if (userAddress) {
+      dispatch(getProfileInformation())
+    }
+  }, [userAddress])
   return (
     <div className='portfolio'>
       <Container>
@@ -22,13 +42,13 @@ const MyPortfolio = () => {
             />
             <PortfolioCard
               bgColor='#D6EDD9'
-              amount='5,552.52'
+              amount={numberFormate(cptBalance)}
               text='CPT balance'
               icon={card_two}
             />
             <PortfolioCard
               bgColor='#F6F0D8'
-              amount='9,151.52'
+              amount={numberFormate(crtBalance)}
               text='CRT balance'
               icon={card_three}
             />

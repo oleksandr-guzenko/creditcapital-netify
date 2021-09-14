@@ -119,14 +119,31 @@ export const getProfileInformation = () => async (dispatch, getState) => {
     })
 
     if (userAddress) {
-      const {web3, usdc} = getContracts(walletType)
+      const {web3, usdc, cpt, crt} = getContracts(walletType)
       // available Balance
       const balance = await usdc.methods.balanceOf(userAddress).call()
       const availableBalance = web3.utils.fromWei(balance.toString(), 'ether')
 
+      const totalRewardsEarned = 0,
+        cptLPBalance = 0,
+        crtLPBalance = 0
+
+      // CPT and CRT
+      const cptB = await cpt.methods.balanceOf(userAddress).call()
+      const crtB = await crt.methods.balanceOf(userAddress).call()
+      const cptBalance = web3.utils.fromWei(cptB.toString(), 'ether')
+      const crtBalance = web3.utils.fromWei(crtB.toString(), 'ether')
+
       dispatch({
         type: PROFILE_SUCCESS,
-        payload: {availableBalance: Number(availableBalance)},
+        payload: {
+          availableBalance: Number(availableBalance),
+          totalRewardsEarned,
+          cptBalance: Number(cptBalance),
+          crtBalance: Number(crtBalance),
+          cptLPBalance,
+          crtLPBalance,
+        },
       })
     }
   } catch (error) {

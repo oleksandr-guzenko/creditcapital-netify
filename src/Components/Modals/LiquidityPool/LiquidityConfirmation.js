@@ -13,8 +13,9 @@ import {numberFormate} from '../../../Utilities/Util'
 const LiquidityConfirmation = ({show, handleClose}) => {
   // Redux State
   const {
-    temporaryUSDC,
     caplAmount,
+    tokenType,
+    temporaryTokenAmount,
     transactionHashID,
     liquidityError,
     typeOfTransaction,
@@ -45,11 +46,34 @@ const LiquidityConfirmation = ({show, handleClose}) => {
                 {typeOfTransaction === 'deposit' ? 'deposited' : 'withdrawn'}{' '}
                 tokens
               </h6>
-              <h6 className='m-0'>
-                <span className='big'>{numberFormate(caplAmount)} CAPL</span>
-                Received For
-                <span className='big'>{numberFormate(caplAmount)} USDC </span>
-              </h6>
+              {tokenType === 'USDC' ? (
+                <h6 className='m-0'>
+                  <span className='big'>{numberFormate(caplAmount)} CAPL</span>
+                  Received For
+                  <span className='big'>
+                    {numberFormate(temporaryTokenAmount)} USDC{' '}
+                  </span>
+                </h6>
+              ) : tokenType === 'CAPL' ? (
+                <h6 className='m-0'>
+                  <span className='big'>{numberFormate(caplAmount)} USDC</span>
+                  Received For
+                  <span className='big'>
+                    {numberFormate(temporaryTokenAmount)} CAPL{' '}
+                  </span>
+                </h6>
+              ) : tokenType === 'CRET' ? (
+                <h6 className='m-0'>
+                  <span className='big'>{numberFormate(caplAmount)} USDC</span>
+                  Received For
+                  <span className='big'>
+                    {numberFormate(temporaryTokenAmount)} CRET{' '}
+                  </span>
+                </h6>
+              ) : (
+                ''
+              )}
+
               <div className='user__id'>
                 <p onClick={setCopied} className='txt__gray id'>
                   {transactionHashID}
@@ -68,7 +92,9 @@ const LiquidityConfirmation = ({show, handleClose}) => {
             <>
               <Image src={Close} alt='' className='loader' />
               <h3 className='mt-3 text-danger'>Transaction Failed</h3>
-              <h6 className='mt-2'>{numberFormate(temporaryUSDC)} USDC</h6>
+              <h6 className='mt-2'>
+                {numberFormate(temporaryTokenAmount)} {tokenType}
+              </h6>
               <p className='txt__gray note'>View on Explorer</p>
               <button className='btn_brand' onClick={handleClose}>
                 Close

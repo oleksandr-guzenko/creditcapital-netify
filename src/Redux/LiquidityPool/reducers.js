@@ -6,20 +6,27 @@ import {
   LIQUIDITY_WITHDRAW_REQUEST,
   LIQUIDITY_WITHDRAW_SUCCESS,
   LIQUIDITY_WITHDRAW_FAIL,
-  COOL_DOWN_PERIOD,
   CLAIM_WITHDRAW_REQUEST,
   CLAIM_WITHDRAW_SUCCESS,
   CLAIM_WITHDRAW_FAIL,
+  COOL_DOWN_PERIOD_REQUEST,
+  COOL_DOWN_PERIOD_STATUS,
+  COOL_DOWN_PERIOD_FAIL,
+  COOL_DOWN_PERIOD_SUCCESS,
 } from './constants'
 
 const initialState = {
   liquidityLoading: false,
   liquidityError: false,
   transactionHashID: '',
+  tokenType: '',
   caplAmount: '',
-  temporaryUSDC: '',
+  temporaryTokenAmount: '',
   typeOfTransaction: '',
+  coolDownPeriodLoading: false,
   coolDownPeriod: [],
+  isAvailableForClaim: false,
+  coolDownPeriodError: false,
   claimLoading: false,
   claimStatus: '',
   claimError: false,
@@ -33,8 +40,9 @@ export const liquidityPoolReducer = (state = initialState, action) => {
         ...state,
         liquidityLoading: true,
         liquidityError: false,
-        temporaryUSDC: action.payload.amount,
+        temporaryTokenAmount: action.payload.amount,
         typeOfTransaction: action.payload.typeOfTransaction,
+        tokenType: action.payload.tokenType,
       }
     case LIQUIDITY_DEPOSIT_SUCCESS:
     case LIQUIDITY_WITHDRAW_SUCCESS:
@@ -44,7 +52,6 @@ export const liquidityPoolReducer = (state = initialState, action) => {
         liquidityError: false,
         transactionHashID: action.payload.transactionHashID,
         caplAmount: action.payload.tokenAmount,
-        temporaryUSDC: '',
       }
     case LIQUIDITY_DEPOSIT_FAIL:
     case LIQUIDITY_WITHDRAW_FAIL:
@@ -53,10 +60,29 @@ export const liquidityPoolReducer = (state = initialState, action) => {
         liquidityLoading: false,
         liquidityError: action.payload,
       }
-    case COOL_DOWN_PERIOD:
+    case COOL_DOWN_PERIOD_REQUEST:
+      return {
+        ...state,
+        coolDownPeriodLoading: true,
+        coolDownPeriodError: false,
+      }
+    case COOL_DOWN_PERIOD_SUCCESS:
       return {
         ...state,
         coolDownPeriod: action.payload,
+        coolDownPeriodLoading: false,
+      }
+    case COOL_DOWN_PERIOD_STATUS:
+      return {
+        ...state,
+        isAvailableForClaim: action.payload,
+        coolDownPeriodLoading: false,
+      }
+    case COOL_DOWN_PERIOD_FAIL:
+      return {
+        ...state,
+        coolDownPeriodError: action.payload,
+        coolDownPeriodLoading: false,
       }
     case CLEAR_TRANSACTION_HISTORY:
       return {
