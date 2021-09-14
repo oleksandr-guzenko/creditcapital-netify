@@ -43,25 +43,25 @@ const MyPortfolio = () => {
             <PortfolioCard
               bgColor='#D6EDD9'
               amount={numberFormate(cptBalance)}
-              text='CPT balance'
+              text='CAPL balance'
               icon={card_two}
             />
             <PortfolioCard
               bgColor='#F6F0D8'
               amount={numberFormate(crtBalance)}
-              text='CRT balance'
+              text='CRET balance'
               icon={card_three}
             />
             <PortfolioCard
               bgColor='#D8E4F6'
               amount='$1,542.02'
-              text='CPT LP Balance'
+              text='CAPL LP Balance'
               icon={card_four}
             />
             <PortfolioCard
               bgColor='#F6D8D8'
               amount='$1,542.02'
-              text='CRT LP Balance'
+              text='CRET LP Balance'
               icon={card_five}
             />{' '}
           </div>
