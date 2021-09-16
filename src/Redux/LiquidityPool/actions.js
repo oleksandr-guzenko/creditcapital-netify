@@ -66,7 +66,7 @@ export const liquidityWithdrawAction =
         profile: {walletType, userAddress},
       } = getState()
 
-      const {usdc, liquidityPool, web3} = getContracts(walletType)
+      const {capl, liquidityPool, web3} = getContracts(walletType)
 
       dispatch({
         type: LIQUIDITY_WITHDRAW_REQUEST,
@@ -75,13 +75,15 @@ export const liquidityWithdrawAction =
 
       const price = web3.utils.toWei(amount.toString())
 
-      await usdc.methods
+      await capl.methods
         .approve(liquidityPool._address, price)
         .send({from: userAddress})
 
       const transaction = await liquidityPool.methods
         .withdraw(price)
         .send({from: userAddress})
+
+        console.log(transaction);
 
       const tokenAmount = web3.utils.fromWei(
         transaction.events.withdrawrequested.returnValues.amount.toString()
@@ -92,6 +94,7 @@ export const liquidityWithdrawAction =
         type: LIQUIDITY_WITHDRAW_SUCCESS,
         payload: {transactionHashID, tokenAmount},
       })
+
     } catch (error) {
       dispatch({
         type: LIQUIDITY_WITHDRAW_FAIL,
@@ -150,7 +153,9 @@ export const claimWithdraw = () => async (dispatch, getState) => {
     dispatch({
       type: CLAIM_WITHDRAW_REQUEST,
     })
+
     const res = await liquidityPool.methods.claim().call()
+
     console.log('wor')
     console.log(res)
 

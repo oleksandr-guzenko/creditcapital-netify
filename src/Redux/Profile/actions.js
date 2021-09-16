@@ -7,19 +7,19 @@ import {
 import getContracts, {ethereum, walletLink} from '../Blockchain/contracts'
 // Real Network
 
-// const data = [
-//   {
-//     chainId: '0x89',
-//     chainName: 'Polygon Mainnet',
-//     nativeCurrency: {
-//       name: 'MATIC',
-//       symbol: 'MATIC',
-//       decimals: 18,
-//     },
-//     rpcUrls: ['https://polygon-rpc.com/'],
-//     blockExplorerUrls: ['https://www.polygonscan.com/'],
-//   },
-// ]
+const data = [
+  {
+    chainId: '0x89',
+    chainName: 'Polygon Mainnet',
+    nativeCurrency: {
+      name: 'MATIC',
+      symbol: 'MATIC',
+      decimals: 18,
+    },
+    rpcUrls: ['https://polygon-rpc.com/'],
+    blockExplorerUrls: ['https://www.polygonscan.com/'],
+  },
+]
 
 // Test Network
 
@@ -37,19 +37,19 @@ import getContracts, {ethereum, walletLink} from '../Blockchain/contracts'
 //   },
 // ]
 
-const data = [
-  {
-    chainId: '0x13881',
-    chainName: 'Polygon Testnet',
-    nativeCurrency: {
-      name: 'MATIC',
-      symbol: 'MATIC',
-      decimals: 18,
-    },
-    rpcUrls: ['https://matic-mumbai.chainstacklabs.com/'],
-    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-  },
-]
+// const data = [
+//   {
+//     chainId: '0x13881',
+//     chainName: 'Polygon Testnet',
+//     nativeCurrency: {
+//       name: 'MATIC',
+//       symbol: 'MATIC',
+//       decimals: 18,
+//     },
+//     rpcUrls: ['https://matic-mumbai.chainstacklabs.com/'],
+//     blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+//   },
+// ]
 
 // actions
 
@@ -119,18 +119,18 @@ export const getProfileInformation = () => async (dispatch, getState) => {
     })
 
     if (userAddress) {
-      const {web3, usdc, cpt, crt} = getContracts(walletType)
+      const {web3, usdc, capl, cret} = getContracts(walletType)
       // available Balance
       const balance = await usdc.methods.balanceOf(userAddress).call()
       const availableBalance = web3.utils.fromWei(balance.toString(), 'ether')
-
+      
       const totalRewardsEarned = 0,
         cptLPBalance = 0,
         crtLPBalance = 0
 
       // CPT and CRT
-      const cptB = await cpt.methods.balanceOf(userAddress).call()
-      const crtB = await crt.methods.balanceOf(userAddress).call()
+      const cptB = await capl.methods.balanceOf(userAddress).call()
+      const crtB = await cret.methods.balanceOf(userAddress).call()
       const cptBalance = web3.utils.fromWei(cptB.toString(), 'ether')
       const crtBalance = web3.utils.fromWei(crtB.toString(), 'ether')
 

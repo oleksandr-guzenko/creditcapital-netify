@@ -34,7 +34,6 @@ export const treasuryWalletAction = (amount) => async (dispatch, getState) => {
       .depositToken(price)
       .send({from: userAddress})
 
-    
     const tranHash = transaction.transactionHash
     const usdcAmount = web3.utils.fromWei(
       transaction.events.Deposited.returnValues.usdcAmount.toString()
@@ -88,6 +87,7 @@ export const totalTreasuryAmount = () => async (dispatch, getState) => {
 
     const balance = await depositUSDC.methods.AMOUNT_RAISED().call()
     const totalTreasury = web3.utils.fromWei(balance.toString(), 'ether')
+    
 
     dispatch({
       type: TREASURY_AMOUNT_SUCCESS,

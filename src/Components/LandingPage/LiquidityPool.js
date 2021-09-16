@@ -23,9 +23,8 @@ import {getProfileInformation} from '../../Redux/Profile/actions'
 const LiquidityPool = () => {
   // Redux State
   const dispatch = useDispatch()
-  const {userAddress, availableBalance, profileLoading} = useSelector(
-    (state) => state.profile
-  )
+  const {userAddress, availableBalance, profileLoading, cptBalance} =
+    useSelector((state) => state.profile)
   const {
     liquidityLoading,
     transactionHashID,
@@ -135,7 +134,7 @@ const LiquidityPool = () => {
   }, [profileLoading, availableBalance, userAddress])
 
   useEffect(() => {
-    if (userAddress && transactionHashID !== '') {
+    if (userAddress) {
       dispatch(getProfileInformation())
     }
   }, [userAddress, transactionHashID])
@@ -234,7 +233,7 @@ const LiquidityPool = () => {
                             className='loader'
                           />
                         ) : (
-                          `${numberFormate(availableBalance)}`
+                          `${numberFormate(cptBalance)}`
                         )}
                         <span className='txt__gray ms-1'>(~$19,214.261)</span>
                       </h6>

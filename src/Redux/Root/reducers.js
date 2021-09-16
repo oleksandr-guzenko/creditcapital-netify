@@ -14,10 +14,10 @@ const initialState = {
   error: false,
   USDCAmount: '',
   tranHash: '',
+  depositedLoading: false,
   depositedAmount: null,
   totalDepositedLoading: false,
   totalDepositedAmount: null,
-  depositedLoading: false,
 }
 
 export const defaultReducer = (state = initialState, action) => {

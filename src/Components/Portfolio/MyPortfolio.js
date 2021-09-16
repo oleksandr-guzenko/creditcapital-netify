@@ -22,6 +22,9 @@ const MyPortfolio = () => {
     profileLoading,
     cptBalance,
     crtBalance,
+    crtLPBalance,
+    cptLPBalance,
+    totalRewardsEarned,
   } = useSelector((state) => state.profile)
   useEffect(() => {
     if (userAddress) {
@@ -36,7 +39,7 @@ const MyPortfolio = () => {
           <div className='portfolio__cards__container'>
             <PortfolioCard
               bgColor='#e5def0'
-              amount='$1,542.02'
+              amount={`$ ${numberFormate(cptLPBalance)}`}
               text='Total Rewards Earned'
               icon={card_one}
             />
@@ -54,13 +57,13 @@ const MyPortfolio = () => {
             />
             <PortfolioCard
               bgColor='#D8E4F6'
-              amount='$1,542.02'
+              amount={`$ ${numberFormate(cptLPBalance)}`}
               text='CAPL LP Balance'
               icon={card_four}
             />
             <PortfolioCard
               bgColor='#F6D8D8'
-              amount='$1,542.02'
+              amount={`$ ${numberFormate(crtLPBalance)}`}
               text='CRET LP Balance'
               icon={card_five}
             />{' '}

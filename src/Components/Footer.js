@@ -1,6 +1,8 @@
 import React from 'react'
 import {Col, Container, Image, Row} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+
+// SVgs
 import PaperIcon from '../Assets/social_icons/rocket.svg'
 import DiscordIcon from '../Assets/social_icons/discord.svg'
 import TwitterIcon from '../Assets/social_icons/twitter.svg'
