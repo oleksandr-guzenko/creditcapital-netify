@@ -61,7 +61,7 @@ const Banner = () => {
   }, [userAddress, tranHash])
   useEffect(() => {
     dispatch(totalTreasuryAmount())
-  }, [tranHash])
+  }, [tranHash, userAddress])
 
   const handleDepositPriceChange = (number) => {
     setDepositPrice(number.value)

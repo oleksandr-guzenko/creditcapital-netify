@@ -16,7 +16,7 @@ const data = [
       symbol: 'MATIC',
       decimals: 18,
     },
-    rpcUrls: ['https://polygon-rpc.com/'],
+    rpcUrls: ['https://rpc-mainnet.maticvigil.com'],
     blockExplorerUrls: ['https://www.polygonscan.com/'],
   },
 ]
@@ -123,7 +123,7 @@ export const getProfileInformation = () => async (dispatch, getState) => {
       // available Balance
       const balance = await usdc.methods.balanceOf(userAddress).call()
       const availableBalance = web3.utils.fromWei(balance.toString(), 'ether')
-      
+
       const totalRewardsEarned = 0,
         cptLPBalance = 0,
         crtLPBalance = 0
