@@ -2095,7 +2095,7 @@ const getContracts = (walletType) => {
         type: 'function',
       },
     ],
-    '0x9BC84902d485Ab0A009B61f91f4dAAA397185500'
+    '0x76Ae7a349282E3013446500E66D5Ae8b2AE6731e'
   )
 
   return {

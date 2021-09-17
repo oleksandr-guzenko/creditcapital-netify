@@ -6,6 +6,7 @@ import {
   TREASURY_INFO_REQUEST,
   TREASURY_AMOUNT_REQUEST,
   TREASURY_AMOUNT_SUCCESS,
+  CLEAR_HISTORY,
 } from './constants'
 
 import getContracts from '../Blockchain/contracts'
@@ -26,17 +27,23 @@ export const treasuryWalletAction = (amount) => async (dispatch, getState) => {
       payload: amount,
     })
 
+    const gasPrice = await web3.eth.getGasPrice()
+    const newGasPrice = web3.utils.toHex(Number(gasPrice * 1.5)?.toFixed(0))
+    console.log(gasPrice * 1.5, newGasPrice, web3.utils.toHex(newGasPrice))
+
     await usdc.methods
       .approve(depositUSDC._address, price)
-      .send({from: userAddress})
+      .send({from: userAddress, gasPrice: newGasPrice})
 
     const transaction = await depositUSDC.methods
       .depositToken(price)
-      .send({from: userAddress})
+      .send({from: userAddress, gasPrice: newGasPrice})
 
     const tranHash = transaction.transactionHash
+
     const usdcAmount = web3.utils.fromWei(
-      transaction.events.Deposited.returnValues.USDCAmount.toString(), 'Mwei'
+      transaction.events.Deposited.returnValues.USDCAmount.toString(),
+      'ether'
     )
 
     dispatch({
@@ -63,7 +70,7 @@ export const treasuryInfo = () => async (dispatch, getState) => {
     })
 
     const amount = await depositUSDC.methods.tokenBoughtUser(userAddress).call()
-    const transaction = web3.utils.fromWei(amount.toString(), 'Mwei')
+    const transaction = web3.utils.fromWei(amount.toString(), 'ether')
 
     dispatch({
       type: TREASURY_INFO_SUCCESS,
@@ -95,4 +102,10 @@ export const totalTreasuryAmount = () => async (dispatch, getState) => {
   } catch (error) {
     console.error(error?.message)
   }
+}
+
+export const clearHis = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_HISTORY,
+  })
 }

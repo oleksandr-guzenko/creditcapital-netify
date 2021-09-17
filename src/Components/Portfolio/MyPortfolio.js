@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {Container} from 'react-bootstrap'
 import PortfolioCard from './PortfolioCard'
-import {numberFormate} from '../../Utilities/Util'
+import {exactNumberFormate, numberFormate} from '../../Utilities/Util'
 
 // Svgs
 import card_one from '../../Assets/portfolio/card_one.svg'

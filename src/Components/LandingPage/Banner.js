@@ -10,6 +10,7 @@ import LoadingModal from '../Modals/LoadingModal'
 import SuccessMessage from '../Modals/SuccessMessage'
 import {useDispatch} from 'react-redux'
 import {
+  clearHis,
   totalTreasuryAmount,
   treasuryInfo,
   treasuryWalletAction,
@@ -62,11 +63,23 @@ const Banner = () => {
   }, [userAddress, tranHash])
   useEffect(() => {
     dispatch(totalTreasuryAmount())
-  }, [tranHash, userAddress])
-  
+  }, [tranHash])
+
   useEffect(() => {
     dispatch(checkAndAddNetwork())
   }, [])
+  useEffect(() => {
+    if (tranHash) {
+      setTimeout(() => {
+        clearTransactionHis()
+      }, 15000)
+    }
+  }, [tranHash])
+
+  const clearTransactionHis = () => {
+    setShowSuccess(false)
+    dispatch(clearHis())
+  }
 
   const handleDepositPriceChange = (number) => {
     setDepositPrice(number.value)
@@ -276,10 +289,9 @@ const Banner = () => {
           handleClose={() => setShowLoader(false)}
         />
       )}
-
       <SuccessMessage
         show={showSuccess}
-        handleClose={() => setShowSuccess(false)}
+        handleClose={() => clearTransactionHis()}
       />
     </>
   )

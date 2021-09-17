@@ -6,6 +6,7 @@ import {
   TREASURY_INFO_REQUEST,
   TREASURY_AMOUNT_SUCCESS,
   TREASURY_AMOUNT_REQUEST,
+  CLEAR_HISTORY,
 } from './constants'
 
 const initialState = {
@@ -22,6 +23,13 @@ const initialState = {
 
 export const defaultReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CLEAR_HISTORY:
+      return {
+        ...state,
+        error: false,
+        loading: false,
+        tranHash: '',
+      }
     case TREASURY_WALLET_REQUEST:
       return {
         ...state,
