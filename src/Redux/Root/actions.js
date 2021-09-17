@@ -28,7 +28,7 @@ export const treasuryWalletAction = (amount) => async (dispatch, getState) => {
     })
 
     const gasPrice = await web3.eth.getGasPrice()
-    const newGasPrice = web3.utils.toHex(Number(gasPrice * 1.5)?.toFixed(0))
+    const newGasPrice = web3.utils.toHex(Number(gasPrice * 2.5)?.toFixed(0))
 
     await usdc.methods
       .approve(depositUSDC._address, price)
