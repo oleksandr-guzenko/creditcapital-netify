@@ -20,7 +20,7 @@ export const treasuryWalletAction = (amount) => async (dispatch, getState) => {
     } = getState()
 
     const {usdc, web3, depositUSDC} = getContracts(walletType)
-    const price = web3.utils.toWei(amount.toString())
+    const price = web3.utils.toWei(amount.toString(), 'Mwei')
     dispatch({
       type: TREASURY_WALLET_REQUEST,
       payload: amount,
@@ -36,7 +36,7 @@ export const treasuryWalletAction = (amount) => async (dispatch, getState) => {
 
     const tranHash = transaction.transactionHash
     const usdcAmount = web3.utils.fromWei(
-      transaction.events.Deposited.returnValues.usdcAmount.toString()
+      transaction.events.Deposited.returnValues.USDCAmount.toString()
     )
 
     dispatch({
@@ -63,7 +63,7 @@ export const treasuryInfo = () => async (dispatch, getState) => {
     })
 
     const amount = await depositUSDC.methods.tokenBoughtUser(userAddress).call()
-    const transaction = web3.utils.fromWei(amount.toString(), 'ether')
+    const transaction = web3.utils.fromWei(amount.toString(), 'Mwei')
 
     dispatch({
       type: TREASURY_INFO_SUCCESS,
@@ -85,9 +85,8 @@ export const totalTreasuryAmount = () => async (dispatch, getState) => {
       type: TREASURY_AMOUNT_REQUEST,
     })
 
-    const balance = await depositUSDC.methods.AMOUNT_RAISED().call()
-    const totalTreasury = web3.utils.fromWei(balance.toString(), 'ether')
-    
+    const balance = await depositUSDC?.methods?.AMOUNT_RAISED()?.call()
+    const totalTreasury = web3.utils.fromWei(balance.toString(), 'Mwei')
 
     dispatch({
       type: TREASURY_AMOUNT_SUCCESS,

@@ -11,7 +11,10 @@ import card_four from '../../Assets/portfolio/card_four.svg'
 import card_five from '../../Assets/portfolio/card_five.svg'
 // Redux Imports
 import {useDispatch, useSelector} from 'react-redux'
-import {getProfileInformation} from '../../Redux/Profile/actions'
+import {
+  disConnectWallet,
+  getProfileInformation,
+} from '../../Redux/Profile/actions'
 
 const MyPortfolio = () => {
   // Redux State
@@ -31,11 +34,20 @@ const MyPortfolio = () => {
       dispatch(getProfileInformation())
     }
   }, [userAddress])
+
+  const handleDisconnect = () => {
+    dispatch(disConnectWallet())
+  }
   return (
     <div className='portfolio'>
       <Container>
         <div className='portfolio__container'>
-          <h4>My Portfolio</h4>
+          <div className='d-flex align-items-start justify-content-between mb-3 flex-wrap'>
+            <h4>My Portfolio</h4>
+            <button className='btn_brand' onClick={handleDisconnect}>
+              Disconnect
+            </button>
+          </div>
           <div className='portfolio__cards__container'>
             <PortfolioCard
               bgColor='#e5def0'

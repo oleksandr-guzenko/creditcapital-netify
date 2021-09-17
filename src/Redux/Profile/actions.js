@@ -5,6 +5,7 @@ import {
   PROFILE_FAIL,
 } from './constants'
 import getContracts, {ethereum, walletLink} from '../Blockchain/contracts'
+import {totalTreasuryAmount} from '../Root/actions'
 // Real Network
 
 const data = [
@@ -16,7 +17,7 @@ const data = [
       symbol: 'MATIC',
       decimals: 18,
     },
-    rpcUrls: ['https://rpc-mainnet.maticvigil.com'],
+    rpcUrls: ['https://polygon-rpc.com/'],
     blockExplorerUrls: ['https://www.polygonscan.com/'],
   },
 ]
@@ -59,7 +60,6 @@ export const checkAndAddNetwork = () => async (dispatch) => {
       method: 'wallet_switchEthereumChain',
       params: [{chainId: data[0]?.chainId}],
     })
-    dispatch(getProfileInformation())
   } catch (error) {
     console.log(error)
     if (error?.code === 4902) {
@@ -68,7 +68,6 @@ export const checkAndAddNetwork = () => async (dispatch) => {
           method: 'wallet_addEthereumChain',
           params: data,
         })
-        dispatch(getProfileInformation())
       } catch (addError) {
         console.error(addError?.message)
       }
@@ -122,7 +121,7 @@ export const getProfileInformation = () => async (dispatch, getState) => {
       const {web3, usdc, capl, cret} = getContracts(walletType)
       // available Balance
       const balance = await usdc.methods.balanceOf(userAddress).call()
-      const availableBalance = web3.utils.fromWei(balance.toString(), 'ether')
+      const availableBalance = web3.utils.fromWei(balance.toString(), 'Mwei')
 
       const totalRewardsEarned = 0,
         cptLPBalance = 0,
