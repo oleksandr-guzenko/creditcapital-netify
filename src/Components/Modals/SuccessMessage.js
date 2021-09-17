@@ -44,8 +44,8 @@ const SuccessMessage = ({show, handleClose}) => {
               </h4>
               <h4>{Number(USDCAmount)?.toFixed(2)} USDC</h4>
               <h4 className='mt-1'>
-                {Number(USDCAmount / 2)?.toFixed(2)} CAPL &{' '}
-                {Number(USDCAmount / 2)?.toFixed(2)} CRET
+                {Number(USDCAmount / 2)} CAPL &{' '}
+                {Number(USDCAmount / 2)} CRET
               </h4>
               <div className='user__id'>
                 <p className='txt__gray id'>
