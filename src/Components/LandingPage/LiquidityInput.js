@@ -94,9 +94,9 @@ const LiquidityInput = ({price, handlePriceChange, errors, typeOfToken}) => {
           allowNegative={false}
           fixedDecimalScale={true}
           allowLeadingZeros={false}
-          decimalScale={2}
+          decimalScale={4}
           onValueChange={handlePriceChange}
-          placeholder='0.00'
+          placeholder='0.0000'
           className='shadow-none form-control'
         />
         <InputGroup.Text>MAX</InputGroup.Text>

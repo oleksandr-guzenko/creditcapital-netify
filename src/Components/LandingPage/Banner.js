@@ -161,15 +161,11 @@ const Banner = () => {
                         width={30}
                         className='m-auto'
                       />
-                    ) : depositedAmount ? (
-                      `$${numberFormate(depositedAmount)}`
                     ) : (
-                      '$0'
+                      `$${numberFormate(depositedAmount)}`
                     )}
                   </h5>
-                  <p className='txt__gray'>
-                    Funds deposited By User
-                  </p>
+                  <p className='txt__gray'>Funds deposited By User</p>
                 </Col>
                 <Col xl={3} lg={3} md={6}>
                   <Image src={ImgOne} alt='' className='mb-3' />
@@ -182,10 +178,8 @@ const Banner = () => {
                         width={30}
                         className='m-auto'
                       />
-                    ) : totalDepositedAmount ? (
-                      `$${numberFormate(totalDepositedAmount)}`
                     ) : (
-                      '$0'
+                      `$${numberFormate(totalDepositedAmount)}`
                     )}
                   </h5>
                   <p className='txt__gray'>
