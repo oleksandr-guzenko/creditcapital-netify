@@ -168,7 +168,7 @@ const Banner = () => {
                     )}
                   </h5>
                   <p className='txt__gray'>
-                    Funds deposited in Treasury wallet
+                    Funds deposited By User
                   </p>
                 </Col>
                 <Col xl={3} lg={3} md={6}>
