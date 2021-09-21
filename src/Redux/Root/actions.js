@@ -44,11 +44,12 @@ export const treasuryWalletAction = (amount) => async (dispatch, getState) => {
       transaction.events.Deposited.returnValues.USDCAmount.toString(),
       'ether'
     )
-
     dispatch({
       type: TREASURY_WALLET_SUCCESS,
       payload: {tranHash, usdcAmount},
     })
+    dispatch(totalTreasuryAmount())
+    dispatch(treasuryInfo())
   } catch (error) {
     dispatch({
       type: TREASURY_WALLET_FAIL,

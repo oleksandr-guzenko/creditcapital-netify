@@ -60,12 +60,13 @@ const Banner = () => {
     if (userAddress) {
       dispatch(treasuryInfo())
     }
-  }, [userAddress, tranHash])
-  useEffect(() => {
-    dispatch(totalTreasuryAmount())
-  }, [tranHash])
+  }, [userAddress])
+  // useEffect(() => {
+  //   dispatch(totalTreasuryAmount())
+  // }, [tranHash])
 
   useEffect(() => {
+    dispatch(totalTreasuryAmount())
     dispatch(checkAndAddNetwork())
   }, [])
   useEffect(() => {

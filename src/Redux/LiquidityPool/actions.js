@@ -83,7 +83,7 @@ export const liquidityWithdrawAction =
         .withdraw(price)
         .send({from: userAddress})
 
-        console.log(transaction);
+      console.log(transaction)
 
       const tokenAmount = web3.utils.fromWei(
         transaction.events.withdrawrequested.returnValues.amount.toString()
@@ -94,7 +94,6 @@ export const liquidityWithdrawAction =
         type: LIQUIDITY_WITHDRAW_SUCCESS,
         payload: {transactionHashID, tokenAmount},
       })
-
     } catch (error) {
       dispatch({
         type: LIQUIDITY_WITHDRAW_FAIL,
