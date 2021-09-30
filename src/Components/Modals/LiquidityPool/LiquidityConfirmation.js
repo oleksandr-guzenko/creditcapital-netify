@@ -89,17 +89,19 @@ const LiquidityConfirmation = ({show, handleClose}) => {
               </button> */}
             </>
           ) : (
-            <>
-              <Image src={Close} alt='' className='loader' />
-              <h3 className='mt-3 text-danger'>Transaction Failed</h3>
-              <h6 className='mt-2'>
-                {numberFormate(temporaryTokenAmount)} {tokenType}
-              </h6>
-              <p className='txt__gray note'>View on Explorer</p>
-              <button className='btn_brand' onClick={handleClose}>
-                Close
-              </button>
-            </>
+            liquidityError && (
+              <>
+                <Image src={Close} alt='' className='loader' />
+                <h3 className='mt-3 text-danger'>Transaction Failed</h3>
+                <h6 className='mt-2'>
+                  {numberFormate(temporaryTokenAmount)} {tokenType}
+                </h6>
+                <p className='txt__gray note'>View on Explorer</p>
+                <button className='btn_brand' onClick={handleClose}>
+                  Close
+                </button>
+              </>
+            )
           )}
         </div>
       </div>

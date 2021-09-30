@@ -18,13 +18,16 @@ import {
   getCoolDownPeriod,
   claimWithdraw,
 } from '../../Redux/LiquidityPool/actions'
-import {getProfileInformation, getProfileInformationTest} from '../../Redux/Profile/actions'
 
 const LiquidityPool = () => {
   // Redux State
   const dispatch = useDispatch()
-  const {userAddress, availableBalance, profileLoading, cptBalance} =
-    useSelector((state) => state.profile)
+  const {userAddress} = useSelector((state) => state.profile)
+  const {
+    testUSDC: availableBalance,
+    testProfileLoading: profileLoading,
+    lpCAPLBalance: cptBalance,
+  } = useSelector((state) => state.testProfile)
   const {
     liquidityLoading,
     transactionHashID,
@@ -133,14 +136,12 @@ const LiquidityPool = () => {
     }
   }, [profileLoading, availableBalance, userAddress])
 
- 
-
   // Cool down period
   useEffect(() => {
     if (userAddress) {
       dispatch(getCoolDownPeriod())
     }
-  }, [userAddress, transactionHashID])
+  }, [userAddress])
 
   const claimFunds = () => {
     dispatch(claimWithdraw())
@@ -172,7 +173,7 @@ const LiquidityPool = () => {
                         ) : (
                           `${numberFormate(availableBalance)}`
                         )}{' '}
-                        <span className='txt__gray ms-1'>(~$19,214.261)</span>
+                        {/* <span className='txt__gray ms-1'>(~$19,214.261)</span> */}
                       </h6>
                     </div>
                   </div>
@@ -231,7 +232,7 @@ const LiquidityPool = () => {
                         ) : (
                           `${numberFormate(cptBalance)}`
                         )}
-                        <span className='txt__gray ms-1'>(~$19,214.261)</span>
+                        {/* <span className='txt__gray ms-1'>(~$19,214.261)</span> */}
                       </h6>
                     </div>
                   </div>

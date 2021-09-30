@@ -31,6 +31,8 @@ const testState = {
   caplRewards: 0,
   cretRewards: 0,
   testProfileError: false,
+  testUSDC: 0,
+  lpCAPLBalance: 0,
 }
 
 export const profileReducer = (state = initialState, action) => {
@@ -88,6 +90,8 @@ export const profileReducerTest = (state = testState, action) => {
         caplRewards: action.payload.caplRewards,
         cretRewards: action.payload.cretRewards,
         totalPlatformRewards: action.payload.totalPlatformRewards,
+        testUSDC: action.payload.testUSDC,
+        lpCAPLBalance: action.payload.lpCAPLBalance,
       }
     case TEST_PROFILE_FAIL:
       return {

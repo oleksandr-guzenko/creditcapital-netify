@@ -187,10 +187,13 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
     dispatch({
       type: TEST_PROFILE_REQ,
     })
-    const {web3, testcapl, Staking, cretStaking} = getContracts(walletType)
+    const {web3, testcapl, liquidityPoolCAPL, dummyUSDC, Staking, cretStaking} =
+      getContracts(walletType)
 
     if (userAddress) {
       // available Balance
+      const balance = await dummyUSDC.methods.balanceOf(userAddress).call()
+      const availableBalance = web3.utils.fromWei(balance.toString(), 'Mwei')
 
       // CPT and CRT
       const caplB = await testcapl.methods.balanceOf(userAddress).call()
@@ -214,6 +217,14 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
         'ether'
       )
 
+      // lp balance
+      const lpCAPL = await liquidityPoolCAPL.methods
+        ._balances(userAddress)
+        .call()
+
+      console.log(lpCAPL)
+      const lpCAPLBalance = web3.utils.fromWei(lpCAPL.toString(), 'Mwei')
+
       dispatch({
         type: TEST_PROFILE_SUCCESS,
         payload: {
@@ -223,6 +234,8 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
           cretRewards,
           totalRewards: Number(caplRewards) + Number(cretRewards),
           totalPlatformRewards: Number(totalPlatformRewards),
+          testUSDC: availableBalance,
+          lpCAPLBalance: lpCAPLBalance,
         },
       })
     }
