@@ -159,8 +159,7 @@ export const getProfileInformation = () => async (dispatch, getState) => {
       const crtB = await cret.methods.balanceOf(userAddress).call()
       const crtBalance = web3.utils.fromWei(crtB.toString(), 'ether')
 
-      const ccptB = await Staking.methods._balances(userAddress).call()
-      const CCPTBalance = web3.utils.fromWei(ccptB.toString(), 'ether')
+
 
       dispatch({
         type: PROFILE_SUCCESS,
@@ -171,7 +170,6 @@ export const getProfileInformation = () => async (dispatch, getState) => {
           crtBalance: Number(crtBalance),
           cptLPBalance,
           crtLPBalance,
-          CCPTBalance,
         },
       })
     }
