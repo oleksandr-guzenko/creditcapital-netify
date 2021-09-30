@@ -7,7 +7,13 @@ import NumberFormat from 'react-number-format'
 // images
 import USDC from '../../Assets/money/usdc.svg'
 
-const LiquidityInput = ({price, handlePriceChange, errors, typeOfToken}) => {
+const LiquidityInput = ({
+  price,
+  handlePriceChange,
+  errors,
+  typeOfToken,
+  disabled,
+}) => {
   // const [selectedValue, setSelectedValue] = useState('')
 
   // const {Option} = components
@@ -84,7 +90,7 @@ const LiquidityInput = ({price, handlePriceChange, errors, typeOfToken}) => {
           ''
         )}
         <NumberFormat
-          disabled={errors}
+          disabled={errors || disabled}
           thousandsGroupStyle='thousand'
           value={price}
           decimalSeparator='.'

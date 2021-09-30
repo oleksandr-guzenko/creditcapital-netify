@@ -26,7 +26,7 @@ import ImgFive from '../../Assets/Investor/Token_burned.svg'
 //
 import {useSelector} from 'react-redux'
 import {numberFormate} from '../../Utilities/Util'
-import {checkAndAddNetwork} from '../../Redux/Profile/actions'
+// import {checkAndAddNetwork} from '../../Redux/Profile/actions'
 
 const Banner = () => {
   const {pathname} = useLocation()
@@ -67,7 +67,7 @@ const Banner = () => {
 
   useEffect(() => {
     dispatch(totalTreasuryAmount())
-    dispatch(checkAndAddNetwork())
+    // dispatch(checkAndAddNetwork())
   }, [])
   useEffect(() => {
     if (tranHash) {

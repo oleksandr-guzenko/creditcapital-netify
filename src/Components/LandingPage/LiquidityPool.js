@@ -18,7 +18,7 @@ import {
   getCoolDownPeriod,
   claimWithdraw,
 } from '../../Redux/LiquidityPool/actions'
-import {getProfileInformation} from '../../Redux/Profile/actions'
+import {getProfileInformation, getProfileInformationTest} from '../../Redux/Profile/actions'
 
 const LiquidityPool = () => {
   // Redux State
@@ -42,7 +42,7 @@ const LiquidityPool = () => {
 
   // loaders and success states
   const [showLoader, setShowLoader] = useState(false)
-  const [showSuccessModal, setShowSuccessModal] = useState(true)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const clearInputValues = () => {
     setDepositPrice('')
@@ -136,6 +136,7 @@ const LiquidityPool = () => {
   useEffect(() => {
     if (userAddress) {
       dispatch(getProfileInformation())
+      dispatch(getProfileInformationTest())
     }
   }, [userAddress, transactionHashID])
 

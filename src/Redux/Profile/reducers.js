@@ -3,6 +3,9 @@ import {
   PROFILE_REQUEST,
   PROFILE_SUCCESS,
   PROFILE_FAIL,
+  TEST_PROFILE_FAIL,
+  TEST_PROFILE_SUCCESS,
+  TEST_PROFILE_REQ,
 } from './constants'
 
 const initialState = {
@@ -16,6 +19,16 @@ const initialState = {
   crtBalance: 0,
   cptLPBalance: 0,
   crtLPBalance: 0,
+  unStakeBalance: 0,
+  CCPTBalance: 0,
+}
+
+const testState = {
+  testProfileLoading: false,
+  CAPLBalance: '',
+  CCPTBalance: '',
+  Rewards: '',
+  testProfileError: false,
 }
 
 export const profileReducer = (state = initialState, action) => {
@@ -41,12 +54,42 @@ export const profileReducer = (state = initialState, action) => {
         crtBalance: action.payload.crtBalance,
         cptLPBalance: action.payload.cptLPBalance,
         crtLPBalance: action.payload.crtLPBalance,
+        CCPTBalance: action.payload.CCPTBalance,
       }
     case PROFILE_FAIL:
       return {
         ...state,
         profileLoading: false,
         profileError: action.payload,
+      }
+
+    default:
+      return state
+  }
+}
+
+export const profileReducerTest = (state = testState, action) => {
+  switch (action.type) {
+    case TEST_PROFILE_REQ:
+      return {
+        ...state,
+        testProfileLoading: true,
+        testProfileError: false,
+      }
+
+    case TEST_PROFILE_SUCCESS:
+      return {
+        ...state,
+        testProfileLoading: false,
+        CAPLBalance: action.payload.CAPLBalance,
+        CCPTBalance: action.payload.CCPTBalance,
+        Rewards: action.payload.Rewards,
+      }
+    case TEST_PROFILE_FAIL:
+      return {
+        ...state,
+        testProfileLoading: false,
+        testProfileError: action.payload,
       }
 
     default:

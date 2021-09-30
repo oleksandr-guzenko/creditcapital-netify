@@ -33,7 +33,7 @@ export const liquidityDepositAction =
         payload: {amount, typeOfTransaction, tokenType},
       })
 
-      const price = web3.utils.toWei(amount.toString())
+      const price = web3.utils.toWei(amount.toString(), 'Mwei')
 
       await usdc.methods
         .approve(liquidityPool._address, price)
@@ -73,7 +73,7 @@ export const liquidityWithdrawAction =
         payload: {amount, typeOfTransaction, tokenType},
       })
 
-      const price = web3.utils.toWei(amount.toString())
+      const price = web3.utils.toWei(amount.toString(), 'ether')
 
       await capl.methods
         .approve(liquidityPool._address, price)
@@ -86,7 +86,7 @@ export const liquidityWithdrawAction =
       console.log(transaction)
 
       const tokenAmount = web3.utils.fromWei(
-        transaction.events.withdrawrequested.returnValues.amount.toString()
+        transaction.events.withdrawRequested.returnValues.amount.toString()
       )
       const transactionHashID = transaction.transactionHash
 

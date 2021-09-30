@@ -28,3 +28,5 @@ export const calculatePercentage = (totalAmount, percentage) => {
   const result = Number(totalAmount) - percentageAmount
   return result
 }
+
+

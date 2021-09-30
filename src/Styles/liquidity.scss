@@ -1,6 +1,6 @@
 .liquidity,
 .loans {
-  // padding: 50px 0;
+  padding: 0 !important;
   .liquidity__header {
     @include displayCenter(center, space-between);
     margin-top: 20px;

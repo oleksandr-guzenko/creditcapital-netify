@@ -14,6 +14,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {
   disConnectWallet,
   getProfileInformation,
+  getProfileInformationTest,
 } from '../../Redux/Profile/actions'
 
 const MyPortfolio = () => {
@@ -28,10 +29,12 @@ const MyPortfolio = () => {
     crtLPBalance,
     cptLPBalance,
     totalRewardsEarned,
+    CCPTBalance,
   } = useSelector((state) => state.profile)
   useEffect(() => {
     if (userAddress) {
       dispatch(getProfileInformation())
+      dispatch(getProfileInformationTest())
     }
   }, [userAddress])
 
@@ -77,6 +80,12 @@ const MyPortfolio = () => {
               bgColor='#F6D8D8'
               amount={`$ ${numberFormate(crtLPBalance)}`}
               text='CRET LP Balance'
+              icon={card_five}
+            />
+            <PortfolioCard
+              bgColor='#F6D1D8'
+              amount={`$ ${numberFormate(CCPTBalance)}`}
+              text='CCPT Balance'
               icon={card_five}
             />{' '}
           </div>
