@@ -47,8 +47,10 @@ const StakingConfirmation = ({show, handleClose}) => {
               </h6>
 
               <h6 className='m-0'>
+                {typeOfTransaction === 'staking'
+                  ? 'You have been rewarded'
+                  : 'Received'}
                 <span className='big'>
-                  {typeOfTransaction === 'staking' ? 'Reward of ' : ''}
                   {typeOfTransaction === 'staking'
                     ? numberFormate(tokenAmount / 10)
                     : unStakeType === 0
@@ -56,7 +58,7 @@ const StakingConfirmation = ({show, handleClose}) => {
                     : numberFormate(tokenAmount)}{' '}
                   {typeOfTransaction === 'staking' ? 'CCPT' : 'CAPL'}
                 </span>
-                Received For
+                for
                 <span className='big'>
                   {numberFormate(tokenAmount)}{' '}
                   {typeOfTransaction === 'staking' ? 'CAPL' : 'CAPL'}{' '}
@@ -77,15 +79,17 @@ const StakingConfirmation = ({show, handleClose}) => {
               </button> */}
             </>
           ) : (
-            <>
-              <Image src={Close} alt='' className='loader' />
-              <h3 className='mt-3 text-danger'>Transaction Failed</h3>
-              <h6 className='mt-2'>{tokenAmount} CAPL</h6>
-              <p className='txt__gray note'>View on Explorer</p>
-              <button className='btn_brand' onClick={handleClose}>
-                Close
-              </button>
-            </>
+            stakingError && (
+              <>
+                <Image src={Close} alt='' className='loader' />
+                <h3 className='mt-3 text-danger'>Transaction Failed</h3>
+                <h6 className='mt-2'>{tokenAmount} CAPL</h6>
+                <p className='txt__gray note'>View on Explorer</p>
+                <button className='btn_brand' onClick={handleClose}>
+                  Close
+                </button>
+              </>
+            )
           )}
         </div>
       </div>

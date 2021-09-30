@@ -11,6 +11,7 @@ import Wallet from '../Assets/wallet.svg'
 
 // redux imports
 import {useSelector, useDispatch} from 'react-redux'
+import { getProfileInformation, getProfileInformationTest } from '../Redux/Profile/actions'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -29,8 +30,11 @@ const Header = () => {
   useEffect(() => {
     if (userAddress) {
       closeWalletsModal()
+      dispatch(getProfileInformation())
+      dispatch(getProfileInformationTest())
     }
   }, [userAddress])
+
   return (
     <>
       <Navbar collapseOnSelect expand='xl' fixed='top' variant='dark'>

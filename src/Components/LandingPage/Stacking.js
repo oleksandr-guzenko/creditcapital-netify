@@ -25,7 +25,7 @@ const Stacking = () => {
     testProfileLoading,
     CAPLBalance: cptBalance,
     CCPTBalance,
-    Rewards,
+    caplRewards,
   } = useSelector((state) => state.testProfile)
   const {
     transactionHASH,
@@ -72,7 +72,7 @@ const Stacking = () => {
       setShowSuccessModal(true)
       setTimeout(() => {
         if (transactionStatus === 200) {
-          dispatch(clearTransHistory())
+          handleCloseAndClearValue()
         }
       }, 15000)
     } else {
@@ -171,6 +171,13 @@ const Stacking = () => {
                   <div className='liquidity__pool__box__top'>
                     <div>
                       <h5>Stake CAPL</h5>
+                      {balanceError && (
+                        <p className='text-danger danger error_message'>
+                          Please fund your wallet with CAPL
+                        </p>
+                      )}
+                    </div>
+                    <div>
                       <h6>
                         {testProfileLoading ? (
                           <ReactLoading
@@ -183,15 +190,7 @@ const Stacking = () => {
                         ) : (
                           `${numberFormate(cptBalance)}`
                         )}{' '}
-                        <span className='txt__gray'>(~$19,214.261)</span>
                       </h6>
-                    </div>
-                    <div>
-                      {balanceError && (
-                        <p className='text-danger danger error_message'>
-                          Please fund your wallet with CAPL
-                        </p>
-                      )}
                     </div>
                   </div>
                   <form onSubmit={submitStaking}>
@@ -201,6 +200,7 @@ const Stacking = () => {
                       errors={balanceError}
                       typeOfToken='CAPL'
                     />
+
                     <div className='liquidity__pool__box__btn'>
                       <button
                         type='submit'
@@ -235,9 +235,7 @@ const Stacking = () => {
                       )}
                     </div>
                     <div>
-                      <p className='txt__gray'>
-                        CAPL Balance Avaiable to unstake
-                      </p>
+                      {/* <p className='txt__gray'>Unstake CAPL Balance</p> */}
                       <h6>
                         {testProfileLoading ? (
                           <ReactLoading
@@ -250,7 +248,6 @@ const Stacking = () => {
                         ) : (
                           `${numberFormate(CCPTBalance)}`
                         )}{' '}
-                        <span className='txt__gray'>(~$214.261)</span>
                       </h6>
                     </div>
                   </div>
@@ -262,6 +259,19 @@ const Stacking = () => {
                       typeOfToken='CAPL'
                       disabled={true}
                     />
+                    <p
+                      className='txt__gray'
+                      style={{fontSize: '11px', margin: 0}}
+                    >
+                      *Note: To unstake immediately, pay 70% penalty fees
+                    </p>
+                    <p
+                      className='txt__gray'
+                      style={{fontSize: '11px', marginBottom: 0}}
+                    >
+                      *Note: Staked amount available after cool down period of 3
+                      months
+                    </p>
                     {/* {(coolDownPeriod?.length > 0 || !isAvailableForClaim) && ( */}
                     <div className='liquidity__pool__box__btn d-flex align-content-center justify-content-between'>
                       <button
@@ -332,16 +342,18 @@ const Stacking = () => {
                         className='m-auto'
                       />
                     ) : (
-                      `${numberFormate(Rewards)}`
+                      `${numberFormate(caplRewards)}`
                     )}{' '}
                     <span>CCPT</span>
                   </h4>
-                  <p className='price txt__gray'>~$19,214.261</p>
+                  {/* <p className='price txt__gray'>~$19,214.261</p> */}
                   <p className='txt__gray'>
                     *Note: Rewards will get deposited to your Wallet
                   </p>
-                  <div className='liquidity__pool__box__btn'>
-                    <button className='btn_brand'>Collect</button>
+                  <div className='liquidity__pool__box__btn mt-4'>
+                    <button className='btn_brand btn_brand_disabled'>
+                      Collect
+                    </button>
                   </div>
                 </div>
               </Col>

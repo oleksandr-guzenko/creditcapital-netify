@@ -38,7 +38,7 @@ const StakingLoader = ({show, handleClose}) => {
                 : numberFormate(tokenAmount)}{' '}
               {typeOfTransaction === 'staking' ? 'CCPT' : 'CAPL'}{' '}
             </span>{' '}
-            {typeOfTransaction === 'staking' ? 'Reward' : ''}
+            {typeOfTransaction === 'staking' ? 'Rewards after 3 months' : ''}
           </h6>
 
           <p className='txt__gray note mt-5'>

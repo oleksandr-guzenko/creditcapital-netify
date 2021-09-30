@@ -8,11 +8,6 @@ export const walletLink = new WalletLink({
   darkMode: 'true',
 })
 
-// export const ethereum = walletLink.makeWeb3Provider(
-//   `${process.env.REACT_APP_ETH_JSONRPC_URL}`,
-//   process.env.REACT_APP_CHAIN_ID
-// )
-
 // Production
 const RPC_URL = 'https://polygon-rpc.com/'
 const CHAIN_ID = 137
@@ -27,17 +22,15 @@ export const ethereum = walletLink.makeWeb3Provider(RPC_URL, CHAIN_ID)
 const USDCAddress = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
 const CAPLAddress = '0x2dF9071BF084863B6dAa536f4Fb304DB0FbA7fe2'
 const CRETAddress = '0xf393E1ef50f19192fA03EB8a0b4142Fa6c62D0E1'
-// const StakingAddress = '0x44fb94454885683d892F86440039206eCB65A7e7'
-// const CCPTAddress = '0x1509377cB415d82E9Cd47b32FaD933075aef014B'
-// const LiquidityAddress = '0x9c959478f2A2Ad74F88ddA7DdD9D2f766ecb7F22'
+
 
 // TestNet
-const StakingAddress = '0x9b490899Bc3A9f46f394C055476411eeF6EBEfc0'
 const testCAPLAddress = '0x495338aE49F7F4e69a2C31541A41f9eAcA0f4839'
+const testCRETAddress = '0xC4e0f9781af34c49DAD23257fb58aE124bDB4b4B'
 const testCCPTAddress = '0xc4046A423b0e1DBF12E3a6bB786fFa1bDC0b1A72'
-// const USDCAddress = '0xC5a378CF7E742F66A578Ac371544119AbC6fc560'
-// const CRETAddress = '0xA8bBDC4E4D9320BcD57296927124D3c3D4d201e9'
-// const LiquidityAddress = '0xb38fC71Da49017d489643C471AC562a3A7f0add2'
+const cretStakingAddress = '0x65Ff70BbBff8737C0Ba8Ecfa83732677457cF96b'
+const StakingAddress = '0x78D4c1b27E524005E6e5ecBDE6A825242765e7b8'
+
 
 const getContracts = (walletType) => {
   let web3
@@ -49,1548 +42,13 @@ const getContracts = (walletType) => {
       web3 = new Web3(ethereum)
       break
     default:
-      web3 = new Web3(process.env.REACT_APP_ETH_JSONRPC_URL)
+      web3 = new Web3(RPC_URL)
       break
   }
 
-  // const Liquidityccpt = new web3.eth.Contract(
-  //   [
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'constructor',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'owner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'uint256',
-  //           name: 'value',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'Approval',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'previousOwner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'newOwner',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'OwnershipTransferred',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'from',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'to',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'uint256',
-  //           name: 'value',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'Transfer',
-  //       type: 'event',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'owner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'allowance',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'approve',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'account',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'balanceOf',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'decimals',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint8',
-  //           name: '',
-  //           type: 'uint8',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'subtractedValue',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'decreaseAllowance',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'addedValue',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'increaseAllowance',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '_amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'minttoken',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'name',
-  //       outputs: [
-  //         {
-  //           internalType: 'string',
-  //           name: '',
-  //           type: 'string',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'owner',
-  //       outputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: '',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'renounceOwnership',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'symbol',
-  //       outputs: [
-  //         {
-  //           internalType: 'string',
-  //           name: '',
-  //           type: 'string',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'totalSupply',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'recipient',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'transfer',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'sender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'address',
-  //           name: 'recipient',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'transferFrom',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'newOwner',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'transferOwnership',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //   ],
-  //   CCPTAddress
-  // )
 
-  // const DummyUsdc = new web3.eth.Contract(
-  //   [
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'constructor',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'owner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'uint256',
-  //           name: 'value',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'Approval',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'previousOwner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'newOwner',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'OwnershipTransferred',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'from',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'to',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'uint256',
-  //           name: 'value',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'Transfer',
-  //       type: 'event',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'owner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'allowance',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'approve',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'account',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'balanceOf',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'decimals',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint8',
-  //           name: '',
-  //           type: 'uint8',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'subtractedValue',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'decreaseAllowance',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'addedValue',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'increaseAllowance',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '_amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'minttoken',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'name',
-  //       outputs: [
-  //         {
-  //           internalType: 'string',
-  //           name: '',
-  //           type: 'string',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'owner',
-  //       outputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: '',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'renounceOwnership',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'symbol',
-  //       outputs: [
-  //         {
-  //           internalType: 'string',
-  //           name: '',
-  //           type: 'string',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'totalSupply',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'recipient',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'transfer',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'sender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'address',
-  //           name: 'recipient',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'transferFrom',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'newOwner',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'transferOwnership',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //   ],
-  //   '0xcbAC2F1c28B4cc03f4be12cD363aadB5D561Ad62'
-  // )
+    // Testttt
 
-  // const Liquiditycapl = new web3.eth.Contract(
-  //   [
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'constructor',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'owner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'uint256',
-  //           name: 'value',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'Approval',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'previousOwner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'newOwner',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'OwnershipTransferred',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'from',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'to',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'uint256',
-  //           name: 'value',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'Transfer',
-  //       type: 'event',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'owner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'allowance',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'approve',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'account',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'balanceOf',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'decimals',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint8',
-  //           name: '',
-  //           type: 'uint8',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'subtractedValue',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'decreaseAllowance',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'spender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'addedValue',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'increaseAllowance',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '_amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'minttoken',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'name',
-  //       outputs: [
-  //         {
-  //           internalType: 'string',
-  //           name: '',
-  //           type: 'string',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'owner',
-  //       outputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: '',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'renounceOwnership',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'symbol',
-  //       outputs: [
-  //         {
-  //           internalType: 'string',
-  //           name: '',
-  //           type: 'string',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'totalSupply',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'recipient',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'transfer',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'sender',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'address',
-  //           name: 'recipient',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'transferFrom',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'newOwner',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'transferOwnership',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //   ],
-  //   '0x5B90B6A513e84ee802EEC30a2aE096133fC95125'
-  // )
-
-  // const liquidityPool = new web3.eth.Contract(
-  //   [
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: '_owner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'address',
-  //           name: '_capl',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'address',
-  //           name: '_usdc',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       stateMutability: 'nonpayable',
-  //       type: 'constructor',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: false,
-  //           internalType: 'address',
-  //           name: 'oldOwner',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'address',
-  //           name: 'newOwner',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'OwnerChanged',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: false,
-  //           internalType: 'address',
-  //           name: 'newOwner',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'OwnerNominated',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: false,
-  //           internalType: 'bool',
-  //           name: 'isPaused',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       name: 'PauseChanged',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'user',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'Withdrawn',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'user',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'deposited',
-  //       type: 'event',
-  //     },
-  //     {
-  //       anonymous: false,
-  //       inputs: [
-  //         {
-  //           indexed: true,
-  //           internalType: 'address',
-  //           name: 'user',
-  //           type: 'address',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //         {
-  //           indexed: false,
-  //           internalType: 'uint256',
-  //           name: '_timestamp',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'withdrawRequested',
-  //       type: 'event',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'acceptOwnership',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'account',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'balanceOf',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'cancelWithdraw',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'capl',
-  //       outputs: [
-  //         {
-  //           internalType: 'contract IERC20',
-  //           name: '',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'claim',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'coolDownPeriod',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'deposit',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'user',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'isavailabletoclaim',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'coolDownTimer',
-  //           type: 'uint256',
-  //         },
-  //         {
-  //           internalType: 'bool',
-  //           name: 'isAvailableForClaim',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'lastPauseTime',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'minimumWithdraw',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: '_owner',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'nominateNewOwner',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'nominatedOwner',
-  //       outputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: '',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'owner',
-  //       outputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: '',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'paused',
-  //       outputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: '',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'requestedAmount',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: '',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       name: 'requestedTime',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'bool',
-  //           name: '_paused',
-  //           type: 'bool',
-  //         },
-  //       ],
-  //       name: 'setPaused',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'totalSupply',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'wallet',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'transfertoken',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'address',
-  //           name: 'wallet',
-  //           type: 'address',
-  //         },
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'transferusdc',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'percentage',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'updateCharges',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'NewPeriod',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'updateCoolDownPeriod',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'usdc',
-  //       outputs: [
-  //         {
-  //           internalType: 'contract IERC20',
-  //           name: '',
-  //           type: 'address',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: 'amount',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       name: 'withdraw',
-  //       outputs: [],
-  //       stateMutability: 'nonpayable',
-  //       type: 'function',
-  //     },
-  //     {
-  //       inputs: [],
-  //       name: 'withdrawCharges',
-  //       outputs: [
-  //         {
-  //           internalType: 'uint256',
-  //           name: '',
-  //           type: 'uint256',
-  //         },
-  //       ],
-  //       stateMutability: 'view',
-  //       type: 'function',
-  //     },
-  //   ],
-  //   LiquidityAddress
-  // )
-
-  // testContracts
   const Staking = new web3.eth.Contract(
     [
       {
@@ -1657,6 +115,25 @@ const getContracts = (walletType) => {
           },
         ],
         name: 'PauseChanged',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'user',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'RewardCollected',
         type: 'event',
       },
       {
@@ -1769,6 +246,32 @@ const getContracts = (walletType) => {
       },
       {
         inputs: [],
+        name: '_rewardDistributed',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: '_totalSupply',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
         name: 'acceptOwnership',
         outputs: [],
         stateMutability: 'nonpayable',
@@ -1830,6 +333,13 @@ const getContracts = (walletType) => {
           },
         ],
         stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'collectReward',
+        outputs: [],
+        stateMutability: 'nonpayable',
         type: 'function',
       },
       {
@@ -2812,6 +1322,929 @@ const getContracts = (walletType) => {
       },
     ],
     testCCPTAddress
+  )
+
+  const testcret = new web3.eth.Contract(
+    [
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'owner',
+            type: 'address',
+          },
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'spender',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'value',
+            type: 'uint256',
+          },
+        ],
+        name: 'Approval',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'previousOwner',
+            type: 'address',
+          },
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'OwnershipTransferred',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'from',
+            type: 'address',
+          },
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'value',
+            type: 'uint256',
+          },
+        ],
+        name: 'Transfer',
+        type: 'event',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'owner',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'spender',
+            type: 'address',
+          },
+        ],
+        name: 'allowance',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'spender',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'approve',
+        outputs: [
+          {
+            internalType: 'bool',
+            name: '',
+            type: 'bool',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        name: 'balanceOf',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'decimals',
+        outputs: [
+          {
+            internalType: 'uint8',
+            name: '',
+            type: 'uint8',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'spender',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'subtractedValue',
+            type: 'uint256',
+          },
+        ],
+        name: 'decreaseAllowance',
+        outputs: [
+          {
+            internalType: 'bool',
+            name: '',
+            type: 'bool',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'spender',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'addedValue',
+            type: 'uint256',
+          },
+        ],
+        name: 'increaseAllowance',
+        outputs: [
+          {
+            internalType: 'bool',
+            name: '',
+            type: 'bool',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '_amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'minttoken',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'name',
+        outputs: [
+          {
+            internalType: 'string',
+            name: '',
+            type: 'string',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'owner',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'renounceOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'symbol',
+        outputs: [
+          {
+            internalType: 'string',
+            name: '',
+            type: 'string',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'recipient',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'transfer',
+        outputs: [
+          {
+            internalType: 'bool',
+            name: '',
+            type: 'bool',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'sender',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'recipient',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'transferFrom',
+        outputs: [
+          {
+            internalType: 'bool',
+            name: '',
+            type: 'bool',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'transferOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
+    testCRETAddress
+  )
+
+  const cretStaking = new web3.eth.Contract(
+    [
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '_owner',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_ccpt',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_cret',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: 'address',
+            name: 'oldOwner',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'OwnerChanged',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'OwnerNominated',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: 'bool',
+            name: 'isPaused',
+            type: 'bool',
+          },
+        ],
+        name: 'PauseChanged',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'user',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'RewardCollected',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'user',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'Staked',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'user',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'Withdrawn',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'user',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'WithdrawnAfterPayingFees',
+        type: 'event',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'Stake',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        name: '_balancesccpt',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        name: '_balancescret',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: '_rewardDistributed',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: '_totalSupply',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'acceptOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        name: 'balanceOf',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'ccpt',
+        outputs: [
+          {
+            internalType: 'contract IERC20',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'collectReward',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'cret',
+        outputs: [
+          {
+            internalType: 'contract IERC20',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'cretperccpt',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'user',
+            type: 'address',
+          },
+        ],
+        name: 'isavailabletowithdraw',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: 'coolDownTimer',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAvailableForwithdraw',
+            type: 'bool',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'lastPauseTime',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'minimumHoldingPeriod',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'minimumWithdraw',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '_owner',
+            type: 'address',
+          },
+        ],
+        name: 'nominateNewOwner',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'nominatedOwner',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'owner',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'paused',
+        outputs: [
+          {
+            internalType: 'bool',
+            name: '',
+            type: 'bool',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'bool',
+            name: '_paused',
+            type: 'bool',
+          },
+        ],
+        name: 'setPaused',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        name: 'stakedTime',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'wallet',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'transferCcpt',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'wallet',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'transfercret',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'percentage',
+            type: 'uint256',
+          },
+        ],
+        name: 'updateCharges',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'NewValue',
+            type: 'uint256',
+          },
+        ],
+        name: 'updatecretperccpt',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'NewPeriod',
+            type: 'uint256',
+          },
+        ],
+        name: 'updateminimumHoldingPeriod',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'withdraw',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: 'withdrawAndPayFees',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'withdrawCharges',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+    cretStakingAddress
   )
 
   // mainnet
@@ -4120,14 +3553,16 @@ const getContracts = (walletType) => {
   )
 
   return {
+    web3,
+    depositUSDC,
     usdc,
     capl,
     cret,
-    depositUSDC,
-    web3,
     Staking,
     testcapl,
     testccpt,
+    testcret,
+    cretStaking
   }
 }
 

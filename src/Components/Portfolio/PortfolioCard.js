@@ -9,7 +9,7 @@ const PortfolioCard = ({amount, text, icon, bgColor}) => {
   const {profileLoading} = useSelector((state) => state.profile)
   return (
     <div className='portfolio__card mb-3' style={{backgroundColor: bgColor}}>
-      <div className='question__icon'>
+      {/* <div className='question__icon'>
         <OverlayTrigger
           overlay={
             <Tooltip id='tooltip-disabled' className='tool'>
@@ -22,7 +22,7 @@ const PortfolioCard = ({amount, text, icon, bgColor}) => {
         >
           <span className='d-inline-block'>{<BsQuestionCircle />}</span>
         </OverlayTrigger>
-      </div>
+      </div> */}
       {profileLoading ? (
         <ReactLoading type='bars' color='#06397e' height={30} width={30} />
       ) : (

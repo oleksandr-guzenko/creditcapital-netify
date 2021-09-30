@@ -43,6 +43,7 @@ export const stakingReducer = (state = initialState, action) => {
         ...state,
         transactionHASH: '',
         transactionStatus: null,
+        stakingError: false,
       }
     case STAKE_CAPL_REQUEST:
       return {

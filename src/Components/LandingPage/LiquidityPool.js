@@ -133,12 +133,7 @@ const LiquidityPool = () => {
     }
   }, [profileLoading, availableBalance, userAddress])
 
-  useEffect(() => {
-    if (userAddress) {
-      dispatch(getProfileInformation())
-      dispatch(getProfileInformationTest())
-    }
-  }, [userAddress, transactionHashID])
+ 
 
   // Cool down period
   useEffect(() => {

@@ -8,7 +8,7 @@ import {useLocation} from 'react-router-dom'
 import LiquidityInput from './LiquidityInput'
 import LoadingModal from '../Modals/LoadingModal'
 import SuccessMessage from '../Modals/SuccessMessage'
-import {useDispatch} from 'react-redux'
+
 import {
   clearHis,
   totalTreasuryAmount,
@@ -24,11 +24,15 @@ import ImgFour from '../../Assets/Investor/medal__inv.svg'
 import ImgFive from '../../Assets/Investor/Token_burned.svg'
 
 //
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import {numberFormate} from '../../Utilities/Util'
 // import {checkAndAddNetwork} from '../../Redux/Profile/actions'
 
 const Banner = () => {
+  // redux
+  const {testProfileLoading, totalPlatformRewards} = useSelector(
+    (state) => state.testProfile
+  )
   const {pathname} = useLocation()
   const [showSection, setShowSection] = useState(false)
 
@@ -106,19 +110,19 @@ const Banner = () => {
     {
       id: uuid(),
       title: 'Capital Pool Locked',
-      price: '$12,580,524.22',
+      price: 0,
       titleTwo: 'APY',
-      percentage: '8.7%',
+      percentage: 0,
     },
     {
       id: uuid(),
       title: 'Excess Liquidity',
-      price: '$11,530,524.22',
+      price: 0,
     },
     {
       id: uuid(),
       title: 'Loan Funds',
-      price: '$82,580,524.22',
+      price: 0,
     },
   ]
   return (
@@ -199,14 +203,14 @@ const Banner = () => {
                     <Col xl={6} lg={6} md={6} sm={6} xs={12}>
                       <div className='banner__two__box'>
                         <Image src={ImgOne} alt='' className='mb-3' />
-                        <h5>$11,530,524.22</h5>
+                        <h5>10,000,000</h5>
                         <p className='txt__gray'>Circulating Supply</p>
                       </div>
                     </Col>
                     <Col xl={6} lg={6} md={6} sm={6} xs={12}>
                       <div className='banner__two__box'>
                         <Image src={ImgTwo} alt='' className='mb-3' />
-                        <h5>$82,580,524.22</h5>
+                        <h5>10,000,000</h5>
                         <p className='txt__gray'>Token Capitalization</p>
                       </div>
                     </Col>
@@ -224,7 +228,7 @@ const Banner = () => {
                   >
                     <div className='banner__two__box box__wrapper separate__Sec'>
                       <Image src={ImgThree} alt='' className='mb-3' />
-                      <h5>$2.00</h5>
+                      <h5>$1.00</h5>
                       <p className='txt__gray'>Capital Token Price</p>
                     </div>
                   </Col>
@@ -232,7 +236,7 @@ const Banner = () => {
                     <Col xl={4} lg={4} md={4} sm={4} xs={12}>
                       <div className='banner__two__box box__wrapper separate__Sec'>
                         <Image src={ImgFive} alt='' className='mb-3' />
-                        <h5>4493.00</h5>
+                        <h5>0.00</h5>
                         <p className='txt__gray'>Credit Tokens Burned</p>
                       </div>
                     </Col>
@@ -246,7 +250,19 @@ const Banner = () => {
                   >
                     <div className='banner__two__box box__wrapper separate__Sec'>
                       <Image src={ImgFour} alt='' className='mb-3' />
-                      <h5>25493.00</h5>
+                      <h5>
+                        {testProfileLoading ? (
+                          <ReactLoading
+                            type='bars'
+                            color='#06397e'
+                            height={30}
+                            width={30}
+                            className='loader m-auto'
+                          />
+                        ) : (
+                          `${numberFormate(totalPlatformRewards)}`
+                        )}{' '}
+                      </h5>
                       <p className='txt__gray'>Total Platform Rewards</p>
                     </div>
                   </Col>
