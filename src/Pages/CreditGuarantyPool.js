@@ -1,14 +1,13 @@
 import React from 'react'
+import LiquidityPoolCRET from '../Components/CreditGuarantyPool/LiquidityPoolCRET'
+import StakingCRET from '../Components/CreditGuarantyPool/StakingCRET'
 import Banner from '../Components/LandingPage/Banner'
-import LiquidityPool from '../Components/LandingPage/LiquidityPool'
-import Stacking from '../Components/LandingPage/Stacking'
-
 const CreditGuarantyPool = () => {
   return (
     <div>
       <Banner />
-      <LiquidityPool />
-      <Stacking />
+      <LiquidityPoolCRET />
+      <StakingCRET />
     </div>
   )
 }

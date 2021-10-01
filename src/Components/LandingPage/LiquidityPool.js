@@ -47,17 +47,26 @@ const LiquidityPool = () => {
   const [showLoader, setShowLoader] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
+  useEffect(() => {
+    if (cptBalance) {
+      setWithdrawPrice(cptBalance)
+    }
+  }, [cptBalance])
+
   const clearInputValues = () => {
     setDepositPrice('')
-    setWithdrawPrice('')
   }
 
   const handleCloseAndClearValue = () => {
     setShowSuccessModal(false)
-    clearInputValues()
     dispatch(clearTransactionHistory())
   }
 
+  useEffect(() => {
+    if (transactionHashID) {
+      clearInputValues()
+    }
+  }, [transactionHashID])
   useEffect(() => {
     if (liquidityLoading) {
       setShowLoader(true)
@@ -128,7 +137,7 @@ const LiquidityPool = () => {
   }, [withdrawPrice, userAddress, profileLoading])
 
   useEffect(() => {
-    if (availableBalance === 0 && !profileLoading) {
+    if (availableBalance === 0 && !profileLoading && userAddress) {
       setBalanceError(true)
       clearInputValues()
     } else {
@@ -242,6 +251,7 @@ const LiquidityPool = () => {
                       handlePriceChange={handleWithdrawPriceChange}
                       errors={balanceError}
                       typeOfToken='CAPL'
+                      disabled={true}
                     />
                     <div className='liquidity__pool__box__bottom withdraw'>
                       <div>
@@ -286,16 +296,14 @@ const LiquidityPool = () => {
                     <div className='liquidity__pool__box__btn'>
                       <button
                         onClick={claimFunds}
-                        // disabled={
-                        //   !coolDownPeriodLoading &&
-                        //   coolDownPeriod?.length > 0
-                        // }
-                        // className={
-                        //   !coolDownPeriodLoading &&
-                        //   coolDownPeriod?.length > 0
-                        //     ? 'btn_brand btn_brand_disabled'
-                        //     : 'btn_brand'
-                        // }
+                        disabled={
+                          !coolDownPeriodLoading && coolDownPeriod?.length > 0
+                        }
+                        className={
+                          !coolDownPeriodLoading && coolDownPeriod?.length > 0
+                            ? 'btn_brand btn_brand_disabled'
+                            : 'btn_brand'
+                        }
                         className='btn_brand'
                       >
                         Claim

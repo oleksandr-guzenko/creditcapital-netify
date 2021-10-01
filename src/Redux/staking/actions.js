@@ -81,6 +81,8 @@ export const unStakingCAPL =
       } = getState()
 
       const {Staking, web3, testccpt} = getContracts(walletType)
+
+      
       const price = web3.utils.toWei(amount.toString(), 'ether')
 
       const gasPrice = await web3.eth.getGasPrice()

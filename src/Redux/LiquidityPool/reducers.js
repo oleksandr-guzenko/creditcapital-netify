@@ -88,26 +88,33 @@ export const liquidityPoolReducer = (state = initialState, action) => {
       return {
         ...state,
         transactionHashID: '',
-        liquidityLoading: false,
         liquidityError: false,
       }
     case CLAIM_WITHDRAW_REQUEST:
       return {
         ...state,
+        liquidityLoading: true,
         claimLoading: true,
         claimError: false,
+        temporaryTokenAmount: action.payload.temporaryTokenAmount,
+        tokenType: action.payload.tokenType,
+        typeOfTransaction: action.payload.typeOfTransaction,
       }
     case CLAIM_WITHDRAW_SUCCESS:
       return {
         ...state,
         claimLoading: false,
-        claimStatus: action.payload,
+        liquidityLoading: false,
+        claimStatus: action.payload.claimStatus,
         claimError: false,
+        transactionHashID: action.payload.transactionHashID,
+        caplAmount: action.payload.tokenAmount,
       }
     case CLAIM_WITHDRAW_FAIL:
       return {
         ...state,
         claimLoading: false,
+        liquidityLoading: false,
         claimError: action.payload,
       }
 

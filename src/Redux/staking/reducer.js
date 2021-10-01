@@ -124,7 +124,7 @@ export const stakingReducer = (state = initialState, action) => {
       return {
         ...state,
         claimLoading: false,
-        claimStatus: action.payload,
+        claimStatus: action.payload.claimStatus,
         claimError: false,
       }
     case CLAIM_WITHDRAW_FAIL:

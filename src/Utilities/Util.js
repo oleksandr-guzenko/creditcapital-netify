@@ -4,6 +4,7 @@
 //   const finalAdd = `${add1}....${add2}`
 //   return finalAdd
 // }
+
 export const numberFormate = (number) => {
   return Number(number)?.toLocaleString(navigator.language, {
     minimumFractionDigits: 4,
@@ -29,4 +30,24 @@ export const calculatePercentage = (totalAmount, percentage) => {
   return result
 }
 
+export const priceConversion = (type, formate, amount, web3) => {
+  if (type === 'fromWei') {
+    const price = web3.utils.fromWei(amount.toString(), formate)
+    return price
+  }
+  if (type === 'toWei') {
+    const price = web3.utils.toWei(amount.toString(), formate)
+    return price
+  }
+}
 
+export const gasPrice = async (web3, number) => {
+  const gasPrice = await web3.eth.getGasPrice()
+  if (number) {
+    const newGasPrice = web3.utils.toHex(Number(gasPrice * number)?.toFixed(0))
+    return newGasPrice
+  } else {
+    const newGasPrice = web3.utils.toHex(Number(gasPrice * 4.5)?.toFixed(0))
+    return newGasPrice
+  }
+}

@@ -8,7 +8,7 @@ import Tick from '../../../Assets/Tick.svg'
 import Close from '../../../Assets/Close.svg'
 // redux imports
 import {useSelector} from 'react-redux'
-import {numberFormate} from '../../../Utilities/Util'
+import {calculatePercentage, numberFormate} from '../../../Utilities/Util'
 
 const LiquidityConfirmation = ({show, handleClose}) => {
   // Redux State
@@ -43,7 +43,13 @@ const LiquidityConfirmation = ({show, handleClose}) => {
               <h3>Transaction success</h3>
               <h6 className='mb-3'>
                 You have been successfully{' '}
-                {typeOfTransaction === 'deposit' ? 'deposited' : 'withdrawn'}{' '}
+                {typeOfTransaction === 'deposit'
+                  ? 'deposited'
+                  : typeOfTransaction === 'withdraw'
+                  ? 'withdrawn'
+                  : typeOfTransaction === 'claim'
+                  ? 'Claimed'
+                  : null}{' '}
                 tokens
               </h6>
               {tokenType === 'USDC' ? (
@@ -56,7 +62,9 @@ const LiquidityConfirmation = ({show, handleClose}) => {
                 </h6>
               ) : tokenType === 'CAPL' ? (
                 <h6 className='m-0'>
-                  <span className='big'>{numberFormate(caplAmount)} USDC</span>
+                  <span className='big'>
+                    {numberFormate(calculatePercentage(caplAmount, 2))} USDC
+                  </span>
                   Received For
                   <span className='big'>
                     {numberFormate(temporaryTokenAmount)} CAPL{' '}

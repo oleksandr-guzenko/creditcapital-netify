@@ -16,7 +16,7 @@ import {
 } from './constants'
 
 import getContracts from '../Blockchain/contracts'
-import {formateDate} from '../../Utilities/Util'
+import {formateDate, gasPrice, priceConversion} from '../../Utilities/Util'
 import {getProfileInformationTest} from '../Profile/actions'
 
 // actions
@@ -33,10 +33,8 @@ export const liquidityDepositAction =
         type: LIQUIDITY_DEPOSIT_REQUEST,
         payload: {amount, typeOfTransaction, tokenType},
       })
-      const price = web3.utils.toWei(amount.toString(), 'Mwei')
-
-      const gasPrice = await web3.eth.getGasPrice()
-      const newGasPrice = web3.utils.toHex(Number(gasPrice * 3.5)?.toFixed(0))
+      const price = priceConversion('toWei', 'Mwei', amount, web3)
+      const newGasPrice = await gasPrice(web3)
 
       await dummyUSDC.methods
         .approve(liquidityPoolCAPL._address, price)
@@ -45,11 +43,9 @@ export const liquidityDepositAction =
       const transaction = await liquidityPoolCAPL.methods
         .deposit(price)
         .send({from: userAddress, gasPrice: newGasPrice})
-      console.log(transaction)
 
-      const tokenAmount = web3.utils.fromWei(
-        transaction.events.deposited.returnValues.amount.toString()
-      )
+      const capl_amount = transaction?.events?.deposited?.returnValues?.amount
+      const tokenAmount = priceConversion('fromWei', 'Mwei', capl_amount, web3)
       const transactionHashID = transaction.transactionHash
 
       dispatch({
@@ -78,11 +74,8 @@ export const liquidityWithdrawAction =
         payload: {amount, typeOfTransaction, tokenType},
       })
 
-      const price = web3.utils.toWei(amount.toString(), 'Mwei')
-      console.log(price)
-
-      const gasPrice = await web3.eth.getGasPrice()
-      const newGasPrice = web3.utils.toHex(Number(gasPrice * 3.5)?.toFixed(0))
+      const price = priceConversion('toWei', 'Mwei', amount, web3)
+      const newGasPrice = await gasPrice(web3)
 
       await testcapl.methods
         .approve(liquidityPoolCAPL._address, price)
@@ -92,12 +85,9 @@ export const liquidityWithdrawAction =
         .withdraw(price)
         .send({from: userAddress, gasPrice: newGasPrice})
 
-      const tokenAmount = web3.utils.fromWei(
-        transaction?.events?.withdrawRequested?.returnValues?.amount.toString(),
-        'Mwei'
-      )
-
-      console.log(transaction, tokenAmount)
+      const capl_amount =
+        transaction?.events?.withdrawRequested?.returnValues?.amount
+      const tokenAmount = priceConversion('fromWei', 'Mwei', capl_amount, web3)
       const transactionHashID = transaction.transactionHash
 
       dispatch({
@@ -157,22 +147,37 @@ export const claimWithdraw = () => async (dispatch, getState) => {
   try {
     const {
       profile: {walletType, userAddress},
+      testProfile: {lpCAPLBalance},
     } = getState()
 
-    const {liquidityPoolCAPL} = getContracts(walletType)
+    const {liquidityPoolCAPL, testcapl, web3} = getContracts(walletType)
 
     dispatch({
       type: CLAIM_WITHDRAW_REQUEST,
+      payload: {
+        temporaryTokenAmount: lpCAPLBalance,
+        tokenType: 'CAPL',
+        typeOfTransaction: 'claim',
+      },
     })
+    const price = priceConversion('toWei', 'ether', lpCAPLBalance, web3)
+    const newGasPrice = await gasPrice(web3, 2)
 
-    const res = await liquidityPoolCAPL.methods.claim().call()
+    await testcapl.methods
+      .approve(liquidityPoolCAPL._address, price)
+      .send({from: userAddress, gasPrice: newGasPrice})
 
-    console.log('wor')
-    console.log(res)
+    const res = await liquidityPoolCAPL.methods
+      .claim()
+      .send({from: userAddress, gasPrice: newGasPrice})
+
+    const transactionHashID = res.transactionHash
 
     dispatch({
       type: CLAIM_WITHDRAW_SUCCESS,
+      payload: {transactionHashID, tokenAmount: lpCAPLBalance},
     })
+    dispatch(getProfileInformationTest())
   } catch (error) {
     dispatch({
       type: CLAIM_WITHDRAW_FAIL,
