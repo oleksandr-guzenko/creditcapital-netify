@@ -187,8 +187,16 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
     dispatch({
       type: TEST_PROFILE_REQ,
     })
-    const {web3, testcapl, liquidityPoolCAPL, dummyUSDC, Staking, cretStaking} =
-      getContracts(walletType)
+    const {
+      web3,
+      testcapl,
+      testcret,
+      liquidityPoolCAPL,
+      liquidityPoolCRET,
+      dummyUSDC,
+      Staking,
+      cretStaking,
+    } = getContracts(walletType)
 
     if (userAddress) {
       // available Balance
@@ -199,8 +207,19 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
       const caplB = await testcapl.methods.balanceOf(userAddress).call()
       const CAPLBalance = web3.utils.fromWei(caplB.toString(), 'ether')
 
+      const cretB = await testcret.methods.balanceOf(userAddress).call()
+      const CRETBalance = web3.utils.fromWei(cretB.toString(), 'ether')
+
       const ccptB = await Staking.methods._balancescapl(userAddress).call()
-      const CCPTBalance = web3.utils.fromWei(ccptB.toString(), 'ether')
+      const CAPL_CCPTBalance = web3.utils.fromWei(ccptB.toString(), 'ether')
+
+      const ccptStakingCRET = await cretStaking.methods
+        ._balancescret(userAddress)
+        .call()
+      const CRET_CCPTBalance = web3.utils.fromWei(
+        ccptStakingCRET.toString(),
+        'ether'
+      )
 
       const rew = await Staking.methods._balancesccpt(userAddress).call()
       const caplRewards = web3.utils.fromWei(rew.toString(), 'ether')
@@ -221,21 +240,27 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
       const lpCAPL = await liquidityPoolCAPL.methods
         ._balances(userAddress)
         .call()
+      const lpCRET = await liquidityPoolCRET.methods
+        ._balances(userAddress)
+        .call()
 
-      console.log(lpCAPL)
       const lpCAPLBalance = web3.utils.fromWei(lpCAPL.toString(), 'Mwei')
+      const lpCRETBalance = web3.utils.fromWei(lpCRET.toString(), 'Mwei')
 
       dispatch({
         type: TEST_PROFILE_SUCCESS,
         payload: {
           CAPLBalance,
-          CCPTBalance,
+          CRETBalance,
+          CAPL_CCPTBalance,
+          CRET_CCPTBalance,
           caplRewards,
           cretRewards,
           totalRewards: Number(caplRewards) + Number(cretRewards),
           totalPlatformRewards: Number(totalPlatformRewards),
           testUSDC: availableBalance,
-          lpCAPLBalance: lpCAPLBalance,
+          lpCAPLBalance,
+          lpCRETBalance,
         },
       })
     }

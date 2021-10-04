@@ -24,7 +24,7 @@ const Stacking = () => {
   const {
     testProfileLoading,
     CAPLBalance: cptBalance,
-    CCPTBalance,
+    CAPL_CCPTBalance,
     caplRewards,
   } = useSelector((state) => state.testProfile)
   const {
@@ -45,10 +45,10 @@ const Stacking = () => {
   const [enableClaim, setEnableClaim] = useState(false)
 
   useEffect(() => {
-    if (CCPTBalance) {
-      setUnStakePrice(CCPTBalance)
+    if (CAPL_CCPTBalance) {
+      setUnStakePrice(CAPL_CCPTBalance)
     }
-  }, [CCPTBalance])
+  }, [CAPL_CCPTBalance])
 
   // loaders and success states
   const [showLoader, setShowLoader] = useState(false)
@@ -94,7 +94,7 @@ const Stacking = () => {
   }
   const submitStaking = (e) => {
     e.preventDefault()
-    dispatch(stakingCAPL(stakePrice, 'staking'))
+    dispatch(stakingCAPL(stakePrice, 'staking', 'CAPL_TYPE'))
   }
 
   // staking
@@ -103,7 +103,7 @@ const Stacking = () => {
   }
   const submitUnStaking = (e) => {
     e.preventDefault()
-    dispatch(unStakingCAPL(unStakePrice, 'unstaking', unStakeType))
+    dispatch(unStakingCAPL(unStakePrice, 'unstaking', unStakeType, 'CAPL_TYPE'))
   }
 
   //  Error handling
@@ -246,7 +246,7 @@ const Stacking = () => {
                             className='loader'
                           />
                         ) : (
-                          `${numberFormate(CCPTBalance)}`
+                          `${numberFormate(CAPL_CCPTBalance)}`
                         )}{' '}
                       </h6>
                     </div>

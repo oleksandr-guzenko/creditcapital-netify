@@ -11,9 +11,8 @@ import {calculatePercentage, numberFormate} from '../../../Utilities/Util'
 
 const LiquidityLoader = ({show, handleClose}) => {
   // Redux State
-  const {temporaryTokenAmount, tokenType, typeOfTransaction} = useSelector(
-    (state) => state.liquidity
-  )
+  const {temporaryTokenAmount, tokenType, typeOfTransaction, typeOfLiquidity} =
+    useSelector((state) => state.liquidity)
   return (
     <Modal
       className='buy__token__modal successModal'
@@ -34,7 +33,12 @@ const LiquidityLoader = ({show, handleClose}) => {
               </span>{' '}
               <Image src={usdcImage} alt='' className='me-1' />& Receive
               <span className='big'>
-                {numberFormate(temporaryTokenAmount)} CAPL
+                {numberFormate(temporaryTokenAmount)}{' '}
+                {typeOfLiquidity === 'CAPL_TYPE'
+                  ? 'CAPL'
+                  : typeOfLiquidity === 'CRET_TYPE'
+                  ? 'CRET'
+                  : null}
               </span>
             </h6>
           ) : tokenType === 'CAPL' ? (

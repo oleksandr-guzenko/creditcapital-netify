@@ -95,7 +95,9 @@ const LiquidityPool = () => {
   }
   const submitDepositLiquidityPool = (e) => {
     e.preventDefault()
-    dispatch(liquidityDepositAction(depositPrice, 'deposit', 'USDC'))
+    dispatch(
+      liquidityDepositAction(depositPrice, 'deposit', 'USDC', 'CAPL_TYPE')
+    )
   }
   // Withdraw
 
@@ -103,7 +105,9 @@ const LiquidityPool = () => {
     setWithdrawPrice(number.value)
   }
   const submitWithdrawLiquidityPool = (e) => {
-    dispatch(liquidityWithdrawAction(withdrawPrice, 'withdraw', 'CAPL'))
+    dispatch(
+      liquidityWithdrawAction(withdrawPrice, 'withdraw', 'CAPL', 'CAPL_TYPE')
+    )
     e.preventDefault()
   }
 
@@ -148,12 +152,12 @@ const LiquidityPool = () => {
   // Cool down period
   useEffect(() => {
     if (userAddress) {
-      dispatch(getCoolDownPeriod())
+      dispatch(getCoolDownPeriod('CAPL_TYPE'))
     }
   }, [userAddress])
 
   const claimFunds = () => {
-    dispatch(claimWithdraw())
+    dispatch(claimWithdraw('CAPL_TYPE'))
   }
 
   return (
@@ -161,7 +165,7 @@ const LiquidityPool = () => {
       <div className='liquidity__pool'>
         <Container>
           <div className='liquidity__pool__wrapper'>
-            <h4 className='section__titles'>Liquidity Pool</h4>
+            <h4 className='section__titles'>Liquidity Pool CAPL</h4>
             <p>Earn yield on your adding liquidity, and get extra rewards</p>
             <Row>
               <Col xs={12} sm={12} md={12} lg={6} xl={6} className='mb-3'>
@@ -264,7 +268,7 @@ const LiquidityPool = () => {
                           )}
                         {balanceError && (
                           <p className='text-danger danger text-start'>
-                            Please fund your wallet with USDC
+                            Please fund your wallet with CAPL
                           </p>
                         )}
                       </div>
@@ -276,35 +280,33 @@ const LiquidityPool = () => {
                       </div>
                     </div>
 
-                    {(coolDownPeriod?.length > 0 || !isAvailableForClaim) && (
-                      <div className='liquidity__pool__box__btn'>
-                        <button
-                          disabled={withdrawErrors}
-                          className={
-                            withdrawErrors
-                              ? 'btn_brand btn_brand_disabled'
-                              : 'btn_brand'
-                          }
-                        >
-                          Withdraw
-                        </button>
-                      </div>
-                    )}
+                    {(coolDownPeriod?.length > 0 || !isAvailableForClaim) &&
+                      !enableClaim && (
+                        <div className='liquidity__pool__box__btn'>
+                          <button
+                            disabled={withdrawErrors}
+                            className={
+                              withdrawErrors
+                                ? 'btn_brand btn_brand_disabled'
+                                : 'btn_brand'
+                            }
+                          >
+                            Withdraw
+                          </button>
+                        </div>
+                      )}
                   </form>
                   {((isAvailableForClaim && coolDownPeriod?.length <= 0) ||
                     enableClaim) && (
                     <div className='liquidity__pool__box__btn'>
                       <button
                         onClick={claimFunds}
-                        disabled={
-                          !coolDownPeriodLoading && coolDownPeriod?.length > 0
-                        }
+                        disabled={withdrawErrors}
                         className={
-                          !coolDownPeriodLoading && coolDownPeriod?.length > 0
+                          withdrawErrors
                             ? 'btn_brand btn_brand_disabled'
                             : 'btn_brand'
                         }
-                        className='btn_brand'
                       >
                         Claim
                       </button>

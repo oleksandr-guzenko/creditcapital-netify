@@ -1,0 +1,9 @@
+export const STAKE_REQUEST = 'STAKE_REQUEST'
+export const STAKE_SUCCESS = 'STAKE_SUCCESS'
+export const STAKE_FAIL = 'STAKE_FAIL'
+
+export const UN_STAKE_REQUEST = 'UN_STAKE_REQUEST'
+export const UN_STAKE_SUCCESS = 'UN_STAKE_SUCCESS'
+export const UN_STAKE_FAIL = 'UN_STAKE_FAIL'
+
+export const CLEAR_HISTORY = 'CLEAR_HISTORY'

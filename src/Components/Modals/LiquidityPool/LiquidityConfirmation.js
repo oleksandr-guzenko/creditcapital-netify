@@ -6,6 +6,8 @@ import useClipboard from 'react-use-clipboard'
 // image
 import Tick from '../../../Assets/Tick.svg'
 import Close from '../../../Assets/Close.svg'
+import usdcImage from '../../../Assets/money/usdc.svg'
+
 // redux imports
 import {useSelector} from 'react-redux'
 import {calculatePercentage, numberFormate} from '../../../Utilities/Util'
@@ -19,6 +21,7 @@ const LiquidityConfirmation = ({show, handleClose}) => {
     transactionHashID,
     liquidityError,
     typeOfTransaction,
+    typeOfLiquidity,
   } = useSelector((state) => state.liquidity)
   // clipboard
   const [isCopied, setCopied] = useClipboard(transactionHashID, {
@@ -54,7 +57,14 @@ const LiquidityConfirmation = ({show, handleClose}) => {
               </h6>
               {tokenType === 'USDC' ? (
                 <h6 className='m-0'>
-                  <span className='big'>{numberFormate(caplAmount)} CAPL</span>
+                  <span className='big'>
+                    {numberFormate(caplAmount)}{' '}
+                    {typeOfLiquidity === 'CAPL_TYPE'
+                      ? 'CAPL'
+                      : typeOfLiquidity === 'CRET_TYPE'
+                      ? 'CRET'
+                      : null}
+                  </span>
                   Received For
                   <span className='big'>
                     {numberFormate(temporaryTokenAmount)} USDC{' '}
@@ -65,6 +75,7 @@ const LiquidityConfirmation = ({show, handleClose}) => {
                   <span className='big'>
                     {numberFormate(calculatePercentage(caplAmount, 2))} USDC
                   </span>
+                  <Image src={usdcImage} alt='' className='me-1' />
                   Received For
                   <span className='big'>
                     {numberFormate(temporaryTokenAmount)} CAPL{' '}
@@ -72,7 +83,10 @@ const LiquidityConfirmation = ({show, handleClose}) => {
                 </h6>
               ) : tokenType === 'CRET' ? (
                 <h6 className='m-0'>
-                  <span className='big'>{numberFormate(caplAmount)} USDC</span>
+                  <span className='big'>
+                    {numberFormate(calculatePercentage(caplAmount, 2))} USDC
+                  </span>
+                  <Image src={usdcImage} alt='' className='me-1' />
                   Received For
                   <span className='big'>
                     {numberFormate(temporaryTokenAmount)} CRET{' '}

@@ -11,9 +11,8 @@ import {calculatePercentage, numberFormate} from '../../../Utilities/Util'
 
 const StakingLoader = ({show, handleClose}) => {
   // Redux State
-  const {tokenAmount, typeOfTransaction, unStakeType} = useSelector(
-    (state) => state.staking
-  )
+  const {tokenAmount, typeOfTransaction, unStakeType, stakingType} =
+    useSelector((state) => state.staking)
   return (
     <Modal
       className='buy__token__modal successModal'
@@ -28,15 +27,28 @@ const StakingLoader = ({show, handleClose}) => {
           <h3 className='mb-3'>Waiting for confirmation</h3>
           <h6 className='txt__black'>
             {typeOfTransaction === 'staking' ? 'Staking' : 'UnStaking'}
-            <span className='big'>{numberFormate(tokenAmount)} CAPL</span> &
-            Receive
+            <span className='big'>
+              {numberFormate(tokenAmount)}{' '}
+              {stakingType === 'CAPL_TYPE'
+                ? 'CAPL'
+                : stakingType === 'CRET_TYPE'
+                ? 'CRET'
+                : null}
+            </span>{' '}
+            & Receive
             <span className='big'>
               {typeOfTransaction === 'staking'
                 ? numberFormate(tokenAmount / 10)
                 : unStakeType === 0
                 ? numberFormate(calculatePercentage(tokenAmount, 70))
                 : numberFormate(tokenAmount)}{' '}
-              {typeOfTransaction === 'staking' ? 'CCPT' : 'CAPL'}{' '}
+              {typeOfTransaction === 'staking'
+                ? 'CCPT'
+                : stakingType === 'CAPL_TYPE'
+                ? 'CAPL'
+                : stakingType === 'CRET_TYPE'
+                ? 'CRET'
+                : null}{' '}
             </span>{' '}
             {typeOfTransaction === 'staking' ? 'Rewards after 3 months' : ''}
           </h6>

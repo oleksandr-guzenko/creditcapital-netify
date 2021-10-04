@@ -2,10 +2,10 @@ import {
   LIQUIDITY_DEPOSIT_REQUEST,
   LIQUIDITY_DEPOSIT_SUCCESS,
   LIQUIDITY_DEPOSIT_FAIL,
-  CLEAR_TRANSACTION_HISTORY,
   LIQUIDITY_WITHDRAW_REQUEST,
   LIQUIDITY_WITHDRAW_SUCCESS,
   LIQUIDITY_WITHDRAW_FAIL,
+  CLEAR_TRANSACTION_HISTORY,
   CLAIM_WITHDRAW_REQUEST,
   CLAIM_WITHDRAW_SUCCESS,
   CLAIM_WITHDRAW_FAIL,
@@ -20,6 +20,7 @@ const initialState = {
   liquidityError: false,
   transactionHashID: '',
   tokenType: '',
+  typeOfLiquidity: '',
   caplAmount: '',
   temporaryTokenAmount: '',
   typeOfTransaction: '',
@@ -43,6 +44,7 @@ export const liquidityPoolReducer = (state = initialState, action) => {
         temporaryTokenAmount: action.payload.amount,
         typeOfTransaction: action.payload.typeOfTransaction,
         tokenType: action.payload.tokenType,
+        typeOfLiquidity: action.payload.typeOfLiquidity,
       }
     case LIQUIDITY_DEPOSIT_SUCCESS:
     case LIQUIDITY_WITHDRAW_SUCCESS:

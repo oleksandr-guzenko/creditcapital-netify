@@ -21,37 +21,74 @@ import {getProfileInformationTest} from '../Profile/actions'
 
 // actions
 export const liquidityDepositAction =
-  (amount, typeOfTransaction, tokenType) => async (dispatch, getState) => {
+  (amount, typeOfTransaction, tokenType, liquidityType) =>
+  async (dispatch, getState) => {
     try {
       const {
         profile: {walletType, userAddress},
       } = getState()
 
-      const {dummyUSDC, liquidityPoolCAPL, web3} = getContracts(walletType)
+      const {dummyUSDC, liquidityPoolCAPL, liquidityPoolCRET, web3} =
+        getContracts(walletType)
 
       dispatch({
         type: LIQUIDITY_DEPOSIT_REQUEST,
-        payload: {amount, typeOfTransaction, tokenType},
+        payload: {
+          amount,
+          typeOfTransaction,
+          tokenType,
+          typeOfLiquidity: liquidityType,
+        },
       })
       const price = priceConversion('toWei', 'Mwei', amount, web3)
       const newGasPrice = await gasPrice(web3)
 
-      await dummyUSDC.methods
-        .approve(liquidityPoolCAPL._address, price)
-        .send({from: userAddress, gasPrice: newGasPrice})
+      if (liquidityType === 'CAPL_TYPE') {
+        await dummyUSDC.methods
+          .approve(liquidityPoolCAPL._address, price)
+          .send({from: userAddress, gasPrice: newGasPrice})
 
-      const transaction = await liquidityPoolCAPL.methods
-        .deposit(price)
-        .send({from: userAddress, gasPrice: newGasPrice})
+        const transaction = await liquidityPoolCAPL.methods
+          .deposit(price)
+          .send({from: userAddress, gasPrice: newGasPrice})
 
-      const capl_amount = transaction?.events?.deposited?.returnValues?.amount
-      const tokenAmount = priceConversion('fromWei', 'Mwei', capl_amount, web3)
-      const transactionHashID = transaction.transactionHash
+        const capl_amount = transaction?.events?.deposited?.returnValues?.amount
+        const tokenAmount = priceConversion(
+          'fromWei',
+          'Mwei',
+          capl_amount,
+          web3
+        )
+        const transactionHashID = transaction.transactionHash
 
-      dispatch({
-        type: LIQUIDITY_DEPOSIT_SUCCESS,
-        payload: {transactionHashID, tokenAmount},
-      })
+        dispatch({
+          type: LIQUIDITY_DEPOSIT_SUCCESS,
+          payload: {transactionHashID, tokenAmount},
+        })
+      }
+      if (liquidityType === 'CRET_TYPE') {
+        await dummyUSDC.methods
+          .approve(liquidityPoolCRET._address, price)
+          .send({from: userAddress, gasPrice: newGasPrice})
+
+        const transaction = await liquidityPoolCRET.methods
+          .deposit(price)
+          .send({from: userAddress, gasPrice: newGasPrice})
+
+        const capl_amount = transaction?.events?.deposited?.returnValues?.amount
+        const tokenAmount = priceConversion(
+          'fromWei',
+          'Mwei',
+          capl_amount,
+          web3
+        )
+        const transactionHashID = transaction.transactionHash
+
+        dispatch({
+          type: LIQUIDITY_DEPOSIT_SUCCESS,
+          payload: {transactionHashID, tokenAmount},
+        })
+      }
       dispatch(getProfileInformationTest())
     } catch (error) {
       dispatch({
@@ -61,13 +98,15 @@ export const liquidityDepositAction =
     }
   }
 export const liquidityWithdrawAction =
-  (amount, typeOfTransaction, tokenType) => async (dispatch, getState) => {
+  (amount, typeOfTransaction, tokenType, liquidityType) =>
+  async (dispatch, getState) => {
     try {
       const {
         profile: {walletType, userAddress},
       } = getState()
 
-      const {testcapl, liquidityPoolCAPL, web3} = getContracts(walletType)
+      const {testcapl, testcret, liquidityPoolCAPL, web3, liquidityPoolCRET} =
+        getContracts(walletType)
 
       dispatch({
         type: LIQUIDITY_WITHDRAW_REQUEST,
@@ -77,25 +116,59 @@ export const liquidityWithdrawAction =
       const price = priceConversion('toWei', 'Mwei', amount, web3)
       const newGasPrice = await gasPrice(web3)
 
-      await testcapl.methods
-        .approve(liquidityPoolCAPL._address, price)
-        .send({from: userAddress, gasPrice: newGasPrice})
+      if (liquidityType === 'CAPL_TYPE') {
+        await testcapl.methods
+          .approve(liquidityPoolCAPL._address, price)
+          .send({from: userAddress, gasPrice: newGasPrice})
 
-      const transaction = await liquidityPoolCAPL.methods
-        .withdraw(price)
-        .send({from: userAddress, gasPrice: newGasPrice})
+        const transaction = await liquidityPoolCAPL.methods
+          .withdraw(price)
+          .send({from: userAddress, gasPrice: newGasPrice})
 
-      const capl_amount =
-        transaction?.events?.withdrawRequested?.returnValues?.amount
-      const tokenAmount = priceConversion('fromWei', 'Mwei', capl_amount, web3)
-      const transactionHashID = transaction.transactionHash
+        const capl_amount =
+          transaction?.events?.withdrawRequested?.returnValues?.amount
+        const tokenAmount = priceConversion(
+          'fromWei',
+          'Mwei',
+          capl_amount,
+          web3
+        )
+        const transactionHashID = transaction.transactionHash
 
-      dispatch({
-        type: LIQUIDITY_WITHDRAW_SUCCESS,
-        payload: {transactionHashID, tokenAmount},
-      })
-      dispatch(getProfileInformationTest())
-      dispatch(getCoolDownPeriod())
+        dispatch({
+          type: LIQUIDITY_WITHDRAW_SUCCESS,
+          payload: {transactionHashID, tokenAmount},
+        })
+        dispatch(getProfileInformationTest())
+        dispatch(getCoolDownPeriod(liquidityType))
+      }
+
+      if (liquidityType === 'CRET_TYPE') {
+        await testcret.methods
+          .approve(liquidityPoolCRET._address, price)
+          .send({from: userAddress, gasPrice: newGasPrice})
+
+        const transaction = await liquidityPoolCRET.methods
+          .withdraw(price)
+          .send({from: userAddress, gasPrice: newGasPrice})
+
+        const capl_amount =
+          transaction?.events?.withdrawRequested?.returnValues?.amount
+        const tokenAmount = priceConversion(
+          'fromWei',
+          'Mwei',
+          capl_amount,
+          web3
+        )
+        const transactionHashID = transaction.transactionHash
+
+        dispatch({
+          type: LIQUIDITY_WITHDRAW_SUCCESS,
+          payload: {transactionHashID, tokenAmount},
+        })
+        dispatch(getProfileInformationTest())
+        dispatch(getCoolDownPeriod(liquidityType))
+      }
     } catch (error) {
       dispatch({
         type: LIQUIDITY_WITHDRAW_FAIL,
@@ -104,80 +177,135 @@ export const liquidityWithdrawAction =
     }
   }
 
-export const getCoolDownPeriod = () => async (dispatch, getState) => {
-  try {
-    const {
-      profile: {walletType, userAddress},
-    } = getState()
-    const {liquidityPoolCAPL} = getContracts(walletType)
-    dispatch({
-      type: COOL_DOWN_PERIOD_REQUEST,
-    })
-
-    const response = await liquidityPoolCAPL.methods
-      .isavailabletoclaim(userAddress)
-      .call()
-
-    const timeInSec = Number(response?.coolDownTimer) * 1000
-    const currentTimeInSec = new Date().getTime()
-    const difference = timeInSec - currentTimeInSec
-
-    if (difference > 0) {
-      const coolDownTime = formateDate(Number(response?.coolDownTimer))
+export const getCoolDownPeriod =
+  (liquidityType) => async (dispatch, getState) => {
+    try {
+      const {
+        profile: {walletType, userAddress},
+      } = getState()
+      const {liquidityPoolCAPL, liquidityPoolCRET} = getContracts(walletType)
       dispatch({
-        type: COOL_DOWN_PERIOD_SUCCESS,
-        payload: coolDownTime,
+        type: COOL_DOWN_PERIOD_REQUEST,
+      })
+
+      if (liquidityType === 'CAPL_TYPE') {
+        const response = await liquidityPoolCAPL.methods
+          .isavailabletoclaim(userAddress)
+          .call()
+
+        const timeInSec = Number(response?.coolDownTimer) * 1000
+        const currentTimeInSec = new Date().getTime()
+        const difference = timeInSec - currentTimeInSec
+
+        if (difference > 0) {
+          const coolDownTime = formateDate(Number(response?.coolDownTimer))
+          dispatch({
+            type: COOL_DOWN_PERIOD_SUCCESS,
+            payload: coolDownTime,
+          })
+        }
+        if (response?.isAvailableForClaim) {
+          dispatch({
+            type: COOL_DOWN_PERIOD_STATUS,
+            payload: response?.isAvailableForClaim,
+          })
+        }
+      }
+      if (liquidityType === 'CRET_TYPE') {
+        const response = await liquidityPoolCRET.methods
+          .isavailabletoclaim(userAddress)
+          .call()
+
+        const timeInSec = Number(response?.coolDownTimer) * 1000
+        const currentTimeInSec = new Date().getTime()
+        const difference = timeInSec - currentTimeInSec
+
+        if (difference > 0) {
+          const coolDownTime = formateDate(Number(response?.coolDownTimer))
+          dispatch({
+            type: COOL_DOWN_PERIOD_SUCCESS,
+            payload: coolDownTime,
+          })
+        }
+        if (response?.isAvailableForClaim) {
+          dispatch({
+            type: COOL_DOWN_PERIOD_STATUS,
+            payload: response?.isAvailableForClaim,
+          })
+        }
+      }
+    } catch (error) {
+      dispatch({
+        type: COOL_DOWN_PERIOD_FAIL,
+        payload: error?.message,
       })
     }
-    if (response?.isAvailableForClaim) {
-      dispatch({
-        type: COOL_DOWN_PERIOD_STATUS,
-        payload: response?.isAvailableForClaim,
-      })
-    }
-  } catch (error) {
-    dispatch({
-      type: COOL_DOWN_PERIOD_FAIL,
-      payload: error?.message,
-    })
   }
-}
 
-export const claimWithdraw = () => async (dispatch, getState) => {
+export const claimWithdraw = (liquidityType) => async (dispatch, getState) => {
   try {
     const {
       profile: {walletType, userAddress},
-      testProfile: {lpCAPLBalance},
+      testProfile: {lpCAPLBalance, lpCRETBalance},
     } = getState()
 
-    const {liquidityPoolCAPL, testcapl, web3} = getContracts(walletType)
+    const {liquidityPoolCAPL, testcapl, testcret, web3, liquidityPoolCRET} =
+      getContracts(walletType)
 
-    dispatch({
-      type: CLAIM_WITHDRAW_REQUEST,
-      payload: {
-        temporaryTokenAmount: lpCAPLBalance,
-        tokenType: 'CAPL',
-        typeOfTransaction: 'claim',
-      },
-    })
-    const price = priceConversion('toWei', 'ether', lpCAPLBalance, web3)
-    const newGasPrice = await gasPrice(web3, 2)
+    if (liquidityType === 'CAPL_TYPE') {
+      dispatch({
+        type: CLAIM_WITHDRAW_REQUEST,
+        payload: {
+          temporaryTokenAmount: lpCAPLBalance,
+          tokenType: 'CAPL',
+          typeOfTransaction: 'claim',
+        },
+      })
+      const price = priceConversion('toWei', 'ether', lpCAPLBalance, web3)
+      const newGasPrice = await gasPrice(web3, 2)
+      await testcapl.methods
+        .approve(liquidityPoolCAPL._address, price)
+        .send({from: userAddress, gasPrice: newGasPrice})
 
-    await testcapl.methods
-      .approve(liquidityPoolCAPL._address, price)
-      .send({from: userAddress, gasPrice: newGasPrice})
+      const res = await liquidityPoolCAPL.methods
+        .claim()
+        .send({from: userAddress, gasPrice: newGasPrice})
 
-    const res = await liquidityPoolCAPL.methods
-      .claim()
-      .send({from: userAddress, gasPrice: newGasPrice})
+      const transactionHashID = res.transactionHash
 
-    const transactionHashID = res.transactionHash
+      dispatch({
+        type: CLAIM_WITHDRAW_SUCCESS,
+        payload: {transactionHashID, tokenAmount: lpCAPLBalance},
+      })
+      dispatch(getProfileInformationTest())
+    }
+    if (liquidityType === 'CRET_TYPE') {
+      dispatch({
+        type: CLAIM_WITHDRAW_REQUEST,
+        payload: {
+          temporaryTokenAmount: lpCRETBalance,
+          tokenType: 'CRET',
+          typeOfTransaction: 'claim',
+        },
+      })
+      const price = priceConversion('toWei', 'ether', lpCRETBalance, web3)
+      const newGasPrice = await gasPrice(web3, 2)
+      await testcret.methods
+        .approve(liquidityPoolCRET._address, price)
+        .send({from: userAddress, gasPrice: newGasPrice})
 
-    dispatch({
-      type: CLAIM_WITHDRAW_SUCCESS,
-      payload: {transactionHashID, tokenAmount: lpCAPLBalance},
-    })
-    dispatch(getProfileInformationTest())
+      const res = await liquidityPoolCRET.methods
+        .claim()
+        .send({from: userAddress, gasPrice: newGasPrice})
+
+      const transactionHashID = res.transactionHash
+
+      dispatch({
+        type: CLAIM_WITHDRAW_SUCCESS,
+        payload: {transactionHashID, tokenAmount: lpCRETBalance},
+      })
+      dispatch(getProfileInformationTest())
+    }
   } catch (error) {
     dispatch({
       type: CLAIM_WITHDRAW_FAIL,

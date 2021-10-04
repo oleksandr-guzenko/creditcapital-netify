@@ -18,6 +18,7 @@ const StakingConfirmation = ({show, handleClose}) => {
     transactionHASH,
     stakingError,
     typeOfTransaction,
+    stakingType,
   } = useSelector((state) => state.staking)
   // clipboard
   const [isCopied, setCopied] = useClipboard(transactionHASH, {
@@ -56,12 +57,24 @@ const StakingConfirmation = ({show, handleClose}) => {
                     : unStakeType === 0
                     ? numberFormate(calculatePercentage(tokenAmount, 70))
                     : numberFormate(tokenAmount)}{' '}
-                  {typeOfTransaction === 'staking' ? 'CCPT' : 'CAPL'}
+                  {typeOfTransaction === 'staking'
+                    ? 'CCPT'
+                    : stakingType === 'CAPL_TYPE'
+                    ? 'CAPL'
+                    : stakingType === 'CRET_TYPE'
+                    ? 'CRET'
+                    : null}
                 </span>
                 for
                 <span className='big'>
                   {numberFormate(tokenAmount)}{' '}
-                  {typeOfTransaction === 'staking' ? 'CAPL' : 'CAPL'}{' '}
+                  {typeOfTransaction === 'staking'
+                    ? stakingType === 'CAPL_TYPE'
+                      ? 'CAPL'
+                      : stakingType === 'CRET_TYPE'
+                      ? 'CRET'
+                      : null
+                    : 'CAPL'}{' '}
                 </span>
               </h6>
               <div className='user__id'>
@@ -83,7 +96,14 @@ const StakingConfirmation = ({show, handleClose}) => {
               <>
                 <Image src={Close} alt='' className='loader' />
                 <h3 className='mt-3 text-danger'>Transaction Failed</h3>
-                <h6 className='mt-2'>{tokenAmount} CAPL</h6>
+                <h6 className='mt-2'>
+                  {tokenAmount}{' '}
+                  {stakingType === 'CAPL_TYPE'
+                    ? 'CAPL'
+                    : stakingType === 'CRET_TYPE'
+                    ? 'CRET'
+                    : null}
+                </h6>
                 <p className='txt__gray note'>View on Explorer</p>
                 <button className='btn_brand' onClick={handleClose}>
                   Close
