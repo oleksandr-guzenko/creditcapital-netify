@@ -30,9 +30,8 @@ const MyPortfolio = () => {
     cptLPBalance,
     totalRewardsEarned,
   } = useSelector((state) => state.profile)
-  const {CAPLBalance, CCPTBalance, totalRewards} = useSelector(
-    (state) => state.testProfile
-  )
+  const {CAPLBalance, CRETBalance, totalRewards, lpCRETBalance, lpCAPLBalance} =
+    useSelector((state) => state.testProfile)
   useEffect(() => {
     if (userAddress) {
       dispatch(getProfileInformation())
@@ -62,34 +61,34 @@ const MyPortfolio = () => {
             />
             <PortfolioCard
               bgColor='#D6EDD9'
-              amount={numberFormate(cptBalance)}
+              amount={numberFormate(cptBalance || CAPLBalance)}
               text='CAPL balance'
               icon={card_two}
             />
             <PortfolioCard
               bgColor='#F6F0D8'
-              amount={numberFormate(crtBalance)}
+              amount={numberFormate(crtBalance || CRETBalance)}
               text='CRET balance'
               icon={card_three}
             />
             <PortfolioCard
               bgColor='#D8E4F6'
-              amount={`$ ${numberFormate(cptLPBalance)}`}
+              amount={`$ ${numberFormate(lpCAPLBalance)}`}
               text='CAPL LP Balance'
               icon={card_four}
             />
             <PortfolioCard
               bgColor='#F6D8D8'
-              amount={`$ ${numberFormate(crtLPBalance)}`}
+              amount={`$ ${numberFormate(lpCRETBalance)}`}
               text='CRET LP Balance'
               icon={card_five}
             />
-            <PortfolioCard
+            {/* <PortfolioCard
               bgColor='#F6D8D8'
-              amount={`$ ${numberFormate(0)}`}
+              amount={`$ ${numberFormate(CCPTBalance)}`}
               text='CCPT Balance'
               icon={card_five}
-            />
+            /> */}
           </div>
         </div>
       </Container>
