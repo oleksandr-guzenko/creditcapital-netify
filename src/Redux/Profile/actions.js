@@ -230,11 +230,9 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
       // total platform rewards
       const platformCAPL = await Staking.methods._rewardDistributed().call()
       const platformCRET = await cretStaking.methods._rewardDistributed().call()
-      const totalplatRewards = Number(platformCAPL) + Number(platformCRET)
-      const totalPlatformRewards = web3.utils.fromWei(
-        totalplatRewards.toString(),
-        'ether'
-      )
+      const a = web3.utils.fromWei(platformCAPL.toString(), 'ether')
+      const b = web3.utils.fromWei(platformCRET.toString(), 'ether')
+      const totalplatRewards = Number(a) + Number(b)
 
       // lp balance
       const lpCAPL = await liquidityPoolCAPL.methods
@@ -257,7 +255,7 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
           caplRewards,
           cretRewards,
           totalRewards: Number(caplRewards) + Number(cretRewards),
-          totalPlatformRewards: Number(totalPlatformRewards),
+          totalPlatformRewards: Number(totalplatRewards),
           testUSDC: availableBalance,
           lpCAPLBalance,
           lpCRETBalance,
@@ -271,3 +269,5 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
     })
   }
 }
+
+

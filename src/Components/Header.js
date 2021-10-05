@@ -11,7 +11,7 @@ import Wallet from '../Assets/wallet.svg'
 
 // redux imports
 import {useSelector, useDispatch} from 'react-redux'
-import { getProfileInformation, getProfileInformationTest } from '../Redux/Profile/actions'
+import { getProfile, getProfileInformation, getProfileInformationTest } from '../Redux/Profile/actions'
 
 const Header = () => {
   const dispatch = useDispatch()

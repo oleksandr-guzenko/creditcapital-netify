@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 const PortfolioCard = ({amount, text, icon, bgColor}) => {
   const {profileLoading} = useSelector((state) => state.profile)
+  const {testProfileLoading} = useSelector((state) => state.testProfile)
   return (
     <div className='portfolio__card mb-3' style={{backgroundColor: bgColor}}>
       {/* <div className='question__icon'>
@@ -23,7 +24,7 @@ const PortfolioCard = ({amount, text, icon, bgColor}) => {
           <span className='d-inline-block'>{<BsQuestionCircle />}</span>
         </OverlayTrigger>
       </div> */}
-      {profileLoading ? (
+      {profileLoading || testProfileLoading ? (
         <ReactLoading type='bars' color='#06397e' height={30} width={30} />
       ) : (
         <h3>{amount}</h3>

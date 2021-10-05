@@ -74,7 +74,11 @@ const StakingConfirmation = ({show, handleClose}) => {
                       : stakingType === 'CRET_TYPE'
                       ? 'CRET'
                       : null
-                    : 'CAPL'}{' '}
+                    : stakingType === 'CAPL_TYPE'
+                    ? 'CAPL'
+                    : stakingType === 'CRET_TYPE'
+                    ? 'CRET'
+                    : null}{' '}
                 </span>
               </h6>
               <div className='user__id'>

@@ -31,7 +31,7 @@ const testCCPTAddress = '0xc4046A423b0e1DBF12E3a6bB786fFa1bDC0b1A72'
 const cretStakingAddress = '0x65Ff70BbBff8737C0Ba8Ecfa83732677457cF96b'
 const StakingAddress = '0x78D4c1b27E524005E6e5ecBDE6A825242765e7b8'
 const liquidityPoolCAPLAddress = '0x99B32952936c784D5b018F4798bAE5515E7c68B8'
-const liquidityCRETAddPoolress = '0x74B253769187dB633657ef7D70846fFbcFE210Ce'
+const liquidityPoolCRETAddress = '0x74B253769187dB633657ef7D70846fFbcFE210Ce'
 
 const getContracts = (walletType) => {
   let web3
@@ -3552,7 +3552,7 @@ const getContracts = (walletType) => {
         type: 'function',
       },
     ],
-    liquidityCRETAddPoolress
+    liquidityPoolCRETAddress
   )
   // mainnet
   const usdc = new web3.eth.Contract(
