@@ -11,11 +11,13 @@ import {
   claimUnStakeWithdraw,
   clearTransHistory,
   getUnStakeCoolDownPeriod,
+  stakedInformation,
   stakingCAPL,
   unStakingCAPL,
 } from '../../Redux/staking/actions'
 import StakingLoader from '../Modals/Staking/StakingLoader'
 import StakingConfirmation from '../Modals/Staking/StakingConfirmation'
+import StakingHistory from './StakingHistory'
 
 const Stacking = () => {
   // Redux State
@@ -106,6 +108,13 @@ const Stacking = () => {
     dispatch(unStakingCAPL(unStakePrice, 'unstaking', unStakeType, 'CAPL_TYPE'))
   }
 
+  // stakedInformation
+  useEffect(() => {
+    if (userAddress) {
+      dispatch(stakedInformation('CAPL_TYPE'))
+    }
+  }, [userAddress])
+
   //  Error handling
   useEffect(() => {
     if (
@@ -166,7 +175,7 @@ const Stacking = () => {
               deposit
             </p>
             <Row>
-              <Col xs={12} sm={12} md={12} lg={4} xl={4} className='mb-3'>
+              <Col xs={12} sm={12} md={12} lg={6} xl={6} className='mb-3'>
                 <div className='liquidity__pool__box'>
                   <div className='liquidity__pool__box__top'>
                     <div>
@@ -217,7 +226,7 @@ const Stacking = () => {
                   </form>
                 </div>
               </Col>
-              <Col xs={12} sm={12} md={12} lg={4} xl={4} className='mb-3'>
+              {/* <Col xs={12} sm={12} md={12} lg={4} xl={4} className='mb-3'>
                 <div className='liquidity__pool__box unstake'>
                   <div className='liquidity__pool__box__top'>
                     <div>
@@ -234,9 +243,9 @@ const Stacking = () => {
                         </p>
                       )}
                     </div>
-                    <div>
-                      {/* <p className='txt__gray'>Unstake CAPL Balance</p> */}
-                      <h6>
+                    <div> */}
+              {/* <p className='txt__gray'>Unstake CAPL Balance</p> */}
+              {/* <h6>
                         {testProfileLoading ? (
                           <ReactLoading
                             type='bars'
@@ -271,9 +280,9 @@ const Stacking = () => {
                     >
                       *Note: Staked amount available after cool down period of 3
                       months
-                    </p>
-                    {/* {(coolDownPeriod?.length > 0 || !isAvailableForClaim) && ( */}
-                    <div className='liquidity__pool__box__btn d-flex align-content-center justify-content-between'>
+                    </p> */}
+              {/* {(coolDownPeriod?.length > 0 || !isAvailableForClaim) && ( */}
+              {/* <div className='liquidity__pool__box__btn d-flex align-content-center justify-content-between'>
                       <button
                         type='submit'
                         onClick={() => setUnStakeType(0)}
@@ -308,10 +317,10 @@ const Stacking = () => {
                       >
                         Unstake After
                       </button>
-                    </div>
-                    {/* )} */}
-                  </form>
-                  {/* {((isAvailableForClaim && coolDownPeriod?.length <= 0) ||
+                    </div> */}
+              {/* )} */}
+              {/* </form> */}
+              {/* {((isAvailableForClaim && coolDownPeriod?.length <= 0) ||
                     enableClaim) && (
                     <div className='liquidity__pool__box__btn m-auto'>
                       <button
@@ -327,9 +336,9 @@ const Stacking = () => {
                       </button>
                     </div>
                   )} */}
-                </div>
-              </Col>
-              <Col xs={12} sm={12} md={12} lg={4} xl={4} className='mb-3'>
+              {/* </div>
+              </Col> */}
+              <Col xs={12} sm={12} md={12} lg={6} xl={6} className='mb-3'>
                 <div className='liquidity__pool__box reward__section'>
                   <h5>Rewards</h5>
                   <h4 className='text-center'>
@@ -358,6 +367,8 @@ const Stacking = () => {
                 </div>
               </Col>
             </Row>
+            <hr />
+            <StakingHistory stakingType='CAPL_TYPE' />
           </div>
         </Container>
       </div>

@@ -11,6 +11,12 @@ export const numberFormate = (number) => {
   })
 }
 
+export const createBonus = (totalAmount, bonusRatio) => {
+  const bonus = (Number(totalAmount) / 100) * bonusRatio
+  const result = (Number(totalAmount) + bonus)?.toFixed(2)
+  return result
+}
+
 export const formateDate = (milliSeconds) => {
   const newDate = new Date(milliSeconds * 1000)
   const [years, months, days, hours, minutes, seconds] = [
@@ -49,5 +55,16 @@ export const gasPrice = async (web3, number) => {
   } else {
     const newGasPrice = web3.utils.toHex(Number(gasPrice * 4.5)?.toFixed(0))
     return newGasPrice
+  }
+}
+
+export const getTheTimeDifference = (sec) => {
+  const timeInSec = Number(sec) * 1000
+  const currentTimeInSec = new Date().getTime()
+  const difference = timeInSec - currentTimeInSec
+  if (difference > 0) {
+    return true
+  } else {
+    return false
   }
 }

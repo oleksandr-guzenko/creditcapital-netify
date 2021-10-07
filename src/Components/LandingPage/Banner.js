@@ -26,6 +26,7 @@ import ImgFive from '../../Assets/Investor/Token_burned.svg'
 //
 import {useSelector, useDispatch} from 'react-redux'
 import {numberFormate} from '../../Utilities/Util'
+import BuyTokens from './BuyTokens'
 // import {checkAndAddNetwork} from '../../Redux/Profile/actions'
 
 const Banner = () => {
@@ -128,6 +129,7 @@ const Banner = () => {
   return (
     <>
       <div className='banner'>
+        <BuyTokens />
         <div className='section__two'>
           <Container>
             <div className='box__wrapper banner__two__box text-center treasury'>
@@ -137,7 +139,9 @@ const Banner = () => {
                     onSubmit={submitDepositLiquidityPool}
                     className='treasury'
                   >
-                    <h5 className='mb-4'>Send Amount to Treasury Wallet</h5>
+                    <h5 style={{fontSize: '20px'}} className='mb-4'>
+                      Send Amount to Treasury Wallet
+                    </h5>
                     <LiquidityInput
                       price={depositPrice}
                       handlePriceChange={handleDepositPriceChange}

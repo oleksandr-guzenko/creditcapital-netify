@@ -1,0 +1,186 @@
+.buy__cpt__modal {
+  padding: 20px;
+  @include mQ($sm) {
+    padding: 20px 10px;
+  }
+  .buy__cpt__header {
+    text-align: center;
+    &__tile {
+      h4 {
+        font-size: 25px;
+        font-weight: 700;
+      }
+    }
+    &__close {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+      cursor: pointer;
+      min-width: 30px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: $transition;
+      svg {
+        font-size: 25px;
+      }
+      &:hover {
+        background-color: $brand__color;
+        svg {
+          color: $white__color;
+        }
+      }
+    }
+  }
+  &__instructions {
+    margin: 30px 0 20px 0;
+    @include displayCenter(center, space-between);
+    flex-wrap: wrap;
+    p {
+      @include normalFont(14px);
+      margin: 0;
+    }
+    &__left {
+      @include displayCenter(center, center);
+      h6 {
+        margin: 0;
+        margin-left: 10px;
+      }
+    }
+    &__right {
+    }
+  }
+  form {
+    .input__wrapper {
+      @include displayCenter(center, space-between);
+      border: 1px solid rgb(221, 221, 221);
+      border-radius: 5px;
+      padding: 5px;
+      margin: 10px 0;
+
+      .cpt {
+        font-size: 13px;
+        min-width: 90px;
+        border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
+        cursor: default !important;
+        img {
+          margin-right: 5px;
+        }
+      }
+
+      //   react-select-
+
+      .css-2b097c-container {
+        min-width: 100px;
+        .css-yk16xz-control {
+          border: 0;
+          background-color: transparent;
+          box-shadow: none;
+          font-size: 12px !important;
+          color: $brand__color !important;
+          &:hover {
+            border-color: transparent;
+          }
+        }
+      }
+      .css-yk16xz-control,
+      .css-1pahdxg-control {
+        border-color: transparent !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+        border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
+        border-radius: 0 !important;
+        font-size: 12px !important;
+        color: $brand__color !important;
+
+        &:hover {
+          border-color: transparent !important;
+          border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
+        }
+      }
+      .css-1wa3eu0-placeholder {
+        color: $brand__color;
+      }
+      input {
+        background-color: transparent;
+        border: 0;
+        &:focus {
+          outline: none;
+        }
+        &::placeholder {
+          color: $font__black;
+        }
+      }
+      .input-group-text {
+        background-color: transparent;
+        color: $brand__color;
+        font-weight: 500;
+        user-select: none;
+        cursor: pointer;
+        border: 0;
+        border-left: 2px solid rgba(221, 221, 221, 0.733);
+      }
+      .css-1okebmr-indicatorSeparator {
+        display: none;
+      }
+    }
+    .danger {
+      @include normalFont(10px);
+      text-align: left;
+      padding: 0;
+      margin: -5px 0;
+    }
+    .buy__btn__wrapper {
+      text-align: center;
+      margin-top: 20px;
+      button {
+        padding: 8px 60px;
+      }
+    }
+    p {
+      margin: 0;
+      margin: 20px 0;
+      @include normalFont(12px);
+      text-align: center;
+    }
+    .price__inputs {
+      position: relative;
+      .arrow__circle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 30px;
+        min-height: 30px;
+        background-color: rgb(255, 255, 255);
+        border-radius: 50%;
+        @include displayCenter(center, center);
+        box-shadow: $box_shadow_five;
+        svg {
+          font-size: 20px;
+          position: relative;
+          z-index: 2;
+          color: $primary;
+        }
+        &::before {
+          position: absolute;
+          content: '';
+          border-radius: 50%;
+          top: 4px;
+          left: 4px;
+          bottom: 4px;
+          right: 4px;
+          background: $font__gray;
+          z-index: 1;
+        }
+      }
+    }
+  }
+}
+.buy__token__modal {
+  .modal-dialog {
+    max-width: 600px;
+  }
+}

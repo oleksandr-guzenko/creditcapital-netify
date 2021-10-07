@@ -9,6 +9,7 @@
       margin-bottom: 15px;
       @include displayCenter(center, space-between);
       transition: $transition;
+
       &:hover {
         box-shadow: $box_shadow_three;
       }

@@ -121,6 +121,16 @@ svg {
     transform: translateY(-2px);
   }
 }
+.outlined {
+  background-color: $primary !important;
+  color: $brand__color !important;
+  border: 1px solid $brand__color;
+  cursor: not-allowed !important;
+  &:hover {
+    box-shadow: none !important;
+    transform: unset !important;
+  }
+}
 .btn__brand__secondary {
   background-color: #232d3a !important;
   color: $primary !important;

@@ -118,6 +118,7 @@ export const liquidityPoolReducer = (state = initialState, action) => {
         claimLoading: false,
         liquidityLoading: false,
         claimError: action.payload,
+        liquidityError: action.payload
       }
 
     default:

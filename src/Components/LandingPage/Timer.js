@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import intervalToDuration from 'date-fns/intervalToDuration'
+import {stakedInformation} from '../../Redux/staking/actions'
+import {useDispatch} from 'react-redux'
 
 // redux imports
 
-const SaleTimer = ({countDownTime, setEnableClaim}) => {
+const SaleTimer = ({countDownTime, stakingType}) => {
+  const dispatch = useDispatch()
   const [timer, setTimer] = useState('')
 
   useEffect(() => {
@@ -30,7 +33,7 @@ const SaleTimer = ({countDownTime, setEnableClaim}) => {
         ) {
           setTimer(results)
           clearInterval(info)
-          setEnableClaim(true)
+          dispatch(stakedInformation(stakingType))
         } else {
           setTimer(results)
         }

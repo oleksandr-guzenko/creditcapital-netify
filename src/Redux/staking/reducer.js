@@ -6,9 +6,19 @@ import {
   UN_STAKE_SUCCESS,
   UN_STAKE_FAIL,
   CLEAR_HISTORY,
+  STAKING_INFO_REQUEST,
+  STAKING_INFO_SUCCESS,
+  STAKING_INFO_FAIL,
 } from './constants.js'
 
 const initialState = {
+  stakingInfo: {
+    loading: false,
+    error: false,
+    data: [],
+  },
+  type: '',
+  success: '',
   unStakeType: null,
   stakingLoading: false,
   stakingError: false,
@@ -124,6 +134,38 @@ export const stakingReducer = (state = initialState, action) => {
     //     claimLoading: false,
     //     claimError: action.payload,
     //   }
+
+    case STAKING_INFO_REQUEST:
+      return {
+        ...state,
+        type: action.payload,
+        success: '',
+        stakingInfo: {
+          loading: true,
+          error: false,
+          data: [],
+        },
+      }
+    case STAKING_INFO_SUCCESS:
+      return {
+        ...state,
+        stakingInfo: {
+          loading: false,
+          error: false,
+          data: action.payload,
+        },
+        success: 200,
+      }
+    case STAKING_INFO_FAIL:
+      return {
+        ...state,
+        stakingInfo: {
+          loading: false,
+          error: action.payload,
+          data: [],
+        },
+        success: '',
+      }
 
     default:
       return state

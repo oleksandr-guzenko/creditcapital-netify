@@ -269,5 +269,3 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
     })
   }
 }
-
-

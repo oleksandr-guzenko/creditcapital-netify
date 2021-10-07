@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux'
+import { buyCAPLandCRETReducer } from './BuyCAPTAndCRET/reducer'
 import {liquidityPoolReducer} from './LiquidityPool/reducers'
 import {profileReducer, profileReducerTest} from './Profile/reducers'
 import {defaultReducer} from './Root/reducers'
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   testProfile: profileReducerTest,
   liquidity: liquidityPoolReducer,
   staking: stakingReducer,
+  buyTokens: buyCAPLandCRETReducer,
 })
 
 export default rootReducer
