@@ -72,8 +72,8 @@ const StakingHistory = ({trustee, stakingType}) => {
                 <Col xl={4} lg={4} md={6} sm={6} xs={12} key={stake?.uniqueId}>
                   <div className='stakeCard mb-3 h-100'>
                     <div className='d-flex align-items-center justify-content-between'>
-                      <h6>Staked Time</h6>
-                      <h6>
+                      <p>Staked Time</p>
+                      <p>
                         {format(
                           new Date(
                             stake?.stakedTime[0],
@@ -85,35 +85,35 @@ const StakingHistory = ({trustee, stakingType}) => {
                           ),
                           "do MMM, YYY' - 'hh:mm bb"
                         )}
-                      </h6>
+                      </p>
                     </div>
                     <div className='d-flex align-content-center justify-content-between'>
-                      <h6>Staked Amount</h6>
-                      <h6>
+                      <p>Staked Amount</p>
+                      <p>
                         {numberFormate(stake?.stakedAmount)}{' '}
                         {type === 'CAPL_TYPE'
                           ? 'CAPL'
                           : type === 'CRET_TYPE'
                           ? 'CRET'
                           : null}{' '}
-                      </h6>
+                      </p>
                     </div>
                     <div className='d-flex align-content-center justify-content-between'>
-                      <h6>Reward Amount</h6>
-                      <h6>{numberFormate(stake?.rewardAmount)} CCPT</h6>
+                      <p>Reward Amount</p>
+                      <p>{numberFormate(stake?.rewardAmount)} CCPT</p>
                     </div>
                     <div className='d-flex align-content-center justify-content-between'>
                       <>
-                        <h6>Count Down</h6>
+                        <p>Cool Down Period</p>
                         {stake?.isAvailableForUnstake ? (
-                          <h6>
+                          <p>
                             <Timer
                               countDownTime={stake?.countDown}
-                              stakingType={stakingType}
+                            stakingType={stakingType}
                             />
-                          </h6>
+                          </p>
                         ) : (
-                          <h6>Completed</h6>
+                          <p>Completed</p>
                         )}
                       </>
                     </div>
