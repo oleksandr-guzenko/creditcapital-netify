@@ -23,12 +23,24 @@
 }
 
 .stakeCard {
-  padding: 20px;
+  padding: 20px 20px 0 20px;
   border: 1px solid rgb(221, 221, 221);
   border-radius: 10px;
-  background-color: $primary;
+  background: rgb(197, 205, 207);
   p {
     font-size: 11px;
     margin-bottom: 0.5rem;
+    color: $font__black !important;
   }
 }
+.completed {
+  background-color: $primary;
+  p {
+    color: $font__gray !important;
+  }
+  .txt__brand {
+   color: $brand__color !important; 
+  }
+}
+// $font__gray: #848e9c;
+// $font__black: #333333;

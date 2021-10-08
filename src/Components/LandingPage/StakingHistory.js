@@ -70,7 +70,13 @@ const StakingHistory = ({trustee, stakingType}) => {
               ) : null}
               {stakingInfo?.data?.map((stake) => (
                 <Col xl={4} lg={4} md={6} sm={6} xs={12} key={stake?.uniqueId}>
-                  <div className='stakeCard mb-3 h-100'>
+                  <div
+                    className={
+                      !stake?.isActive
+                        ? 'stakeCard mb-3 h-100 completed'
+                        : 'stakeCard mb-3 h-100'
+                    }
+                  >
                     <div className='d-flex align-items-center justify-content-between'>
                       <p>Staked Time</p>
                       <p>
@@ -109,11 +115,11 @@ const StakingHistory = ({trustee, stakingType}) => {
                           <p>
                             <Timer
                               countDownTime={stake?.countDown}
-                            stakingType={stakingType}
+                              stakingType={stakingType}
                             />
                           </p>
                         ) : (
-                          <p>Completed</p>
+                          <p className='txt__brand'>Completed</p>
                         )}
                       </>
                     </div>
