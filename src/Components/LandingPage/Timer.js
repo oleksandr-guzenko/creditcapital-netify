@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux'
 
 // redux imports
 
-const SaleTimer = ({countDownTime, stakingType}) => {
+const SaleTimer = ({countDownTime, setEnableClaim, stakingType}) => {
   const dispatch = useDispatch()
   const [timer, setTimer] = useState('')
 
@@ -33,6 +33,7 @@ const SaleTimer = ({countDownTime, stakingType}) => {
         ) {
           setTimer(results)
           clearInterval(info)
+          setEnableClaim(true)
           dispatch(stakedInformation(stakingType))
         } else {
           setTimer(results)

@@ -44,7 +44,7 @@ const StackingCRET = () => {
   const [stakeErrors, setStakeErrors] = useState(false)
   const [unStakePrice, setUnStakePrice] = useState('')
   const [unStakeErrors, setUnStakeErrors] = useState(false)
-  const [enableClaim, setEnableClaim] = useState(false)
+  // const [enableClaim, setEnableClaim] = useState(false)
 
   useEffect(() => {
     if (CRET_CCPTBalance) {
@@ -58,7 +58,7 @@ const StackingCRET = () => {
 
   // ErrorState
   const [balanceError, setBalanceError] = useState(false)
-  const [unStakeType, setUnStakeType] = useState(null)
+  // const [unStakeType, setUnStakeType] = useState(null)
 
   const clearInputValues = () => {
     setStakePrice('')
@@ -99,14 +99,14 @@ const StackingCRET = () => {
     dispatch(stakingCAPL(stakePrice, 'staking', 'CRET_TYPE'))
   }
 
-  // staking
-  const handleUnStakePriceChange = (number) => {
-    setUnStakePrice(number.value)
-  }
-  const submitUnStaking = (e) => {
-    e.preventDefault()
-    dispatch(unStakingCAPL(unStakePrice, 'unstaking', unStakeType, 'CRET_TYPE'))
-  }
+  // // staking
+  // const handleUnStakePriceChange = (number) => {
+  //   setUnStakePrice(number.value)
+  // }
+  // const submitUnStaking = (e) => {
+  //   e.preventDefault()
+  //   dispatch(unStakingCAPL(unStakePrice, 'unstaking', unStakeType, 'CRET_TYPE'))
+  // }
 
   // stakedInformation
   useEffect(() => {
@@ -130,19 +130,19 @@ const StackingCRET = () => {
     }
   }, [stakePrice, userAddress, testProfileLoading])
 
-  useEffect(() => {
-    if (
-      unStakePrice == 0 ||
-      unStakePrice == '.' ||
-      !userAddress ||
-      balanceError ||
-      testProfileLoading
-    ) {
-      setUnStakeErrors(true)
-    } else {
-      setUnStakeErrors(false)
-    }
-  }, [unStakePrice, userAddress, testProfileLoading])
+  // useEffect(() => {
+  //   if (
+  //     unStakePrice == 0 ||
+  //     unStakePrice == '.' ||
+  //     !userAddress ||
+  //     balanceError ||
+  //     testProfileLoading
+  //   ) {
+  //     setUnStakeErrors(true)
+  //   } else {
+  //     setUnStakeErrors(false)
+  //   }
+  // }, [unStakePrice, userAddress, testProfileLoading])
 
   useEffect(() => {
     if (cptBalance === 0 && !testProfileLoading && userAddress) {
