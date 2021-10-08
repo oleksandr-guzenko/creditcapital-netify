@@ -153,16 +153,16 @@ const StackingCRET = () => {
     }
   }, [testProfileLoading, cptBalance, userAddress])
 
-  // Cool down period
-  useEffect(() => {
-    if (userAddress) {
-      dispatch(getUnStakeCoolDownPeriod())
-    }
-  }, [userAddress])
+  // // Cool down period
+  // useEffect(() => {
+  //   if (userAddress) {
+  //     dispatch(getUnStakeCoolDownPeriod())
+  //   }
+  // }, [userAddress])
 
-  const claimFunds = () => {
-    dispatch(claimUnStakeWithdraw(unStakePrice))
-  }
+  // const claimFunds = () => {
+  //   dispatch(claimUnStakeWithdraw(unStakePrice))
+  // }
 
   return (
     <>

@@ -17,7 +17,7 @@ const StakingHistory = ({trustee, stakingType}) => {
   //   const [enableClaim, setEnableClaim] = useState(false)
 
   const submitUnstake = (stakeID, amount, id) => {
-    dispatch(unStakingCAPL(stakeID, amount, 'unstaking', id, 'CAPL_TYPE'))
+    dispatch(unStakingCAPL(stakeID, amount, 'unstaking', id, stakingType))
   }
   var result = format(new Date(), "do MMM, YYY' - 'hh:mm bb")
 
@@ -69,12 +69,20 @@ const StakingHistory = ({trustee, stakingType}) => {
                 </div>
               ) : null}
               {stakingInfo?.data?.map((stake) => (
-                <Col xl={4} lg={4} md={6} sm={6} xs={12} key={stake?.uniqueId}>
+                <Col
+                  xl={4}
+                  lg={4}
+                  md={6}
+                  sm={6}
+                  xs={12}
+                  key={stake?.uniqueId}
+                  className='mb-3'
+                >
                   <div
                     className={
                       !stake?.isActive
-                        ? 'stakeCard mb-3 h-100 completed'
-                        : 'stakeCard mb-3 h-100'
+                        ? 'stakeCard  h-100 completed'
+                        : 'stakeCard  h-100'
                     }
                   >
                     <div className='d-flex align-items-center justify-content-between'>

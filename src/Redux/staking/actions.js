@@ -94,6 +94,7 @@ export const stakingCAPL =
 export const unStakingCAPL =
   (stakeID, amount, transactionType, unStakeType, stakingType) =>
   async (dispatch, getState) => {
+    console.log(stakeID, amount, transactionType, unStakeType, stakingType)
     try {
       dispatch({
         type: UN_STAKE_REQUEST,
