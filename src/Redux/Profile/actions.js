@@ -141,33 +141,60 @@ export const getProfileInformation = () => async (dispatch, getState) => {
     dispatch({
       type: PROFILE_REQUEST,
     })
-    const {web3, usdc, capl, cret, Staking} = getContracts(walletType)
+    const {web3, usdc, capl, cret, Staking, cretStaking} =
+      getContracts(walletType)
 
     if (userAddress) {
       // available Balance
       const balance = await usdc.methods.balanceOf(userAddress).call()
       const availableBalance = web3.utils.fromWei(balance.toString(), 'Mwei')
 
-      const totalRewardsEarned = 0,
-        cptLPBalance = 0,
-        crtLPBalance = 0
-
       // CPT and CRT
-      const cptB = await capl.methods.balanceOf(userAddress).call()
-      const cptBalance = web3.utils.fromWei(cptB.toString(), 'ether')
+      const caplB = await capl.methods.balanceOf(userAddress).call()
+      const CAPLBalance = web3.utils.fromWei(caplB.toString(), 'ether')
 
-      const crtB = await cret.methods.balanceOf(userAddress).call()
-      const crtBalance = web3.utils.fromWei(crtB.toString(), 'ether')
+      const cretB = await cret.methods.balanceOf(userAddress).call()
+
+      const CRETBalance = web3.utils.fromWei(cretB.toString(), 'ether')
+
+      const ccptB = await Staking.methods._balancescapl(userAddress).call()
+      const CAPL_CCPTBalance = web3.utils.fromWei(ccptB.toString(), 'ether')
+
+      const ccptStakingCRET = await cretStaking.methods
+        ._balancescret(userAddress)
+        .call()
+      const CRET_CCPTBalance = web3.utils.fromWei(
+        ccptStakingCRET.toString(),
+        'ether'
+      )
+
+      // rewards
+      const rew = await Staking.methods._balancesccpt(userAddress).call()
+      const caplRewards = web3.utils.fromWei(rew.toString(), 'ether')
+
+      const rewss = await cretStaking.methods._balancesccpt(userAddress).call()
+      const cretRewards = web3.utils.fromWei(rewss.toString(), 'ether')
+
+      // total platform rewards
+      const platformCAPL = await Staking.methods._rewardDistributed().call()
+      const platformCRET = await cretStaking.methods._rewardDistributed().call()
+      const a = web3.utils.fromWei(platformCAPL.toString(), 'ether')
+      const b = web3.utils.fromWei(platformCRET.toString(), 'ether')
+      const totalPlatRewards = Number(a) + Number(b)
+
 
       dispatch({
         type: PROFILE_SUCCESS,
         payload: {
           availableBalance: Number(availableBalance),
-          totalRewardsEarned,
-          cptBalance: Number(cptBalance),
-          crtBalance: Number(crtBalance),
-          cptLPBalance,
-          crtLPBalance,
+          CAPLBalance,
+          CRETBalance,
+          CAPL_CCPTBalance,
+          CRET_CCPTBalance,
+          caplRewards,
+          cretRewards,
+          totalRewards: Number(caplRewards) + Number(cretRewards),
+          totalPlatformRewards: Number(totalPlatRewards),
         },
       })
     }
@@ -187,52 +214,13 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
     dispatch({
       type: TEST_PROFILE_REQ,
     })
-    const {
-      web3,
-      testcapl,
-      testcret,
-      liquidityPoolCAPL,
-      liquidityPoolCRET,
-      dummyUSDC,
-      Staking,
-      cretStaking,
-    } = getContracts(walletType)
+    const {web3, liquidityPoolCAPL, liquidityPoolCRET, dummyUSDC} =
+      getContracts(walletType)
 
     if (userAddress) {
       // available Balance
       const balance = await dummyUSDC.methods.balanceOf(userAddress).call()
       const availableBalance = web3.utils.fromWei(balance.toString(), 'Mwei')
-
-      // CPT and CRT
-      const caplB = await testcapl.methods.balanceOf(userAddress).call()
-      const CAPLBalance = web3.utils.fromWei(caplB.toString(), 'ether')
-
-      const cretB = await testcret.methods.balanceOf(userAddress).call()
-      const CRETBalance = web3.utils.fromWei(cretB.toString(), 'ether')
-
-      const ccptB = await Staking.methods._balancescapl(userAddress).call()
-      const CAPL_CCPTBalance = web3.utils.fromWei(ccptB.toString(), 'ether')
-
-      const ccptStakingCRET = await cretStaking.methods
-        ._balancescret(userAddress)
-        .call()
-      const CRET_CCPTBalance = web3.utils.fromWei(
-        ccptStakingCRET.toString(),
-        'ether'
-      )
-
-      const rew = await Staking.methods._balancesccpt(userAddress).call()
-      const caplRewards = web3.utils.fromWei(rew.toString(), 'ether')
-
-      const rewss = await cretStaking.methods._balancesccpt(userAddress).call()
-      const cretRewards = web3.utils.fromWei(rewss.toString(), 'ether')
-
-      // total platform rewards
-      const platformCAPL = await Staking.methods._rewardDistributed().call()
-      const platformCRET = await cretStaking.methods._rewardDistributed().call()
-      const a = web3.utils.fromWei(platformCAPL.toString(), 'ether')
-      const b = web3.utils.fromWei(platformCRET.toString(), 'ether')
-      const totalplatRewards = Number(a) + Number(b)
 
       // lp balance
       const lpCAPL = await liquidityPoolCAPL.methods
@@ -248,14 +236,6 @@ export const getProfileInformationTest = () => async (dispatch, getState) => {
       dispatch({
         type: TEST_PROFILE_SUCCESS,
         payload: {
-          CAPLBalance,
-          CRETBalance,
-          CAPL_CCPTBalance,
-          CRET_CCPTBalance,
-          caplRewards,
-          cretRewards,
-          totalRewards: Number(caplRewards) + Number(cretRewards),
-          totalPlatformRewards: Number(totalplatRewards),
           testUSDC: availableBalance,
           lpCAPLBalance,
           lpCRETBalance,

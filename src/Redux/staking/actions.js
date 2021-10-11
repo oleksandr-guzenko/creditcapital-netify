@@ -36,15 +36,13 @@ export const stakingCAPL =
       const {
         profile: {walletType, userAddress},
       } = getState()
-      const {Staking, web3, testcapl, testcret, cretStaking} =
-        getContracts(walletType)
-      const price = web3.utils.toWei(amount.toString(), 'ether')
+      const {Staking, web3, capl, cret, cretStaking} = getContracts(walletType)
 
-      const gasPrice = await web3.eth.getGasPrice()
-      const newGasPrice = web3.utils.toHex(Number(gasPrice * 4.5)?.toFixed(0))
+      const price = priceConversion('toWei', 'ether', amount, web3)
+      const newGasPrice = await gasPrice(web3)
 
       if (stakingType === 'CAPL_TYPE') {
-        await testcapl.methods
+        await capl.methods
           .approve(Staking._address, price)
           .send({from: userAddress, gasPrice: newGasPrice})
 
@@ -64,7 +62,7 @@ export const stakingCAPL =
         dispatch(stakedInformation(stakingType))
       }
       if (stakingType === 'CRET_TYPE') {
-        await testcret.methods
+        await cret.methods
           .approve(cretStaking._address, price)
           .send({from: userAddress, gasPrice: newGasPrice})
 
@@ -110,7 +108,6 @@ export const unStakingCAPL =
       } = getState()
 
       const {Staking, web3, cretStaking} = getContracts(walletType)
-
       const newGasPrice = await gasPrice(web3)
 
       if (stakingType === 'CAPL_TYPE') {
@@ -125,7 +122,7 @@ export const unStakingCAPL =
             type: UN_STAKE_SUCCESS,
             payload: {transactionHASH: tranHash, transactionStatus: 200},
           })
-          dispatch(getUnStakeCoolDownPeriod())
+
           dispatch(getProfileInformationTest())
           dispatch(stakedInformation(stakingType))
         }
@@ -133,9 +130,7 @@ export const unStakingCAPL =
           const transaction = await Staking.methods
             .withdraw(stakeID)
             .send({from: userAddress, gasPrice: newGasPrice})
-
           const tranHash = transaction.transactionHash
-
           dispatch({
             type: UN_STAKE_SUCCESS,
             payload: {transactionHASH: tranHash, transactionStatus: 200},
@@ -156,7 +151,7 @@ export const unStakingCAPL =
             type: UN_STAKE_SUCCESS,
             payload: {transactionHASH: tranHash, transactionStatus: 200},
           })
-          dispatch(getUnStakeCoolDownPeriod())
+
           dispatch(getProfileInformationTest())
           dispatch(stakedInformation(stakingType))
         }
@@ -181,76 +176,6 @@ export const unStakingCAPL =
       })
     }
   }
-
-export const getUnStakeCoolDownPeriod = () => async (dispatch, getState) => {
-  // try {
-  //   const {
-  //     profile: {walletType, userAddress},
-  //   } = getState()
-  //   const {Staking} = getContracts(walletType)
-  //   dispatch({
-  //     type: UN_STAKE_TIMER_REQUEST,
-  //   })
-  //   const response = await Staking.methods
-  //     .isavailabletowithdraw(userAddress)
-  //     .call()
-  //   const timeInSec = Number(response?.coolDownTimer) * 1000
-  //   const currentTimeInSec = new Date().getTime()
-  //   const difference = timeInSec - currentTimeInSec
-  //   if (difference > 0) {
-  //     const coolDownTime = formateDate(Number(response?.coolDownTimer))
-  //     dispatch({
-  //       type: UN_STAKE_TIMER_SUCCESS,
-  //       payload: coolDownTime,
-  //     })
-  //   }
-  //   if (response) {
-  //     dispatch({
-  //       type: UN_STAKE_TIMER_STATUS,
-  //       payload: response?.isAvailableForwithdraw,
-  //     })
-  //   }
-  // } catch (error) {
-  //   dispatch({
-  //     type: UN_STAKE_TIMER_FAIL,
-  //     payload: error?.message,
-  //   })
-  // }
-}
-
-export const claimUnStakeWithdraw = () => async (dispatch, getState) => {
-  // try {
-  //   const {
-  //     profile: {walletType, userAddress},
-  //   } = getState()
-  //   const {Staking, web3} = getContracts(walletType)
-  //   dispatch({
-  //     type: CLAIM_WITHDRAW_REQUEST,
-  //   })
-  //   const price = web3.utils.toWei(amount.toString(), 'ether')
-  //   const gasPrice = await web3.eth.getGasPrice()
-  //   const newGasPrice = web3.utils.toHex(Number(gasPrice * 2.5)?.toFixed(0))
-  //   const transaction = await Staking.methods
-  //     .withdraw(price)
-  //     .send({from: userAddress, gasPrice: newGasPrice})
-  //   const tranHash = transaction.transactionHash
-  //   dispatch({
-  //     type: CLAIM_WITHDRAW_SUCCESS,
-  //     payload: tranHash,
-  //   })
-  // } catch (error) {
-  //   dispatch({
-  //     type: CLAIM_WITHDRAW_FAIL,
-  //     payload: error?.message,
-  //   })
-  // }
-}
-
-export const clearTransHistory = () => async (dispatch) => {
-  dispatch({
-    type: CLEAR_HISTORY,
-  })
-}
 
 export const stakedInformation =
   (stakingType) => async (dispatch, getState) => {
@@ -347,3 +272,9 @@ export const stakedInformation =
       })
     }
   }
+
+export const clearTransHistory = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_HISTORY,
+  })
+}

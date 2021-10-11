@@ -26,10 +26,9 @@ const ReserveToken = ({show, handleClose, name}) => {
   // Redux State
   const {hashID, error} = useSelector((state) => state.buyTokens)
 
-  const {userAddress} = useSelector((state) => state.profile)
-
-  const {testUSDC: availableBalance, testProfileLoading: profileLoading} =
-    useSelector((state) => state.testProfile)
+  const {userAddress, availableBalance, profileLoading} = useSelector(
+    (state) => state.profile
+  )
 
   // select
   // const {Option} = components

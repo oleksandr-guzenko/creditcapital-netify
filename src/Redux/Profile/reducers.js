@@ -10,28 +10,26 @@ import {
 
 const initialState = {
   profileLoading: false,
+  profileError: false,
   userAddress: '',
   walletType: '',
   availableBalance: null,
-  profileError: '',
-  totalRewardsEarned: 0,
-  cptBalance: 0,
-  crtBalance: 0,
-  cptLPBalance: 0,
-  crtLPBalance: 0,
-  unStakeBalance: 0,
+  CAPLBalance: 0,
+  CRETBalance: 0,
+  caplRewards: 0,
+  cretRewards: 0,
+  totalRewards: 0,
+  totalPlatformRewards: 0,
+  CAPL_CCPTBalance: 0,
+  CRET_CCPTBalance: 0,
+  lpCAPLBalance: 0,
+  lpCRETBalance: 0,
 }
 
 const testState = {
   testProfileLoading: false,
-  CAPLBalance: 0,
-  CRETBalance: 0,
   CAPL_CCPTBalance: 0,
   CRET_CCPTBalance: 0,
-  totalRewards: 0,
-  totalPlatformRewards: 0,
-  caplRewards: 0,
-  cretRewards: 0,
   testProfileError: false,
   testUSDC: 0,
   lpCAPLBalance: 0,
@@ -50,17 +48,21 @@ export const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         profileLoading: true,
+        profileError: false,
       }
     case PROFILE_SUCCESS:
       return {
         ...state,
         profileLoading: false,
         availableBalance: action.payload.availableBalance,
-        totalRewardsEarned: action.payload.totalRewardsEarned,
-        cptBalance: action.payload.cptBalance,
-        crtBalance: action.payload.crtBalance,
-        cptLPBalance: action.payload.cptLPBalance,
-        crtLPBalance: action.payload.crtLPBalance,
+        CAPLBalance: action.payload.CAPLBalance,
+        CRETBalance: action.payload.CRETBalance,
+        CAPL_CCPTBalance: action.payload.CAPL_CCPTBalance,
+        CRET_CCPTBalance: action.payload.CRET_CCPTBalance,
+        totalRewards: action.payload.totalRewards,
+        caplRewards: action.payload.caplRewards,
+        cretRewards: action.payload.cretRewards,
+        totalPlatformRewards: action.payload.totalPlatformRewards,
       }
     case PROFILE_FAIL:
       return {
@@ -87,14 +89,6 @@ export const profileReducerTest = (state = testState, action) => {
       return {
         ...state,
         testProfileLoading: false,
-        CAPLBalance: action.payload.CAPLBalance,
-        CRETBalance: action.payload.CRETBalance,
-        CAPL_CCPTBalance: action.payload.CAPL_CCPTBalance,
-        CRET_CCPTBalance: action.payload.CRET_CCPTBalance,
-        totalRewards: action.payload.totalRewards,
-        caplRewards: action.payload.caplRewards,
-        cretRewards: action.payload.cretRewards,
-        totalPlatformRewards: action.payload.totalPlatformRewards,
         testUSDC: action.payload.testUSDC,
         lpCAPLBalance: action.payload.lpCAPLBalance,
         lpCRETBalance: action.payload.lpCRETBalance,

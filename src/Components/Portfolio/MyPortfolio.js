@@ -23,15 +23,17 @@ const MyPortfolio = () => {
   const {
     userAddress,
     availableBalance,
-    profileLoading,
-    cptBalance,
-    crtBalance,
-    crtLPBalance,
-    cptLPBalance,
-    totalRewardsEarned,
+    CAPLBalance,
+    CRETBalance,
+    totalRewards,
+    lpCAPLBalance,
+    lpCRETBalance,
   } = useSelector((state) => state.profile)
-  const {CAPLBalance, CRETBalance, totalRewards, lpCRETBalance, lpCAPLBalance} =
-    useSelector((state) => state.testProfile)
+  const {
+    lpCRETBalance: a,
+    lpCAPLBalance: b,
+    testUSDC: c,
+  } = useSelector((state) => state.testProfile)
   useEffect(() => {
     if (userAddress) {
       dispatch(getProfileInformation())
@@ -61,34 +63,34 @@ const MyPortfolio = () => {
             />
             <PortfolioCard
               bgColor='#D6EDD9'
-              amount={numberFormate(cptBalance || CAPLBalance)}
+              amount={numberFormate(CAPLBalance)}
               text='CAPL balance'
               icon={card_two}
             />
             <PortfolioCard
               bgColor='#F6F0D8'
-              amount={numberFormate(crtBalance || CRETBalance)}
+              amount={numberFormate(CRETBalance)}
               text='CRET balance'
               icon={card_three}
             />
             <PortfolioCard
               bgColor='#D8E4F6'
-              amount={`$ ${numberFormate(lpCAPLBalance)}`}
+              amount={`$ ${numberFormate(lpCAPLBalance || a)}`}
               text='CAPL LP Balance'
               icon={card_four}
             />
             <PortfolioCard
               bgColor='#F6D8D8'
-              amount={`$ ${numberFormate(lpCRETBalance)}`}
+              amount={`$ ${numberFormate(lpCRETBalance || b)}`}
               text='CRET LP Balance'
               icon={card_five}
             />
-            {/* <PortfolioCard
+            <PortfolioCard
               bgColor='#F6D8D8'
-              amount={`$ ${numberFormate(CCPTBalance)}`}
-              text='CCPT Balance'
+              amount={`$ ${numberFormate(availableBalance || c)}`}
+              text='USDC Balance'
               icon={card_five}
-            /> */}
+            />
           </div>
         </div>
       </Container>

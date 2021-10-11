@@ -27,13 +27,6 @@ const initialState = {
   transactionStatus: null,
   tokenAmount: '',
   typeOfTransaction: '',
-  coolDownPeriodLoading: false,
-  coolDownPeriod: [],
-  isAvailableForClaim: false,
-  coolDownPeriodError: false,
-  claimLoading: false,
-  claimStatus: '',
-  claimError: false,
 }
 export const stakingReducer = (state = initialState, action) => {
   switch (action.type) {

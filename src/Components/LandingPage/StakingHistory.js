@@ -14,7 +14,7 @@ const StakingHistory = ({trustee, stakingType}) => {
   //   const [unStakeErrors, setUnStakeErrors] = useState(false)
   const {stakingInfo, type, success} = useSelector((state) => state.staking)
   const {userAddress} = useSelector((state) => state.profile)
-  //   const [enableClaim, setEnableClaim] = useState(false)
+  const [enableClaim, setEnableClaim] = useState(false)
 
   const submitUnstake = (stakeID, amount, id) => {
     dispatch(unStakingCAPL(stakeID, amount, 'unstaking', id, stakingType))
@@ -119,11 +119,12 @@ const StakingHistory = ({trustee, stakingType}) => {
                     <div className='d-flex align-content-center justify-content-between'>
                       <>
                         <p>Cool Down Period</p>
-                        {stake?.isAvailableForUnstake ? (
+                        {stake?.isAvailableForUnstake && stake.isActive ? (
                           <p>
                             <Timer
                               countDownTime={stake?.countDown}
                               stakingType={stakingType}
+                              setEnableClaim={setEnableClaim}
                             />
                           </p>
                         ) : (

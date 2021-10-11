@@ -2,18 +2,14 @@ import React, {useEffect, useState} from 'react'
 import {Col, Container, Row} from 'react-bootstrap'
 import LiquidityInput from '../LandingPage/LiquidityInput'
 import ReactLoading from 'react-loading'
-import Timer from '../LandingPage/Timer'
 
 // Redux Imports
 import {useDispatch, useSelector} from 'react-redux'
 import {numberFormate} from '../../Utilities/Util'
 import {
-  claimUnStakeWithdraw,
   clearTransHistory,
-  getUnStakeCoolDownPeriod,
   stakedInformation,
   stakingCAPL,
-  unStakingCAPL,
 } from '../../Redux/staking/actions'
 import StakingLoader from '../Modals/Staking/StakingLoader'
 import StakingConfirmation from '../Modals/Staking/StakingConfirmation'
@@ -22,35 +18,30 @@ import StakingHistory from '../LandingPage/StakingHistory'
 const StackingCRET = () => {
   // Redux State
   const dispatch = useDispatch()
-  const {userAddress} = useSelector((state) => state.profile)
+
   const {
-    testProfileLoading,
+    profileLoading,
+    userAddress,
     CRETBalance: cptBalance,
-    CRET_CCPTBalance,
     cretRewards,
-  } = useSelector((state) => state.testProfile)
-  const {
-    transactionHASH,
-    coolDownPeriodLoading,
-    stakingLoading,
-    transactionStatus,
-    stakingError,
-    coolDownPeriod,
-    isAvailableForClaim,
-  } = useSelector((state) => state.staking)
+  } = useSelector((state) => state.profile)
+
+  const {transactionHASH, stakingLoading, transactionStatus, stakingError} =
+    useSelector((state) => state.staking)
 
   // local stats
   const [stakePrice, setStakePrice] = useState('')
   const [stakeErrors, setStakeErrors] = useState(false)
-  const [unStakePrice, setUnStakePrice] = useState('')
-  const [unStakeErrors, setUnStakeErrors] = useState(false)
+  // const [unStakePrice, setUnStakePrice] = useState('')
+
+  // const [unStakeErrors, setUnStakeErrors] = useState(false)
   // const [enableClaim, setEnableClaim] = useState(false)
 
-  useEffect(() => {
-    if (CRET_CCPTBalance) {
-      setUnStakePrice(CRET_CCPTBalance)
-    }
-  }, [CRET_CCPTBalance])
+  // useEffect(() => {
+  //   if (CRET_CCPTBalance) {
+  //     setUnStakePrice(CRET_CCPTBalance)
+  //   }
+  // }, [CRET_CCPTBalance])
 
   // loaders and success states
   const [showLoader, setShowLoader] = useState(false)
@@ -122,13 +113,13 @@ const StackingCRET = () => {
       stakePrice == '.' ||
       !userAddress ||
       balanceError ||
-      testProfileLoading
+      profileLoading
     ) {
       setStakeErrors(true)
     } else {
       setStakeErrors(false)
     }
-  }, [stakePrice, userAddress, testProfileLoading])
+  }, [stakePrice, userAddress, profileLoading])
 
   // useEffect(() => {
   //   if (
@@ -136,22 +127,22 @@ const StackingCRET = () => {
   //     unStakePrice == '.' ||
   //     !userAddress ||
   //     balanceError ||
-  //     testProfileLoading
+  //     profileLoading
   //   ) {
   //     setUnStakeErrors(true)
   //   } else {
   //     setUnStakeErrors(false)
   //   }
-  // }, [unStakePrice, userAddress, testProfileLoading])
+  // }, [unStakePrice, userAddress, profileLoading])
 
   useEffect(() => {
-    if (cptBalance === 0 && !testProfileLoading && userAddress) {
+    if (cptBalance === 0 && !profileLoading && userAddress) {
       setBalanceError(true)
       clearInputValues()
     } else {
       setBalanceError(false)
     }
-  }, [testProfileLoading, cptBalance, userAddress])
+  }, [profileLoading, cptBalance, userAddress])
 
   // // Cool down period
   // useEffect(() => {
@@ -188,7 +179,7 @@ const StackingCRET = () => {
                     </div>
                     <div>
                       <h6>
-                        {testProfileLoading ? (
+                        {profileLoading ? (
                           <ReactLoading
                             type='bars'
                             color='#06397e'
@@ -244,9 +235,9 @@ const StackingCRET = () => {
                       )}
                     </div>
                     <div> */}
-                      {/* <p className='txt__gray'>Unstake CAPL Balance</p> */}
-                      {/* <h6>
-                        {testProfileLoading ? (
+              {/* <p className='txt__gray'>Unstake CAPL Balance</p> */}
+              {/* <h6>
+                        {profileLoading ? (
                           <ReactLoading
                             type='bars'
                             color='#06397e'
@@ -281,8 +272,8 @@ const StackingCRET = () => {
                       *Note: Staked amount available after cool down period of 3
                       months
                     </p> */}
-                    {/* {(coolDownPeriod?.length > 0 || !isAvailableForClaim) && ( */}
-                    {/* <div className='liquidity__pool__box__btn d-flex align-content-center justify-content-between'>
+              {/* {(coolDownPeriod?.length > 0 || !isAvailableForClaim) && ( */}
+              {/* <div className='liquidity__pool__box__btn d-flex align-content-center justify-content-between'>
                       <button
                         type='submit'
                         onClick={() => setUnStakeType(0)}
@@ -318,9 +309,9 @@ const StackingCRET = () => {
                         Unstake After
                       </button>
                     </div> */}
-                    {/* )} */}
-                  {/* </form> */}
-                  {/* {((isAvailableForClaim && coolDownPeriod?.length <= 0) ||
+              {/* )} */}
+              {/* </form> */}
+              {/* {((isAvailableForClaim && coolDownPeriod?.length <= 0) ||
                     enableClaim) && (
                     <div className='liquidity__pool__box__btn m-auto'>
                       <button
@@ -336,13 +327,13 @@ const StackingCRET = () => {
                       </button>
                     </div>
                   )} */}
-                {/* </div>
+              {/* </div>
               </Col> */}
               <Col xs={12} sm={12} md={12} lg={6} xl={6} className='mb-3'>
                 <div className='liquidity__pool__box reward__section'>
                   <h5>Rewards</h5>
                   <h4 className='text-center'>
-                    {testProfileLoading ? (
+                    {profileLoading ? (
                       <ReactLoading
                         type='bars'
                         color='#06397e'

@@ -31,8 +31,8 @@ import BuyTokens from './BuyTokens'
 
 const Banner = () => {
   // redux
-  const {testProfileLoading, totalPlatformRewards} = useSelector(
-    (state) => state.testProfile
+  const {userAddress, profileLoading, totalPlatformRewards} = useSelector(
+    (state) => state.profile
   )
   const {pathname} = useLocation()
   const [showSection, setShowSection] = useState(false)
@@ -48,7 +48,7 @@ const Banner = () => {
     totalDepositedAmount,
     totalDepositedLoading,
   } = useSelector((state) => state.root)
-  const {userAddress} = useSelector((state) => state.profile)
+
   const [depositPrice, setDepositPrice] = useState('')
   const [showLoader, setShowLoader] = useState(true)
   const [showSuccess, setShowSuccess] = useState(false)
@@ -255,7 +255,7 @@ const Banner = () => {
                     <div className='banner__two__box box__wrapper separate__Sec'>
                       <Image src={ImgFour} alt='' className='mb-3' />
                       <h5>
-                        {testProfileLoading ? (
+                        {profileLoading ? (
                           <ReactLoading
                             type='bars'
                             color='#06397e'

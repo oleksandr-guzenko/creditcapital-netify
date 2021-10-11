@@ -32,9 +32,9 @@ const SaleTimer = ({countDownTime, setEnableClaim, stakingType}) => {
           results.seconds === 0
         ) {
           setTimer(results)
+          dispatch(stakedInformation(stakingType))
           clearInterval(info)
           setEnableClaim(true)
-          dispatch(stakedInformation(stakingType))
         } else {
           setTimer(results)
         }

@@ -21,19 +21,19 @@ export const reserveCPTAndCRT =
       const {
         profile: {userAddress, walletType},
       } = getState()
-      const {BuyCAPL, BuyCRET, web3, dummyUSDC} = getContracts(walletType)
+      const {BuyCAPL, BuyCRET, web3, usdc} = getContracts(walletType)
 
       const price = priceConversion('toWei', 'Mwei', amount, web3)
-      const newGasPrice = await gasPrice(web3)
+      // const newGasPrice = await gasPrice(web3)
 
       if (type === 'CAPL') {
-        await dummyUSDC.methods
+        await usdc.methods
           .approve(BuyCAPL._address, price)
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress})
 
         const transaction = await BuyCAPL.methods
           .buyToken(price)
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress})
         const txHash = transaction.transactionHash
 
         dispatch({
@@ -43,13 +43,13 @@ export const reserveCPTAndCRT =
         dispatch(getProfileInformation())
         dispatch(getProfileInformationTest())
       } else if (type === 'CRET') {
-        await dummyUSDC.methods
+        await usdc.methods
           .approve(BuyCRET._address, price)
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress})
 
         const transaction = await BuyCRET.methods
           .buyToken(price)
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress})
         const txHash = transaction.transactionHash
         dispatch({
           type: BUY__CPT__SUCCESS,

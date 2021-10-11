@@ -2,18 +2,14 @@ import React, {useEffect, useState} from 'react'
 import {Col, Container, Row} from 'react-bootstrap'
 import LiquidityInput from './LiquidityInput'
 import ReactLoading from 'react-loading'
-import Timer from '../LandingPage/Timer'
 
 // Redux Imports
 import {useDispatch, useSelector} from 'react-redux'
 import {numberFormate} from '../../Utilities/Util'
 import {
-  claimUnStakeWithdraw,
   clearTransHistory,
-  getUnStakeCoolDownPeriod,
   stakedInformation,
   stakingCAPL,
-  unStakingCAPL,
 } from '../../Redux/staking/actions'
 import StakingLoader from '../Modals/Staking/StakingLoader'
 import StakingConfirmation from '../Modals/Staking/StakingConfirmation'
@@ -22,35 +18,29 @@ import StakingHistory from './StakingHistory'
 const Stacking = () => {
   // Redux State
   const dispatch = useDispatch()
-  const {userAddress} = useSelector((state) => state.profile)
   const {
-    testProfileLoading,
+    profileLoading,
+    userAddress,
     CAPLBalance: cptBalance,
-    CAPL_CCPTBalance,
     caplRewards,
-  } = useSelector((state) => state.testProfile)
-  const {
-    transactionHASH,
-    coolDownPeriodLoading,
-    stakingLoading,
-    transactionStatus,
-    stakingError,
-    coolDownPeriod,
-    isAvailableForClaim,
-  } = useSelector((state) => state.staking)
+  } = useSelector((state) => state.profile)
+
+  const {transactionHASH, stakingLoading, transactionStatus, stakingError} =
+    useSelector((state) => state.staking)
 
   // local stats
   const [stakePrice, setStakePrice] = useState('')
   const [stakeErrors, setStakeErrors] = useState(false)
-  const [unStakePrice, setUnStakePrice] = useState('')
-  const [unStakeErrors, setUnStakeErrors] = useState(false)
-  const [enableClaim, setEnableClaim] = useState(false)
+  // const [unStakePrice, setUnStakePrice] = useState('')
 
-  useEffect(() => {
-    if (CAPL_CCPTBalance) {
-      setUnStakePrice(CAPL_CCPTBalance)
-    }
-  }, [CAPL_CCPTBalance])
+  // const [unStakeErrors, setUnStakeErrors] = useState(false)
+  // const [enableClaim, setEnableClaim] = useState(false)
+
+  // useEffect(() => {
+  //   if (CAPL_CCPTBalance) {
+  //     setUnStakePrice(CAPL_CCPTBalance)
+  //   }
+  // }, [CAPL_CCPTBalance])
 
   // loaders and success states
   const [showLoader, setShowLoader] = useState(false)
@@ -58,7 +48,7 @@ const Stacking = () => {
 
   // ErrorState
   const [balanceError, setBalanceError] = useState(false)
-  const [unStakeType, setUnStakeType] = useState(null)
+  // const [unStakeType, setUnStakeType] = useState(null)
 
   const clearInputValues = () => {
     setStakePrice('')
@@ -100,13 +90,13 @@ const Stacking = () => {
   }
 
   // staking
-  const handleUnStakePriceChange = (number) => {
-    setUnStakePrice(number.value)
-  }
-  const submitUnStaking = (e) => {
-    e.preventDefault()
-    dispatch(unStakingCAPL(unStakePrice, 'unstaking', unStakeType, 'CAPL_TYPE'))
-  }
+  // const handleUnStakePriceChange = (number) => {
+  //   setUnStakePrice(number.value)
+  // }
+  // const submitUnStaking = (e) => {
+  //   e.preventDefault()
+  //   dispatch(unStakingCAPL(unStakePrice, 'unstaking', unStakeType, 'CAPL_TYPE'))
+  // }
 
   // stakedInformation
   useEffect(() => {
@@ -122,47 +112,47 @@ const Stacking = () => {
       stakePrice == '.' ||
       !userAddress ||
       balanceError ||
-      testProfileLoading
+      profileLoading
     ) {
       setStakeErrors(true)
     } else {
       setStakeErrors(false)
     }
-  }, [stakePrice, userAddress, testProfileLoading])
+  }, [stakePrice, userAddress, profileLoading])
+
+  // useEffect(() => {
+  //   if (
+  //     unStakePrice == 0 ||
+  //     unStakePrice == '.' ||
+  //     !userAddress ||
+  //     balanceError ||
+  //     profileLoading
+  //   ) {
+  //     setUnStakeErrors(true)
+  //   } else {
+  //     setUnStakeErrors(false)
+  //   }
+  // }, [unStakePrice, userAddress, profileLoading])
 
   useEffect(() => {
-    if (
-      unStakePrice == 0 ||
-      unStakePrice == '.' ||
-      !userAddress ||
-      balanceError ||
-      testProfileLoading
-    ) {
-      setUnStakeErrors(true)
-    } else {
-      setUnStakeErrors(false)
-    }
-  }, [unStakePrice, userAddress, testProfileLoading])
-
-  useEffect(() => {
-    if (cptBalance === 0 && !testProfileLoading && userAddress) {
+    if (cptBalance === 0 && !profileLoading && userAddress) {
       setBalanceError(true)
       clearInputValues()
     } else {
       setBalanceError(false)
     }
-  }, [testProfileLoading, cptBalance, userAddress])
+  }, [profileLoading, cptBalance, userAddress])
 
   // Cool down period
-  useEffect(() => {
-    if (userAddress) {
-      dispatch(getUnStakeCoolDownPeriod())
-    }
-  }, [userAddress])
+  // useEffect(() => {
+  //   if (userAddress) {
+  //     dispatch(getUnStakeCoolDownPeriod())
+  //   }
+  // }, [userAddress])
 
-  const claimFunds = () => {
-    dispatch(claimUnStakeWithdraw(unStakePrice))
-  }
+  // const claimFunds = () => {
+  //   dispatch(claimUnStakeWithdraw(unStakePrice))
+  // }
 
   return (
     <>
@@ -188,7 +178,7 @@ const Stacking = () => {
                     </div>
                     <div>
                       <h6>
-                        {testProfileLoading ? (
+                        {profileLoading ? (
                           <ReactLoading
                             type='bars'
                             color='#06397e'
@@ -246,7 +236,7 @@ const Stacking = () => {
                     <div> */}
               {/* <p className='txt__gray'>Unstake CAPL Balance</p> */}
               {/* <h6>
-                        {testProfileLoading ? (
+                        {profileLoading ? (
                           <ReactLoading
                             type='bars'
                             color='#06397e'
@@ -342,7 +332,7 @@ const Stacking = () => {
                 <div className='liquidity__pool__box reward__section'>
                   <h5>Rewards</h5>
                   <h4 className='text-center'>
-                    {testProfileLoading ? (
+                    {profileLoading ? (
                       <ReactLoading
                         type='bars'
                         color='#06397e'
