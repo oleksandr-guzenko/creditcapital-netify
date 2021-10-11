@@ -108,13 +108,13 @@ export const unStakingCAPL =
       } = getState()
 
       const {Staking, web3, cretStaking} = getContracts(walletType)
-      const newGasPrice = await gasPrice(web3)
+      // const newGasPrice = await gasPrice(web3)
 
       if (stakingType === 'CAPL_TYPE') {
         if (unStakeType === 0) {
           const transaction = await Staking.methods
             .withdrawAndPayFees(stakeID)
-            .send({from: userAddress, gasPrice: newGasPrice})
+            .send({from: userAddress})
 
           const tranHash = transaction.transactionHash
 
@@ -129,7 +129,7 @@ export const unStakingCAPL =
         if (unStakeType === 1) {
           const transaction = await Staking.methods
             .withdraw(stakeID)
-            .send({from: userAddress, gasPrice: newGasPrice})
+            .send({from: userAddress})
           const tranHash = transaction.transactionHash
           dispatch({
             type: UN_STAKE_SUCCESS,
@@ -145,7 +145,7 @@ export const unStakingCAPL =
         if (unStakeType === 0) {
           const transaction = await cretStaking.methods
             .withdrawAndPayFees(stakeID)
-            .send({from: userAddress, gasPrice: newGasPrice})
+            .send({from: userAddress})
           const tranHash = transaction.transactionHash
           dispatch({
             type: UN_STAKE_SUCCESS,
@@ -158,7 +158,7 @@ export const unStakingCAPL =
         if (unStakeType === 1) {
           const transaction = await cretStaking.methods
             .withdraw(stakeID)
-            .send({from: userAddress, gasPrice: newGasPrice})
+            .send({from: userAddress})
           const tranHash = transaction.transactionHash
           dispatch({
             type: UN_STAKE_SUCCESS,
