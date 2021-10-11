@@ -349,11 +349,11 @@ const Stacking = () => {
                   <p className='txt__gray'>
                     *Note: Rewards will get deposited to your Wallet
                   </p>
-                  <div className='liquidity__pool__box__btn mt-4'>
+                  {/* <div className='liquidity__pool__box__btn mt-4'>
                     <button className='btn_brand btn_brand_disabled'>
                       Collect
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </Col>
             </Row>
