@@ -61,6 +61,9 @@ const Header = () => {
                 <LinkContainer to='/farming'>
                   <Nav.Link>Farming</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to='/yield-aggregator'>
+                  <Nav.Link>Yield Aggregator</Nav.Link>
+                </LinkContainer>
               </div>
               <div className='navbar__right'>
                 {/* <div className='circle'>

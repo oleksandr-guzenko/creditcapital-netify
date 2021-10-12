@@ -8,6 +8,7 @@ import NotFound from './Pages/NotFound'
 import TrusteeLandingPage from './Pages/Trustees/TrusteeLandingPage'
 import TrusteeCreditGuarantyPool from './Pages/Trustees/TrusteeCreditGuarantyPool'
 import Portfolio from './Pages/Portfolio'
+import YieldAggregator from './Pages/YieldAggregator.js'
 
 // components
 import Header from './Components/Header'
@@ -22,14 +23,15 @@ function App() {
         <Header />
         <Switch>
           <Route path='/' exact component={LandingPage} />
-          <Route path='/credit_guaranty_pool' component={CreditGuarantyPool} />
-          <Route path='/trustee' component={TrusteeLandingPage} />
-          <Route
+          <Route path='/credit-guaranty-pool' component={CreditGuarantyPool} />
+          {/* <Route path='/trustee' component={TrusteeLandingPage} /> */}
+          {/* <Route
             path='/trustee_credit_guaranty_pool'
             component={TrusteeCreditGuarantyPool}
-          />
+          /> */}
           <Route path='/farming' component={Farming} />
           <Route path='/portfolio' component={Portfolio} />
+          <Route path='/yield-aggregator' component={YieldAggregator} />
           <Route path='*' component={NotFound} />
         </Switch>
         <ArrowUp />
