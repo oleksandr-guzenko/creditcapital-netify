@@ -6,6 +6,7 @@ import {clearHashValue} from '../../Redux/BuyCAPTAndCRET/actions'
 import ReserveToken from '../Modals/BuyCAPLAndCRET/ReserveToken'
 import LoadingModalToken from '../Modals/BuyCAPLAndCRET/LoadingModalToken'
 import SuccessMessageToken from '../Modals/BuyCAPLAndCRET/SuccessMessageToken'
+import BuyCCPTToken from '../Modals/BuyCAPLAndCRET/BuyCCPTToken'
 
 const BuyTokens = () => {
   // Redux State
@@ -15,15 +16,21 @@ const BuyTokens = () => {
   const {hashID, loading, error} = useSelector((state) => state.buyTokens)
 
   const [show, setShow] = useState(false)
+  const [showCCPTModal, setShowCCPTModal] = useState(false)
   const [modalTitle, setModalTitle] = useState('')
 
   // Buy TokenModal
   const openTokenModal = (e) => {
-    setShow(true)
     setModalTitle(e.target.textContent)
+    if (e.target.textContent === 'Get CCPT') {
+      setShowCCPTModal(true)
+    } else {
+      setShow(true)
+    }
   }
   const closeTokenModal = () => {
     setShow(false)
+    setShowCCPTModal(false)
   }
 
   useEffect(() => {
@@ -74,7 +81,7 @@ const BuyTokens = () => {
       <div className='section__one'>
         <Container>
           <Row>
-            <Col xl={6} lg={6} md={6} sm={12} xs={12}>
+            <Col xl={4} lg={4} md={6} sm={12} xs={12}>
               <div className='banner__one__box justify-content-center'>
                 <div className='banner__one__box__left'>
                   <h5 className='text-center'>Capital Tokens (CAPL)</h5>
@@ -99,7 +106,7 @@ const BuyTokens = () => {
                 </div>
               </div>
             </Col>
-            <Col xl={6} lg={6} md={6} sm={12} xs={12}>
+            <Col xl={4} lg={4} md={6} sm={12} xs={12}>
               <div className='banner__one__box justify-content-center'>
                 <div className='banner__one__box__left'>
                   <h5 className='text-center'>Credit Tokens (CRET)</h5>
@@ -124,12 +131,48 @@ const BuyTokens = () => {
                 </div>
               </div>
             </Col>
+            <Col xl={4} lg={4} md={6} sm={12} xs={12}>
+              <div className='banner__one__box justify-content-center'>
+                <div className='banner__one__box__left'>
+                  <h5 className='text-center'>
+                    Credit Capital Protocol Token (CCPT)
+                  </h5>
+                  <p className='txt__gray text-center mt-3'>
+                    {/* Credit Tokens are stable coins with a steady return which
+                    will facilitate loan insurance by guaranteeing the interest
+                    and principal payments of commercial borrowers for a fee
+                    payment which generates additional tokens. */}
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Dolore aperiam vel maiores labore excepturi laudantium ab
+                    tempore ipsam exercitationem dicta.maiores labore excepturi
+                    laudantium ab
+                  </p>
+                  <section className='text-center mt-4'>
+                    <button
+                      onClick={userAddress ? (e) => openTokenModal(e) : null}
+                      className={
+                        userAddress
+                          ? 'btn_brand'
+                          : 'btn_brand btn_brand_disabled'
+                      }
+                    >
+                      Get CCPT
+                    </button>
+                  </section>
+                </div>
+              </div>
+            </Col>
           </Row>
         </Container>
       </div>
       <ReserveToken
         name={modalTitle}
         show={show}
+        handleClose={closeTokenModal}
+      />
+      <BuyCCPTToken
+        name={modalTitle}
+        show={showCCPTModal}
         handleClose={closeTokenModal}
       />
       <SuccessMessageToken
