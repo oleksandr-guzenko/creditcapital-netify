@@ -12,6 +12,7 @@ const cptState = {
   temporaryUSD: '',
   temporaryCPT: '',
   tokenType: '',
+  ccptTokenType: '',
 }
 export const buyCAPLandCRETReducer = (state = cptState, action) => {
   switch (action.type) {
@@ -22,6 +23,7 @@ export const buyCAPLandCRETReducer = (state = cptState, action) => {
         tokenType: action.payload.tokenType,
         temporaryUSD: action.payload.amount,
         temporaryCPT: action.payload.CPT,
+        ccptTokenType: action.payload.ccptTokenType,
       }
 
     // case BUY__CRT__REQUEST:

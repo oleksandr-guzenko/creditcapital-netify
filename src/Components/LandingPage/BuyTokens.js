@@ -81,7 +81,7 @@ const BuyTokens = () => {
       <div className='section__one'>
         <Container>
           <Row>
-            <Col xl={4} lg={4} md={6} sm={12} xs={12}>
+            <Col xl={4} lg={4} md={6} sm={12} xs={12} className='mb-2'>
               <div className='banner__one__box justify-content-center'>
                 <div className='banner__one__box__left'>
                   <h5 className='text-center'>Capital Tokens (CAPL)</h5>
@@ -106,7 +106,7 @@ const BuyTokens = () => {
                 </div>
               </div>
             </Col>
-            <Col xl={4} lg={4} md={6} sm={12} xs={12}>
+            <Col xl={4} lg={4} md={6} sm={12} xs={12} className='mb-2'>
               <div className='banner__one__box justify-content-center'>
                 <div className='banner__one__box__left'>
                   <h5 className='text-center'>Credit Tokens (CRET)</h5>
@@ -131,23 +131,17 @@ const BuyTokens = () => {
                 </div>
               </div>
             </Col>
-            <Col xl={4} lg={4} md={6} sm={12} xs={12}>
-              <div className='banner__one__box justify-content-center'>
+            <Col xl={4} lg={4} md={6} sm={12} xs={12} className='mb-2'>
+              <div className='banner__one__box  justify-content-center'>
                 <div className='banner__one__box__left'>
                   <h5 className='text-center'>
                     Credit Capital Protocol Token (CCPT)
                   </h5>
                   <p className='txt__gray text-center mt-3'>
-                    {/* Credit Tokens are stable coins with a steady return which
-                    will facilitate loan insurance by guaranteeing the interest
-                    and principal payments of commercial borrowers for a fee
-                    payment which generates additional tokens. */}
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Dolore aperiam vel maiores labore excepturi laudantium ab
-                    tempore ipsam exercitationem dicta.maiores labore excepturi
-                    laudantium ab
+                    Get Credit Capital Protocol token CCPT , a governance token
+                    against CRT tokens or CAPL tokens
                   </p>
-                  <section className='text-center mt-4'>
+                  <section className='text-center' style={{marginTop: '63px'}}>
                     <button
                       onClick={userAddress ? (e) => openTokenModal(e) : null}
                       className={

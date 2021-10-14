@@ -87,11 +87,19 @@ const BuyCCPTToken = ({show, handleClose, name}) => {
     //   }
     // }
   }
+
   // form
   const buyTokenHandler = (e) => {
     e.preventDefault()
     if (price && userAddress && CPT) {
-      dispatch(reserveCPTAndCRT(price, CPT, 'CCPT'))
+      dispatch(
+        reserveCPTAndCRT(
+          price,
+          numberFormate(calculatePercentage(CPT, 90)),
+          'CCPT',
+          selectedValue
+        )
+      )
     }
   }
 

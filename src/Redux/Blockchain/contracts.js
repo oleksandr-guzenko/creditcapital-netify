@@ -27,6 +27,7 @@ const cretStakingAddress = '0xBad9696b3Bf02d542284D907876e5d20bF070bEF'
 const StakingAddress = '0x336F810531ef1f13C7F688038eA40EA68402f6fa'
 const BuyCAPLAddress = '0x17D0781cc56A13E27f9fEF322345AE214a5389F5'
 const BuyCRETAddress = '0x4C3C4210dEE40CA095Bf23BfaC2041e5C82804fA'
+const BuyCCPTAddress = '0xE980E4C09366072fBDc2946443e1a8dEb21fb578'
 
 // TestNet
 const testCAPLAddress = '0x495338aE49F7F4e69a2C31541A41f9eAcA0f4839'
@@ -4360,7 +4361,353 @@ const getContracts = (walletType) => {
     BuyCRETAddress
   )
 
-  
+  const BuyCCPT = new web3.eth.Contract(
+    [
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'investor',
+            type: 'address',
+          },
+          {
+            indexed: true,
+            internalType: 'uint256',
+            name: 'CRETAmount',
+            type: 'uint256',
+          },
+          {
+            indexed: false,
+            internalType: 'contract IERC20',
+            name: 'tokentype',
+            type: 'address',
+          },
+        ],
+        name: 'Bought',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'previousOwner',
+            type: 'address',
+          },
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'OwnershipTransferred',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: '_owner',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        name: 'WithdrawnAny',
+        type: 'event',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '_amount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint8',
+            name: 'id',
+            type: 'uint8',
+          },
+        ],
+        name: 'buyToken',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'renounceOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'transferOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'NewValue',
+            type: 'uint256',
+          },
+        ],
+        name: 'updatetokensperccpt',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '_treasury',
+            type: 'address',
+          },
+        ],
+        name: 'updatetreasury',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'contract IERC20',
+            name: '_token',
+            type: 'address',
+          },
+        ],
+        name: 'withdrawTokens',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '_CRET',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_CCPT',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_CAPL',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_treasury',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+      },
+      {
+        inputs: [],
+        name: 'CAPL',
+        outputs: [
+          {
+            internalType: 'contract IERC20',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'CaplRaised',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        name: 'CaplUser',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'CCPT',
+        outputs: [
+          {
+            internalType: 'contract IERC20',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'CcptSold',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'CRET',
+        outputs: [
+          {
+            internalType: 'contract IERC20',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'CretRaised',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        name: 'CretUser',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'owner',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        name: 'tokenBoughtUser',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'Tokensperccpt',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'treasury',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+
+    BuyCCPTAddress
+  )
+
   const usdc = new web3.eth.Contract(
     [
       {
@@ -5677,9 +6024,10 @@ const getContracts = (walletType) => {
     dummyUSDC,
     BuyCAPL,
     BuyCRET,
+    BuyCCPT,
     cretStaking,
     liquidityPoolCRET,
-    liquidityPoolCAPL
+    liquidityPoolCAPL,
   }
 }
 

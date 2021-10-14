@@ -15,9 +15,8 @@ import {numberFormate} from '../../../Utilities/Util'
 
 const SuccessMessage = ({show, handleClose}) => {
   // Redux State
-  const {temporaryCPT, hashID, temporaryUSD, tokenType, error} = useSelector(
-    (state) => state.buyTokens
-  )
+  const {temporaryCPT, ccptTokenType, hashID, temporaryUSD, tokenType, error} =
+    useSelector((state) => state.buyTokens)
 
   // clipboard
   const [isCopied, setCopied] = useClipboard(hashID, {
@@ -49,7 +48,16 @@ const SuccessMessage = ({show, handleClose}) => {
               </h4>
               <h6>
                 For
-                <span className='big'>{numberFormate(temporaryUSD)} USDC </span>
+                <span className='big'>
+                  {numberFormate(temporaryUSD)}{' '}
+                  {tokenType === 'CAPL'
+                    ? 'USDC'
+                    : tokenType === 'CRET'
+                    ? 'USDC'
+                    : tokenType === 'CCPT'
+                    ? ccptTokenType
+                    : null}{' '}
+                </span>
               </h6>
               <div className='user__id'>
                 <p onClick={setCopied} className='txt__gray id'>
@@ -69,7 +77,16 @@ const SuccessMessage = ({show, handleClose}) => {
               <>
                 <Image src={Close} alt='' />
                 <h4 className='mt-3 text-danger'>Transaction Failed</h4>
-                <h5 className='mt-2'>{numberFormate(temporaryUSD)} USDC</h5>
+                <h5 className='mt-2'>
+                  {numberFormate(temporaryUSD)}{' '}
+                  {tokenType === 'CAPL'
+                    ? 'USDC'
+                    : tokenType === 'CRET'
+                    ? 'USDC'
+                    : tokenType === 'CCPT'
+                    ? ccptTokenType
+                    : null}{' '}
+                </h5>
                 <p className='txt__gray note'>{result}</p>
               </>
             )

@@ -12,16 +12,17 @@ import {
   getProfileInformationTest,
 } from '../Profile/actions'
 export const reserveCPTAndCRT =
-  (amount, CPT, type) => async (dispatch, getState) => {
+  (amount, CPT, type, ccptTokenType) => async (dispatch, getState) => {
     try {
       dispatch({
         type: BUY__CPT__REQUEST,
-        payload: {amount, CPT, tokenType: type},
+        payload: {amount, CPT, tokenType: type, ccptTokenType},
       })
       const {
         profile: {userAddress, walletType},
       } = getState()
-      const {BuyCAPL, BuyCRET, web3, usdc} = getContracts(walletType)
+      const {BuyCAPL, BuyCRET, BuyCCPT, web3, usdc, capl, cret} =
+        getContracts(walletType)
 
       const price = priceConversion('toWei', 'Mwei', amount, web3)
       // const newGasPrice = await gasPrice(web3)
@@ -57,6 +58,36 @@ export const reserveCPTAndCRT =
         })
         dispatch(getProfileInformation())
         dispatch(getProfileInformationTest())
+      } else if (type === 'CCPT') {
+        if (ccptTokenType === 'CAPL') {
+          await capl.methods
+            .approve(BuyCCPT._address, price)
+            .send({from: userAddress})
+          const transaction = await BuyCCPT.methods
+            .buyToken(price, 0)
+            .send({from: userAddress})
+          const txHash = transaction.transactionHash
+          dispatch({
+            type: BUY__CPT__SUCCESS,
+            transactionHash: txHash,
+          })
+          dispatch(getProfileInformation())
+          dispatch(getProfileInformationTest())
+        } else if (ccptTokenType === 'CRET') {
+          await cret.methods
+            .approve(BuyCCPT._address, price)
+            .send({from: userAddress})
+          const transaction = await BuyCCPT.methods
+            .buyToken(price, 1)
+            .send({from: userAddress})
+          const txHash = transaction.transactionHash
+          dispatch({
+            type: BUY__CPT__SUCCESS,
+            transactionHash: txHash,
+          })
+          dispatch(getProfileInformation())
+          dispatch(getProfileInformationTest())
+        }
       }
     } catch (error) {
       dispatch({
