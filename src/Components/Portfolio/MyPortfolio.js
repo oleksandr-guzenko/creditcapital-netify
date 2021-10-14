@@ -25,6 +25,7 @@ const MyPortfolio = () => {
     availableBalance,
     CAPLBalance,
     CRETBalance,
+    CCPTBalance,
     totalRewards,
     lpCAPLBalance,
     lpCRETBalance,
@@ -57,8 +58,8 @@ const MyPortfolio = () => {
           <div className='portfolio__cards__container'>
             <PortfolioCard
               bgColor='#e5def0'
-              amount={`$ ${numberFormate(totalRewards)}`}
-              text='Total Rewards Earned'
+              amount={`$ ${numberFormate(CCPTBalance)}`}
+              text='CCPT Balance'
               icon={card_one}
             />
             <PortfolioCard
@@ -90,6 +91,12 @@ const MyPortfolio = () => {
               amount={`$ ${numberFormate(availableBalance || c)}`}
               text='USDC Balance'
               icon={card_five}
+            />
+            <PortfolioCard
+              bgColor='#e5def0'
+              amount={`$ ${numberFormate(totalRewards)}`}
+              text='Total Rewards Earned'
+              icon={card_one}
             />
           </div>
         </div>

@@ -20,7 +20,7 @@ import {totalTreasuryAmount} from '../Root/actions'
 //       symbol: 'MATIC',
 //       decimals: 18,
 //     },
-//     rpcUrls: ['https://polygon-rpc.com/'],
+//     rpcUrls: ['https://rpc-mainnet.maticvigil.com/'],
 //     blockExplorerUrls: ['https://www.polygonscan.com/'],
 //   },
 // ]
@@ -141,7 +141,7 @@ export const getProfileInformation = () => async (dispatch, getState) => {
     dispatch({
       type: PROFILE_REQUEST,
     })
-    const {web3, usdc, capl, cret, Staking, cretStaking} =
+    const {web3, usdc, capl, cret, ccpt, Staking, cretStaking} =
       getContracts(walletType)
 
     if (userAddress) {
@@ -152,6 +152,9 @@ export const getProfileInformation = () => async (dispatch, getState) => {
       // CPT and CRT
       const caplB = await capl.methods.balanceOf(userAddress).call()
       const CAPLBalance = web3.utils.fromWei(caplB.toString(), 'ether')
+
+      const ccpftB = await ccpt.methods.balanceOf(userAddress).call()
+      const CCPTBalance = web3.utils.fromWei(ccpftB.toString(), 'ether')
 
       const cretB = await cret.methods.balanceOf(userAddress).call()
 
@@ -182,7 +185,6 @@ export const getProfileInformation = () => async (dispatch, getState) => {
       const b = web3.utils.fromWei(platformCRET.toString(), 'ether')
       const totalPlatRewards = Number(a) + Number(b)
 
-
       dispatch({
         type: PROFILE_SUCCESS,
         payload: {
@@ -191,6 +193,7 @@ export const getProfileInformation = () => async (dispatch, getState) => {
           CRETBalance,
           CAPL_CCPTBalance,
           CRET_CCPTBalance,
+          CCPTBalance,
           caplRewards,
           cretRewards,
           totalRewards: Number(caplRewards) + Number(cretRewards),

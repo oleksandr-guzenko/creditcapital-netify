@@ -55,7 +55,7 @@ const Header = () => {
                 <LinkContainer to='/'>
                   <Nav.Link>Capital Pool</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to='/credit_guaranty_pool'>
+                <LinkContainer to='/credit-guaranty-pool'>
                   <Nav.Link>Credit Guaranty Pool</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to='/farming'>

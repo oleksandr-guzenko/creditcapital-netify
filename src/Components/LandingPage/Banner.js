@@ -279,7 +279,15 @@ const Banner = () => {
           <Container>
             <Row>
               {box__info?.map((info) => (
-                <Col xl={4} lg={4} md={4} sm={12} xs={12} key={info?.id}>
+                <Col
+                  xl={4}
+                  lg={4}
+                  md={4}
+                  sm={12}
+                  xs={12}
+                  key={info?.id}
+                  className='mb-2'
+                >
                   <div className='banner__one__box'>
                     <div className='banner__one__box__left'>
                       <p className='txt__gray'>{info?.title}</p>

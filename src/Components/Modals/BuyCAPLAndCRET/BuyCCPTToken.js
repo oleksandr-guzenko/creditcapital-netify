@@ -22,7 +22,6 @@ const BuyCCPTToken = ({show, handleClose, name}) => {
   const [balanceError, setBalanceError] = useState(false)
   const [availableBalanceError, setAvailableBalanceError] = useState(false)
 
-  console.log(availableBalanceError)
 
   // Redux State
   const {hashID, error} = useSelector((state) => state.buyTokens)
