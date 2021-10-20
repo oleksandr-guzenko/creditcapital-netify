@@ -39,6 +39,12 @@ $xxl: 1400px;
   justify-content: $justify;
 }
 
+@mixin userAddress($width) {
+  width: $width !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 @mixin image($object-fit) {
   width: 100%;
   height: 100%;

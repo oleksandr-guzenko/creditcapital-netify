@@ -46,6 +46,14 @@ const Wallets = ({show, handleClose}) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (typeof window.ethereum !== 'undefined') {
+      window.ethereum.on('chainChanged', () => {
+        window.location.reload()
+      })
+    }
+  }, [])
+
   // useEffect(() => {
   //   const checkIt = async () => {
   //     if (typeof window.ethereum !== 'undefined') {
@@ -77,12 +85,12 @@ const Wallets = ({show, handleClose}) => {
           </div>
           <div className='success__body'>
             <div className='wallet' onClick={connectToMetaMask}>
-              <Image src={MetaMaskFox} alt='' />
               <h5>MetaMask</h5>
+              <Image src={MetaMaskFox} alt='' />
             </div>
             <div className='wallet' onClick={connectToCoinbase}>
-              <Image src={Coinbase_wallet} alt='' />
               <h5>Coinbase</h5>
+              <Image src={Coinbase_wallet} alt='' />
             </div>
           </div>
         </div>

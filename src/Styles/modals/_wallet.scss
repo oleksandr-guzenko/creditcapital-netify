@@ -14,12 +14,12 @@
 
   .wallet {
     border-radius: 5px;
-    box-shadow: $box-shadow-six;
+    box-shadow: $box-shadow-two;
     padding: 20px;
     margin: 20px 0;
     cursor: pointer;
     transition: $transition;
-    @include displayCenter(center, center);
+    @include displayCenter(center, space-between);
     img {
       max-width: 30px;
       max-height: 30px;
@@ -31,6 +31,40 @@
     }
     &:hover {
       box-shadow: $box-shadow-four;
+    }
+  }
+}
+
+.Disconnecct {
+  .modal-dialog {
+    max-width: 480px;
+  }
+
+  .user__id {
+    background-color: #ebebeb !important;
+    border-radius: 5px;
+
+    p {
+      //   @include userAddress(390px);
+      text-align: center;
+    }
+    @include mQ(450px) {
+      p {
+        @include userAddress(300px);
+        text-align: center;
+      }
+    }
+    @include mQ(350px) {
+      p {
+        @include userAddress(200px);
+        text-align: center;
+      }
+    }
+  }
+
+  @include mQ($sm) {
+    button {
+      font-size: 12px;
     }
   }
 }

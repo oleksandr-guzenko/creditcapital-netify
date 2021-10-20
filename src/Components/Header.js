@@ -11,7 +11,12 @@ import Wallet from '../Assets/wallet.svg'
 
 // redux imports
 import {useSelector, useDispatch} from 'react-redux'
-import { getProfile, getProfileInformation, getProfileInformationTest } from '../Redux/Profile/actions'
+import {
+  getProfile,
+  getProfileInformation,
+  getProfileInformationTest,
+} from '../Redux/Profile/actions'
+import DisConnect from './Modals/DisConnect/DisConnect'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -20,6 +25,8 @@ const Header = () => {
 
   // Wallets modal
   const [showWallets, setShowWallets] = useState(false)
+  const [openDisconnectModal, setOpenDisconnectModal] = useState(false)
+
   const closeWalletsModal = () => {
     setShowWallets(false)
   }
@@ -86,7 +93,10 @@ const Header = () => {
                   </div>
                 )}
                 {userAddress && (
-                  <div className='option__wrapper'>
+                  <div
+                    className='option__wrapper'
+                    onClick={() => setOpenDisconnectModal(true)}
+                  >
                     <Image
                       src={
                         walletType === 'MetaMask'
@@ -97,7 +107,10 @@ const Header = () => {
                       }
                       alt=''
                     />
-                    <a className='user__id'>{userAddress}</a>
+                    <a className='user__id'>{`${userAddress?.substring(
+                      0,
+                      4
+                    )}...${userAddress?.substring(userAddress.length - 4)}`}</a>
                   </div>
                 )}
                 {!userAddress && (
@@ -111,6 +124,10 @@ const Header = () => {
         </Container>
       </Navbar>
       <Wallets show={showWallets} handleClose={closeWalletsModal} />
+      <DisConnect
+        show={openDisconnectModal}
+        handleClose={() => setOpenDisconnectModal(false)}
+      />
     </>
   )
 }

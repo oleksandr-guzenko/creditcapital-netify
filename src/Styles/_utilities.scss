@@ -125,10 +125,10 @@ svg {
   background-color: $primary !important;
   color: $brand__color !important;
   border: 1px solid $brand__color;
-  cursor: not-allowed !important;
   &:hover {
-    box-shadow: none !important;
+    color: $primary !important;
     transform: unset !important;
+    background-color: $brand__color !important;
   }
 }
 .btn__brand__secondary {
