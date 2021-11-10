@@ -68,8 +68,11 @@ const Header = () => {
                 <LinkContainer to='/farming'>
                   <Nav.Link>Farming</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to='/yield-aggregator'>
-                  <Nav.Link>Yield Aggregator</Nav.Link>
+                <LinkContainer to='/swap'>
+                  <Nav.Link>Swap</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/liquidity'>
+                  <Nav.Link>Liquidity</Nav.Link>
                 </LinkContainer>
               </div>
               <div className='navbar__right'>

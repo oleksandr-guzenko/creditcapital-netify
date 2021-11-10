@@ -8,13 +8,15 @@ import NotFound from './Pages/NotFound'
 import TrusteeLandingPage from './Pages/Trustees/TrusteeLandingPage'
 import TrusteeCreditGuarantyPool from './Pages/Trustees/TrusteeCreditGuarantyPool'
 import Portfolio from './Pages/Portfolio'
-import YieldAggregator from './Pages/YieldAggregator.js'
+// import YieldAggregator from './Pages/YieldAggregator.js'
+import Farming from './Pages/Farming'
+import Swap from './Pages/Swap'
+import Liquidity from './Pages/Liquidity'
 
 // components
 import Header from './Components/Header'
 import Footer from './Components/Footer'
 import ArrowUp from './Components/ArrowUp'
-import Farming from './Pages/Farming'
 
 function App() {
   return (
@@ -31,7 +33,9 @@ function App() {
           /> */}
           <Route path='/farming' component={Farming} />
           <Route path='/portfolio' component={Portfolio} />
-          <Route path='/yield-aggregator' component={YieldAggregator} />
+          <Route path='/swap' component={Swap} />
+          <Route path='/liquidity' component={Liquidity} />
+          {/* <Route path='/yield-aggregator' component={YieldAggregator} /> */}
           <Route path='*' component={NotFound} />
         </Switch>
         <ArrowUp />

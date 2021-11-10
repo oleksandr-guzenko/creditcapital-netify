@@ -39,6 +39,23 @@
   .modal-dialog {
     max-width: 480px;
   }
+  .wallet_icon {
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    border-radius: 50%;
+    margin: auto auto 20px auto;
+    box-shadow: $box-shadow-four;
+    img {
+      @include image(contain);
+    }
+    @include mQ($sm) {
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+      margin: auto auto 10px auto;
+    }
+  }
 
   .user__id {
     background-color: #ebebeb !important;

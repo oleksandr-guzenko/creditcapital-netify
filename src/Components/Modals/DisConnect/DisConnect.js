@@ -1,4 +1,4 @@
-import {Modal} from 'react-bootstrap'
+import {Image, Modal} from 'react-bootstrap'
 import {CgClose} from 'react-icons/cg'
 import {FiCopy} from 'react-icons/fi'
 import useClipboard from 'react-use-clipboard'
@@ -8,10 +8,14 @@ import {useSelector} from 'react-redux'
 import {useDispatch} from 'react-redux'
 import {disConnectWallet} from '../../../Redux/Profile/actions'
 
+// Svgs
+import MetaMask from '../../../Assets/MetaMask.svg'
+import Coinbase from '../../../Assets/coinbase_Wallet.svg'
+
 const DisConnect = ({show, handleClose}) => {
   // redux State
   const dispatch = useDispatch()
-  const {userAddress} = useSelector((state) => state.profile)
+  const {userAddress, walletType} = useSelector((state) => state.profile)
 
   //   clipboard
   const [isCopied, setCopied] = useClipboard(userAddress, {
@@ -34,6 +38,18 @@ const DisConnect = ({show, handleClose}) => {
             </div>
           </div>
           <div className='success__body'>
+            <div className='wallet_icon'>
+              <Image
+                src={
+                  walletType === 'MetaMask'
+                    ? MetaMask
+                    : walletType === 'Coinbase'
+                    ? Coinbase
+                    : ''
+                }
+                alt=''
+              />
+            </div>
             <div className='user__id'>
               <p onClick={setCopied} className='txt__gray id'>
                 {userAddress}
