@@ -129,7 +129,7 @@ const LiquidityPool = () => {
               </div>
             </div>
             <div className='box_wrapper_button'>
-              <button className='btn_brand'>Swap</button>
+              <button className='btn_brand'>Add Liquidity</button>
             </div>
           </div>
         </Container>
