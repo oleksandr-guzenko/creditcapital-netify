@@ -87,10 +87,15 @@
 }
 
 .settings {
-  h5 {
-    margin: 0;
-  }
   .minutes_wrapper {
+    h5 {
+      margin: 0;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    label {
+      float: left;
+    }
     padding: 20px;
   }
   .success__body {

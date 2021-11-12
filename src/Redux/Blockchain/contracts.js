@@ -1,6 +1,8 @@
 import Web3 from 'web3'
 import WalletLink from 'walletlink'
 import CC_LOGO from '../../Assets/CC_Logo.svg'
+import {USDCBnbABI, USDCBnbAddress} from './ABI/USDCBNB'
+import {CCPTBnbABI, CCPTBnbAddress} from './ABI/CCPTBNB'
 
 export const walletLink = new WalletLink({
   appName: 'Credit Capital',
@@ -9,8 +11,10 @@ export const walletLink = new WalletLink({
 })
 
 // Production
-const RPC_URL = 'https://polygon-rpc.com/'
-const CHAIN_ID = 137
+// const RPC_URL = 'https://polygon-rpc.com/'
+const RPC_URL = 'https://data-seed-prebsc-1-s1.binance.org:8545/'
+// const CHAIN_ID = 137
+const CHAIN_ID = 97
 
 // testing
 // const RPC_URL = 'https://rpc-mumbai.maticvigil.com/'
@@ -33,6 +37,8 @@ const BuyCCPTAddress = '0xE980E4C09366072fBDc2946443e1a8dEb21fb578'
 const testCAPLAddress = '0x495338aE49F7F4e69a2C31541A41f9eAcA0f4839'
 const testCRETAddress = '0xC4e0f9781af34c49DAD23257fb58aE124bDB4b4B'
 const dummyUSDCAddress = '0x046bC6cBc4B74F75Fdd71fa71495fb6d125283C3'
+const swapAddress = '0x3713Ce76b2B41E9526Ff3c24976DDBDb41b2F25A'
+
 // const testCCPTAddress = '0xc4046A423b0e1DBF12E3a6bB786fFa1bDC0b1A72'
 // const cretStakingAddress = '0xaf8E1ADEEe81c00aa701100850000c8D50745d35'
 // const StakingAddress = '0x27eCe1fDA11E301a0d3c97F32EC7B465AB12d2Fe'
@@ -56,6 +62,8 @@ const getContracts = (walletType) => {
   }
 
   // Testttt
+  const USDCBNB = new web3.eth.Contract(USDCBnbABI, USDCBnbAddress)
+  const CCPTBNB = new web3.eth.Contract(CCPTBnbABI, CCPTBnbAddress)
 
   const Staking = new web3.eth.Contract(
     [
@@ -3903,6 +3911,116 @@ const getContracts = (walletType) => {
     ],
     liquidityPoolCRETAddress
   )
+  const swap = new web3.eth.Contract(
+    [
+      {
+        inputs: [
+          {internalType: 'address', name: '_ccpt', type: 'address'},
+          {internalType: 'address', name: '_usdc', type: 'address'},
+        ],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+      },
+      {
+        inputs: [],
+        name: '_index',
+        outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'ccpt',
+        outputs: [{internalType: 'address', name: '', type: 'address'}],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'ccptUsdcPair',
+        outputs: [{internalType: 'address', name: '', type: 'address'}],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {internalType: 'uint256', name: 'tokenAmount', type: 'uint256'},
+          {internalType: 'uint256', name: 'duration', type: 'uint256'},
+        ],
+        name: 'getCcpt',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {internalType: 'uint256', name: 'tokenAmount', type: 'uint256'},
+        ],
+        name: 'getCcptAmount',
+        outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {internalType: 'uint256', name: 'tokenAmount', type: 'uint256'},
+          {internalType: 'uint256', name: 'duration', type: 'uint256'},
+        ],
+        name: 'getUSDC',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {internalType: 'uint256', name: 'tokenAmount', type: 'uint256'},
+        ],
+        name: 'getUSDCAmount',
+        outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'reserves',
+        outputs: [
+          {internalType: 'uint112', name: '', type: 'uint112'},
+          {internalType: 'uint112', name: '', type: 'uint112'},
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'swapAndLiquifyEnabled',
+        outputs: [{internalType: 'bool', name: '', type: 'bool'}],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'uniswapV2Router',
+        outputs: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'usdc',
+        outputs: [{internalType: 'address', name: '', type: 'address'}],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+    swapAddress
+  )
+
   // mainnet
 
   const BuyCAPL = new web3.eth.Contract(
@@ -6018,11 +6136,14 @@ const getContracts = (walletType) => {
     ccpt,
     capl,
     cret,
+    swap,
     Staking,
     testcapl,
     testcret,
     dummyUSDC,
     BuyCAPL,
+    USDCBNB,
+    CCPTBNB,
     BuyCRET,
     BuyCCPT,
     cretStaking,

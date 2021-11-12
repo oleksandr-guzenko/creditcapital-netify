@@ -21,8 +21,8 @@ const SettingsModal = ({show, handleClose, handleTimeChange, time}) => {
         </div>
       </div>
       <div className='success__body'>
-        <h5>Transaction Deadline</h5>
         <div className='minutes_wrapper'>
+          <h5>Transaction Deadline</h5>
           <Form.Group>
             <Form.Label>Minutes</Form.Label>
             <NumberFormat

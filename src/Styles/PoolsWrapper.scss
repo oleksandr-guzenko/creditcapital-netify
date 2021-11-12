@@ -84,6 +84,8 @@
       }
     }
     &_circle {
+      border: 1px solid rgba(28, 33, 45, 0.12) !important;
+
       width: 40px;
       height: 40px;
       background-color: aliceblue;
@@ -92,9 +94,11 @@
       place-items: center;
       margin: 15px auto;
       cursor: pointer;
-      box-shadow: $box_shadow_five;
       svg {
         font-size: 20px;
+      }
+      &:hover {
+        box-shadow: $box_shadow_five;
       }
     }
     &_button {
