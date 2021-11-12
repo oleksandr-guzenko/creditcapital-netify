@@ -1,5 +1,6 @@
 import {gasPrice, priceConversion} from '../../Utilities/Util'
 import getContracts from '../Blockchain/contracts'
+import {checkAndAddNetwork} from '../Profile/actions'
 import {
   GET_CONVERTED_CCPT_VALUES_SUCCESS,
   GET_CONVERTED_USDC_VALUES_SUCCESS,
@@ -12,6 +13,7 @@ import {
 export const swapTokens =
   (amount, tokenType, minutes) => async (dispatch, getState) => {
     try {
+      dispatch(checkAndAddNetwork())
       dispatch({
         type: SWAPPING_REQUEST,
         payload: tokenType,

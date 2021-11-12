@@ -57,26 +57,42 @@ import {totalTreasuryAmount} from '../Root/actions'
 
 // actions
 
-// export const checkAndAddNetwork = () => async (dispatch) => {
-//   try {
-//     await window.ethereum.request({
-//       method: 'wallet_switchEthereumChain',
-//       params: [{chainId: data[0]?.chainId}],
-//     })
-//   } catch (error) {
-//     console.log(error)
-//     if (error?.code === 4902) {
-//       try {
-//         await window.ethereum.request({
-//           method: 'wallet_addEthereumChain',
-//           params: data,
-//         })
-//       } catch (addError) {
-//         console.error(addError?.message)
-//       }
-//     }
-//   }
-// }
+const bnbdata = [
+  {
+    // chainId: '0x38',
+    chainId: '0x61',
+    chainName: 'Binance Smart Chain Testnet',
+    nativeCurrency: {
+      name: 'BNB',
+      symbol: 'BNB',
+      decimals: 18,
+    },
+    // rpcUrls: ['https://bsc-dataseed.binance.org/'],
+    rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+    blockExplorerUrls: ['https://bscscan.com/'],
+  },
+]
+
+export const checkAndAddNetwork = () => async () => {
+  try {
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{chainId: bnbdata[0]?.chainId}],
+    })
+  } catch (error) {
+    console.log(error)
+    if (error?.code === 4902) {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: bnbdata,
+        })
+      } catch (addError) {
+        console.error(addError?.message)
+      }
+    }
+  }
+}
 
 // export const checkAndAddNetworkTest = () => async (dispatch) => {
 //   try {
