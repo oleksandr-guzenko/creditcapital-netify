@@ -122,5 +122,7 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
         payload: {usdcBNBBalance, ccptBNBBalance},
       })
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error?.message);
+  }
 }

@@ -1,0 +1,92 @@
+.lpVaults {
+  .main_wrapper {
+    &_header {
+      background: rgb(243, 232, 232);
+      padding: 15px;
+      border-radius: 10px 10px 0 0;
+      cursor: pointer;
+      @include displayCenter(center, space-between);
+      flex-wrap: wrap;
+      .header_wrapper {
+        &_left {
+          margin-right: 30px;
+          img {
+            width: 40px;
+            height: 40px;
+            // @include image(contain);
+          }
+        }
+        &_right {
+        }
+        h4,
+        p {
+          margin: 0;
+        }
+        svg {
+          width: 40px;
+          height: 40px;
+          padding: 5px;
+          border-radius: 10px;
+          background: $primary;
+          cursor: pointer;
+        }
+      }
+      .wefwe {
+        @include displayCenter(center, space-between);
+      }
+    }
+  }
+
+  .lpWrapper {
+    background-color: $primary;
+    border-radius: 0 0 10px 10px;
+    padding: 15px;
+    .info {
+      margin-top: 10px;
+      .info_part {
+        @include displayCenter(center, space-between);
+        p,
+        a {
+          font-size: 11px;
+          margin: 3px;
+        }
+        a {
+          color: black;
+          text-decoration: underline !important;
+        }
+      }
+    }
+  }
+
+  @include mQ($md) {
+    .main_wrapper {
+      &_header {
+        padding: 15px 5px;
+        @include displayCenter(flex-start, space-between);
+        .header_wrapper {
+          &_left {
+            margin-right: 10px;
+            img {
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          h4 {
+            font-size: 12px;
+          }
+          p {
+            font-size: 10px;
+          }
+          svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+    .lpWrapper {
+      padding: 5px;
+    }
+  }
+}

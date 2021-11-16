@@ -12,6 +12,7 @@ import Portfolio from './Pages/Portfolio'
 import Farming from './Pages/Farming'
 import Swap from './Pages/Swap'
 import Liquidity from './Pages/Liquidity'
+import Vault from './Pages/Vault'
 
 // components
 import Header from './Components/Header'
@@ -35,6 +36,7 @@ function App() {
           <Route path='/portfolio' component={Portfolio} />
           <Route path='/swap' component={Swap} />
           <Route path='/liquidity' component={Liquidity} />
+          <Route path='/vault' component={Vault} />
           {/* <Route path='/yield-aggregator' component={YieldAggregator} /> */}
           <Route path='*' component={NotFound} />
         </Switch>

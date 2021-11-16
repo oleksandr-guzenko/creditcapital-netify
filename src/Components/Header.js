@@ -17,6 +17,7 @@ import {
   getProfileInformationTest,
 } from '../Redux/Profile/actions'
 import DisConnect from './Modals/DisConnect/DisConnect'
+import {getSwapTokenBalances} from '../Redux/Swap/actions'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -39,6 +40,12 @@ const Header = () => {
       closeWalletsModal()
       dispatch(getProfileInformation())
       dispatch(getProfileInformationTest())
+    }
+  }, [userAddress])
+
+  useEffect(() => {
+    if (userAddress) {
+      dispatch(getSwapTokenBalances())
     }
   }, [userAddress])
 
@@ -73,6 +80,9 @@ const Header = () => {
                 </LinkContainer>
                 <LinkContainer to='/liquidity'>
                   <Nav.Link>Liquidity</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/Vault'>
+                  <Nav.Link>Vault</Nav.Link>
                 </LinkContainer>
               </div>
               <div className='navbar__right'>

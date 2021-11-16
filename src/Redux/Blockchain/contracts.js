@@ -3,6 +3,8 @@ import WalletLink from 'walletlink'
 import CC_LOGO from '../../Assets/CC_Logo.svg'
 import {USDCBnbABI, USDCBnbAddress} from './ABI/USDCBNB'
 import {CCPTBnbABI, CCPTBnbAddress} from './ABI/CCPTBNB'
+import {vaultLPABI, vaultLPAddress} from './ABI/VaultLP'
+import { USDC_CCPT_ABI, USDC_CCPT_Address } from './ABI/USDC_CCPT'
 
 export const walletLink = new WalletLink({
   appName: 'Credit Capital',
@@ -64,6 +66,8 @@ const getContracts = (walletType) => {
   // Testttt
   const USDCBNB = new web3.eth.Contract(USDCBnbABI, USDCBnbAddress)
   const CCPTBNB = new web3.eth.Contract(CCPTBnbABI, CCPTBnbAddress)
+  const VAULTLP = new web3.eth.Contract(vaultLPABI,vaultLPAddress)
+  const USDC_CCPT_TOKEN = new web3.eth.Contract(USDC_CCPT_ABI,USDC_CCPT_Address)
 
   const Staking = new web3.eth.Contract(
     [
@@ -6144,6 +6148,8 @@ const getContracts = (walletType) => {
     BuyCAPL,
     USDCBNB,
     CCPTBNB,
+    USDC_CCPT_TOKEN,
+    VAULTLP,
     BuyCRET,
     BuyCCPT,
     cretStaking,

@@ -4,14 +4,13 @@ import {RiListSettingsLine} from 'react-icons/ri'
 import {VscHistory} from 'react-icons/vsc'
 import {BiChevronDown} from 'react-icons/bi'
 import {BsArrowDown} from 'react-icons/bs'
-import NumberFormat from 'react-number-format'
+
 import {Link} from 'react-router-dom'
 import RecentTransactions from '../Modals/RecentTransactions/RecentTransactions'
 import SettingsModal from '../Modals/SettingsModal/SettingsModal'
 import {useDispatch, useSelector} from 'react-redux'
 import {
   convertTokenValue,
-  getSwapTokenBalances,
   swapTokens,
 } from '../../Redux/Swap/actions'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
@@ -72,12 +71,6 @@ const SwapPool = () => {
       setSwapSucc(false)
     }
   }, [swapHash])
-
-  useEffect(() => {
-    if (userAddress) {
-      dispatch(getSwapTokenBalances())
-    }
-  }, [userAddress])
 
   // const handlePriceChange = (number) => {
   //   setPrice(number.value)

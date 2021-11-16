@@ -102,3 +102,15 @@
     padding: 0px 0 50px 0;
   }
 }
+
+.success__body {
+  .transform {
+    padding: 0;
+    .container {
+      padding: 0;
+      .box_wrapper {
+        padding: 5px;
+      }
+    }
+  }
+}

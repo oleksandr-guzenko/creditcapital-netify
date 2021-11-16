@@ -44,3 +44,18 @@
 }
 // $font__gray: #848e9c;
 // $font__black: #333333;
+
+
+.reward__section {
+  text-align: center;
+  p {
+    text-align: center;
+    font-size: 12px;
+    margin: 10px 0 !important;
+    font-weight: 400;
+  }
+  .price {
+    font-size: 16px;
+    margin: 0;
+  }
+}

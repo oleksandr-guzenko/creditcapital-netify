@@ -6,6 +6,7 @@ import {defaultReducer} from './Root/reducers'
 
 import {stakingReducer} from './staking/reducer'
 import {swapReducer} from './Swap/reducer'
+import {vaultReducer} from './Vault/reducer'
 
 const rootReducer = combineReducers({
   root: defaultReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   staking: stakingReducer,
   buyTokens: buyCAPLandCRETReducer,
   swap: swapReducer,
+  vault: vaultReducer,
 })
 
 export default rootReducer

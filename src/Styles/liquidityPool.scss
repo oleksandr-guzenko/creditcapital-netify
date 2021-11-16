@@ -201,3 +201,131 @@
     }
   }
 }
+
+// 43333333333333333333333333333333333333
+.liquidity__pool__box {
+  padding: 20px;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 10px;
+  background-color: #ffffff;
+  height: 100%;
+  .trustee {
+    text-align: right;
+    font-size: 11px;
+    margin-bottom: 0px !important;
+    font-weight: 400;
+  }
+  &__top {
+    @include displayCenter(flex-start, space-between);
+    h5 {
+      font-weight: 500;
+    }
+    p {
+      text-align: right;
+      font-weight: 400;
+      margin-bottom: 5px !important;
+    }
+    h6 {
+      font-weight: 400;
+      text-align: right;
+      margin: 0;
+      padding: 0;
+      @include displayCenter(center, flex-end);
+      .loader {
+        margin: -30px 10px 0 0;
+      }
+    }
+  }
+  &__middle {
+    @include displayCenter(center, space-between);
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 15px 0;
+
+    .css-2b097c-container {
+      min-width: 100px;
+      .css-yk16xz-control {
+        border: 0;
+        background-color: transparent;
+        box-shadow: none;
+        font-size: 12px !important;
+        color: $brand__color !important;
+        &:hover {
+          border-color: transparent;
+        }
+      }
+    }
+    .css-yk16xz-control,
+    .css-1pahdxg-control {
+      border-color: transparent !important;
+      box-shadow: none !important;
+      background-color: transparent !important;
+      border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
+      border-radius: 0 !important;
+      font-size: 12px !important;
+      color: $brand__color !important;
+
+      &:hover {
+        border-color: transparent !important;
+        border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
+      }
+    }
+    input {
+      background-color: transparent;
+      border: 0;
+      &:focus {
+        outline: none;
+      }
+    }
+    .input-group-text {
+      background-color: transparent;
+      color: #2fa6f2;
+      font-weight: 500;
+      border: 0;
+      border-left: 2px solid rgba(221, 221, 221, 0.733);
+    }
+    .cpt {
+      font-size: 14px;
+      border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
+      img {
+        margin-right: 3px;
+      }
+    }
+  }
+  &__bottom {
+    @include displayCenter(center, space-between);
+    margin: 15px 0;
+    p {
+      text-align: right;
+      font-size: 12px;
+      margin-bottom: 0px !important;
+      font-weight: 400;
+    }
+  }
+  .withdraw {
+    p {
+      margin-bottom: 0;
+    }
+  }
+  &__btn {
+    width: 100%;
+    @include displayCenter(center, space-between);
+    margin-top: 20px;
+    .btn_brand {
+      width: 40%;
+      text-align: center !important;
+      padding: 10px 10px;
+    }
+  }
+
+  @include mQ($md) {
+    .liquidity__pool__box__btn .btn_brand {
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+    .liquidity__pool__box__top h5 {
+      font-size: 16px;
+    }
+  }
+}

@@ -109,3 +109,23 @@
     }
   }
 }
+.transform {
+  padding: 0;
+  .box_wrapper_container_top {
+    h4 {
+      span {
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+  .box_wrapper_container_bottom_right {
+    select {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+  }
+}
