@@ -20,11 +20,13 @@ import {
   transformTokens,
 } from '../../../Redux/Vault/action'
 import VaultSuccess from './VaultSuccess'
+import {convertTokenValue} from '../../../Redux/Swap/actions'
 
 const TransformModal = ({show, handleClose}) => {
   // Redux State
   const dispatch = useDispatch()
   const {usdcBNBBalance, ccptBNBBalance} = useSelector((state) => state.swap)
+  const {usdcPrice, ccptPrice} = useSelector((state) => state.swap)
   const {vaultHash, vaultLoading} = useSelector((state) => state.vault)
   const {userAddress} = useSelector((state) => state.profile)
   const {usdc_ccpt_Balance} = useSelector((state) => state.vault)
@@ -46,7 +48,17 @@ const TransformModal = ({show, handleClose}) => {
       setSecondPrice('')
     } else if (priceRegex.test(value)) {
       setPrice(value)
-      dispatch(getUSDCAndCCPTBalance(value, tokenType))
+      dispatch(
+        convertTokenValue(
+          value / 2,
+          tokenType === 'usdcToken'
+            ? 'USDC'
+            : tokenType === 'ccptToken'
+            ? 'CCPT'
+            : null
+        )
+      )
+      // dispatch(getUSDCAndCCPTBalance(value, tokenType))
       // setFirstAvailableForChange(false)
       // setSecondAvailableForChange(true)
     }
@@ -71,6 +83,7 @@ const TransformModal = ({show, handleClose}) => {
 
   const selectTokenType = (e) => {
     setTokenType(e.target.value)
+    setPrice('')
   }
 
   const makeTransform = () => {
@@ -159,7 +172,45 @@ const TransformModal = ({show, handleClose}) => {
                       </div>
                     </div>
                   </div>
-                  {/* <div className='box_wrapper_container'>
+                  <div className='box_wrapper_container'>
+                    <div className='box_wrapper_container_top'>
+                      <h4>
+                        <span>
+                          <img src={USDCSVG} alt='' />
+                        </span>{' '}
+                        USDC
+                      </h4>
+                      <h4>
+                        {price === ''
+                          ? 0
+                          : tokenType === 'usdcToken'
+                          ? numberFormate(price / 2)
+                          : tokenType === 'ccptToken'
+                          ? numberFormate(usdcPrice)
+                          : 0}
+                      </h4>
+                    </div>
+                  </div>
+                  <div className='box_wrapper_container'>
+                    <div className='box_wrapper_container_top'>
+                      <h4>
+                        <span>
+                          <img src={CCPTSVG} alt='' />
+                        </span>{' '}
+                        CCPT
+                      </h4>
+                      <h4>
+                        {price === ''
+                          ? 0
+                          : tokenType === 'ccptToken'
+                          ? numberFormate(price / 2)
+                          : tokenType === 'usdcToken'
+                          ? numberFormate(ccptPrice)
+                          : 0}
+                      </h4>
+                    </div>
+                  </div>
+                  <div className='box_wrapper_container'>
                     <div className='box_wrapper_container_top'>
                       <h4>
                         <span>
@@ -168,9 +219,17 @@ const TransformModal = ({show, handleClose}) => {
                         </span>{' '}
                         USDC-CCPT
                       </h4>
-                      <h4>{numberFormate(usdc_ccpt_Balance)}</h4>
+                      <h4>
+                        {price === ''
+                          ? 0
+                          : tokenType === 'usdcToken'
+                          ? numberFormate(price / 2 + Number(ccptPrice))
+                          : tokenType === 'ccptToken'
+                          ? numberFormate(price / 2 + Number(usdcPrice))
+                          : 0}
+                      </h4>
                     </div>
-                  </div> */}
+                  </div>
 
                   <div className='box_wrapper_button'>
                     <button
@@ -182,7 +241,7 @@ const TransformModal = ({show, handleClose}) => {
                       disabled={!userAddress}
                       onClick={makeTransform}
                     >
-                      Add Liquidity
+                      Create LP
                     </button>
                   </div>
                 </div>
