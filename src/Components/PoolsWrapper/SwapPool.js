@@ -11,6 +11,7 @@ import SettingsModal from '../Modals/SettingsModal/SettingsModal'
 import {useDispatch, useSelector} from 'react-redux'
 import {
   convertTokenValue,
+  REMOVE_hash,
   swapTokens,
 } from '../../Redux/Swap/actions'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
@@ -67,6 +68,9 @@ const SwapPool = () => {
       setSwapSucc(true)
       setPrice('')
       setSecondPrice('')
+      setTimeout(() => {
+        dispatch(REMOVE_hash())
+      }, 15000)
     } else {
       setSwapSucc(false)
     }
@@ -329,7 +333,13 @@ const SwapPool = () => {
         handleClose={() => setOpenSet(false)}
       />
       <SwapLoading show={swapLoad} handleClose={() => setSwapLoad(false)} />
-      <SwapSuccess show={swapSucc} handleClose={() => setSwapSucc(false)} />
+      <SwapSuccess
+        show={swapSucc}
+        handleClose={() => {
+          setSwapSucc(false)
+          dispatch(REMOVE_hash())
+        }}
+      />
     </>
   )
 }

@@ -5,6 +5,7 @@ import {
   GET_CONVERTED_CCPT_VALUES_SUCCESS,
   GET_CONVERTED_USDC_VALUES_SUCCESS,
   GET_SWAP_TOKENS_BALANCE,
+  REMOVE_HASH,
   SWAPPING_FAIL,
   SWAPPING_REQUEST,
   SWAPPING_SUCCESS,
@@ -123,6 +124,12 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
       })
     }
   } catch (error) {
-    console.log(error?.message);
+    console.log(error?.message)
   }
+}
+
+export const REMOVE_hash = () => async (dispatch) => {
+  dispatch({
+    type: REMOVE_HASH,
+  })
 }

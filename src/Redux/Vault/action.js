@@ -8,10 +8,8 @@ import {
   GET_VAULT_BALANCE_SUCCESS,
   VAULT_DEPOSIT_FAIL,
   VAULT_DEPOSIT_REQUEST,
+  CLEAR_VALUES,
   VAULT_DEPOSIT_SUCCESS,
-  VAULT_TRANSFORM_FAIL,
-  VAULT_TRANSFORM_REQUEST,
-  VAULT_TRANSFORM_SUCCESS,
 } from './constants'
 
 // export const vaultDepositAndWithdrawTokens =
@@ -111,7 +109,7 @@ export const transformTokens =
     try {
       dispatch(checkAndAddNetwork())
       dispatch({
-        type: VAULT_TRANSFORM_REQUEST,
+        type: VAULT_DEPOSIT_REQUEST,
         payload: tokenType,
       })
       const {
@@ -132,7 +130,7 @@ export const transformTokens =
           .send({from: userAddress})
         const tranHash = transaction.transactionHash
         dispatch({
-          type: VAULT_TRANSFORM_SUCCESS,
+          type: VAULT_DEPOSIT_SUCCESS,
           payload: tranHash,
         })
         dispatch(getSwapTokenBalances())
@@ -148,7 +146,7 @@ export const transformTokens =
           .send({from: userAddress})
         const tranHash = transaction.transactionHash
         dispatch({
-          type: VAULT_TRANSFORM_SUCCESS,
+          type: VAULT_DEPOSIT_SUCCESS,
           payload: tranHash,
         })
         dispatch(getSwapTokenBalances())
@@ -156,7 +154,7 @@ export const transformTokens =
       }
     } catch (error) {
       dispatch({
-        type: VAULT_TRANSFORM_FAIL,
+        type: VAULT_DEPOSIT_FAIL,
         payload: error?.message,
       })
     }
@@ -182,4 +180,10 @@ export const getDepositedBalance = () => async (dispatch, getState) => {
   } catch (error) {
     console.error(error?.message)
   }
+}
+
+export const clearHashValues = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_VALUES,
+  })
 }

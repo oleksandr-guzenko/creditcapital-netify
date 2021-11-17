@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Container, Modal} from 'react-bootstrap'
 import {BiChevronDown} from 'react-icons/bi'
 import {CgClose} from 'react-icons/cg'
@@ -15,14 +15,17 @@ import USDCSVG from '../../../Assets/money/usdc.svg'
 import CCPTSVG from '../../../Assets/portfolio/card_three.svg'
 import {numberFormate} from '../../../Utilities/Util'
 import {
+  clearHashValues,
   getUSDCAndCCPTBalance,
   transformTokens,
 } from '../../../Redux/Vault/action'
+import VaultSuccess from './VaultSuccess'
 
 const TransformModal = ({show, handleClose}) => {
   // Redux State
   const dispatch = useDispatch()
   const {usdcBNBBalance, ccptBNBBalance} = useSelector((state) => state.swap)
+  const {vaultHash, vaultLoading} = useSelector((state) => state.vault)
   const {userAddress} = useSelector((state) => state.profile)
   const {usdc_ccpt_Balance} = useSelector((state) => state.vault)
 
@@ -49,19 +52,19 @@ const TransformModal = ({show, handleClose}) => {
     }
   }
 
-  const handlePriceChangeTwo = (e) => {
-    const {value} = e.target
-    const priceRegex = /^[0-9]*\.?[0-9]*$/
-    if (value === '') {
-      setPrice('')
-      setSecondPrice('')
-    } else if (priceRegex.test(value)) {
-      setSecondPrice(value)
-      dispatch(getUSDCAndCCPTBalance(value, tokenType))
-      // setFirstAvailableForChange(true)
-      // setSecondAvailableForChange(false)
-    }
-  }
+  // const handlePriceChangeTwo = (e) => {
+  //   const {value} = e.target
+  //   const priceRegex = /^[0-9]*\.?[0-9]*$/
+  //   if (value === '') {
+  //     setPrice('')
+  //     setSecondPrice('')
+  //   } else if (priceRegex.test(value)) {
+  //     setSecondPrice(value)
+  //     dispatch(getUSDCAndCCPTBalance(value, tokenType))
+  //     // setFirstAvailableForChange(true)
+  //     // setSecondAvailableForChange(false)
+  //   }
+  // }
   const handleTimeChange = (number) => {
     setTime(number.value)
   }
@@ -73,6 +76,27 @@ const TransformModal = ({show, handleClose}) => {
   const makeTransform = () => {
     dispatch(transformTokens(price, tokenType, time))
   }
+
+  useEffect(() => {
+    if (vaultLoading) {
+      setSwapLoad(true)
+    } else {
+      setSwapLoad(false)
+    }
+  }, [vaultLoading])
+
+  useEffect(() => {
+    if (vaultHash) {
+      setSwapSucc(true)
+      setPrice('')
+      setSecondPrice('')
+      setTimeout(() => {
+        dispatch(clearHashValues())
+      }, 15000)
+    } else {
+      setSwapSucc(false)
+    }
+  }, [vaultHash])
 
   return (
     <Modal
@@ -135,7 +159,7 @@ const TransformModal = ({show, handleClose}) => {
                       </div>
                     </div>
                   </div>
-                  <div className='box_wrapper_container'>
+                  {/* <div className='box_wrapper_container'>
                     <div className='box_wrapper_container_top'>
                       <h4>
                         <span>
@@ -146,12 +170,12 @@ const TransformModal = ({show, handleClose}) => {
                       </h4>
                       <h4>{numberFormate(usdc_ccpt_Balance)}</h4>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className='box_wrapper_button'>
                     <button
                       className={
-                        !userAddress
+                        !userAddress || price === ''
                           ? 'btn_brand btn_brand_disabled'
                           : 'btn_brand'
                       }
@@ -178,9 +202,12 @@ const TransformModal = ({show, handleClose}) => {
               show={swapLoad}
               handleClose={() => setSwapLoad(false)}
             />
-            <SwapSuccess
+            <VaultSuccess
               show={swapSucc}
-              handleClose={() => setSwapSucc(false)}
+              handleClose={() => {
+                setSwapSucc(false)
+                dispatch(clearHashValues())
+              }}
             />
           </>
         </div>

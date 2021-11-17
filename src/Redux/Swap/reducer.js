@@ -4,6 +4,7 @@ import {
   GET_SWAP_TOKENS_BALANCE,
   SWAPPING_FAIL,
   SWAPPING_REQUEST,
+  REMOVE_HASH,
   SWAPPING_SUCCESS,
 } from './constans'
 
@@ -55,6 +56,19 @@ export const swapReducer = (state = initialState, action) => {
         swapLoading: false,
         swapError: action.payload,
       }
+    case REMOVE_HASH:
+      return {
+        ...state,
+        swapLoading: false,
+        swapError: false,
+        swapHash: '',
+        usdcPrice: '',
+        ccptPrice: '',
+        swapingType: '',
+        usdcBNBBalance: 0,
+        ccptBNBBalance: 0,
+      }
+
     default:
       return state
   }
