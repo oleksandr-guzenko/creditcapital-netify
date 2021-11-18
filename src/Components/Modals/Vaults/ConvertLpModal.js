@@ -22,7 +22,7 @@ import {
 import VaultSuccess from './VaultSuccess'
 import {convertTokenValue} from '../../../Redux/Swap/actions'
 
-const TransformModal = ({show, handleClose}) => {
+const ConvertLpModal = ({show, handleClose}) => {
   // Redux State
   const dispatch = useDispatch()
   const {usdcBNBBalance, ccptBNBBalance} = useSelector((state) => state.swap)
@@ -120,7 +120,7 @@ const TransformModal = ({show, handleClose}) => {
       <div className='buy__cpt__modal'>
         <div className='buy__cpt__header'>
           <div className='buy__cpt__header__tile'>
-            <h4>Transform Tokens</h4>
+            <h4>Convert LP Tokens</h4>
           </div>
           <div className='buy__cpt__header__close' onClick={handleClose}>
             <CgClose />
@@ -128,7 +128,7 @@ const TransformModal = ({show, handleClose}) => {
         </div>
         <div className='success__body'>
           <>
-            <div className='swap transform'>
+            <div className='swap transform convertLp'>
               <Container>
                 <div className='box_wrapper'>
                   <div className='box_wrapper_header'>
@@ -141,6 +141,7 @@ const TransformModal = ({show, handleClose}) => {
                       <VscHistory onClick={() => setOpenTrans(true)} />
                     </div>
                   </div>
+
                   <div className='box_wrapper_container'>
                     <div className='box_wrapper_container_top'>
                       <h4>Send</h4>
@@ -153,6 +154,7 @@ const TransformModal = ({show, handleClose}) => {
                           : 0}
                       </h4>
                     </div>
+
                     <div className='box_wrapper_container_bottom'>
                       <div className='box_wrapper_container_bottom_left'>
                         <input
@@ -165,15 +167,21 @@ const TransformModal = ({show, handleClose}) => {
                       <div className='box_wrapper_container_bottom_right'>
                         {/* <h4 onClick={setMaximumBalanceOfUSDC}>MAX</h4> */}
                         {/* {firstToken === 'USDC' && <Image src={USDC} alt='' />} */}
-                        <select name='' id='' onChange={selectTokenType}>
+                        {/* <select name='' id='' onChange={selectTokenType}>
                           <option value='usdcToken'>USDC</option>
                           <option value='ccptToken'>CCPT</option>
-                        </select>
+                        </select> */}
+                        <h4>
+                          <span>
+                            <img src={USDCSVG} alt='' />
+                            <img src={CCPTSVG} alt='' />
+                          </span>{' '}
+                          USDC-CCPT
+                        </h4>
                       </div>
                     </div>
                   </div>
-                  <h6>Receive (Estimated)</h6>
-                  <div className='box_wrapper_container'>
+                  {/* <div className='box_wrapper_container'>
                     <div className='box_wrapper_container_top'>
                       <h4>
                         <span>
@@ -191,7 +199,28 @@ const TransformModal = ({show, handleClose}) => {
                           : 0}
                       </h4>
                     </div>
+                  </div> */}
+                  <h6>Receive (Estimated)</h6>
+                  <div className='box_wrapper_container'>
+                    <div className='box_wrapper_container_top'>
+                      <h4>
+                        <span>
+                          <img src={USDCSVG} alt='' />
+                        </span>{' '}
+                        USDC
+                      </h4>
+                      <h4>
+                        {price === ''
+                          ? 0
+                          : tokenType === 'usdcToken'
+                          ? numberFormate(price / 2 + Number(ccptPrice))
+                          : tokenType === 'ccptToken'
+                          ? numberFormate(price / 2 + Number(usdcPrice))
+                          : 0}
+                      </h4>
+                    </div>
                   </div>
+
                   <div className='box_wrapper_container'>
                     <div className='box_wrapper_container_top'>
                       <h4>
@@ -211,26 +240,6 @@ const TransformModal = ({show, handleClose}) => {
                       </h4>
                     </div>
                   </div>
-                  <div className='box_wrapper_container'>
-                    <div className='box_wrapper_container_top'>
-                      <h4>
-                        <span>
-                          <img src={USDCSVG} alt='' />
-                          <img src={CCPTSVG} alt='' />
-                        </span>{' '}
-                        USDC-CCPT
-                      </h4>
-                      <h4>
-                        {price === ''
-                          ? 0
-                          : tokenType === 'usdcToken'
-                          ? numberFormate(price / 2 + Number(ccptPrice))
-                          : tokenType === 'ccptToken'
-                          ? numberFormate(price / 2 + Number(usdcPrice))
-                          : 0}
-                      </h4>
-                    </div>
-                  </div>
 
                   <div className='box_wrapper_button'>
                     <button
@@ -242,7 +251,7 @@ const TransformModal = ({show, handleClose}) => {
                       disabled={!userAddress}
                       onClick={makeTransform}
                     >
-                      Create LP
+                      Convert
                     </button>
                   </div>
                 </div>
@@ -276,4 +285,4 @@ const TransformModal = ({show, handleClose}) => {
   )
 }
 
-export default TransformModal
+export default ConvertLpModal

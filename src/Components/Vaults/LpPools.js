@@ -11,6 +11,7 @@ import CCPTSVG from '../../Assets/portfolio/card_three.svg'
 import {useDispatch, useSelector} from 'react-redux'
 import {getDepositedBalance} from '../../Redux/Vault/action'
 import {numberFormate} from '../../Utilities/Util'
+import ConvertLpModal from '../Modals/Vaults/ConvertLpModal'
 
 const LpPools = () => {
   //redux
@@ -104,7 +105,7 @@ const LpPools = () => {
                         <div>
                           <p className='txt__gray'>Available balance</p>
                           <h6>
-                            {numberFormate(depositedLpBalance)}
+                            {numberFormate(depositedLpBalance)} LP $(0.0000)
                             {/* {profileLoading ? (
                             <ReactLoading
                               type='bars'
@@ -166,7 +167,7 @@ const LpPools = () => {
                         <div>
                           <p className='txt__gray'>Available balance</p>
                           <h6>
-                            0.0000
+                            0.0000 LP $(0.0000)
                             {/* {profileLoading ? (
                             <ReactLoading
                               type='bars'
@@ -208,7 +209,10 @@ const LpPools = () => {
                         >
                           Deposit
                         </button> */}
-                          <button type='submit' className='btn_brand'>
+                          <button
+                            onClick={() => setConvertModal(true)}
+                            className='btn_brand'
+                          >
                             Convert LP
                           </button>
                           <button type='submit' className='btn_brand'>
@@ -239,11 +243,11 @@ const LpPools = () => {
                       <p className='txt__gray'>
                         *Note: Rewards will get deposited to your Wallet
                       </p>
-                      {/* <div className='liquidity__pool__box__btn mt-4'>
-                    <button className='btn_brand btn_brand_disabled'>
-                      Collect
-                    </button>
-                  </div> */}
+                      <div className='liquidity__pool__box__btn justify-content-center mt-5'>
+                        <button className='btn_brand btn_brand_disabled'>
+                          Collect
+                        </button>
+                      </div>
                     </div>
                   </Col>
                 </Row>
@@ -334,6 +338,10 @@ const LpPools = () => {
       <TransformModal
         show={transformModal}
         handleClose={() => setTransformModal(false)}
+      />
+      <ConvertLpModal
+        show={convertModal}
+        handleClose={() => setConvertModal(false)}
       />
     </>
   )

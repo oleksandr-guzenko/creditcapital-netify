@@ -5,10 +5,9 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import LandingPage from './Pages/LandingPage'
 import CreditGuarantyPool from './Pages/CreditGuarantyPool'
 import NotFound from './Pages/NotFound'
-import TrusteeLandingPage from './Pages/Trustees/TrusteeLandingPage'
-import TrusteeCreditGuarantyPool from './Pages/Trustees/TrusteeCreditGuarantyPool'
+// import TrusteeLandingPage from './Pages/Trustees/TrusteeLandingPage'
+// import TrusteeCreditGuarantyPool from './Pages/Trustees/TrusteeCreditGuarantyPool'
 import Portfolio from './Pages/Portfolio'
-// import YieldAggregator from './Pages/YieldAggregator.js'
 import Farming from './Pages/Farming'
 import Swap from './Pages/Swap'
 import Liquidity from './Pages/Liquidity'
@@ -37,7 +36,7 @@ function App() {
           <Route path='/swap' component={Swap} />
           <Route path='/liquidity' component={Liquidity} />
           <Route path='/vault' component={Vault} />
-          {/* <Route path='/yield-aggregator' component={YieldAggregator} /> */}
+          
           <Route path='*' component={NotFound} />
         </Switch>
         <ArrowUp />
