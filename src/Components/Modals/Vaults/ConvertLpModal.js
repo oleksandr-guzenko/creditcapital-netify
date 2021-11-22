@@ -176,7 +176,7 @@ const ConvertLpModal = ({show, handleClose}) => {
                             <img src={USDCSVG} alt='' />
                             <img src={CCPTSVG} alt='' />
                           </span>{' '}
-                          USDC-CCPT
+                          USDC-CAPL
                         </h4>
                       </div>
                     </div>
@@ -227,7 +227,7 @@ const ConvertLpModal = ({show, handleClose}) => {
                         <span>
                           <img src={CCPTSVG} alt='' />
                         </span>{' '}
-                        CCPT
+                        CAPL
                       </h4>
                       <h4>
                         {price === ''

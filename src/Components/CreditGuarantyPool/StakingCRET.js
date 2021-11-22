@@ -344,7 +344,7 @@ const StackingCRET = () => {
                     ) : (
                       `${numberFormate(cretRewards)}`
                     )}{' '}
-                    <span>CCPT</span>
+                    <span>CAPL</span>
                   </h4>
                   {/* <p className='price txt__gray'>~$19,214.261</p> */}
                   <p className='txt__gray'>

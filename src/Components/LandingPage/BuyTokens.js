@@ -22,7 +22,7 @@ const BuyTokens = () => {
   // Buy TokenModal
   const openTokenModal = (e) => {
     setModalTitle(e.target.textContent)
-    if (e.target.textContent === 'Get CCPT') {
+    if (e.target.textContent === 'Get CAPL') {
       setShowCCPTModal(true)
     } else {
       setShow(true)
@@ -84,7 +84,7 @@ const BuyTokens = () => {
             <Col xl={4} lg={4} md={6} sm={12} xs={12} className='mb-2'>
               <div className='banner__one__box justify-content-center'>
                 <div className='banner__one__box__left'>
-                  <h5 className='text-center'>Capital Tokens (CAPL)</h5>
+                  <h5 className='text-center'>Capital Tokens (CCUSD)</h5>
                   <p className='txt__gray text-center mt-3'>
                     Capital Tokens are more volatile coins with a higher return
                     which represent an interest in a portfolio of commercial
@@ -100,7 +100,7 @@ const BuyTokens = () => {
                           : 'btn_brand btn_brand_disabled'
                       }
                     >
-                      Buy CAPL
+                      Buy CCUSD
                     </button>
                   </section>
                 </div>
@@ -135,11 +135,11 @@ const BuyTokens = () => {
               <div className='banner__one__box  justify-content-center'>
                 <div className='banner__one__box__left'>
                   <h5 className='text-center'>
-                    Credit Capital Protocol Token (CCPT)
+                    Credit Capital Protocol Token (CAPL)
                   </h5>
                   <p className='txt__gray text-center mt-3'>
-                    Get Credit Capital Protocol token CCPT , a governance token
-                    against CRT tokens or CAPL tokens
+                    Get Credit Capital Protocol token CAPL , a governance token
+                    against CRT tokens or CCUSD tokens
                   </p>
                   <section className='text-center' style={{marginTop: '63px'}}>
                     <button
@@ -150,7 +150,7 @@ const BuyTokens = () => {
                           : 'btn_brand btn_brand_disabled'
                       }
                     >
-                      Get CCPT
+                      Get CAPL
                     </button>
                   </section>
                 </div>

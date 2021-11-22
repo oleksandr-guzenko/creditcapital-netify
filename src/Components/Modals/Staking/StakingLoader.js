@@ -30,7 +30,7 @@ const StakingLoader = ({show, handleClose}) => {
             <span className='big'>
               {numberFormate(tokenAmount)}{' '}
               {stakingType === 'CAPL_TYPE'
-                ? 'CAPL'
+                ? 'CCUSD'
                 : stakingType === 'CRET_TYPE'
                 ? 'CRET'
                 : null}
@@ -43,9 +43,9 @@ const StakingLoader = ({show, handleClose}) => {
                 ? numberFormate(calculatePercentage(tokenAmount, 70))
                 : numberFormate(tokenAmount)}{' '}
               {typeOfTransaction === 'staking'
-                ? 'CCPT'
-                : stakingType === 'CAPL_TYPE'
                 ? 'CAPL'
+                : stakingType === 'CAPL_TYPE'
+                ? 'CCUSD'
                 : stakingType === 'CRET_TYPE'
                 ? 'CRET'
                 : null}{' '}

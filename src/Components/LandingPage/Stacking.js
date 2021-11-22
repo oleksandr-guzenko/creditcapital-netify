@@ -159,9 +159,9 @@ const Stacking = () => {
       <div className='liquidity__pool stacking'>
         <Container>
           <div className='liquidity__pool__wrapper'>
-            <h4 className='section__titles'>Staking CAPL</h4>
+            <h4 className='section__titles'>Staking CCUSD</h4>
             <p>
-              Staking CAPL is an additional way to earn extra yield on current
+              Staking CCUSD is an additional way to earn extra yield on current
               deposit
             </p>
             <Row>
@@ -169,10 +169,10 @@ const Stacking = () => {
                 <div className='liquidity__pool__box'>
                   <div className='liquidity__pool__box__top'>
                     <div>
-                      <h5>Stake CAPL</h5>
+                      <h5>Stake CCUSD</h5>
                       {balanceError && (
                         <p className='text-danger danger error_message'>
-                          Please fund your wallet with CAPL
+                          Please fund your wallet with CCUSD
                         </p>
                       )}
                     </div>
@@ -197,7 +197,7 @@ const Stacking = () => {
                       price={stakePrice}
                       handlePriceChange={handleStakePriceChange}
                       errors={balanceError}
-                      typeOfToken='CAPL'
+                      typeOfToken='CCUSD'
                     />
 
                     <div className='liquidity__pool__box__btn'>
@@ -343,7 +343,7 @@ const Stacking = () => {
                     ) : (
                       `${numberFormate(caplRewards)}`
                     )}{' '}
-                    <span>CCPT</span>
+                    <span>CAPL</span>
                   </h4>
                   {/* <p className='price txt__gray'>~$19,214.261</p> */}
                   <p className='txt__gray'>

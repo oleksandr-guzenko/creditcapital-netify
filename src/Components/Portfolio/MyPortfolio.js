@@ -59,13 +59,13 @@ const MyPortfolio = () => {
             <PortfolioCard
               bgColor='#e5def0'
               amount={`$ ${numberFormate(CCPTBalance)}`}
-              text='CCPT Balance'
+              text='CAPL Balance'
               icon={card_one}
             />
             <PortfolioCard
               bgColor='#D6EDD9'
               amount={numberFormate(CAPLBalance)}
-              text='CAPL balance'
+              text='CCUDC balance'
               icon={card_two}
             />
             <PortfolioCard
@@ -77,7 +77,7 @@ const MyPortfolio = () => {
             <PortfolioCard
               bgColor='#D8E4F6'
               amount={`$ ${numberFormate(lpCAPLBalance || a)}`}
-              text='CAPL LP Balance'
+              text='CCUDC LP Balance'
               icon={card_four}
             />
             <PortfolioCard

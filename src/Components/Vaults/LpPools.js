@@ -9,15 +9,28 @@ import VaultInput from './VaultInput'
 import USDCSVG from '../../Assets/money/usdc.svg'
 import CCPTSVG from '../../Assets/portfolio/card_three.svg'
 import {useDispatch, useSelector} from 'react-redux'
-import {getDepositedBalance} from '../../Redux/Vault/action'
+import {
+  clearHashValues,
+  getDepositedBalance,
+  vaultDepositAndWithdrawTokens,
+  withdrawVaultTokens,
+} from '../../Redux/Vault/action'
 import {numberFormate} from '../../Utilities/Util'
 import ConvertLpModal from '../Modals/Vaults/ConvertLpModal'
+import SwapLoading from '../Modals/SwapModals/SwapLoading'
+import VaultSuccess from '../Modals/Vaults/VaultSuccess'
 
 const LpPools = () => {
   //redux
   const dispatch = useDispatch()
   const {userAddress} = useSelector((state) => state.profile)
-  const {depositedLpBalance} = useSelector((state) => state.vault)
+  const {
+    vaultHash,
+    vaultLoading,
+    depositedLpBalance,
+    vaultRewards,
+    withdrawLpBalance,
+  } = useSelector((state) => state.vault)
 
   const [open, setOpen] = useState(false)
   const [depositPrice, setDepositPrice] = useState('')
@@ -26,6 +39,32 @@ const LpPools = () => {
   const [balanceError, setBalanceError] = useState(false)
   const [withdrawPrice, setWithdrawPrice] = useState('')
   const [withdrawErrors, setWithdrawErrors] = useState(false)
+
+  // loading
+  const [swapLoad, setSwapLoad] = useState(false)
+  const [swapSucc, setSwapSucc] = useState(false)
+
+  useEffect(() => {
+    if (vaultLoading) {
+      setSwapLoad(true)
+    } else {
+      setSwapLoad(false)
+    }
+  }, [vaultLoading])
+
+  useEffect(() => {
+    if (vaultHash) {
+      setSwapSucc(true)
+      setDepositPrice('')
+      setWithdrawPrice('')
+      setTimeout(() => {
+        dispatch(clearHashValues())
+      }, 15000)
+    } else {
+      setSwapSucc(false)
+    }
+  }, [vaultHash])
+  // ################
 
   useEffect(() => {
     if (userAddress) {
@@ -39,6 +78,7 @@ const LpPools = () => {
   }
   const submitDepositLiquidityPool = (e) => {
     e.preventDefault()
+    dispatch(vaultDepositAndWithdrawTokens(depositPrice, 'deposit'))
   }
   // Withdraw
 
@@ -47,6 +87,10 @@ const LpPools = () => {
   }
   const submitWithdrawLiquidityPool = (e) => {
     e.preventDefault()
+    dispatch(vaultDepositAndWithdrawTokens(depositPrice, 'withdraw'))
+  }
+  const claimVaultRewards = () => {
+    dispatch(vaultDepositAndWithdrawTokens(0, 'rewards'))
   }
 
   // transform
@@ -75,7 +119,7 @@ const LpPools = () => {
                   <Image src={CCPTSVG} alt='' className='img_sec' />
                 </div>
                 <div className='header_wrapper_right'>
-                  <h4>USDC-CCPT</h4>
+                  <h4>USDC-CAPL</h4>
                   <p>0.625</p>
                 </div>
               </div>
@@ -89,7 +133,7 @@ const LpPools = () => {
               </div>
               <div className='header_wrapper'>
                 <h4>$0.00</h4>
-                <p>0.000 CCPT</p>
+                <p>0.000 CAPL</p>
               </div>
               <div className='header_wrapper'>
                 {open ? <GoChevronUp /> : <GoChevronDown />}
@@ -167,7 +211,7 @@ const LpPools = () => {
                         <div>
                           <p className='txt__gray'>Available balance</p>
                           <h6>
-                            0.0000 LP $(0.0000)
+                            {numberFormate(withdrawLpBalance)} LP $(0.0000)
                             {/* {profileLoading ? (
                             <ReactLoading
                               type='bars'
@@ -237,14 +281,22 @@ const LpPools = () => {
                       ) : (
                         `${numberFormate(caplRewards)}`
                       )}{' '} */}
-                        0.0000 <span>CCPT</span>
+                        {numberFormate(vaultRewards)} <span>CAPL</span>
                       </h4>
                       {/* <p className='price txt__gray'>~$19,214.261</p> */}
                       <p className='txt__gray'>
                         *Note: Rewards will get deposited to your Wallet
                       </p>
                       <div className='liquidity__pool__box__btn justify-content-center mt-5'>
-                        <button className='btn_brand btn_brand_disabled'>
+                        <button
+                          disabled={vaultRewards === '0'}
+                          className={
+                            vaultRewards === '0'
+                              ? 'btn_brand_disabled'
+                              : 'btn_brand'
+                          }
+                          onClick={claimVaultRewards}
+                        >
                           Collect
                         </button>
                       </div>
@@ -262,7 +314,7 @@ const LpPools = () => {
                         </div>
                         <div className='info_part'>
                           <p>Farm Name</p>
-                          <p>CCPT</p>
+                          <p>CAPL</p>
                         </div>
                         <div className='info_part'>
                           <p>Farm Contract</p>
@@ -319,7 +371,7 @@ const LpPools = () => {
                           <p>0</p>
                         </div>
                         <div className='info_part'>
-                          <p>CCPT APR</p>
+                          <p>CAPL APR</p>
                           <p>160.26%</p>
                         </div>
                         <div className='info_part'>
@@ -342,6 +394,14 @@ const LpPools = () => {
       <ConvertLpModal
         show={convertModal}
         handleClose={() => setConvertModal(false)}
+      />
+      <SwapLoading show={swapLoad} handleClose={() => setSwapLoad(false)} />
+      <VaultSuccess
+        show={swapSucc}
+        handleClose={() => {
+          setSwapSucc(false)
+          dispatch(clearHashValues())
+        }}
       />
     </>
   )

@@ -58,9 +58,9 @@ const StakingConfirmation = ({show, handleClose}) => {
                     ? numberFormate(calculatePercentage(tokenAmount, 70))
                     : numberFormate(tokenAmount)}{' '}
                   {typeOfTransaction === 'staking'
-                    ? 'CCPT'
-                    : stakingType === 'CAPL_TYPE'
                     ? 'CAPL'
+                    : stakingType === 'CAPL_TYPE'
+                    ? 'CCUSD'
                     : stakingType === 'CRET_TYPE'
                     ? 'CRET'
                     : null}
@@ -70,12 +70,12 @@ const StakingConfirmation = ({show, handleClose}) => {
                   {numberFormate(tokenAmount)}{' '}
                   {typeOfTransaction === 'staking'
                     ? stakingType === 'CAPL_TYPE'
-                      ? 'CAPL'
+                      ? 'CCUSD'
                       : stakingType === 'CRET_TYPE'
                       ? 'CRET'
                       : null
                     : stakingType === 'CAPL_TYPE'
-                    ? 'CAPL'
+                    ? 'CCUSD'
                     : stakingType === 'CRET_TYPE'
                     ? 'CRET'
                     : null}{' '}
@@ -103,7 +103,7 @@ const StakingConfirmation = ({show, handleClose}) => {
                 <h6 className='mt-2'>
                   {tokenAmount}{' '}
                   {stakingType === 'CAPL_TYPE'
-                    ? 'CAPL'
+                    ? 'CCUSD'
                     : stakingType === 'CRET_TYPE'
                     ? 'CRET'
                     : null}

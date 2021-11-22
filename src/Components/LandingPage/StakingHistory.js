@@ -106,7 +106,7 @@ const StakingHistory = ({trustee, stakingType}) => {
                       <p>
                         {numberFormate(stake?.stakedAmount)}{' '}
                         {type === 'CAPL_TYPE'
-                          ? 'CAPL'
+                          ? 'CCUDC'
                           : type === 'CRET_TYPE'
                           ? 'CRET'
                           : null}{' '}
@@ -114,7 +114,7 @@ const StakingHistory = ({trustee, stakingType}) => {
                     </div>
                     <div className='d-flex align-content-center justify-content-between'>
                       <p>Reward Amount</p>
-                      <p>{numberFormate(stake?.rewardAmount)} CCPT</p>
+                      <p>{numberFormate(stake?.rewardAmount)} CAPL</p>
                     </div>
                     <div className='d-flex align-content-center justify-content-between'>
                       <>

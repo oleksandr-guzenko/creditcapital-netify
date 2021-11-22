@@ -22,7 +22,6 @@ const BuyCCPTToken = ({show, handleClose, name}) => {
   const [balanceError, setBalanceError] = useState(false)
   const [availableBalanceError, setAvailableBalanceError] = useState(false)
 
-
   // Redux State
   const {hashID, error} = useSelector((state) => state.buyTokens)
 
@@ -33,11 +32,11 @@ const BuyCCPTToken = ({show, handleClose, name}) => {
   const {Option} = components
   const options = [
     {
-      value: 'CAPL',
+      value: 'CCUSD',
       label: (
         <div className='d-flex align-items-center justify-content-between'>
           <h6 className='mb-0' style={{fontSize: '12px', marginLeft: '3px'}}>
-            CAPL
+            CCUSD
           </h6>
         </div>
       ),
@@ -95,7 +94,7 @@ const BuyCCPTToken = ({show, handleClose, name}) => {
         reserveCPTAndCRT(
           price,
           numberFormate(calculatePercentage(CPT, 90)),
-          'CCPT',
+          'CAPL',
           selectedValue
         )
       )
@@ -197,7 +196,7 @@ const BuyCCPTToken = ({show, handleClose, name}) => {
         </div>
         <div className='buy__cpt__modal__instructions mb-0'>
           <div className='buy__cpt__modal__instructions__left'>
-            <p className='txt__gray'>CAPL balance</p>
+            <p className='txt__gray'>CCUSD balance</p>
             <h6>
               {profileLoading ? (
                 <ReactLoading
@@ -212,7 +211,7 @@ const BuyCCPTToken = ({show, handleClose, name}) => {
             </h6>
           </div>
           <div className='buy__cpt__modal__instructions__right'>
-            <p className='txt__gray'>1 CCPT : 10 CAPL | 10 CRET</p>
+            <p className='txt__gray'>1 CAPL : 10 CCUSD | 10 CRET</p>
           </div>
         </div>
         <div className='buy__cpt__modal__instructions m-0'>
@@ -237,7 +236,7 @@ const BuyCCPTToken = ({show, handleClose, name}) => {
           <div className='price__inputs'>
             <div className='input__wrapper'>
               <Select
-                placeholder={'CAPL'}
+                placeholder={'CCUSD'}
                 components={{DropdownIndicator}}
                 value={selectedValue}
                 onChange={handleChange}
@@ -306,7 +305,7 @@ const BuyCCPTToken = ({show, handleClose, name}) => {
             <div className='input__wrapper'>
               <InputGroup>
                 <InputGroup.Text className='border-0 txt__brand cpt'>
-                  CCPT
+                  CAPL
                 </InputGroup.Text>
                 <Form.Control
                   disabled

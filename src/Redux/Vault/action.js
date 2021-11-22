@@ -12,61 +12,71 @@ import {
   VAULT_DEPOSIT_SUCCESS,
 } from './constants'
 
-// export const vaultDepositAndWithdrawTokens =
-//   (amount, tokenType, minutes) => async (dispatch, getState) => {
-//     try {
-//       dispatch(checkAndAddNetwork())
-//       dispatch({
-//         type: VAULT_DEPOSIT_REQUEST,
-//         payload: tokenType,
-//       })
-//       const {
-//         profile: {walletType, userAddress},
-//       } = getState()
+export const vaultDepositAndWithdrawTokens =
+  (amount, type) => async (dispatch, getState) => {
+    try {
+      dispatch(checkAndAddNetwork())
+      dispatch({
+        type: VAULT_DEPOSIT_REQUEST,
+      })
+      const {
+        profile: {walletType, userAddress},
+      } = getState()
 
-//       const {swap, USDCBNB, CCPTBNB, web3} = getContracts(walletType)
-//       const price = priceConversion('toWei', 'ether', amount, web3)
+      const {REWARDS_VAULT, USDC_CCPT_TOKEN, web3} = getContracts(walletType)
 
-//       // const newGasPrice = await gasPrice(web3)
+      const price = priceConversion('toWei', 'ether', amount, web3)
+      // const newGasPrice = await gasPrice(web3)
 
-//       if (tokenType === 'USDC') {
-//         await USDCBNB.methods
-//           .approve(swap._address, price)
-//           .send({from: userAddress})
-//         const transaction = await swap.methods
-//           .getCcpt(price, minutes * 60)
-//           .send({from: userAddress})
-//         const tranHash = transaction.transactionHash
-//         dispatch({
-//           type: VAULT_DEPOSIT_SUCCESS,
-//           payload: tranHash,
-//         })
-//         dispatch(getSwapTokenBalances())
-//         dispatch(getUSDCAndCCPTBalance())
-//       }
+      if (type === 'deposit') {
+        await USDC_CCPT_TOKEN.methods
+          .approve(REWARDS_VAULT._address, price)
+          .send({from: userAddress})
 
-//       if (tokenType === 'CCPT') {
-//         await CCPTBNB.methods
-//           .approve(swap._address, price)
-//           .send({from: userAddress})
-//         const transaction = await swap.methods
-//           .getUSDC(price, minutes * 60)
-//           .send({from: userAddress})
-//         const tranHash = transaction.transactionHash
-//         dispatch({
-//           type: VAULT_DEPOSIT_SUCCESS,
-//           payload: tranHash,
-//         })
-//         dispatch(getSwapTokenBalances())
-//         dispatch(getUSDCAndCCPTBalance())
-//       }
-//     } catch (error) {
-//       dispatch({
-//         type: VAULT_DEPOSIT_FAIL,
-//         payload: error?.message,
-//       })
-//     }
-//   }
+        const transaction = await REWARDS_VAULT.methods
+          .deposit(0, price)
+          .send({from: userAddress})
+
+        const tranHash = transaction.transactionHash
+        dispatch({
+          type: VAULT_DEPOSIT_SUCCESS,
+          payload: tranHash,
+        })
+        dispatch(getDepositedBalance())
+      }
+      if (type === 'withdraw') {
+        const transaction = await REWARDS_VAULT.methods
+          .withdraw(0, price)
+          .send({from: userAddress})
+
+        const tranHash = transaction.transactionHash
+        dispatch({
+          type: VAULT_DEPOSIT_SUCCESS,
+          payload: tranHash,
+        })
+        dispatch(getDepositedBalance())
+      }
+      if (type === 'rewards') {
+        const transaction = await REWARDS_VAULT.methods
+          .withdraw(0, 0)
+          .send({from: userAddress})
+
+        const tranHash = transaction.transactionHash
+        dispatch({
+          type: VAULT_DEPOSIT_SUCCESS,
+          payload: tranHash,
+        })
+        dispatch(getDepositedBalance())
+      }
+
+      // dispatch(getUSDCAndCCPTBalance())
+    } catch (error) {
+      dispatch({
+        type: VAULT_DEPOSIT_FAIL,
+        payload: error?.message,
+      })
+    }
+  }
 
 export const getUSDCAndCCPTBalance =
   (amount, tokenType) => async (dispatch, getState) => {
@@ -165,16 +175,28 @@ export const getDepositedBalance = () => async (dispatch, getState) => {
       profile: {walletType, userAddress},
     } = getState()
 
-    const {USDC_CCPT_TOKEN, web3} = getContracts(walletType)
+    const {REWARDS_VAULT, USDC_CCPT_TOKEN, web3} = getContracts(walletType)
 
     if (userAddress) {
       const deposit = await USDC_CCPT_TOKEN.methods
         .balanceOf(userAddress)
         .call()
       const depositedLpBalance = web3.utils.fromWei(deposit.toString(), 'ether')
+      const withDraw = await REWARDS_VAULT.methods
+        .userInfo(0, userAddress)
+        .call()
+      const withdrawLpBalance = web3.utils.fromWei(
+        withDraw?.shares.toString(),
+        'ether'
+      )
+      const vaultR = await REWARDS_VAULT.methods
+        .pendingCAPL(0, userAddress)
+        .call()
+      const vaultRewards = web3.utils.fromWei(vaultR.toString(), 'ether')
+
       dispatch({
         type: GET_DEPOSITED_BALANCE_SUCCESS,
-        payload: depositedLpBalance,
+        payload: {depositedLpBalance, withdrawLpBalance, vaultRewards},
       })
     }
   } catch (error) {

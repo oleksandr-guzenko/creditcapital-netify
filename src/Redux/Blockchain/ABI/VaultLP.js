@@ -1,8 +1,8 @@
-export const vaultLPAddress = '0x2a60Cac83A0182040967C3bFae5A9Ecd45903240'
+export const vaultLPAddress = '0x2320613371A1F51c0C6Ad41152957b4000157751'
 export const vaultLPABI = [
   {
     inputs: [
-      {internalType: 'address', name: '_ccpt', type: 'address'},
+      {internalType: 'address', name: '_capl', type: 'address'},
       {internalType: 'address', name: '_usdc', type: 'address'},
       {internalType: 'address', name: '_pair', type: 'address'},
     ],
@@ -18,7 +18,7 @@ export const vaultLPABI = [
   },
   {
     inputs: [
-      {internalType: 'uint256', name: 'tokenAmountCcpt', type: 'uint256'},
+      {internalType: 'uint256', name: 'tokenAmountcapl', type: 'uint256'},
       {internalType: 'uint256', name: 'tokenAmountUsdc', type: 'uint256'},
       {internalType: 'uint256', name: 'duration', type: 'uint256'},
     ],
@@ -36,7 +36,7 @@ export const vaultLPABI = [
       {internalType: 'uint256', name: 'tokenAmount', type: 'uint256'},
       {internalType: 'uint256', name: 'duration', type: 'uint256'},
     ],
-    name: 'addLiquidityCcpt',
+    name: 'addLiquidityCapl',
     outputs: [
       {internalType: 'uint256', name: '_amountA', type: 'uint256'},
       {internalType: 'uint256', name: '_amountB', type: 'uint256'},
@@ -61,21 +61,21 @@ export const vaultLPABI = [
   },
   {
     inputs: [],
-    name: 'ccpt',
+    name: 'capl',
     outputs: [{internalType: 'address', name: '', type: 'address'}],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'ccptUsdcPair',
+    name: 'caplUsdcPair',
     outputs: [{internalType: 'address', name: '', type: 'address'}],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [{internalType: 'uint256', name: 'tokenAmount', type: 'uint256'}],
-    name: 'getCcptAmount',
+    name: 'getCaplAmount',
     outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
     stateMutability: 'view',
     type: 'function',

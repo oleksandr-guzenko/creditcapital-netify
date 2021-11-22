@@ -39,7 +39,7 @@ const SwapPool = () => {
   const [openSet, setOpenSet] = useState(false)
   const [time, setTime] = useState(20)
   const [firstToken, setFirstToken] = useState('USDC')
-  const [secondToken, setSecondToken] = useState('CCPT')
+  const [secondToken, setSecondToken] = useState('CAPL')
 
   const [swapLoad, setSwapLoad] = useState(false)
   const [swapSucc, setSwapSucc] = useState(false)
@@ -126,39 +126,39 @@ const SwapPool = () => {
     setPrice('')
     setSecondPrice('')
   }
-  const setMaximumBalanceOfUSDC = () => {
-    const priceRegex = /^[0-9]*\.?[0-9]*$/
+  // const setMaximumBalanceOfUSDC = () => {
+  //   const priceRegex = /^[0-9]*\.?[0-9]*$/
 
-    if (usdcBNBBalance === '') {
-      setPrice('')
-      setSecondPrice('')
-    } else if (priceRegex.test(usdcBNBBalance)) {
-      if (toggle) {
-        setSecondPrice(usdcBNBBalance)
-      } else {
-        setPrice(usdcBNBBalance)
-      }
-      dispatch(convertTokenValue(usdcBNBBalance, firstToken))
-      setFirstAvailableForChange(false)
-      setSecondAvailableForChange(true)
-    }
-  }
-  const setMaximumBalanceOfCCPT = () => {
-    const priceRegex = /^[0-9]*\.?[0-9]*$/
-    if (ccptBNBBalance === '') {
-      setPrice('')
-      setSecondPrice('')
-    } else if (priceRegex.test(ccptBNBBalance)) {
-      if (toggle) {
-        setPrice(ccptBNBBalance)
-      } else {
-        setSecondPrice(ccptBNBBalance)
-      }
-      dispatch(convertTokenValue(ccptBNBBalance, secondToken))
-      setFirstAvailableForChange(true)
-      setSecondAvailableForChange(false)
-    }
-  }
+  //   if (usdcBNBBalance === '') {
+  //     setPrice('')
+  //     setSecondPrice('')
+  //   } else if (priceRegex.test(usdcBNBBalance)) {
+  //     if (toggle) {
+  //       setSecondPrice(usdcBNBBalance)
+  //     } else {
+  //       setPrice(usdcBNBBalance)
+  //     }
+  //     dispatch(convertTokenValue(usdcBNBBalance, firstToken))
+  //     setFirstAvailableForChange(false)
+  //     setSecondAvailableForChange(true)
+  //   }
+  // }
+  // const setMaximumBalanceOfCCPT = () => {
+  //   const priceRegex = /^[0-9]*\.?[0-9]*$/
+  //   if (ccptBNBBalance === '') {
+  //     setPrice('')
+  //     setSecondPrice('')
+  //   } else if (priceRegex.test(ccptBNBBalance)) {
+  //     if (toggle) {
+  //       setPrice(ccptBNBBalance)
+  //     } else {
+  //       setSecondPrice(ccptBNBBalance)
+  //     }
+  //     dispatch(convertTokenValue(ccptBNBBalance, secondToken))
+  //     setFirstAvailableForChange(true)
+  //     setSecondAvailableForChange(false)
+  //   }
+  // }
 
   const makeSwap = () => {
     dispatch(swapTokens(price, toggle ? 'CCPT' : 'USDC', time))
@@ -198,7 +198,7 @@ const SwapPool = () => {
                   Balance:{' '}
                   {firstToken === 'USDC'
                     ? numberFormate(usdcBNBBalance)
-                    : firstToken === 'CCPT'
+                    : firstToken === 'CAPL'
                     ? numberFormate(ccptBNBBalance)
                     : null}
                 </h4>
@@ -256,7 +256,7 @@ const SwapPool = () => {
                 <h4>Receive (estimated)</h4>
                 <h4>
                   Balance:{' '}
-                  {secondToken === 'CCPT'
+                  {secondToken === 'CAPL'
                     ? numberFormate(ccptBNBBalance)
                     : secondToken === 'USDC'
                     ? numberFormate(usdcBNBBalance)

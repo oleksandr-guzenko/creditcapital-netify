@@ -4,7 +4,8 @@ import CC_LOGO from '../../Assets/CC_Logo.svg'
 import {USDCBnbABI, USDCBnbAddress} from './ABI/USDCBNB'
 import {CCPTBnbABI, CCPTBnbAddress} from './ABI/CCPTBNB'
 import {vaultLPABI, vaultLPAddress} from './ABI/VaultLP'
-import { USDC_CCPT_ABI, USDC_CCPT_Address } from './ABI/USDC_CCPT'
+import {USDC_CCPT_ABI, USDC_CCPT_Address} from './ABI/USDC_CCPT'
+import {Rewards_ABI, Rewards_Address} from './ABI/RewardsValut'
 
 export const walletLink = new WalletLink({
   appName: 'Credit Capital',
@@ -39,7 +40,7 @@ const BuyCCPTAddress = '0xE980E4C09366072fBDc2946443e1a8dEb21fb578'
 const testCAPLAddress = '0x495338aE49F7F4e69a2C31541A41f9eAcA0f4839'
 const testCRETAddress = '0xC4e0f9781af34c49DAD23257fb58aE124bDB4b4B'
 const dummyUSDCAddress = '0x046bC6cBc4B74F75Fdd71fa71495fb6d125283C3'
-const swapAddress = '0x3713Ce76b2B41E9526Ff3c24976DDBDb41b2F25A'
+const swapAddress = '0x2320613371A1F51c0C6Ad41152957b4000157751'
 
 // const testCCPTAddress = '0xc4046A423b0e1DBF12E3a6bB786fFa1bDC0b1A72'
 // const cretStakingAddress = '0xaf8E1ADEEe81c00aa701100850000c8D50745d35'
@@ -66,8 +67,12 @@ const getContracts = (walletType) => {
   // Testttt
   const USDCBNB = new web3.eth.Contract(USDCBnbABI, USDCBnbAddress)
   const CCPTBNB = new web3.eth.Contract(CCPTBnbABI, CCPTBnbAddress)
-  const VAULTLP = new web3.eth.Contract(vaultLPABI,vaultLPAddress)
-  const USDC_CCPT_TOKEN = new web3.eth.Contract(USDC_CCPT_ABI,USDC_CCPT_Address)
+  const VAULTLP = new web3.eth.Contract(vaultLPABI, vaultLPAddress)
+  const USDC_CCPT_TOKEN = new web3.eth.Contract(
+    USDC_CCPT_ABI,
+    USDC_CCPT_Address
+  )
+  const REWARDS_VAULT = new web3.eth.Contract(Rewards_ABI, Rewards_Address)
 
   const Staking = new web3.eth.Contract(
     [
@@ -3919,7 +3924,7 @@ const getContracts = (walletType) => {
     [
       {
         inputs: [
-          {internalType: 'address', name: '_ccpt', type: 'address'},
+          {internalType: 'address', name: '_capl', type: 'address'},
           {internalType: 'address', name: '_usdc', type: 'address'},
         ],
         stateMutability: 'nonpayable',
@@ -3934,14 +3939,14 @@ const getContracts = (walletType) => {
       },
       {
         inputs: [],
-        name: 'ccpt',
+        name: 'capl',
         outputs: [{internalType: 'address', name: '', type: 'address'}],
         stateMutability: 'view',
         type: 'function',
       },
       {
         inputs: [],
-        name: 'ccptUsdcPair',
+        name: 'caplUsdcPair',
         outputs: [{internalType: 'address', name: '', type: 'address'}],
         stateMutability: 'view',
         type: 'function',
@@ -3951,7 +3956,7 @@ const getContracts = (walletType) => {
           {internalType: 'uint256', name: 'tokenAmount', type: 'uint256'},
           {internalType: 'uint256', name: 'duration', type: 'uint256'},
         ],
-        name: 'getCcpt',
+        name: 'getCapl',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -3960,7 +3965,7 @@ const getContracts = (walletType) => {
         inputs: [
           {internalType: 'uint256', name: 'tokenAmount', type: 'uint256'},
         ],
-        name: 'getCcptAmount',
+        name: 'getCaplAmount',
         outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
         stateMutability: 'view',
         type: 'function',
@@ -4251,7 +4256,6 @@ const getContracts = (walletType) => {
         type: 'function',
       },
     ],
-
     BuyCAPLAddress
   )
 
@@ -4479,7 +4483,6 @@ const getContracts = (walletType) => {
         type: 'function',
       },
     ],
-
     BuyCRETAddress
   )
 
@@ -6155,6 +6158,7 @@ const getContracts = (walletType) => {
     cretStaking,
     liquidityPoolCRET,
     liquidityPoolCAPL,
+    REWARDS_VAULT
   }
 }
 

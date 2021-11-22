@@ -89,7 +89,7 @@ export const convertTokenValue =
           payload: {ccptPrice},
         })
       }
-      if (tokenType === 'CCPT') {
+      if (tokenType === 'CAPL') {
         const usdcAmount = await swap.methods.getUSDCAmount(price).call()
         const usdcPrice = Number(
           priceConversion('fromWei', 'ether', usdcAmount, web3)

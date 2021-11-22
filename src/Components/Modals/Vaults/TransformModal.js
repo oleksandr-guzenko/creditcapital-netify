@@ -54,7 +54,7 @@ const TransformModal = ({show, handleClose}) => {
           tokenType === 'usdcToken'
             ? 'USDC'
             : tokenType === 'ccptToken'
-            ? 'CCPT'
+            ? 'CAPL'
             : null
         )
       )
@@ -167,7 +167,7 @@ const TransformModal = ({show, handleClose}) => {
                         {/* {firstToken === 'USDC' && <Image src={USDC} alt='' />} */}
                         <select name='' id='' onChange={selectTokenType}>
                           <option value='usdcToken'>USDC</option>
-                          <option value='ccptToken'>CCPT</option>
+                          <option value='ccptToken'>CAPL</option>
                         </select>
                       </div>
                     </div>
@@ -198,7 +198,7 @@ const TransformModal = ({show, handleClose}) => {
                         <span>
                           <img src={CCPTSVG} alt='' />
                         </span>{' '}
-                        CCPT
+                        CAPL
                       </h4>
                       <h4>
                         {price === ''
@@ -218,7 +218,7 @@ const TransformModal = ({show, handleClose}) => {
                           <img src={USDCSVG} alt='' />
                           <img src={CCPTSVG} alt='' />
                         </span>{' '}
-                        USDC-CCPT
+                        USDC-CAPL
                       </h4>
                       <h4>
                         {price === ''

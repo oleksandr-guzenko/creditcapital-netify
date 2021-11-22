@@ -86,7 +86,7 @@ const ReserveToken = ({show, handleClose, name}) => {
         reserveCPTAndCRT(
           price,
           CPT,
-          name === 'Buy CAPL' ? 'CAPL' : name === 'Buy CRET' ? 'CRET' : null
+          name === 'Buy CCUSD' ? 'CCUSD' : name === 'Buy CRET' ? 'CRET' : null
         )
       )
     }
@@ -196,7 +196,7 @@ const ReserveToken = ({show, handleClose, name}) => {
           </div>
           <div className='buy__cpt__modal__instructions__right'>
             <p className='txt__gray'>
-              1 USDC : 1 {name === 'Buy CAPL' ? 'CAPL' : 'CRET'}
+              1 USDC : 1 {name === 'Buy CCUSD' ? 'CCUSD' : 'CRET'}
             </p>
           </div>
         </div>
@@ -273,7 +273,7 @@ const ReserveToken = ({show, handleClose, name}) => {
             <div className='input__wrapper'>
               <InputGroup>
                 <InputGroup.Text className='border-0 txt__brand cpt'>
-                  {name === 'Buy CAPL' ? 'CAPL' : 'CRET'}
+                  {name === 'Buy CCUSD' ? 'CCUSD' : 'CRET'}
                 </InputGroup.Text>
                 <Form.Control
                   disabled

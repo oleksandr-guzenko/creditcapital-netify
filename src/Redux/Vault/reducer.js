@@ -15,14 +15,18 @@ const initialState = {
   vaultType: '',
   usdc_ccpt_Balance: 0,
   depositedLpBalance: 0,
+  withdrawLpBalance: 0,
   vaultLpBalance: 0,
+  vaultRewards: 0,
 }
 export const vaultReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_DEPOSITED_BALANCE_SUCCESS:
       return {
         ...state,
-        depositedLpBalance: action.payload,
+        depositedLpBalance: action.payload.depositedLpBalance,
+        withdrawLpBalance: action.payload.withdrawLpBalance,
+        vaultRewards: action.payload.vaultRewards,
       }
     case GET_CONVERTED_USDC_CCPT_VALUES_SUCCESS:
       return {

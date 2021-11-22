@@ -78,9 +78,9 @@ const LiquidityInput = ({
             <Image src={USDC} height='15px' width='15px' alt='' />
             USDC
           </InputGroup.Text>
-        ) : typeOfToken === 'CAPL' ? (
+        ) : typeOfToken === 'CCUSD' ? (
           <InputGroup.Text className='border-0 txt__brand cpt'>
-            CAPL
+            CCUSD
           </InputGroup.Text>
         ) : typeOfToken === 'CRET' ? (
           <InputGroup.Text className='border-0 txt__brand cpt'>

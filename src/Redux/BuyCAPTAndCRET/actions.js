@@ -27,7 +27,7 @@ export const reserveCPTAndCRT =
       const price = priceConversion('toWei', 'Mwei', amount, web3)
       // const newGasPrice = await gasPrice(web3)
 
-      if (type === 'CAPL') {
+      if (type === 'CCUSD') {
         await usdc.methods
           .approve(BuyCAPL._address, price)
           .send({from: userAddress})
@@ -58,8 +58,8 @@ export const reserveCPTAndCRT =
         })
         dispatch(getProfileInformation())
         dispatch(getProfileInformationTest())
-      } else if (type === 'CCPT') {
-        if (ccptTokenType === 'CAPL') {
+      } else if (type === 'CAPL') {
+        if (ccptTokenType === 'CCUSD') {
           await capl.methods
             .approve(BuyCCPT._address, price)
             .send({from: userAddress})
