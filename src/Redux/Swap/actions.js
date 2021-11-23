@@ -33,7 +33,7 @@ export const swapTokens =
           .approve(swap._address, price)
           .send({from: userAddress})
         const transaction = await swap.methods
-          .getCcpt(price, minutes * 60)
+          .getCapl(price, minutes * 60)
           .send({from: userAddress})
         const tranHash = transaction.transactionHash
         dispatch({
@@ -43,7 +43,7 @@ export const swapTokens =
         dispatch(getSwapTokenBalances())
       }
 
-      if (tokenType === 'CCPT') {
+      if (tokenType === 'CAPL') {
         await CCPTBNB.methods
           .approve(swap._address, price)
           .send({from: userAddress})
@@ -79,7 +79,7 @@ export const convertTokenValue =
       const price = priceConversion('toWei', 'ether', amount, web3)
 
       if (tokenType === 'USDC') {
-        const ccptAmount = await swap.methods.getCcptAmount(price).call()
+        const ccptAmount = await swap.methods.getCaplAmount(price).call()
         const ccptPrice = Number(
           priceConversion('fromWei', 'ether', ccptAmount, web3)
         )?.toFixed(18)

@@ -161,7 +161,7 @@ const SwapPool = () => {
   // }
 
   const makeSwap = () => {
-    dispatch(swapTokens(price, toggle ? 'CCPT' : 'USDC', time))
+    dispatch(swapTokens(price, toggle ? 'CAPL' : 'USDC', time))
   }
 
   return (

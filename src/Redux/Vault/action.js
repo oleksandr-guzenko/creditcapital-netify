@@ -19,6 +19,8 @@ export const vaultDepositAndWithdrawTokens =
       dispatch({
         type: VAULT_DEPOSIT_REQUEST,
       })
+      console.log('sdcdsf')
+
       const {
         profile: {walletType, userAddress},
       } = getState()
@@ -43,8 +45,7 @@ export const vaultDepositAndWithdrawTokens =
           payload: tranHash,
         })
         dispatch(getDepositedBalance())
-      }
-      if (type === 'withdraw') {
+      } else if (type === 'withdraw') {
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, price)
           .send({from: userAddress})
@@ -55,8 +56,7 @@ export const vaultDepositAndWithdrawTokens =
           payload: tranHash,
         })
         dispatch(getDepositedBalance())
-      }
-      if (type === 'rewards') {
+      } else if (type === 'rewards') {
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, 0)
           .send({from: userAddress})

@@ -87,7 +87,7 @@ const LpPools = () => {
   }
   const submitWithdrawLiquidityPool = (e) => {
     e.preventDefault()
-    dispatch(vaultDepositAndWithdrawTokens(depositPrice, 'withdraw'))
+    dispatch(vaultDepositAndWithdrawTokens(withdrawPrice, 'withdraw'))
   }
   const claimVaultRewards = () => {
     dispatch(vaultDepositAndWithdrawTokens(0, 'rewards'))
@@ -292,7 +292,7 @@ const LpPools = () => {
                           disabled={vaultRewards === '0'}
                           className={
                             vaultRewards === '0'
-                              ? 'btn_brand_disabled'
+                              ? 'btn_brand btn_brand_disabled'
                               : 'btn_brand'
                           }
                           onClick={claimVaultRewards}
