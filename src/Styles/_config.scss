@@ -1,8 +1,9 @@
 // Sass Variables
-$primary: #f3f5f9;
+$primary: #f7f3f9;
 $secondary: #defff4;
-$brand__color: #06397e;
+$brand__color: #13585a;
 $white__color: #fafafa;
+$secondary: #242831;
 
 $font__gray: #848e9c;
 $font__black: #333333;
@@ -18,6 +19,76 @@ $box_shadow_three: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 $box_shadow_four: 0px 0px 4px 2px #06397e;
 $box_shadow_five: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 $box-shadow-six: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+// ################################################33
+
+// gradients
+$background_gradient: linear-gradient(180deg, #242831 0%, #212428 100%);
+$gradient_one: linear-gradient(
+  260.09deg,
+  #1ee8b77a 9.85%,
+  #ac33bf3d 107.01%,
+  #ac33bf3d 20%
+);
+$gradient_two: linear-gradient(
+  90deg,
+  #1ee8b7 -0.01%,
+  rgba(30, 232, 183, 0) 100%
+);
+$gradient_three: linear-gradient(90deg, #10171f 3.6%, #214242 105.45%);
+$gradient_six: linear-gradient(90deg, #0e151d 3.6%, #233147 105.45%);
+$gradient_four: linear-gradient(0deg, #412c4e 0%, rgba(50, 55, 83, 0) 100%);
+$neon_background_one: linear-gradient(134deg, #e100ff, #060c21, #18deae);
+
+$neon_background_five: linear-gradient(220deg, #e100ff, #00eeff, #3700ff);
+$neon_background_six: linear-gradient(to right, #00eeff, #ff00ea, #fffb00);
+$neon_background_seven: linear-gradient(to right, #fffb00, #ff00ea, #00eeff);
+$neon_background_eight: linear-gradient(to right, #00ffff, #d8dac3, #6f00ff);
+
+$gradient_five: linear-gradient(
+  220deg,
+  rgba(30, 232, 182, 0.637) 9.85%,
+  rgba(172, 51, 191, 0.4) 107.01%
+);
+
+$text_gradient: linear-gradient(to right, #366ce3, #fcac00);
+$text_gradient_one: linear-gradient(
+  to right,
+  #00eeff 35%,
+  #ff006a,
+  #fcac00 70%
+);
+$text_gradient_text: linear-gradient(239deg, #74ebd5 35%, #9face6 70%);
+
+$neon_background_four: linear-gradient(195deg, #e100ff, #00eeff, #3700ff);
+
+$neon_background_one_hover: linear-gradient(268deg, #ffbb00, #060c21, #d40063);
+$neon_background_two: linear-gradient(64deg, #b700ff, #060c21, #18deae);
+$neon_background_two_hover: linear-gradient(268deg, #ffbb00, #000000, #d40063);
+
+$neon_background_three: linear-gradient(64deg, #b700ff, #060c21, #18deae);
+$neon_background_three_hover: linear-gradient(
+  268deg,
+  #ffbb00,
+  #000000,
+  #d40063
+);
+
+// Shadows
+
+/* Btn Shadow */
+$btn_box_shadow: 0px 0px 30px rgba(30, 232, 183, 0.4);
+$btn_box_shadowTwo: 0px 0px 30px rgba(0, 255, 200, 0.692);
+$box_shadow_one: rgba(0, 0, 0, 0.685) 0px 10px 15px -3px,
+  rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+$box_shadow_two: 0px 1px 4px 3px rgba(0, 0, 0, 0.1);
+$box_shadow_three: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+$box_shadow_four: 0px 0px 4px 2px #064e7e;
+$box_shadow_five: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+$box-shadow-six: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+$box_shadow_seven: 0px 0px 4px 2px #ff8800;
+
+// #####################################################3
 
 // Sass Mixins
 @mixin displayCenter($align, $justify) {
@@ -37,6 +108,14 @@ $xxl: 1400px;
   display: flex;
   align-items: $align;
   justify-content: $justify;
+}
+
+@mixin textGradients {
+  background-image: $text_gradient_text !important;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  width: fit-content;
 }
 
 @mixin userAddress($width) {
@@ -78,5 +157,251 @@ $xxl: 1400px;
     @return $font__black;
   } @else {
     @return $primary;
+  }
+}
+
+// Gradient Mixins
+@mixin neonBackgroundTwo($angle) {
+  $neon_background_one_hover: linear-gradient(
+    $angle,
+    #ffbb00,
+    #060c21,
+    #d40063
+  );
+}
+@mixin neonEffect($borderRadius) {
+  position: relative;
+  &::before {
+    position: absolute;
+    content: '';
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    z-index: -1;
+    background: $neon_background_one;
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: -5px;
+    bottom: -5px;
+    left: -5px;
+    right: -5px;
+    z-index: -2;
+    // background: $neon_background_one;
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+  }
+  &:hover {
+    &::before {
+      background: $neon_background_one_hover;
+    }
+    &::after {
+      background: $neon_background_one_hover;
+      filter: blur(100px);
+    }
+  }
+}
+@mixin neonEffectTwo($borderRadius) {
+  position: relative;
+  &::before {
+    position: absolute;
+    content: '';
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    z-index: -1;
+    // width: calc(100% - 35px);
+    // height: calc(100% - 35px);
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+    background: $neon_background_four;
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: -5px;
+    bottom: -5px;
+    left: -5px;
+    right: -5px;
+    z-index: -2;
+
+    background: $neon_background_four;
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+    filter: blur(5px);
+  }
+  &:hover {
+    &::after {
+      background: $neon_background_four;
+      filter: blur(300px);
+    }
+  }
+}
+@mixin neonEffectThree($borderRadius) {
+  position: relative;
+  &::before {
+    position: absolute;
+    content: '';
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    z-index: -1;
+    background: $neon_background_three;
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: -5px;
+    bottom: -5px;
+    left: -5px;
+    right: -5px;
+    z-index: -2;
+    filter: blur(100px);
+    background: $neon_background_three;
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+  }
+  // &:hover {
+  //   &::before {
+  //     background: $neon_background_three_hover;
+  //   }
+  //   &::after {
+  //     background: $neon_background_three_hover;
+  //   }
+  // }
+}
+@mixin neonEffectFour($borderRadius) {
+  position: relative;
+  &::before {
+    position: absolute;
+    content: '';
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    z-index: -1;
+    // width: calc(100% - 35px);
+    // height: calc(100% - 35px);
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+    background: $neon_background_four;
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: -5px;
+    bottom: -5px;
+    left: -5px;
+    right: -5px;
+    z-index: -2;
+
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+  }
+  &:hover {
+    &::after {
+      background: $neon_background_four;
+      filter: blur(5px);
+    }
+  }
+}
+@mixin neonEffectModal($borderRadius, $gradient) {
+  position: relative;
+  &::before {
+    position: absolute;
+    content: '';
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    z-index: -1;
+    // width: calc(100% - 35px);
+    // height: calc(100% - 35px);
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+    background: $gradient;
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: -5px;
+    bottom: -5px;
+    left: -5px;
+    right: -5px;
+    z-index: -2;
+
+    background: $gradient;
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+    filter: blur(300px);
+  }
+  &:hover {
+    &::after {
+      background: $gradient;
+      filter: blur(10px);
+    }
+  }
+}
+@mixin neonEffectModal($borderRadius, $gradient) {
+  position: relative;
+  &::before {
+    position: absolute;
+    content: '';
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    z-index: -1;
+    // width: calc(100% - 35px);
+    // height: calc(100% - 35px);
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+    background: $gradient;
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: -5px;
+    bottom: -5px;
+    left: -5px;
+    right: -5px;
+    z-index: -2;
+
+    background: $gradient;
+    @if $borderRadius {
+      border-radius: $borderRadius !important;
+    }
+    filter: blur(5px);
+  }
+  &:hover {
+    &::after {
+      background: $gradient;
+      filter: blur(100px);
+    }
   }
 }

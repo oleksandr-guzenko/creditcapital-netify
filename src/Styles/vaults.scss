@@ -1,12 +1,28 @@
+.vaultPools {
+  padding: 100px 0 30px 0;
+  .tisdfsdfsdtle {
+    @include displayCenter(center, center);
+    margin-bottom: 40px;
+    h4 {
+      @include textGradients();
+      font-size: 30px;
+    }
+  }
+}
 .lpVaults {
+  padding: 0;
+  margin-bottom: 50px;
   .main_wrapper {
+    background-color: $secondary;
+    border-radius: 5px;
+    @include neonEffectModal(5px, $neon_background_eight);
     &_header {
-      background: rgb(243, 232, 232);
       padding: 15px;
       border-radius: 10px 10px 0 0;
       cursor: pointer;
       @include displayCenter(center, space-between);
       flex-wrap: wrap;
+      color: $primary;
       .header_wrapper {
         &_left {
           margin-right: 30px;
@@ -27,7 +43,8 @@
           height: 40px;
           padding: 5px;
           border-radius: 10px;
-          background: $primary;
+          background: $secondary;
+          border: 1px solid;
           cursor: pointer;
         }
       }
@@ -38,9 +55,20 @@
   }
 
   .lpWrapper {
-    background-color: $primary;
+    background-color: $secondary;
+    // @include neonEffectModal(0, $neon_background_seven);
     border-radius: 0 0 10px 10px;
     padding: 15px;
+    margin-top: 20px;
+    .liquidity__pool__box {
+      background-color: $secondary !important;
+      color: $primary;
+      border-color: #b4a66e !important;
+      input {
+        background-color: transparent !important;
+        color: $primary !important;
+      }
+    }
     .info {
       margin-top: 10px;
       .info_part {
@@ -51,7 +79,7 @@
           margin: 3px;
         }
         a {
-          color: black;
+          color: $primary;
           text-decoration: underline !important;
         }
       }

@@ -174,11 +174,11 @@ const SwapPool = () => {
                 <h6>Swap</h6>
               </div>
             </Link>
-            <Link to='/liquidity'>
+            {/* <Link to='/liquidity'>
               <div className='toggle_wrapper'>
                 <h6>Liquidity</h6>
               </div>
-            </Link>
+            </Link> */}
           </div>
           <div className='box_wrapper'>
             <div className='box_wrapper_header'>

@@ -1,5 +1,6 @@
 .navbar {
-  background: $brand__color !important;
+  // background: $brand__color !important;
+  background-image: linear-gradient(239deg, #74ebd5 0%, #9face6 100%);
   a {
     font-size: 14px !important;
   }
@@ -27,6 +28,7 @@
       margin: auto;
       a {
         padding: 0 20px !important;
+        color: $secondary;
       }
     }
     .navbar__right {
@@ -38,21 +40,28 @@
         }
       }
       .option__wrapper {
-        background-color: #21559e;
-        color: $white__color;
-        border-radius: 5px;
+        // background: $brand__color !important;
+        // color: $white__color;
+        border-radius: 33px;
+        // border: 1px solid $white__color;
         padding: 8px 15px;
         margin: 0 10px;
         user-select: none;
         cursor: pointer;
         @include displayCenter(center, center);
+        color: $secondary !important;
+        border: 1px solid $secondary;
+        // background: $secondary !important;
         .user__id {
           width: 80px;
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
           text-decoration: none;
-          color: $white__color;
+          color: $secondary !important;
+        }
+        a {
+          color: $secondary !important;
         }
 
         .nav-link {
@@ -62,6 +71,10 @@
         img {
           width: 20px;
           height: 20px;
+          margin-right: 5px;
+        }
+        svg {
+          font-size: 20px;
           margin-right: 5px;
         }
       }

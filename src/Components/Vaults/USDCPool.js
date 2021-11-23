@@ -20,7 +20,7 @@ import ConvertLpModal from '../Modals/Vaults/ConvertLpModal'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
 import VaultSuccess from '../Modals/Vaults/VaultSuccess'
 
-const LpPools = () => {
+const USDCPool = () => {
   //redux
   const dispatch = useDispatch()
   const {userAddress} = useSelector((state) => state.profile)
@@ -111,10 +111,9 @@ const LpPools = () => {
               <div className='header_wrapper wefwe'>
                 <div className='header_wrapper_left'>
                   <Image src={USDCSVG} alt='' />
-                  <Image src={CCPTSVG} alt='' className='img_sec' />
                 </div>
                 <div className='header_wrapper_right'>
-                  <h4>USDC-CAPL</h4>
+                  <h4>USDC</h4>
                   <p>0.625</p>
                 </div>
               </div>
@@ -402,4 +401,4 @@ const LpPools = () => {
   )
 }
 
-export default LpPools
+export default USDCPool

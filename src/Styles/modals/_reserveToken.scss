@@ -1,20 +1,26 @@
 .buy__cpt__modal {
   padding: 20px;
+  color: $primary !important;
   @include mQ($sm) {
     padding: 20px 10px;
   }
   .buy__cpt__header {
     text-align: center;
+    color: $primary !important;
+
     &__tile {
       h4 {
         font-size: 25px;
         font-weight: 700;
+        color: $primary !important;
+        user-select: none;
       }
     }
     &__close {
-      position: absolute;
-      right: 10px;
-      top: 20px;
+      @include neonEffectTwo(50%);
+      position: absolute !important;
+      right: -15px;
+      top: -12px !important;
       cursor: pointer;
       min-width: 30px;
       min-height: 30px;
@@ -23,16 +29,40 @@
       justify-content: center;
       border-radius: 50%;
       transition: $transition;
+      background-color: #000;
       svg {
-        font-size: 25px;
+        font-size: 15px;
+        color: $primary;
       }
       &:hover {
-        background-color: $brand__color;
+        background-color: #000 !important;
         svg {
-          color: $white__color;
+          color: $primary !important;
         }
       }
     }
+    // &__close {
+    //   position: absolute;
+    //   right: 10px;
+    //   top: 20px;
+    //   cursor: pointer;
+    //   min-width: 30px;
+    //   min-height: 30px;
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    //   border-radius: 50%;
+    //   transition: $transition;
+    //   svg {
+    //     font-size: 25px;
+    //   }
+    //   &:hover {
+    //     background-color: $brand__color;
+    //     svg {
+    //       color: $white__color;
+    //     }
+    //   }
+    // }
   }
   &__instructions {
     margin: 30px 0 20px 0;

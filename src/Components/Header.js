@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react'
 import {Container, Image, Nav, Navbar} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
 import Wallets from './Modals/Wallets'
+import {useLocation} from 'react-router-dom'
+import {BiWalletAlt} from 'react-icons/bi'
 
 // images
-import Logo from '../Assets/Logo.svg'
+import Logo from '../Assets/portfolio/Logo.svg'
 import MetaMask from '../Assets/MetaMask.svg'
 import Coinbase from '../Assets/coinbase_Wallet.svg'
 import Wallet from '../Assets/wallet.svg'
@@ -21,6 +23,8 @@ import {getSwapTokenBalances} from '../Redux/Swap/actions'
 
 const Header = () => {
   const dispatch = useDispatch()
+  const {pathname} = useLocation()
+
   // Redux State
   const {userAddress, walletType} = useSelector((state) => state.profile)
 
@@ -49,6 +53,19 @@ const Header = () => {
     }
   }, [userAddress])
 
+  useEffect(() => {
+    if (pathname != '/') {
+      const NavItem = document.querySelector('.main')
+      NavItem?.classList.remove('active')
+    }
+    if (pathname === '/') {
+      const navList = document.querySelectorAll('.nav-link')
+      navList.forEach((item) => item.classList.remove('active'))
+      const NavItem = document.querySelector('.main')
+      NavItem?.classList.add('active')
+    }
+  }, [pathname])
+
   return (
     <>
       <Navbar collapseOnSelect expand='xl' fixed='top' variant='dark'>
@@ -66,7 +83,7 @@ const Header = () => {
           <Navbar.Collapse id='responsive-navbar-nav'>
             <Nav className='m-auto nav__ mx-auto'>
               <div className='navbar__left'>
-                <LinkContainer to='/'>
+                <LinkContainer to='/' className='main'>
                   <Nav.Link>Capital Pool</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to='/credit-guaranty-pool'>
@@ -78,9 +95,9 @@ const Header = () => {
                 <LinkContainer to='/swap'>
                   <Nav.Link>Swap</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to='/liquidity'>
+                {/* <LinkContainer to='/liquidity'>
                   <Nav.Link>Liquidity</Nav.Link>
-                </LinkContainer>
+                </LinkContainer> */}
                 <LinkContainer to='/Vault'>
                   <Nav.Link>Vault</Nav.Link>
                 </LinkContainer>
@@ -99,8 +116,8 @@ const Header = () => {
                   <div className='option__wrapper'>
                     <LinkContainer to='/portfolio'>
                       <Nav.Link>
-                        <Image src={Wallet} alt='' />
-                        Portfolio
+                        <BiWalletAlt />
+                        Dashboard
                       </Nav.Link>
                     </LinkContainer>
                   </div>
@@ -128,6 +145,7 @@ const Header = () => {
                 )}
                 {!userAddress && (
                   <div className='option__wrapper' onClick={openWalletsModal}>
+                    <BiWalletAlt />
                     <a>Connect Wallet</a>
                   </div>
                 )}

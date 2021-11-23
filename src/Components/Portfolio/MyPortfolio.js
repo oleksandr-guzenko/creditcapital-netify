@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {Container} from 'react-bootstrap'
+import {Container, Row} from 'react-bootstrap'
 import PortfolioCard from './PortfolioCard'
 import {exactNumberFormate, numberFormate} from '../../Utilities/Util'
 
@@ -49,13 +49,13 @@ const MyPortfolio = () => {
     <div className='portfolio'>
       <Container>
         <div className='portfolio__container'>
-          <div className='d-flex align-items-start justify-content-between mb-3 flex-wrap'>
+          <div className='mt-5 d-flex align-items-center justify-content-center flex-column'>
             <h4>My Portfolio</h4>
-            <button className='btn_brand' onClick={handleDisconnect}>
+            <button className='btn_brand sdfdsf' onClick={handleDisconnect}>
               Disconnect
             </button>
           </div>
-          <div className='portfolio__cards__container'>
+          <Row className='portfolio__cards__container'>
             <PortfolioCard
               bgColor='#e5def0'
               amount={`$ ${numberFormate(CCPTBalance)}`}
@@ -98,7 +98,7 @@ const MyPortfolio = () => {
               text='Total Rewards Earned'
               icon={card_one}
             />
-          </div>
+          </Row>
         </div>
       </Container>
     </div>

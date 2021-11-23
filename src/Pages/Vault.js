@@ -1,10 +1,10 @@
 import React from 'react'
-import LpPools from '../Components/Vaults/LpPools'
+import VaultWrapper from '../Components/Vaults/VaultWrapper'
 
 const Vault = () => {
   return (
     <div>
-      <LpPools />
+      <VaultWrapper />
     </div>
   )
 }

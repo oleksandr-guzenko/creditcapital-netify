@@ -2,32 +2,32 @@
   padding: 100px 0 30px 0;
   h4 {
     font-weight: 500;
-    font-size: 23px;
+    font-size: 30px;
+    @include textGradients();
     margin-bottom: 30px;
   }
+  .sdfdsf {
+    border-radius: 33px;
+    margin-bottom: 40px;
+  }
+
   .portfolio__container {
-    border: 1px solid rgba(28, 33, 45, 0.12);
-    border-radius: 10px;
-    padding: 20px 30px;
+    // padding: 20px 30px;
   }
   .portfolio__cards__container {
-    @include displayCenter(center, space-between);
-    flex-wrap: wrap;
+    // @include displayCenter(center, space-between);
+    // flex-wrap: wrap;
     .portfolio__card {
       position: relative;
-      width: 230px;
-      height: 320px;
+      // width: 230px;
+      // height: 320px;
+      height: 100%;
       padding: 20px;
       border: 1px solid rgba(136, 136, 136, 0.15);
       border-radius: 10px;
       box-shadow: $box_shadow_one;
-      h3 {
-        font-weight: bold;
-        font-size: 30px;
-      }
-      p {
-        max-width: 114px;
-      }
+      @include displayCenter(center, flex-start);
+      flex: 0 1 150px;
       .question__icon {
         text-align: right;
         margin-bottom: 10px;
@@ -36,13 +36,24 @@
         }
       }
       &__img__wrapper {
-        position: absolute;
-        bottom: 20px;
+        // position: absolute;
+        // bottom: 20px;
         width: 50px;
         height: 50px;
         border-radius: 50%;
         background-color: $primary;
         @include displayCenter(center, center);
+        margin-right: 10px;
+      }
+      .portfolio_right {
+        h3 {
+          font-weight: bold;
+          font-size: 30px;
+        }
+        p {
+          // max-width: 114px;
+          margin-bottom: 0;
+        }
       }
     }
   }

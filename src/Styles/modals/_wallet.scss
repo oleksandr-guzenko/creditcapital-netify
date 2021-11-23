@@ -6,6 +6,7 @@
     margin-bottom: 50px;
     h4 {
       font-size: 20px;
+      color: $primary !important;
     }
   }
   .buy__cpt__header__close {
@@ -18,6 +19,7 @@
     padding: 20px;
     margin: 20px 0;
     cursor: pointer;
+    box-shadow: $box-shadow-four;
     transition: $transition;
     @include displayCenter(center, space-between);
     img {
@@ -28,9 +30,10 @@
     h5 {
       margin: 0;
       font-size: 16px;
+      color: $primary !important;
     }
     &:hover {
-      box-shadow: $box-shadow-four;
+      box-shadow: 0px 0px 4px 2px rgb(148, 235, 238);
     }
   }
 }
@@ -58,7 +61,7 @@
   }
 
   .user__id {
-    background-color: #ebebeb !important;
+    background-color: #111111 !important;
     border-radius: 5px;
 
     p {
@@ -88,6 +91,7 @@
 
 .settings {
   .minutes_wrapper {
+    color: $primary;
     h5 {
       margin: 0;
       margin-bottom: 20px;
@@ -95,6 +99,13 @@
     }
     label {
       float: left;
+    }
+    input {
+      background-color: transparent;
+      border-radius: 33px;
+      color: $primary;
+      border: 1px solid $primary;
+      padding: 10px 15px;
     }
     padding: 20px;
   }
@@ -104,8 +115,18 @@
 }
 
 .success__body {
+  color: $primary !important;
+  margin-top: 50px;
   .transform {
     padding: 0;
+    padding-bottom: 20px;
+    border: 1px solid rgb(11, 247, 215) !important;
+    .box_wrapper {
+      background-color: #000000 !important;
+      &_container {
+        background-color: #000000 !important;
+      }
+    }
     img {
       width: 20px;
       height: 20px;

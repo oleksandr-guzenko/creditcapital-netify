@@ -7,13 +7,16 @@
     max-width: fit-content;
     margin: 10px auto 30px auto;
     border-radius: 33px;
-    background: $primary;
+
+    // background: $primary;
     // padding: 10px 20px;
     border: 1px solid rgba(28, 33, 45, 0.12) !important;
     @include displayCenter(center, space-between);
     .toggle_wrapper {
-      //   background: $brand__color;
+      background: $secondary;
       color: $font__black;
+      @include neonEffectTwo(33px);
+
       border-radius: 33px;
       padding: 12px 50px;
       h6 {
@@ -21,17 +24,19 @@
       }
     }
     .active {
-      background: $brand__color;
+      // background: $brand__color;
       color: $white__color;
     }
   }
   .box_wrapper {
     max-width: 500px;
     margin: auto;
-    background: $primary;
+    background: $secondary;
     padding: 20px;
     border: 1px solid rgba(28, 33, 45, 0.12) !important;
     border-radius: 10px;
+    @include neonEffectTwo(10px);
+    color: $primary;
 
     &_header {
       @include displayCenter(flex-start, space-between);
@@ -51,9 +56,9 @@
     &_container {
       margin: 15px 0;
       padding: 20px;
-      border: 1px solid rgba(28, 33, 45, 0.12) !important;
+      border: 1px solid rgba(255, 255, 255, 0.466) !important;
       border-radius: 10px;
-      background: rgb(255, 252, 247);
+      background: $secondary;
       &_top {
         @include displayCenter(center, space-between);
         h4 {
@@ -67,6 +72,7 @@
             border: 0;
             padding: 15px 0;
             background-color: transparent;
+            color: $primary;
           }
         }
         &_right {
@@ -84,11 +90,10 @@
       }
     }
     &_circle {
-      border: 1px solid rgba(28, 33, 45, 0.12) !important;
-
+      border: 1px solid rgba(255, 255, 255, 0.723) !important;
       width: 40px;
       height: 40px;
-      background-color: aliceblue;
+      background-color: $secondary;
       border-radius: 50%;
       display: grid;
       place-items: center;

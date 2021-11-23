@@ -8,7 +8,7 @@ body {
   font-family: 'Circular Std', sans-serif !important;
   font-weight: normal !important;
   font-style: normal;
-  background-color: #ffffff;
+  background: #242831 !important;
   scroll-behavior: smooth;
 }
 .container-fluid {
@@ -106,8 +106,10 @@ svg {
 // buttons
 .btn_brand {
   border: 0;
-  background-color: $brand__color;
-  color: $primary;
+  background-color: #74ebd5;
+  background-image: linear-gradient(239deg, #74ebd5 0%, #9face6 100%);
+  color: $secondary;
+
   display: inline-block;
   border-radius: 5px;
   font-weight: 500;
@@ -116,19 +118,20 @@ svg {
   padding: 10px 55px;
   transition: $transition;
   &:hover {
-    box-shadow: $box_shadow_one;
-    background-color: #06387eea;
-    transform: translateY(-2px);
+    box-shadow: $btn_box_shadowTwo;
+    // transform: translateY(-2px);
   }
 }
 .outlined {
   background-color: $primary !important;
-  color: $brand__color !important;
-  border: 1px solid $brand__color;
+  color: $primary !important;
+  border: 1px solid $primary;
+  background: $secondary !important;
   &:hover {
     color: $primary !important;
     transform: unset !important;
-    background-color: $brand__color !important;
+    box-shadow: unset;
+    // background-color: $brand__color !important;
   }
 }
 .btn__brand__secondary {
@@ -257,5 +260,29 @@ svg {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+// modal
+.modal-backdrop.show {
+  opacity: 0.8 !important;
+}
+
+.modal-backdrop {
+  background-color: #10171f !important;
+}
+
+.modal-content {
+  @include neonEffectTwo(0.3rem);
+  background-color: #000000 !important;
+  border: transparent;
+  border-radius: 0rem;
+}
+
+.modal-dialog {
+  margin: 5rem auto !important;
+
+  @include mQ($sm) {
+    margin: 5rem 1.3rem !important;
   }
 }

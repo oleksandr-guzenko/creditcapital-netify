@@ -8,14 +8,17 @@
   z-index: 2;
   border-radius: 50%;
   @include displayCenter(center, center);
-  background-color: $brand__color;
+  background-color: #74ebd5;
   cursor: pointer;
   box-shadow: $box_shadow_two;
   transition: all 0.3s ease-in-out;
   .icon {
     transition: all 0.3s ease-in-out;
-    color: $white__color;
+    color: $secondary;
     font-size: 28px;
+  }
+  &:hover {
+    box-shadow: $btn_box_shadowTwo;
   }
 }
 .hide {
