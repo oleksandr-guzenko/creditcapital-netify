@@ -27,7 +27,6 @@ export const swapTokens =
       const price = priceConversion('toWei', 'ether', amount, web3)
 
       // const newGasPrice = await gasPrice(web3)
-
       if (tokenType === 'USDC') {
         await USDCBNB.methods
           .approve(swap._address, price)

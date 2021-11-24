@@ -13,7 +13,6 @@ import {
   clearHashValues,
   getDepositedBalance,
   vaultDepositAndWithdrawTokens,
-  withdrawVaultTokens,
 } from '../../Redux/Vault/action'
 import {numberFormate} from '../../Utilities/Util'
 import ConvertLpModal from '../Modals/Vaults/ConvertLpModal'
@@ -236,7 +235,7 @@ const LpPools = () => {
                           </p>
                         </div> */}
                         </div>
-                        <div className='liquidity__pool__box__btn'>
+                        <div className='liquidity__pool__box__btn  justify-content-center'>
                           {/* <button
                           disabled={depositErrors}
                           type='submit'
@@ -248,12 +247,7 @@ const LpPools = () => {
                         >
                           Deposit
                         </button> */}
-                          <button
-                            onClick={() => setConvertModal(true)}
-                            className='btn_brand'
-                          >
-                            Convert LP
-                          </button>
+                         
                           <button type='submit' className='btn_brand'>
                             Withdraw
                           </button>

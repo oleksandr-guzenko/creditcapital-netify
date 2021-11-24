@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import {Col, Collapse, Container, Image, Row} from 'react-bootstrap'
 import {BiPlay} from 'react-icons/bi'
 import {GoChevronDown, GoChevronUp} from 'react-icons/go'
-import TransformModal from '../Modals/Vaults/TransformModal'
 import VaultInput from './VaultInput'
 
 // svgs
@@ -16,7 +15,6 @@ import {
   withdrawVaultTokens,
 } from '../../Redux/Vault/action'
 import {numberFormate} from '../../Utilities/Util'
-import ConvertLpModal from '../Modals/Vaults/ConvertLpModal'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
 import VaultSuccess from '../Modals/Vaults/VaultSuccess'
 
@@ -24,6 +22,8 @@ const USDCPool = () => {
   //redux
   const dispatch = useDispatch()
   const {userAddress} = useSelector((state) => state.profile)
+  const {usdcBNBBalance} = useSelector((state) => state.swap)
+
   const {
     vaultHash,
     vaultLoading,
@@ -93,10 +93,6 @@ const USDCPool = () => {
     dispatch(vaultDepositAndWithdrawTokens(0, 'rewards'))
   }
 
-  // transform
-  const [transformModal, setTransformModal] = useState(false)
-  const [convertModal, setConvertModal] = useState(false)
-
   return (
     <>
       <div className='swap lpVaults'>
@@ -143,7 +139,7 @@ const USDCPool = () => {
                         <div>
                           <p className='txt__gray'>Available balance</p>
                           <h6>
-                            {numberFormate(depositedLpBalance)} LP $(0.0000)
+                            {numberFormate(usdcBNBBalance)} USDC $(0.0000)
                             {/* {profileLoading ? (
                             <ReactLoading
                               type='bars'
@@ -173,7 +169,7 @@ const USDCPool = () => {
                           </p>
                         </div> */}
                         </div>
-                        <div className='liquidity__pool__box__btn'>
+                        <div className='liquidity__pool__box__btn justify-content-center'>
                           {/* <button
                           disabled={depositErrors}
                           type='submit'
@@ -185,12 +181,7 @@ const USDCPool = () => {
                         >
                           Deposit
                         </button> */}
-                          <button
-                            onClick={() => setTransformModal(true)}
-                            className='btn_brand'
-                          >
-                            Transform
-                          </button>
+
                           <button type='submit' className='btn_brand'>
                             Deposit
                           </button>
@@ -235,7 +226,7 @@ const USDCPool = () => {
                           </p>
                         </div> */}
                         </div>
-                        <div className='liquidity__pool__box__btn'>
+                        <div className='liquidity__pool__box__btn  justify-content-center'>
                           {/* <button
                           disabled={depositErrors}
                           type='submit'
@@ -247,12 +238,7 @@ const USDCPool = () => {
                         >
                           Deposit
                         </button> */}
-                          <button
-                            onClick={() => setConvertModal(true)}
-                            className='btn_brand'
-                          >
-                            Convert LP
-                          </button>
+
                           <button type='submit' className='btn_brand'>
                             Withdraw
                           </button>
@@ -381,14 +367,6 @@ const USDCPool = () => {
           </section>
         </Container>
       </div>
-      <TransformModal
-        show={transformModal}
-        handleClose={() => setTransformModal(false)}
-      />
-      <ConvertLpModal
-        show={convertModal}
-        handleClose={() => setConvertModal(false)}
-      />
       <SwapLoading show={swapLoad} handleClose={() => setSwapLoad(false)} />
       <VaultSuccess
         show={swapSucc}

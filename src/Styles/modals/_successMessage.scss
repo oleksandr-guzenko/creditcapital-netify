@@ -27,7 +27,7 @@
       }
     }
     .user__id {
-      background-color: #f8f8f9;
+      background: #141414;
       position: relative;
       p {
         cursor: pointer;
@@ -50,6 +50,9 @@
           font-size: 10px;
         }
       }
+    }
+    .btn_brand {
+      color: $secondary !important;
     }
     .note {
       @include normalFont(14px);
