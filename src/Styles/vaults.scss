@@ -118,3 +118,16 @@
     }
   }
 }
+
+.vault__input {
+  .css-26l3qy-menu {
+    background-color: $secondary !important;
+    color: $primary !important;
+    &:hover {
+      background-color: transparent;
+    }
+  }
+  .css-2b097c-container {
+    min-width: 115px !important;
+  }
+}

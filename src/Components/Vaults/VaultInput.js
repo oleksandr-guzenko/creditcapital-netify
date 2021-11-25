@@ -13,6 +13,9 @@ const VaultInput = ({
   errors,
   typeOfToken,
   disabled,
+  setTypeOfDeposit,
+  deposit,
+  typeOfDeposit,
 }) => {
   // const [selectedValue, setSelectedValue] = useState('')
 
@@ -23,7 +26,7 @@ const VaultInput = ({
   //     label: (
   //       <div className='d-flex align-items-center justify-content-between'>
   //         <img src={USDC} height='18px' width='18px' alt='' />
-  //         <h6 className='mb-0' style={{fontSize: '12px', marginLeft: '3px'}}>
+  //         <h6 className='mb-0' style={{fontSize: '12px', marginLeft: '3px', color: "#fff"}}>
   //           USDC
   //         </h6>
   //       </div>
@@ -36,37 +39,69 @@ const VaultInput = ({
   //     {props.data.label}
   //   </Option>
   // )
-  // const CaretDownIcon = () => {
-  //   return <BsFillPlayFill className='play-down' />
-  // }
+  const CaretDownIcon = () => {
+    return <BsFillPlayFill className='play-down' />
+  }
 
-  // const DropdownIndicator = (props) => {
-  //   return (
-  //     <components.DropdownIndicator {...props}>
-  //       <CaretDownIcon />
-  //     </components.DropdownIndicator>
-  //   )
-  // }
+  const DropdownIndicator = (props) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <CaretDownIcon />
+      </components.DropdownIndicator>
+    )
+  }
 
-  // const handleChange = (selectedOption) => {
-  //   setSelectedValue(selectedOption.value)
-  // }
+  const handleChange = (selectedOption) => {
+    setTypeOfDeposit(selectedOption.value)
+  }
+  const options = [
+    {
+      value: 'USDC-CAPL',
+      label: (
+        <div className='d-flex align-items-center justify-content-between'>
+          <h6 className='mb-0' style={{fontSize: '12px', marginLeft: '3px', color: "#fff"}}>
+            USDC-CAPL
+          </h6>
+        </div>
+      ),
+    },
+    {
+      value: 'USDC',
+      label: (
+        <div className='d-flex align-items-center justify-content-between'>
+          <h6 className='mb-0' style={{fontSize: '12px', marginLeft: '3px', color: "#fff"}}>
+            USDC
+          </h6>
+        </div>
+      ),
+    },
+    {
+      value: 'CAPL',
+      label: (
+        <div className='d-flex align-items-center justify-content-between'>
+          <h6 className='mb-0' style={{fontSize: '12px', marginLeft: '3px', color: "#fff"}}>
+            CAPL
+          </h6>
+        </div>
+      ),
+    },
+  ]
 
   return (
-    <div className='liquidity__pool__box__middle'>
-      {/* {!cpt && (
+    <div className='liquidity__pool__box__middle  vault__input'>
+      {deposit && (
         <Select
           placeholder={'USDC'}
           components={{DropdownIndicator}}
-          value={selectedValue}
+          value={typeOfDeposit}
           onChange={handleChange}
           options={options}
           isSearchable={false}
           value={options.filter((option) => {
-            return option.value === selectedValue
+            return option.value === typeOfDeposit
           })}
         />
-      )} */}
+      )}
       <InputGroup>
         {/* {cpt && (
           <InputGroup.Text className='border-0 txt__brand cpt'>
@@ -105,7 +140,7 @@ const VaultInput = ({
           placeholder='0.0000'
           className='shadow-none form-control'
         />
-        <InputGroup.Text>MAX</InputGroup.Text>
+        {/* <InputGroup.Text>MAX</InputGroup.Text> */}
       </InputGroup>
     </div>
   )

@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {
   clearHashValues,
   getDepositedBalance,
+  sharesTotal,
   vaultDepositAndWithdrawTokens,
 } from '../../Redux/Vault/action'
 import {numberFormate} from '../../Utilities/Util'
@@ -23,17 +24,20 @@ const LpPools = () => {
   //redux
   const dispatch = useDispatch()
   const {userAddress} = useSelector((state) => state.profile)
+  const {usdcBNBBalance, ccptBNBBalance} = useSelector((state) => state.swap)
   const {
     vaultHash,
     vaultLoading,
     depositedLpBalance,
     vaultRewards,
     withdrawLpBalance,
+    apy,
   } = useSelector((state) => state.vault)
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   const [depositPrice, setDepositPrice] = useState('')
   const [depositErrors, setDepositErrors] = useState(false)
+  const [typeOfDeposit, setTypeOfDeposit] = useState('USDC-CAPL')
 
   // ErrorState
   const [balanceError, setBalanceError] = useState(false)
@@ -69,6 +73,7 @@ const LpPools = () => {
   useEffect(() => {
     if (userAddress) {
       dispatch(getDepositedBalance())
+      dispatch(sharesTotal())
     }
   }, [userAddress])
 
@@ -78,7 +83,18 @@ const LpPools = () => {
   }
   const submitDepositLiquidityPool = (e) => {
     e.preventDefault()
-    dispatch(vaultDepositAndWithdrawTokens(depositPrice, 'deposit'))
+    dispatch(
+      vaultDepositAndWithdrawTokens(
+        depositPrice,
+        typeOfDeposit === 'USDC-CAPL'
+          ? 'deposit'
+          : typeOfDeposit === 'USDC'
+          ? 'usdcDeposit'
+          : typeOfDeposit === 'CAPL'
+          ? 'caplDeposit'
+          : ''
+      )
+    )
   }
   // Withdraw
   const handleWithdrawPriceChange = (number) => {
@@ -136,14 +152,26 @@ const LpPools = () => {
             <Collapse in={open}>
               <div className='lpWrapper' id='collapse-div'>
                 <Row>
-                  <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
+                  <Col className='mb-3' sm={12} md={12} lg={5} xl={4}>
                     <div className='liquidity__pool__box'>
                       <div className='liquidity__pool__box__top'>
-                        <h5>In Wallet</h5>
+                        <h5>{typeOfDeposit} Wallet</h5>
                         <div>
                           <p className='txt__gray'>Available balance</p>
                           <h6>
-                            {numberFormate(depositedLpBalance)} LP $(0.0000)
+                            {typeOfDeposit === 'USDC-CAPL'
+                              ? `${numberFormate(
+                                  depositedLpBalance
+                                )} LP $(0.0000)`
+                              : typeOfDeposit === 'USDC'
+                              ? `${numberFormate(
+                                  usdcBNBBalance
+                                )} USDC $(0.0000)`
+                              : typeOfDeposit === 'CAPL'
+                              ? `${numberFormate(
+                                  ccptBNBBalance
+                                )} CAPL $(0.0000)`
+                              : ''}
                             {/* {profileLoading ? (
                             <ReactLoading
                               type='bars'
@@ -165,6 +193,9 @@ const LpPools = () => {
                           handlePriceChange={handleDepositPriceChange}
                           errors={balanceError}
                           typeOfToken='USDC'
+                          typeOfDeposit={typeOfDeposit}
+                          setTypeOfDeposit={setTypeOfDeposit}
+                          deposit={true}
                         />
                         <div className='liquidity__pool__box__bottom'>
                           {/* <div>
@@ -173,7 +204,13 @@ const LpPools = () => {
                           </p>
                         </div> */}
                         </div>
-                        <div className='liquidity__pool__box__btn'>
+                        <div
+                          className={
+                            typeOfDeposit === 'USDC-CAPL'
+                              ? 'liquidity__pool__box__btn'
+                              : 'liquidity__pool__box__btn justify-content-center'
+                          }
+                        >
                           {/* <button
                           disabled={depositErrors}
                           type='submit'
@@ -185,12 +222,14 @@ const LpPools = () => {
                         >
                           Deposit
                         </button> */}
-                          <button
-                            onClick={() => setTransformModal(true)}
-                            className='btn_brand'
-                          >
-                            Transform
-                          </button>
+                          {typeOfDeposit === 'USDC-CAPL' && (
+                            <button
+                              onClick={() => setTransformModal(true)}
+                              className='btn_brand'
+                            >
+                              Transform
+                            </button>
+                          )}
                           <button type='submit' className='btn_brand'>
                             Deposit
                           </button>
@@ -198,7 +237,7 @@ const LpPools = () => {
                       </form>
                     </div>
                   </Col>
-                  <Col className='mb-3' sm={12} md={12} lg={5} xl={4}>
+                  <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
                     <div className='liquidity__pool__box'>
                       <div className='liquidity__pool__box__top'>
                         <h5>In Vault</h5>
@@ -247,7 +286,7 @@ const LpPools = () => {
                         >
                           Deposit
                         </button> */}
-                         
+
                           <button type='submit' className='btn_brand'>
                             Withdraw
                           </button>
@@ -292,6 +331,7 @@ const LpPools = () => {
                     </div>
                   </Col>
                 </Row>
+
                 <Row>
                   <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
                     <div className='liquidity__pool__box'>
@@ -302,16 +342,21 @@ const LpPools = () => {
                           <>$66.00</>
                         </div>
                         <div className='info_part'>
-                          <p>Farm Name</p>
-                          <p>CAPL</p>
+                          <p>Pool Name</p>
+                          <p>USDC-CAPL</p>
                         </div>
-                        <div className='info_part'>
+                        {/* <div className='info_part'>
                           <p>Farm Contract</p>
                           <a href='#'>View</a>
-                        </div>
+                        </div> */}
                         <div className='info_part'>
                           <p>Vault Contract</p>
-                          <a href='#'>View</a>
+                          <a
+                            target='_blank'
+                            href='https://testnet.bscscan.com/address/0x10f7f07338E99e5507C6ACb1DE019011e1ECdDf1#code'
+                          >
+                            View
+                          </a>
                         </div>
                         <div className='info_part'>
                           <p>Vault Multiplier</p>
@@ -326,9 +371,9 @@ const LpPools = () => {
                       <div className='info'>
                         <div className='info_part'>
                           <p>Deposit Fee</p>
-                          <p>0.0%</p>
+                          <p>1%</p>
                         </div>
-                        <div className='info_part'>
+                        {/* <div className='info_part'>
                           <p>Auto-Compound Fee (on profits)</p>
                           <p>0.0%</p>
                         </div>
@@ -339,10 +384,10 @@ const LpPools = () => {
                         <div className='info_part'>
                           <p>Buyback & Burn Fee (on profits)</p>
                           <p>0.0%</p>
-                        </div>
+                        </div> */}
                         <div className='info_part'>
                           <p>Withdraw Fee</p>
-                          <p>0.0%</p>
+                          <p>1%</p>
                         </div>
                       </div>
                     </div>
@@ -351,9 +396,9 @@ const LpPools = () => {
                     <div className='liquidity__pool__box'>
                       <h5>APY Calculations</h5>
                       <div className='info'>
-                        <div className='info_part'>
-                          <p>Farm APY</p>
-                          <p>0.0%</p>
+                        {/* <div className='info_part'>
+                          <p>Total APY</p>
+                          <p>{numberFormate(apy)}%</p>
                         </div>
                         <div className='info_part'>
                           <p>Optimal Compounds Per Year</p>
@@ -362,10 +407,10 @@ const LpPools = () => {
                         <div className='info_part'>
                           <p>CAPL APR</p>
                           <p>160.26%</p>
-                        </div>
+                        </div> */}
                         <div className='info_part'>
                           <p>Total APY</p>
-                          <p>394.85%</p>
+                          <p>{numberFormate(apy)}%</p>
                         </div>
                       </div>
                     </div>

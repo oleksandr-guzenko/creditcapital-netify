@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {Container, Row} from 'react-bootstrap'
+import {Col, Container, Image, Row} from 'react-bootstrap'
 import PortfolioCard from './PortfolioCard'
 import {exactNumberFormate, numberFormate} from '../../Utilities/Util'
 
@@ -9,6 +9,8 @@ import card_two from '../../Assets/portfolio/card_two.svg'
 import card_three from '../../Assets/portfolio/card_three.svg'
 import card_four from '../../Assets/portfolio/card_four.svg'
 import card_five from '../../Assets/portfolio/card_five.svg'
+import Logo from '../../Assets/CC_Logo.svg'
+
 // Redux Imports
 import {useDispatch, useSelector} from 'react-redux'
 import {
@@ -55,6 +57,62 @@ const MyPortfolio = () => {
               Disconnect
             </button>
           </div>
+          <Row>
+            <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
+              <div className='upBox '>
+                <h3>Metrics</h3>
+                <div className='d-flex align-items-center justify-content-between'>
+                  <p>Max Supply</p>
+                  <p>9999999</p>
+                </div>
+                <div className='d-flex align-items-center justify-content-between'>
+                  <p>Aqua Burned in USD</p>
+                  <p>$252,943</p>
+                </div>
+                <div className='d-flex align-items-center justify-content-between'>
+                  <p>Market Cap / TVL Ratio</p>
+                  <p>0.11</p>
+                </div>
+                <div className='mt-3 d-flex justify-content-center'>
+                  <button className='btn_brand'>Buy CAPL</button>
+                </div>
+              </div>
+            </Col>
+            <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
+              <div className='upBox sfds'>
+                <Image src={Logo} alt='' />
+                <h6>CAPL</h6>
+                <p>0.0000</p>
+              </div>
+            </Col>
+            <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
+              <div className='upBox'>
+                <h3>Holdings</h3>
+                <div className='d-flex align-items-center justify-content-between'>
+                  <div className='hleft'>
+                    <p>Balance In Vaults</p>
+                    <h5>$0.00</h5>
+                  </div>
+                  <div className='hright'>
+                    <p>Current APY</p>
+                    <h5>0.00%</h5>
+                  </div>
+                </div>
+                <div className='d-flex align-items-center justify-content-between'>
+                  <div className='hleft'>
+                    <p>Pending Earnings</p>
+                    <h5>$0.00</h5>
+                  </div>
+                  <div className='hright'>
+                    <p>AQUA Share</p>
+                    <h5>0.0000%</h5>
+                  </div>
+                </div>
+              </div>
+            </Col>
+            <Col className='mb-3' sm={12} md={12} lg={4} xl={4}></Col>
+            <Col className='mb-3' sm={12} md={12} lg={4} xl={4}></Col>
+          </Row>
           <Row className='portfolio__cards__container'>
             <PortfolioCard
               bgColor='#e5def0'

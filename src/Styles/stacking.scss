@@ -39,15 +39,15 @@
     color: $font__gray !important;
   }
   .txt__brand {
-   color: $brand__color !important; 
+    color: $brand__color !important;
   }
 }
 // $font__gray: #848e9c;
 // $font__black: #333333;
 
-
 .reward__section {
   text-align: center;
+  color: $primary !important;
   p {
     text-align: center;
     font-size: 12px;

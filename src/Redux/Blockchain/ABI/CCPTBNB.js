@@ -1,4 +1,4 @@
-export const CCPTBnbAddress = '0x78490FdCCd309cB3262633c4cFa5F17A821f82a8'
+export const CCPTBnbAddress = '0x9fB4a346b7e6b4609263F8FC04256a93cc14683C'
 export const CCPTBnbABI = [
   {
     inputs: [{internalType: 'uint256', name: 'tokenAmount', type: 'uint256'}],

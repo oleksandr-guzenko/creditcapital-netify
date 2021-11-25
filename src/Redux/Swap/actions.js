@@ -73,7 +73,6 @@ export const convertTokenValue =
       const {
         profile: {walletType},
       } = getState()
-
       const {swap, web3} = getContracts(walletType)
       const price = priceConversion('toWei', 'ether', amount, web3)
 

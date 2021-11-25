@@ -3,6 +3,7 @@ import {
   GET_CONVERTED_USDC_CCPT_VALUES_SUCCESS,
   GET_DEPOSITED_BALANCE_SUCCESS,
   GET_VAULT_BALANCE_SUCCESS,
+  SHARES_TOTAL,
   VAULT_DEPOSIT_FAIL,
   VAULT_DEPOSIT_REQUEST,
   VAULT_DEPOSIT_SUCCESS,
@@ -18,9 +19,15 @@ const initialState = {
   withdrawLpBalance: 0,
   vaultLpBalance: 0,
   vaultRewards: 0,
+  apy: 0,
 }
 export const vaultReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SHARES_TOTAL:
+      return {
+        ...state,
+        apy: action.payload,
+      }
     case GET_DEPOSITED_BALANCE_SUCCESS:
       return {
         ...state,

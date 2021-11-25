@@ -1,4 +1,4 @@
-export const vaultLPAddress = '0x2320613371A1F51c0C6Ad41152957b4000157751'
+export const vaultLPAddress = '0xF6Ee046B297e308852307800beDdC0a9D3CA8d70'
 export const vaultLPABI = [
   {
     inputs: [
@@ -8,6 +8,25 @@ export const vaultLPABI = [
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'OwnershipTransferred',
+    type: 'event',
   },
   {
     inputs: [],
@@ -74,6 +93,13 @@ export const vaultLPABI = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'geUnlockTime',
+    outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{internalType: 'uint256', name: 'tokenAmount', type: 'uint256'}],
     name: 'getCaplAmount',
     outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
@@ -88,6 +114,31 @@ export const vaultLPABI = [
     type: 'function',
   },
   {
+    inputs: [
+      {internalType: 'address', name: '_token', type: 'address'},
+      {internalType: 'uint256', name: '_amount', type: 'uint256'},
+      {internalType: 'address', name: '_to', type: 'address'},
+    ],
+    name: 'inCaseTokensGetStuck',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'owner',
+    outputs: [{internalType: 'address', name: '', type: 'address'}],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'reserves',
     outputs: [
@@ -98,10 +149,31 @@ export const vaultLPABI = [
     type: 'function',
   },
   {
+    inputs: [{internalType: 'uint256', name: 'slippage', type: 'uint256'}],
+    name: 'setSlippageTolerance',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'slippageTolerance',
+    outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'swapAndLiquifyEnabled',
     outputs: [{internalType: 'bool', name: '', type: 'bool'}],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{internalType: 'address', name: 'newOwner', type: 'address'}],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {

@@ -44,7 +44,7 @@ svg {
 // table active tabs
 .active__amount {
   background-color: $secondary !important;
-  color: green;
+  color: rgb(255, 255, 255);
   padding: 8px 25px;
   border-radius: 5px;
   text-align: center;
@@ -80,8 +80,8 @@ svg {
 
 // tooltip{
 .toolt {
-  background-color: #06387ee1;
-  color: $primary;
+  background: $primary;
+  color: $secondary;
   padding: 5px 10px;
   visibility: hidden;
   position: absolute;
@@ -153,7 +153,7 @@ svg {
 
 .play-down {
   transform: rotate(90deg);
-  color: $font__black;
+  color: $primary;
 }
 .toggle__play__down {
   transform: rotate(-90deg);
@@ -178,8 +178,8 @@ svg {
     left: 10px;
     padding: 0 8px;
     font-size: 12px;
-    background-color: #ffffff;
-    color: $font__gray;
+    background-color: $secondary !important;
+    color: $primary !important;
     font-weight: 400;
   }
   .css-2b097c-container {

@@ -8,7 +8,7 @@
     padding: 20px;
     border: 1px solid rgb(221, 221, 221);
     border-radius: 10px;
-    background-color: $primary;
+    background-color: $secondary;
     p {
       color: $font__gray;
       font-size: 14px;
@@ -16,12 +16,13 @@
     }
     h4 {
       font-weight: 500;
+      color: $primary;
     }
     .liquidity__pool__box {
       padding: 20px;
-      border: 1px solid rgb(221, 221, 221);
+      border: 1px solid rgb(255, 255, 255);
       border-radius: 10px;
-      background-color: #ffffff;
+      background-color: $secondary;
       height: 100%;
       .trustee {
         text-align: right;
@@ -33,6 +34,7 @@
         @include displayCenter(flex-start, space-between);
         h5 {
           font-weight: 500;
+          color: $primary;
         }
         p {
           text-align: right;
@@ -42,6 +44,7 @@
         h6 {
           font-weight: 400;
           text-align: right;
+          color: $primary;
           margin: 0;
           padding: 0;
           @include displayCenter(center, flex-end);
@@ -64,7 +67,7 @@
             background-color: transparent;
             box-shadow: none;
             font-size: 12px !important;
-            color: $brand__color !important;
+            color: $primary !important;
             &:hover {
               border-color: transparent;
             }
@@ -78,7 +81,7 @@
           border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
           border-radius: 0 !important;
           font-size: 12px !important;
-          color: $brand__color !important;
+          color: $primary !important;
 
           &:hover {
             border-color: transparent !important;
@@ -87,6 +90,7 @@
         }
         input {
           background-color: transparent;
+          color: $primary;
           border: 0;
           &:focus {
             outline: none;
@@ -94,13 +98,14 @@
         }
         .input-group-text {
           background-color: transparent;
-          color: #2fa6f2;
+          color: $primary;
           font-weight: 500;
           border: 0;
           border-left: 2px solid rgba(221, 221, 221, 0.733);
         }
         .cpt {
           font-size: 14px;
+          color: $primary !important;
           border-right: 2px solid rgba(221, 221, 221, 0.733) !important;
           img {
             margin-right: 3px;

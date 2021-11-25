@@ -1,4 +1,4 @@
-export const Rewards_Address = '0xAE202f0b7e00c4570ca8a1A6f7c058b13F3B2119'
+export const Rewards_Address = '0x10f7f07338E99e5507C6ACb1DE019011e1ECdDf1'
 export const Rewards_ABI = [
   {
     anonymous: false,
@@ -79,6 +79,13 @@ export const Rewards_ABI = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'USDC',
+    outputs: [{internalType: 'address', name: '', type: 'address'}],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {internalType: 'uint256', name: '_allocPoint', type: 'uint256'},
       {internalType: 'contract IERC20', name: '_want', type: 'address'},
@@ -88,6 +95,13 @@ export const Rewards_ABI = [
     name: 'add',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'addLiquidityAddress',
+    outputs: [{internalType: 'address', name: '', type: 'address'}],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -103,6 +117,26 @@ export const Rewards_ABI = [
       {internalType: 'uint256', name: '_wantAmt', type: 'uint256'},
     ],
     name: 'deposit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {internalType: 'uint256', name: '_pid', type: 'uint256'},
+      {internalType: 'uint256', name: 'caplAmount', type: 'uint256'},
+    ],
+    name: 'depositWithCapl',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {internalType: 'uint256', name: '_pid', type: 'uint256'},
+      {internalType: 'uint256', name: 'usdcAmount', type: 'uint256'},
+    ],
+    name: 'depositWithUsc',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -204,6 +238,15 @@ export const Rewards_ABI = [
     type: 'function',
   },
   {
+    inputs: [
+      {internalType: 'address', name: 'liquidityAddress', type: 'address'},
+    ],
+    name: 'setAddLiquidity',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [{internalType: 'uint256', name: '_CAPLPerBlock', type: 'uint256'}],
     name: 'setCAPLPerBlock',
     outputs: [],
@@ -211,8 +254,22 @@ export const Rewards_ABI = [
     type: 'function',
   },
   {
+    inputs: [{internalType: 'address', name: 'capl', type: 'address'}],
+    name: 'setCapl',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [{internalType: 'address', name: '_fundSource', type: 'address'}],
     name: 'setFundSource',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{internalType: 'address', name: 'usdc', type: 'address'}],
+    name: 'setUsdc',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

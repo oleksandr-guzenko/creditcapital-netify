@@ -10,6 +10,7 @@ import {
   VAULT_DEPOSIT_REQUEST,
   CLEAR_VALUES,
   VAULT_DEPOSIT_SUCCESS,
+  SHARES_TOTAL,
 } from './constants'
 
 export const vaultDepositAndWithdrawTokens =
@@ -25,7 +26,8 @@ export const vaultDepositAndWithdrawTokens =
         profile: {walletType, userAddress},
       } = getState()
 
-      const {REWARDS_VAULT, USDC_CCPT_TOKEN, web3} = getContracts(walletType)
+      const {REWARDS_VAULT, USDC_CCPT_TOKEN, USDCBNB, CCPTBNB, web3} =
+        getContracts(walletType)
 
       const price = priceConversion('toWei', 'ether', amount, web3)
       // const newGasPrice = await gasPrice(web3)
@@ -59,6 +61,34 @@ export const vaultDepositAndWithdrawTokens =
       } else if (type === 'rewards') {
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, 0)
+          .send({from: userAddress})
+
+        const tranHash = transaction.transactionHash
+        dispatch({
+          type: VAULT_DEPOSIT_SUCCESS,
+          payload: tranHash,
+        })
+        dispatch(getDepositedBalance())
+      } else if (type === 'usdcDeposit') {
+        await USDCBNB.methods
+          .approve(REWARDS_VAULT._address, price)
+          .send({from: userAddress})
+        const transaction = await REWARDS_VAULT.methods
+          .depositWithUsc(0, price)
+          .send({from: userAddress})
+
+        const tranHash = transaction.transactionHash
+        dispatch({
+          type: VAULT_DEPOSIT_SUCCESS,
+          payload: tranHash,
+        })
+        dispatch(getDepositedBalance())
+      } else if (type === 'caplDeposit') {
+        await CCPTBNB.methods
+          .approve(REWARDS_VAULT._address, price)
+          .send({from: userAddress})
+        const transaction = await REWARDS_VAULT.methods
+          .depositWithCapl(0, price)
           .send({from: userAddress})
 
         const tranHash = transaction.transactionHash
@@ -207,5 +237,24 @@ export const getDepositedBalance = () => async (dispatch, getState) => {
 export const clearHashValues = () => async (dispatch) => {
   dispatch({
     type: CLEAR_VALUES,
+  })
+}
+
+export const sharesTotal = () => async (dispatch, getState) => {
+  const {
+    profile: {walletType, userAddress},
+  } = getState()
+
+  const {APY_VAULT, web3} = getContracts(walletType)
+  const res = await APY_VAULT.methods.sharesTotal().call()
+
+  const apy = Number(priceConversion('fromWei', 'ether', res, web3))
+
+  const trans = 60000 / apy
+  console.log(trans)
+
+  dispatch({
+    type: SHARES_TOTAL,
+    payload: trans,
   })
 }

@@ -84,14 +84,8 @@ const Header = () => {
           <Navbar.Collapse id='responsive-navbar-nav'>
             <Nav className='m-auto nav__ mx-auto'>
               <div className='navbar__left'>
-                <LinkContainer to='/' className='main'>
-                  <Nav.Link>Capital Pool</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to='/credit-guaranty-pool'>
-                  <Nav.Link>Credit Guaranty Pool</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to='/farming'>
-                  <Nav.Link>Farming</Nav.Link>
+                <LinkContainer to='/'  className='main'>
+                  <Nav.Link>Vault</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to='/swap'>
                   <Nav.Link>Swap</Nav.Link>
@@ -99,8 +93,15 @@ const Header = () => {
                 {/* <LinkContainer to='/liquidity'>
                   <Nav.Link>Liquidity</Nav.Link>
                 </LinkContainer> */}
-                <LinkContainer to='/Vault'>
-                  <Nav.Link>Vault</Nav.Link>
+
+                <LinkContainer to='/creditPool'>
+                  <Nav.Link>Capital Pool</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/credit-guaranty-pool'>
+                  <Nav.Link>Credit Guaranty Pool</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/farming'>
+                  <Nav.Link>Farming</Nav.Link>
                 </LinkContainer>
               </div>
               <div className='navbar__right'>

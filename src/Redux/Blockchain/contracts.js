@@ -6,6 +6,7 @@ import {CCPTBnbABI, CCPTBnbAddress} from './ABI/CCPTBNB'
 import {vaultLPABI, vaultLPAddress} from './ABI/VaultLP'
 import {USDC_CCPT_ABI, USDC_CCPT_Address} from './ABI/USDC_CCPT'
 import {Rewards_ABI, Rewards_Address} from './ABI/RewardsValut'
+import {APY_ABI, APY_Address} from './ABI/APY'
 
 export const walletLink = new WalletLink({
   appName: 'Credit Capital',
@@ -40,7 +41,7 @@ const BuyCCPTAddress = '0xE980E4C09366072fBDc2946443e1a8dEb21fb578'
 const testCAPLAddress = '0x495338aE49F7F4e69a2C31541A41f9eAcA0f4839'
 const testCRETAddress = '0xC4e0f9781af34c49DAD23257fb58aE124bDB4b4B'
 const dummyUSDCAddress = '0x046bC6cBc4B74F75Fdd71fa71495fb6d125283C3'
-const swapAddress = '0x82c4f5C66c5683e03373d397Dad246665c37dE4f'
+const swapAddress = '0x4A60BDAD1cD4519e5D890F2c4267765De627D41f'
 
 // const testCCPTAddress = '0xc4046A423b0e1DBF12E3a6bB786fFa1bDC0b1A72'
 // const cretStakingAddress = '0xaf8E1ADEEe81c00aa701100850000c8D50745d35'
@@ -73,6 +74,7 @@ const getContracts = (walletType) => {
     USDC_CCPT_Address
   )
   const REWARDS_VAULT = new web3.eth.Contract(Rewards_ABI, Rewards_Address)
+  const APY_VAULT = new web3.eth.Contract(APY_ABI, APY_Address)
 
   const Staking = new web3.eth.Contract(
     [
@@ -3931,6 +3933,25 @@ const getContracts = (walletType) => {
         type: 'constructor',
       },
       {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'previousOwner',
+            type: 'address',
+          },
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'OwnershipTransferred',
+        type: 'event',
+      },
+      {
         inputs: [],
         name: '_index',
         outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
@@ -3948,6 +3969,13 @@ const getContracts = (walletType) => {
         inputs: [],
         name: 'caplUsdcPair',
         outputs: [{internalType: 'address', name: '', type: 'address'}],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'geUnlockTime',
+        outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
         stateMutability: 'view',
         type: 'function',
       },
@@ -3990,6 +4018,31 @@ const getContracts = (walletType) => {
         type: 'function',
       },
       {
+        inputs: [
+          {internalType: 'address', name: '_token', type: 'address'},
+          {internalType: 'uint256', name: '_amount', type: 'uint256'},
+          {internalType: 'address', name: '_to', type: 'address'},
+        ],
+        name: 'inCaseTokensGetStuck',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'owner',
+        outputs: [{internalType: 'address', name: '', type: 'address'}],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'renounceOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
         inputs: [],
         name: 'reserves',
         outputs: [
@@ -4000,10 +4053,31 @@ const getContracts = (walletType) => {
         type: 'function',
       },
       {
+        inputs: [{internalType: 'uint256', name: 'slippage', type: 'uint256'}],
+        name: 'setSlippageTolerance',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'slippageTolerance',
+        outputs: [{internalType: 'uint256', name: '', type: 'uint256'}],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
         inputs: [],
         name: 'swapAndLiquifyEnabled',
         outputs: [{internalType: 'bool', name: '', type: 'bool'}],
         stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{internalType: 'address', name: 'newOwner', type: 'address'}],
+        name: 'transferOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
         type: 'function',
       },
       {
@@ -6158,7 +6232,8 @@ const getContracts = (walletType) => {
     cretStaking,
     liquidityPoolCRET,
     liquidityPoolCAPL,
-    REWARDS_VAULT
+    REWARDS_VAULT,
+    APY_VAULT,
   }
 }
 

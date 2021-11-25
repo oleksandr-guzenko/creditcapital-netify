@@ -1,4 +1,4 @@
-export const USDCBnbAddress = '0xdd31B4b21a14ef9e0993f8D80AEE9B47bae420ea'
+export const USDCBnbAddress = '0xb863D6bfa5Afd8E46Dd8514Be14aB01Dfc8eda40'
 export const USDCBnbABI = [
   {
     inputs: [{internalType: 'uint256', name: 'tokenAmount', type: 'uint256'}],

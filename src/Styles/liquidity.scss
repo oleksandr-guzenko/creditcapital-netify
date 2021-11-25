@@ -5,12 +5,13 @@
     @include displayCenter(center, space-between);
     margin-top: 20px;
     .__play__icon__wrapper {
-      border: 1px solid rgba(28, 33, 45, 0.12) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
       padding: 8px;
       cursor: pointer;
       svg {
         transform: rotate(90deg);
         font-size: 20px;
+        color: $primary;
       }
       .toggle__play__icon {
         transform: rotate(-90deg);
@@ -19,10 +20,10 @@
   }
 }
 .liquidity__table {
-  border: 1px solid rgba(28, 33, 45, 0.12);
+  border: 1px solid rgb(255, 255, 255);
   border-radius: 10px;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: $secondary;
   margin-top: 20px;
   .global__filter {
     @include displayCenter(center, space-between);
@@ -41,7 +42,7 @@
     border-spacing: 0 20px;
     thead {
       th {
-        color: $font__gray;
+        color: $primary;
         font-weight: 500;
         text-transform: uppercase;
         border-bottom: 0 !important;
@@ -52,48 +53,53 @@
         border-radius: 10px !important;
 
         td {
-          border-top: 1px solid rgba(28, 33, 45, 0.12) !important;
-          border-bottom: 1px solid rgba(28, 33, 45, 0.12) !important;
+          border-top: 1px solid rgba(255, 255, 255, 0.795) !important;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.795) !important;
           font-size: 14px;
           vertical-align: middle;
-          color: $font__gray;
+          color: $primary;
           &:first-child {
-            color: $font__black;
+            color: $primary;
             border-radius: 10px 0 0 10px !important;
-            border-left: 1px solid rgba(28, 33, 45, 0.12) !important;
+            border-left: 1px solid rgba(255, 255, 255, 0.795) !important;
           }
           &:last-child {
-            color: $font__black;
+            color: $primary;
             border-radius: 0px 10px 10px 0px !important;
-            border-right: 1px solid rgba(28, 33, 45, 0.12) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.795) !important;
           }
         }
       }
     }
   }
 
-  .table > tbody > tr:nth-of-type(2n + 2) {
-    background-color: #ffffff !important;
-  }
+  // .table > tbody > tr:nth-of-type(2n + 2) {
+  //   background-color: #ffffff !important;
+  // }
 
   .table__bottom {
     @include displayCenter(center, space-between);
     flex-wrap: wrap;
     &__left {
+      color: $primary !important;
       .showing {
-        color: $font__gray;
+        color: $primary;
+        span {
+          color: $primary !important;
+        }
       }
     }
     &__right {
       @include displayCenter(center, center);
       button {
-        border: 0;
-        background-color: rgb(255, 255, 255);
+        border: 1px solid $primary;
+        background-color: $secondary;
         min-width: 35px;
         min-height: 35px;
         border-radius: 50% !important;
         margin: 0 5px;
         cursor: pointer;
+        color: $primary;
       }
       .btn__disabled {
         cursor: not-allowed;
@@ -111,13 +117,15 @@
             min-width: 35px;
             min-height: 35px;
             border-radius: 50% !important;
+            background-color: $secondary;
+            color: $primary;
             @include displayCenter(center, center);
           }
         }
         .circle__active {
           a {
-            background-color: $font__gray;
-            color: $white__color;
+            background-color: $primary;
+            color: $secondary;
           }
         }
       }

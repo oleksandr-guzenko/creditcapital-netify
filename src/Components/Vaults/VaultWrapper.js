@@ -1,6 +1,5 @@
 import React from 'react'
 import LpPools from './LpPools'
-import USDCPool from './USDCPool'
 
 const VaultWrapper = () => {
   return (
@@ -9,7 +8,6 @@ const VaultWrapper = () => {
         <h4>Deposit and Earn</h4>
       </div>
       <LpPools />
-      <USDCPool />
     </div>
   )
 }
