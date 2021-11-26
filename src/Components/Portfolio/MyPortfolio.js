@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import {Col, Container, Image, Row} from 'react-bootstrap'
 import PortfolioCard from './PortfolioCard'
 import {exactNumberFormate, numberFormate} from '../../Utilities/Util'
+import {useHistory} from 'react-router-dom'
 
 // Svgs
 import card_one from '../../Assets/portfolio/card_one.svg'
@@ -18,6 +19,8 @@ import {
   getProfileInformation,
   getProfileInformationTest,
 } from '../../Redux/Profile/actions'
+import {sharesTotal} from '../../Redux/Vault/action'
+import NumberFormat from 'react-number-format'
 
 const MyPortfolio = () => {
   // Redux State
@@ -32,15 +35,21 @@ const MyPortfolio = () => {
     lpCAPLBalance,
     lpCRETBalance,
   } = useSelector((state) => state.profile)
+  let history = useHistory()
   const {
     lpCRETBalance: a,
     lpCAPLBalance: b,
     testUSDC: c,
   } = useSelector((state) => state.testProfile)
+  const {apy, withdrawLpBalance, vaultRewards} = useSelector(
+    (state) => state.vault
+  )
+  const {ccptBNBBalance} = useSelector((state) => state.swap)
   useEffect(() => {
     if (userAddress) {
       dispatch(getProfileInformation())
       dispatch(getProfileInformationTest())
+      dispatch(sharesTotal())
     }
   }, [userAddress])
 
@@ -74,7 +83,12 @@ const MyPortfolio = () => {
                   <p>0.11</p>
                 </div>
                 <div className='mt-3 d-flex justify-content-center'>
-                  <button className='btn_brand'>Buy CAPL</button>
+                  <button
+                    onClick={() => history.push('/swap')}
+                    className='btn_brand'
+                  >
+                    Buy CAPL
+                  </button>
                 </div>
               </div>
             </Col>
@@ -82,7 +96,7 @@ const MyPortfolio = () => {
               <div className='upBox sfds'>
                 <Image src={Logo} alt='' />
                 <h6>CAPL</h6>
-                <p>0.0000</p>
+                <p>{numberFormate(ccptBNBBalance)}</p>
               </div>
             </Col>
             <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
@@ -91,20 +105,20 @@ const MyPortfolio = () => {
                 <div className='d-flex align-items-center justify-content-between'>
                   <div className='hleft'>
                     <p>Balance In Vaults</p>
-                    <h5>$0.00</h5>
+                    <h5>{numberFormate(withdrawLpBalance)}</h5>
                   </div>
                   <div className='hright'>
                     <p>Current APY</p>
-                    <h5>0.00%</h5>
+                    <h5>{numberFormate(apy)}%</h5>
                   </div>
                 </div>
                 <div className='d-flex align-items-center justify-content-between'>
                   <div className='hleft'>
                     <p>Pending Earnings</p>
-                    <h5>$0.00</h5>
+                    <h5>{numberFormate(vaultRewards)}</h5>
                   </div>
                   <div className='hright'>
-                    <p>AQUA Share</p>
+                    <p>CAPL Share</p>
                     <h5>0.0000%</h5>
                   </div>
                 </div>
@@ -113,7 +127,7 @@ const MyPortfolio = () => {
             <Col className='mb-3' sm={12} md={12} lg={4} xl={4}></Col>
             <Col className='mb-3' sm={12} md={12} lg={4} xl={4}></Col>
           </Row>
-          <Row className='portfolio__cards__container'>
+          {/* <Row className='portfolio__cards__container'>
             <PortfolioCard
               bgColor='#e5def0'
               amount={`$ ${numberFormate(CCPTBalance)}`}
@@ -156,7 +170,7 @@ const MyPortfolio = () => {
               text='Total Rewards Earned'
               icon={card_one}
             />
-          </Row>
+          </Row> */}
         </div>
       </Container>
     </div>

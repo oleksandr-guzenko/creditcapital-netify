@@ -32,11 +32,14 @@ const LpPools = () => {
     vaultRewards,
     withdrawLpBalance,
     apy,
+    totalLp,
   } = useSelector((state) => state.vault)
 
   const [open, setOpen] = useState(true)
   const [depositPrice, setDepositPrice] = useState('')
   const [depositErrors, setDepositErrors] = useState(false)
+  const [depositUSDCErrors, setDepositUSDCErrors] = useState(false)
+  const [depositCAPLErrors, setDepositCAPLErrors] = useState(false)
   const [typeOfDeposit, setTypeOfDeposit] = useState('USDC-CAPL')
 
   // ErrorState
@@ -47,6 +50,10 @@ const LpPools = () => {
   // loading
   const [swapLoad, setSwapLoad] = useState(false)
   const [swapSucc, setSwapSucc] = useState(false)
+
+  useEffect(() => {
+    setDepositPrice('')
+  }, [typeOfDeposit])
 
   useEffect(() => {
     if (vaultLoading) {
@@ -61,9 +68,6 @@ const LpPools = () => {
       setSwapSucc(true)
       setDepositPrice('')
       setWithdrawPrice('')
-      setTimeout(() => {
-        dispatch(clearHashValues())
-      }, 15000)
     } else {
       setSwapSucc(false)
     }
@@ -110,7 +114,43 @@ const LpPools = () => {
 
   // transform
   const [transformModal, setTransformModal] = useState(false)
-  const [convertModal, setConvertModal] = useState(false)
+
+  useEffect(() => {
+    if (typeOfDeposit === 'USDC-CAPL') {
+      if (depositPrice === '' || depositedLpBalance === '0' || !userAddress) {
+        setDepositErrors(true)
+      } else {
+        setDepositErrors(false)
+      }
+    } else if (typeOfDeposit === 'USDC') {
+      if (depositPrice === '' || usdcBNBBalance === '0' || !userAddress) {
+        setDepositUSDCErrors(true)
+      } else {
+        setDepositUSDCErrors(false)
+      }
+    } else if (typeOfDeposit === 'CAPL') {
+      if (depositPrice === '' || ccptBNBBalance === '0' || !userAddress) {
+        setDepositCAPLErrors(true)
+      } else {
+        setDepositCAPLErrors(false)
+      }
+    }
+  }, [
+    usdcBNBBalance,
+    ccptBNBBalance,
+    userAddress,
+    depositedLpBalance,
+    depositPrice,
+    typeOfDeposit,
+  ])
+
+  useEffect(() => {
+    if (!userAddress || withdrawLpBalance === '0' || withdrawPrice === '') {
+      setWithdrawErrors(true)
+    } else {
+      setWithdrawErrors(false)
+    }
+  }, [userAddress, withdrawLpBalance, withdrawPrice])
 
   return (
     <>
@@ -130,21 +170,19 @@ const LpPools = () => {
                 </div>
                 <div className='header_wrapper_right'>
                   <h4>USDC-CAPL</h4>
-                  <p>0.625</p>
                 </div>
               </div>
               <div className='header_wrapper'>
-                <h4>967.51%</h4>
-                <p>0.625</p>
+                <h4>{numberFormate(apy)}%</h4>
+                <p>APY</p>
               </div>
               <div className='header_wrapper'>
-                <h4>$0.00</h4>
-                <p>0.000 LP</p>
+                <h4>{numberFormate(totalLp)}</h4>
+                <p>Total LP</p>
               </div>
-              <div className='header_wrapper'>
+              {/* <div className='header_wrapper'>
                 <h4>$0.00</h4>
-                <p>0.000 CAPL</p>
-              </div>
+              </div> */}
               <div className='header_wrapper'>
                 {open ? <GoChevronUp /> : <GoChevronDown />}
               </div>
@@ -211,26 +249,42 @@ const LpPools = () => {
                               : 'liquidity__pool__box__btn justify-content-center'
                           }
                         >
-                          {/* <button
-                          disabled={depositErrors}
-                          type='submit'
-                          className={
-                            depositErrors
-                              ? 'btn_brand btn_brand_disabled'
-                              : 'btn_brand'
-                          }
-                        >
-                          Deposit
-                        </button> */}
                           {typeOfDeposit === 'USDC-CAPL' && (
-                            <button
+                            <a
+                              style={{cursor: 'pointer'}}
                               onClick={() => setTransformModal(true)}
                               className='btn_brand'
                             >
                               Transform
-                            </button>
+                            </a>
                           )}
-                          <button type='submit' className='btn_brand'>
+                          <button
+                            type='submit'
+                            className={
+                              typeOfDeposit === 'USDC-CAPL'
+                                ? depositErrors
+                                  ? 'btn_brand btn_brand_disabled'
+                                  : 'btn_brand'
+                                : typeOfDeposit === 'USDC'
+                                ? depositUSDCErrors
+                                  ? 'btn_brand btn_brand_disabled'
+                                  : 'btn_brand'
+                                : typeOfDeposit === 'CAPL'
+                                ? depositCAPLErrors
+                                  ? 'btn_brand btn_brand_disabled'
+                                  : 'btn_brand'
+                                : ''
+                            }
+                            disabled={
+                              typeOfDeposit === 'USDC-CAPL'
+                                ? depositErrors
+                                : typeOfDeposit === 'USDC'
+                                ? depositUSDCErrors
+                                : typeOfDeposit === 'CAPL'
+                                ? depositCAPLErrors
+                                : false
+                            }
+                          >
                             Deposit
                           </button>
                         </div>
@@ -287,7 +341,15 @@ const LpPools = () => {
                           Deposit
                         </button> */}
 
-                          <button type='submit' className='btn_brand'>
+                          <button
+                            type='submit'
+                            disabled={withdrawErrors}
+                            className={
+                              withdrawErrors
+                                ? 'btn_brand btn_brand_disabled'
+                                : 'btn_brand'
+                            }
+                          >
                             Withdraw
                           </button>
                         </div>
@@ -317,9 +379,9 @@ const LpPools = () => {
                       </p>
                       <div className='liquidity__pool__box__btn justify-content-center mt-5'>
                         <button
-                          disabled={vaultRewards === '0'}
+                          disabled={vaultRewards === '0' || !userAddress}
                           className={
-                            vaultRewards === '0'
+                            vaultRewards === '0' || !userAddress
                               ? 'btn_brand btn_brand_disabled'
                               : 'btn_brand'
                           }
@@ -424,10 +486,6 @@ const LpPools = () => {
       <TransformModal
         show={transformModal}
         handleClose={() => setTransformModal(false)}
-      />
-      <ConvertLpModal
-        show={convertModal}
-        handleClose={() => setConvertModal(false)}
       />
       <SwapLoading show={swapLoad} handleClose={() => setSwapLoad(false)} />
       <VaultSuccess

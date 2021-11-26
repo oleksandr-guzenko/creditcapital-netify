@@ -67,6 +67,47 @@ export const swapTokens =
     }
   }
 
+export const addLiquidityTokens =
+  (capl, usdc, minutes) => async (dispatch, getState) => {
+    try {
+      dispatch(checkAndAddNetwork())
+      dispatch({
+        type: SWAPPING_REQUEST,
+      })
+      const {
+        profile: {walletType, userAddress},
+      } = getState()
+
+      const {VAULTLP, USDCBNB, CCPTBNB, web3} = getContracts(walletType)
+
+      const priceCAPL = priceConversion('toWei', 'ether', capl, web3)
+      const priceUSDC = priceConversion('toWei', 'ether', usdc, web3)
+
+      await USDCBNB.methods
+        .approve(VAULTLP._address, priceUSDC)
+        .send({from: userAddress})
+
+      await CCPTBNB.methods
+        .approve(VAULTLP._address, priceCAPL)
+        .send({from: userAddress})
+
+      const transaction = await VAULTLP.methods
+        .addLiquidityBoth(priceCAPL, priceUSDC, minutes * 60)
+        .send({from: userAddress})
+      const tranHash = transaction.transactionHash
+      dispatch({
+        type: SWAPPING_SUCCESS,
+        payload: tranHash,
+      })
+      dispatch(getSwapTokenBalances())
+    } catch (error) {
+      dispatch({
+        type: SWAPPING_FAIL,
+        payload: error?.message,
+      })
+    }
+  }
+
 export const convertTokenValue =
   (amount, tokenType) => async (dispatch, getState) => {
     try {

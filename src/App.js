@@ -25,17 +25,17 @@ function App() {
         <Header />
         <Switch>
           <Route path='/' exact component={Vault} />
-          <Route path='/credit-guaranty-pool' component={CreditGuarantyPool} />
+          {/* <Route path='/credit-guaranty-pool' component={CreditGuarantyPool} /> */}
           {/* <Route path='/trustee' component={TrusteeLandingPage} /> */}
           {/* <Route
             path='/trustee_credit_guaranty_pool'
             component={TrusteeCreditGuarantyPool}
           /> */}
-          <Route path='/farming' component={Farming} />
+          {/* <Route path='/farming' component={Farming} /> */}
           <Route path='/portfolio' component={Portfolio} />
           <Route path='/swap' component={Swap} />
-          {/* <Route path='/liquidity' component={Liquidity} /> */}
-          <Route path='/creditPool' component={LandingPage} />
+          <Route path='/liquidity' component={Liquidity} />
+          {/* <Route path='/creditPool' component={LandingPage} /> */}
 
           <Route path='*' component={NotFound} />
         </Switch>

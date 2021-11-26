@@ -20,6 +20,7 @@ import {
 } from '../Redux/Profile/actions'
 import DisConnect from './Modals/DisConnect/DisConnect'
 import {getSwapTokenBalances} from '../Redux/Swap/actions'
+import { getDepositedBalance } from '../Redux/Vault/action'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -44,6 +45,7 @@ const Header = () => {
       closeWalletsModal()
       dispatch(getProfileInformation())
       dispatch(getProfileInformationTest())
+      dispatch(getDepositedBalance())
     }
   }, [userAddress])
 
@@ -90,11 +92,11 @@ const Header = () => {
                 <LinkContainer to='/swap'>
                   <Nav.Link>Swap</Nav.Link>
                 </LinkContainer>
-                {/* <LinkContainer to='/liquidity'>
+                <LinkContainer to='/liquidity'>
                   <Nav.Link>Liquidity</Nav.Link>
-                </LinkContainer> */}
+                </LinkContainer>
 
-                <LinkContainer to='/creditPool'>
+                {/* <LinkContainer to='/creditPool'>
                   <Nav.Link>Capital Pool</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to='/credit-guaranty-pool'>
@@ -102,7 +104,7 @@ const Header = () => {
                 </LinkContainer>
                 <LinkContainer to='/farming'>
                   <Nav.Link>Farming</Nav.Link>
-                </LinkContainer>
+                </LinkContainer> */}
               </div>
               <div className='navbar__right'>
                 {/* <div className='circle'>

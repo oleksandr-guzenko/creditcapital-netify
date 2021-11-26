@@ -29,7 +29,11 @@ const TransformModal = ({show, handleClose}) => {
   const {usdcPrice, ccptPrice} = useSelector((state) => state.swap)
   const {vaultHash, vaultLoading} = useSelector((state) => state.vault)
   const {userAddress} = useSelector((state) => state.profile)
-  const {usdc_ccpt_Balance} = useSelector((state) => state.vault)
+  const {usdc_ccpt_Balance, totalSup, reserves} = useSelector(
+    (state) => state.vault
+  )
+
+  console.log(totalSup, ccptPrice, reserves?._reserves0)
 
   const [price, setPrice] = useState('')
   const [secondPrice, setSecondPrice] = useState('')
@@ -39,6 +43,7 @@ const TransformModal = ({show, handleClose}) => {
   const [swapLoad, setSwapLoad] = useState(false)
   const [swapSucc, setSwapSucc] = useState(false)
   const [tokenType, setTokenType] = useState('usdcToken')
+  const [usdc_capl, setUsdc_capl] = useState(0)
 
   const handlePriceChange = (e) => {
     const {value} = e.target
@@ -63,6 +68,18 @@ const TransformModal = ({show, handleClose}) => {
       // setSecondAvailableForChange(true)
     }
   }
+
+  useEffect(() => {
+    if (tokenType === 'usdcToken') {
+      const res =
+        Number(totalSup) * (Number(ccptPrice) / Number(reserves?._reserve0))
+      setUsdc_capl(res)
+    } else if (tokenType === 'ccptToken') {
+      const res =
+        Number(totalSup) * (Number(price / 2) / Number(reserves?._reserve0))
+      setUsdc_capl(res)
+    }
+  }, [totalSup, ccptPrice, reserves, price])
 
   // const handlePriceChangeTwo = (e) => {
   //   const {value} = e.target
@@ -103,9 +120,6 @@ const TransformModal = ({show, handleClose}) => {
       setSwapSucc(true)
       setPrice('')
       setSecondPrice('')
-      setTimeout(() => {
-        dispatch(clearHashValues())
-      }, 15000)
     } else {
       setSwapSucc(false)
     }
@@ -221,13 +235,10 @@ const TransformModal = ({show, handleClose}) => {
                         USDC-CAPL
                       </h4>
                       <h4>
-                        {price === ''
-                          ? 0
-                          : tokenType === 'usdcToken'
-                          ? numberFormate(price / 2 + Number(ccptPrice))
-                          : tokenType === 'ccptToken'
-                          ? numberFormate(price / 2 + Number(usdcPrice))
-                          : 0}
+                        {/* {Number(totalSup) *
+                          (Number(ccptPrice) / Number(reserves?._reserve0))} */}
+                        {/* Totals supply of lp *(token deposited/token reserve) */}
+                        {price === '' ? 0 : numberFormate(usdc_capl)}
                       </h4>
                     </div>
                   </div>

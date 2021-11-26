@@ -182,7 +182,7 @@ export const transformTokens =
           .approve(VAULTLP._address, price)
           .send({from: userAddress})
         const transaction = await VAULTLP.methods
-          .addLiquidityCcpt(price, minutes * 60)
+          .addLiquidityCapl(price, minutes * 60)
           .send({from: userAddress})
         const tranHash = transaction.transactionHash
         dispatch({
@@ -224,9 +224,20 @@ export const getDepositedBalance = () => async (dispatch, getState) => {
         .call()
       const vaultRewards = web3.utils.fromWei(vaultR.toString(), 'ether')
 
+      // total Supply
+      const totalSup = await USDC_CCPT_TOKEN.methods.totalSupply().call()
+      const reserves = await USDC_CCPT_TOKEN.methods.getReserves().call()
+      // const depositedLpBalance = web3.utils.fromWei(deposit.toString(), 'ether')
+
       dispatch({
         type: GET_DEPOSITED_BALANCE_SUCCESS,
-        payload: {depositedLpBalance, withdrawLpBalance, vaultRewards},
+        payload: {
+          depositedLpBalance,
+          withdrawLpBalance,
+          vaultRewards,
+          totalSup,
+          reserves,
+        },
       })
     }
   } catch (error) {
@@ -248,13 +259,13 @@ export const sharesTotal = () => async (dispatch, getState) => {
   const {APY_VAULT, web3} = getContracts(walletType)
   const res = await APY_VAULT.methods.sharesTotal().call()
 
-  const apy = Number(priceConversion('fromWei', 'ether', res, web3))
+  const totalLp = Number(priceConversion('fromWei', 'ether', res, web3))
 
-  const trans = 60000 / apy
+  const trans = 60000 / totalLp
   console.log(trans)
 
   dispatch({
     type: SHARES_TOTAL,
-    payload: trans,
+    payload: {trans, totalLp},
   })
 }

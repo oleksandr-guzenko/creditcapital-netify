@@ -12,11 +12,11 @@
     // padding: 10px 20px;
     border: 1px solid rgba(28, 33, 45, 0.12) !important;
     @include displayCenter(center, space-between);
+    @include neonEffectTwo(33px);
+    background: $secondary;
     .toggle_wrapper {
-      background: $secondary;
-      color: $font__black;
-      @include neonEffectTwo(33px);
-
+      color: $primary;
+      // background: $brand__color;
       border-radius: 33px;
       padding: 12px 50px;
       h6 {
@@ -25,7 +25,9 @@
     }
     .active {
       // background: $brand__color;
-      color: $white__color;
+      background-color: #74ebd5;
+      background-image: linear-gradient(239deg, #74ebd5 0%, #9face6 100%);
+      color: $secondary;
     }
   }
   .box_wrapper {

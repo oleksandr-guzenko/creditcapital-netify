@@ -43,6 +43,7 @@ const SwapPool = () => {
 
   const [swapLoad, setSwapLoad] = useState(false)
   const [swapSucc, setSwapSucc] = useState(false)
+  const [errors, setErrors] = useState(false)
 
   const [firstAvailableForChange, setFirstAvailableForChange] = useState(false)
   const [secondAvailableForChange, setSecondAvailableForChange] =
@@ -68,9 +69,6 @@ const SwapPool = () => {
       setSwapSucc(true)
       setPrice('')
       setSecondPrice('')
-      setTimeout(() => {
-        dispatch(REMOVE_hash())
-      }, 15000)
     } else {
       setSwapSucc(false)
     }
@@ -164,6 +162,19 @@ const SwapPool = () => {
     dispatch(swapTokens(price, toggle ? 'CAPL' : 'USDC', time))
   }
 
+  useEffect(() => {
+    if (
+      price === '' ||
+      usdcBNBBalance === '0' ||
+      ccptBNBBalance === '0' ||
+      !userAddress
+    ) {
+      setErrors(true)
+    } else {
+      setErrors(false)
+    }
+  }, [usdcBNBBalance, ccptBNBBalance, userAddress, price])
+
   return (
     <>
       <div className='swap'>
@@ -174,11 +185,11 @@ const SwapPool = () => {
                 <h6>Swap</h6>
               </div>
             </Link>
-            {/* <Link to='/liquidity'>
+            <Link to='/liquidity'>
               <div className='toggle_wrapper'>
                 <h6>Liquidity</h6>
               </div>
-            </Link> */}
+            </Link>
           </div>
           <div className='box_wrapper'>
             <div className='box_wrapper_header'>
@@ -238,12 +249,7 @@ const SwapPool = () => {
                 <div className='box_wrapper_container_bottom_right'>
                   {/* <h4 onClick={setMaximumBalanceOfUSDC}>MAX</h4> */}
                   {firstToken === 'USDC' && <Image src={USDC} alt='' />}
-                  <h4>
-                    {firstToken}{' '}
-                    <span>
-                      <BiChevronDown />
-                    </span>
-                  </h4>
+                  <h4>{firstToken} </h4>
                 </div>
               </div>
             </div>
@@ -298,12 +304,7 @@ const SwapPool = () => {
                 <div className='box_wrapper_container_bottom_right'>
                   {/* <h4 onClick={setMaximumBalanceOfCCPT}>MAX</h4> */}
                   {secondToken === 'USDC' && <Image src={USDC} alt='' />}
-                  <h4>
-                    {secondToken}{' '}
-                    <span>
-                      <BiChevronDown />
-                    </span>
-                  </h4>
+                  <h4>{secondToken} </h4>
                 </div>
               </div>
             </div>
@@ -311,9 +312,9 @@ const SwapPool = () => {
             <div className='box_wrapper_button'>
               <button
                 className={
-                  !userAddress ? 'btn_brand btn_brand_disabled' : 'btn_brand'
+                  errors ? 'btn_brand btn_brand_disabled' : 'btn_brand'
                 }
-                disabled={!userAddress}
+                disabled={errors}
                 onClick={makeSwap}
               >
                 Swap
