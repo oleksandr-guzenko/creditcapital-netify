@@ -1,4 +1,4 @@
-export const USDC_CCPT_Address = '0x15ef78645e6c22cedfa4656015b45935c9e9ba20'
+export const USDC_CCPT_Address = '0x04E1bA3b473fB5584d6543121009C8076DEF4E4e'
 export const USDC_CCPT_ABI = [
   {
     inputs: [],

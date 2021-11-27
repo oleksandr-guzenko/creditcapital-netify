@@ -12,11 +12,9 @@ import {useDispatch, useSelector} from 'react-redux'
 import {
   clearHashValues,
   getDepositedBalance,
-  sharesTotal,
   vaultDepositAndWithdrawTokens,
 } from '../../Redux/Vault/action'
 import {numberFormate} from '../../Utilities/Util'
-import ConvertLpModal from '../Modals/Vaults/ConvertLpModal'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
 import VaultSuccess from '../Modals/Vaults/VaultSuccess'
 
@@ -41,6 +39,7 @@ const LpPools = () => {
   const [depositUSDCErrors, setDepositUSDCErrors] = useState(false)
   const [depositCAPLErrors, setDepositCAPLErrors] = useState(false)
   const [typeOfDeposit, setTypeOfDeposit] = useState('USDC-CAPL')
+  const [digit, setDigits] = useState(18)
 
   // ErrorState
   const [balanceError, setBalanceError] = useState(false)
@@ -53,6 +52,13 @@ const LpPools = () => {
 
   useEffect(() => {
     setDepositPrice('')
+    typeOfDeposit === 'USDC-CAPL'
+      ? setDigits(18)
+      : typeOfDeposit === 'USDC'
+      ? setDigits(4)
+      : typeOfDeposit === 'CAPL'
+      ? setDigits(4)
+      : setDigits(18)
   }, [typeOfDeposit])
 
   useEffect(() => {
@@ -74,12 +80,11 @@ const LpPools = () => {
   }, [vaultHash])
   // ################
 
-  useEffect(() => {
-    if (userAddress) {
-      dispatch(getDepositedBalance())
-      dispatch(sharesTotal())
-    }
-  }, [userAddress])
+  // useEffect(() => {
+  //   if (userAddress) {
+  //     dispatch(getDepositedBalance())
+  //   }
+  // }, [userAddress])
 
   // Deposit
   const handleDepositPriceChange = (number) => {
@@ -117,19 +122,34 @@ const LpPools = () => {
 
   useEffect(() => {
     if (typeOfDeposit === 'USDC-CAPL') {
-      if (depositPrice === '' || depositedLpBalance === '0' || !userAddress) {
+      if (
+        depositPrice === '' ||
+        depositedLpBalance === '0' ||
+        !userAddress ||
+        Number(depositPrice) > Number(depositedLpBalance)
+      ) {
         setDepositErrors(true)
       } else {
         setDepositErrors(false)
       }
     } else if (typeOfDeposit === 'USDC') {
-      if (depositPrice === '' || usdcBNBBalance === '0' || !userAddress) {
+      if (
+        depositPrice === '' ||
+        usdcBNBBalance === '0' ||
+        !userAddress ||
+        Number(depositPrice) > Number(usdcBNBBalance)
+      ) {
         setDepositUSDCErrors(true)
       } else {
         setDepositUSDCErrors(false)
       }
     } else if (typeOfDeposit === 'CAPL') {
-      if (depositPrice === '' || ccptBNBBalance === '0' || !userAddress) {
+      if (
+        depositPrice === '' ||
+        ccptBNBBalance === '0' ||
+        !userAddress ||
+        Number(depositPrice) > Number(ccptBNBBalance)
+      ) {
         setDepositCAPLErrors(true)
       } else {
         setDepositCAPLErrors(false)
@@ -145,7 +165,12 @@ const LpPools = () => {
   ])
 
   useEffect(() => {
-    if (!userAddress || withdrawLpBalance === '0' || withdrawPrice === '') {
+    if (
+      !userAddress ||
+      withdrawLpBalance === '0' ||
+      withdrawPrice === '' ||
+      Number(withdrawPrice) > Number(withdrawLpBalance)
+    ) {
       setWithdrawErrors(true)
     } else {
       setWithdrawErrors(false)
@@ -196,11 +221,9 @@ const LpPools = () => {
                         <h5>{typeOfDeposit} Wallet</h5>
                         <div>
                           <p className='txt__gray'>Available balance</p>
-                          <h6>
+                          <h6 className='lolsscsd'>
                             {typeOfDeposit === 'USDC-CAPL'
-                              ? `${numberFormate(
-                                  depositedLpBalance
-                                )} LP $(0.0000)`
+                              ? `${depositedLpBalance} LP $(0.0000)`
                               : typeOfDeposit === 'USDC'
                               ? `${numberFormate(
                                   usdcBNBBalance
@@ -234,6 +257,7 @@ const LpPools = () => {
                           typeOfDeposit={typeOfDeposit}
                           setTypeOfDeposit={setTypeOfDeposit}
                           deposit={true}
+                          digits={digit}
                         />
                         <div className='liquidity__pool__box__bottom'>
                           {/* <div>
@@ -297,8 +321,8 @@ const LpPools = () => {
                         <h5>In Vault</h5>
                         <div>
                           <p className='txt__gray'>Available balance</p>
-                          <h6>
-                            {numberFormate(withdrawLpBalance)} LP $(0.0000)
+                          <h6 className='lolsscsd'>
+                            {withdrawLpBalance} LP $(0.0000)
                             {/* {profileLoading ? (
                             <ReactLoading
                               type='bars'
@@ -320,6 +344,7 @@ const LpPools = () => {
                           handlePriceChange={handleWithdrawPriceChange}
                           errors={balanceError}
                           typeOfToken='USDC'
+                          digits={18}
                         />
                         <div className='liquidity__pool__box__bottom'>
                           {/* <div>
@@ -415,7 +440,7 @@ const LpPools = () => {
                           <p>Vault Contract</p>
                           <a
                             target='_blank'
-                            href='https://testnet.bscscan.com/address/0x10f7f07338E99e5507C6ACb1DE019011e1ECdDf1#code'
+                            href='https://polygonscan.com/address/0xef5FF5b55c1bDe6ABDb4833b489440A245206632'
                           >
                             View
                           </a>

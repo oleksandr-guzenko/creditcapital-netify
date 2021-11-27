@@ -94,7 +94,9 @@ const LiquidityPool = () => {
       secondPrice === '' ||
       usdcBNBBalance === '0' ||
       ccptBNBBalance === '0' ||
-      !userAddress
+      !userAddress ||
+      Number(price) > Number(usdcBNBBalance) ||
+      Number(secondPrice) > Number(usdcBNBBalance)
     ) {
       setErrors(true)
     } else {

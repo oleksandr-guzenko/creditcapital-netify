@@ -14,11 +14,7 @@ import SwapSuccess from '../SwapModals/SwapSuccess'
 import USDCSVG from '../../../Assets/money/usdc.svg'
 import CCPTSVG from '../../../Assets/portfolio/card_three.svg'
 import {numberFormate} from '../../../Utilities/Util'
-import {
-  clearHashValues,
-  getUSDCAndCCPTBalance,
-  transformTokens,
-} from '../../../Redux/Vault/action'
+import {clearHashValues, transformTokens} from '../../../Redux/Vault/action'
 import VaultSuccess from './VaultSuccess'
 import {convertTokenValue} from '../../../Redux/Swap/actions'
 
@@ -32,8 +28,6 @@ const TransformModal = ({show, handleClose}) => {
   const {usdc_ccpt_Balance, totalSup, reserves} = useSelector(
     (state) => state.vault
   )
-
-  console.log(totalSup, ccptPrice, reserves?._reserves0)
 
   const [price, setPrice] = useState('')
   const [secondPrice, setSecondPrice] = useState('')
@@ -63,7 +57,6 @@ const TransformModal = ({show, handleClose}) => {
             : null
         )
       )
-      // dispatch(getUSDCAndCCPTBalance(value, tokenType))
       // setFirstAvailableForChange(false)
       // setSecondAvailableForChange(true)
     }
@@ -79,7 +72,7 @@ const TransformModal = ({show, handleClose}) => {
         Number(totalSup) * (Number(price / 2) / Number(reserves?._reserve0))
       setUsdc_capl(res)
     }
-  }, [totalSup, ccptPrice, reserves, price])
+  }, [totalSup, ccptPrice, reserves, price, reserves?._reserve0])
 
   // const handlePriceChangeTwo = (e) => {
   //   const {value} = e.target
@@ -89,7 +82,6 @@ const TransformModal = ({show, handleClose}) => {
   //     setSecondPrice('')
   //   } else if (priceRegex.test(value)) {
   //     setSecondPrice(value)
-  //     dispatch(getUSDCAndCCPTBalance(value, tokenType))
   //     // setFirstAvailableForChange(true)
   //     // setSecondAvailableForChange(false)
   //   }
@@ -124,6 +116,24 @@ const TransformModal = ({show, handleClose}) => {
       setSwapSucc(false)
     }
   }, [vaultHash])
+
+  const [errorOne, setErrorOne] = useState(false)
+
+  useEffect(() => {
+    if (tokenType === 'usdcToken') {
+      if (Number(price) > Number(usdcBNBBalance)) {
+        setErrorOne(true)
+      } else {
+        setErrorOne(false)
+      }
+    } else if (tokenType === 'ccptToken') {
+      if (Number(price) > Number(ccptBNBBalance)) {
+        setErrorOne(true)
+      } else {
+        setErrorOne(false)
+      }
+    }
+  }, [price, usdcBNBBalance, ccptBNBBalance, tokenType])
 
   return (
     <Modal
@@ -246,11 +256,11 @@ const TransformModal = ({show, handleClose}) => {
                   <div className='box_wrapper_button'>
                     <button
                       className={
-                        !userAddress || price === ''
+                        !userAddress || price === '' || errorOne
                           ? 'btn_brand btn_brand_disabled'
                           : 'btn_brand'
                       }
-                      disabled={!userAddress}
+                      disabled={!userAddress || price === '' || errorOne}
                       onClick={makeTransform}
                     >
                       Create LP

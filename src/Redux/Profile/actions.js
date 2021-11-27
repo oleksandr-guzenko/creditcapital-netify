@@ -11,19 +11,19 @@ import getContracts, {ethereum, walletLink} from '../Blockchain/contracts'
 import {totalTreasuryAmount} from '../Root/actions'
 // Real Network
 
-// const data = [
-//   {
-//     chainId: '0x89',
-//     chainName: 'Polygon Mainnet',
-//     nativeCurrency: {
-//       name: 'MATIC',
-//       symbol: 'MATIC',
-//       decimals: 18,
-//     },
-//     rpcUrls: ['https://rpc-mainnet.maticvigil.com/'],
-//     blockExplorerUrls: ['https://www.polygonscan.com/'],
-//   },
-// ]
+const data = [
+  {
+    chainId: '0x89',
+    chainName: 'Polygon Mainnet',
+    nativeCurrency: {
+      name: 'MATIC',
+      symbol: 'MATIC',
+      decimals: 18,
+    },
+    rpcUrls: ['https://rpc-mainnet.maticvigil.com/'],
+    blockExplorerUrls: ['https://www.polygonscan.com/'],
+  },
+]
 
 // Test Network
 
@@ -57,27 +57,27 @@ import {totalTreasuryAmount} from '../Root/actions'
 
 // actions
 
-const bnbdata = [
-  {
-    // chainId: '0x38',
-    chainId: '0x61',
-    chainName: 'Binance Smart Chain Testnet',
-    nativeCurrency: {
-      name: 'BNB',
-      symbol: 'BNB',
-      decimals: 18,
-    },
-    // rpcUrls: ['https://bsc-dataseed.binance.org/'],
-    rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-    blockExplorerUrls: ['https://bscscan.com/'],
-  },
-]
+// const bnbdata = [
+//   {
+//     // chainId: '0x38',
+//     chainId: '0x61',
+//     chainName: 'Binance Smart Chain Testnet',
+//     nativeCurrency: {
+//       name: 'BNB',
+//       symbol: 'BNB',
+//       decimals: 18,
+//     },
+//     // rpcUrls: ['https://bsc-dataseed.binance.org/'],
+//     rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+//     blockExplorerUrls: ['https://bscscan.com/'],
+//   },
+// ]
 
 export const checkAndAddNetwork = () => async () => {
   try {
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{chainId: bnbdata[0]?.chainId}],
+      params: [{chainId: data[0]?.chainId}],
     })
   } catch (error) {
     console.log(error)
@@ -85,7 +85,7 @@ export const checkAndAddNetwork = () => async () => {
       try {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
-          params: bnbdata,
+          params: data,
         })
       } catch (addError) {
         console.error(addError?.message)

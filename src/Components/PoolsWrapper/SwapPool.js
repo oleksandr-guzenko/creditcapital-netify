@@ -162,18 +162,46 @@ const SwapPool = () => {
     dispatch(swapTokens(price, toggle ? 'CAPL' : 'USDC', time))
   }
 
+  // useEffect(() => {
+  //   if (
+  //     price === '' ||
+  //     usdcBNBBalance === '0' ||
+  //     ccptBNBBalance === '0' ||
+  //     !userAddress
+  //   ) {
+  //     setErrors(true)
+  //   } else {
+  //     setErrors(false)
+  //   }
+  // }, [usdcBNBBalance, ccptBNBBalance, userAddress, price])
+
   useEffect(() => {
-    if (
-      price === '' ||
-      usdcBNBBalance === '0' ||
-      ccptBNBBalance === '0' ||
-      !userAddress
-    ) {
-      setErrors(true)
-    } else {
-      setErrors(false)
+    if (toggle === true) {
+      if (
+        Number(price) > Number(ccptBNBBalance) ||
+        price === '' ||
+        usdcBNBBalance === '0' ||
+        ccptBNBBalance === '0' ||
+        !userAddress
+      ) {
+        setErrors(true)
+      } else {
+        setErrors(false)
+      }
+    } else if (toggle === false) {
+      if (
+        Number(price) > Number(usdcBNBBalance) ||
+        price === '' ||
+        usdcBNBBalance === '0' ||
+        ccptBNBBalance === '0' ||
+        !userAddress
+      ) {
+        setErrors(true)
+      } else {
+        setErrors(false)
+      }
     }
-  }, [usdcBNBBalance, ccptBNBBalance, userAddress, price])
+  }, [toggle, price, ccptBNBBalance, usdcBNBBalance])
 
   return (
     <>

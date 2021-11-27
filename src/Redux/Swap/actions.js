@@ -24,7 +24,7 @@ export const swapTokens =
       } = getState()
 
       const {swap, USDCBNB, CCPTBNB, web3} = getContracts(walletType)
-      const price = priceConversion('toWei', 'ether', amount, web3)
+      const price = priceConversion('toWei', 'Mwei', amount, web3)
 
       // const newGasPrice = await gasPrice(web3)
       if (tokenType === 'USDC') {
@@ -56,9 +56,6 @@ export const swapTokens =
         })
         dispatch(getSwapTokenBalances())
       }
-      // dispatch(getProfileInformation())
-      // dispatch(getProfileInformationTest())
-      // dispatch(stakedInformation(stakingType))
     } catch (error) {
       dispatch({
         type: SWAPPING_FAIL,
@@ -80,8 +77,8 @@ export const addLiquidityTokens =
 
       const {VAULTLP, USDCBNB, CCPTBNB, web3} = getContracts(walletType)
 
-      const priceCAPL = priceConversion('toWei', 'ether', capl, web3)
-      const priceUSDC = priceConversion('toWei', 'ether', usdc, web3)
+      const priceCAPL = priceConversion('toWei', 'Mwei', capl, web3)
+      const priceUSDC = priceConversion('toWei', 'Mwei', usdc, web3)
 
       await USDCBNB.methods
         .approve(VAULTLP._address, priceUSDC)
@@ -115,12 +112,13 @@ export const convertTokenValue =
         profile: {walletType},
       } = getState()
       const {swap, web3} = getContracts(walletType)
-      const price = priceConversion('toWei', 'ether', amount, web3)
+      const price = priceConversion('toWei', 'Mwei', amount, web3)
+
 
       if (tokenType === 'USDC') {
         const ccptAmount = await swap.methods.getCaplAmount(price).call()
         const ccptPrice = Number(
-          priceConversion('fromWei', 'ether', ccptAmount, web3)
+          priceConversion('fromWei', 'Mwei', ccptAmount, web3)
         )?.toFixed(18)
 
         dispatch({
@@ -131,7 +129,7 @@ export const convertTokenValue =
       if (tokenType === 'CAPL') {
         const usdcAmount = await swap.methods.getUSDCAmount(price).call()
         const usdcPrice = Number(
-          priceConversion('fromWei', 'ether', usdcAmount, web3)
+          priceConversion('fromWei', 'Mwei', usdcAmount, web3)
         )?.toFixed(18)
         dispatch({
           type: GET_CONVERTED_USDC_VALUES_SUCCESS,
@@ -154,9 +152,9 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
     if (userAddress) {
       // available Balance
       const usdcbalance = await USDCBNB.methods.balanceOf(userAddress).call()
-      const usdcBNBBalance = web3.utils.fromWei(usdcbalance.toString(), 'ether')
+      const usdcBNBBalance = web3.utils.fromWei(usdcbalance.toString(), 'Mwei')
       const ccptbalance = await CCPTBNB.methods.balanceOf(userAddress).call()
-      const ccptBNBBalance = web3.utils.fromWei(ccptbalance.toString(), 'ether')
+      const ccptBNBBalance = web3.utils.fromWei(ccptbalance.toString(), 'Mwei')
       dispatch({
         type: GET_SWAP_TOKENS_BALANCE,
         payload: {usdcBNBBalance, ccptBNBBalance},

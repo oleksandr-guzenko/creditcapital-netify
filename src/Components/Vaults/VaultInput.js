@@ -16,6 +16,7 @@ const VaultInput = ({
   setTypeOfDeposit,
   deposit,
   typeOfDeposit,
+  digits
 }) => {
   // const [selectedValue, setSelectedValue] = useState('')
 
@@ -135,7 +136,7 @@ const VaultInput = ({
           allowNegative={false}
           fixedDecimalScale={true}
           allowLeadingZeros={false}
-          decimalScale={4}
+          decimalScale={digits}
           onValueChange={handlePriceChange}
           placeholder='0.0000'
           className='shadow-none form-control'

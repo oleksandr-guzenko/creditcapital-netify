@@ -19,7 +19,6 @@ import {
   getProfileInformation,
   getProfileInformationTest,
 } from '../../Redux/Profile/actions'
-import {sharesTotal} from '../../Redux/Vault/action'
 import NumberFormat from 'react-number-format'
 
 const MyPortfolio = () => {
@@ -49,7 +48,6 @@ const MyPortfolio = () => {
     if (userAddress) {
       dispatch(getProfileInformation())
       dispatch(getProfileInformationTest())
-      dispatch(sharesTotal())
     }
   }, [userAddress])
 
@@ -72,15 +70,15 @@ const MyPortfolio = () => {
                 <h3>Metrics</h3>
                 <div className='d-flex align-items-center justify-content-between'>
                   <p>Max Supply</p>
-                  <p>9999999</p>
+                  <p>100,000,000</p>
                 </div>
-                <div className='d-flex align-items-center justify-content-between'>
-                  <p>Aqua Burned in USD</p>
+                {/* <div className='d-flex align-items-center justify-content-between'>
+                  <p>CAPL Burned in USD</p>
                   <p>$252,943</p>
-                </div>
+                </div> */}
                 <div className='d-flex align-items-center justify-content-between'>
                   <p>Market Cap / TVL Ratio</p>
-                  <p>0.11</p>
+                  <p>1</p>
                 </div>
                 <div className='mt-3 d-flex justify-content-center'>
                   <button
@@ -92,40 +90,41 @@ const MyPortfolio = () => {
                 </div>
               </div>
             </Col>
-            <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
+            <Col className='mb-3' sm={12} md={12} lg={4} xl={3}>
               <div className='upBox sfds'>
                 <Image src={Logo} alt='' />
                 <h6>CAPL</h6>
                 <p>{numberFormate(ccptBNBBalance)}</p>
               </div>
             </Col>
-            <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
-              <div className='upBox'>
+            <Col className='mb-3' sm={12} md={12} lg={4} xl={5}>
+              <div className='upBox third'>
                 <h3>Holdings</h3>
-                <div className='d-flex align-items-center justify-content-between'>
-                  <div className='hleft'>
+                <div className='d-flex align-items-center justify-content-between flex-wrap'>
+                  <div className='hleft text-start '>
                     <p>Balance In Vaults</p>
-                    <h5>{numberFormate(withdrawLpBalance)}</h5>
+                    {/* <h5 className='redd'>{numberFormate(withdrawLpBalance)}</h5> */}
+                    <h5 className='redd'>{withdrawLpBalance}</h5>
                   </div>
-                  <div className='hright'>
+                  <div className='hright text-lg-end text-sm-start'>
                     <p>Current APY</p>
-                    <h5>{numberFormate(apy)}%</h5>
+                    <h5 className='redd'>{numberFormate(apy)}%</h5>
                   </div>
                 </div>
-                <div className='d-flex align-items-center justify-content-between'>
-                  <div className='hleft'>
+                <div className='d-flex align-items-center justify-content-between flex-wrap'>
+                  <div className='hleft text-start'>
                     <p>Pending Earnings</p>
-                    <h5>{numberFormate(vaultRewards)}</h5>
+                    <h5 className='redd'>{numberFormate(vaultRewards)}</h5>
                   </div>
-                  <div className='hright'>
+                  <div className='hright text-lg-end text-sm-start'>
                     <p>CAPL Share</p>
-                    <h5>0.0000%</h5>
+                    <h5 className='redd'>
+                      {(Number(ccptBNBBalance) / 100000000)?.toFixed(18)} %
+                    </h5>
                   </div>
                 </div>
               </div>
             </Col>
-            <Col className='mb-3' sm={12} md={12} lg={4} xl={4}></Col>
-            <Col className='mb-3' sm={12} md={12} lg={4} xl={4}></Col>
           </Row>
           {/* <Row className='portfolio__cards__container'>
             <PortfolioCard

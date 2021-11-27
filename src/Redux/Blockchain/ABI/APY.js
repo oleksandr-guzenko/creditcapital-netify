@@ -1,4 +1,4 @@
-export const APY_Address = '0xa770e6E255e16A05f3bA5dd2CE244E4d18A69a5a'
+export const APY_Address = '0x487D3660ED55F8E10b80B03B7796D2b5C09eDa84'
 export const APY_ABI = [
   {
     inputs: [
@@ -20,6 +20,11 @@ export const APY_ABI = [
       {
         internalType: 'address',
         name: '_wantAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_govAdd',
         type: 'address',
       },
     ],

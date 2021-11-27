@@ -14,13 +14,14 @@ import Wallet from '../Assets/wallet.svg'
 // redux imports
 import {useSelector, useDispatch} from 'react-redux'
 import {
+  checkAndAddNetwork,
   getProfile,
   getProfileInformation,
   getProfileInformationTest,
 } from '../Redux/Profile/actions'
 import DisConnect from './Modals/DisConnect/DisConnect'
 import {getSwapTokenBalances} from '../Redux/Swap/actions'
-import { getDepositedBalance } from '../Redux/Vault/action'
+import {getDepositedBalance, sharesTotal} from '../Redux/Vault/action'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -28,6 +29,7 @@ const Header = () => {
 
   // Redux State
   const {userAddress, walletType} = useSelector((state) => state.profile)
+  const {reserves} = useSelector((state) => state.vault)
 
   // Wallets modal
   const [showWallets, setShowWallets] = useState(false)
@@ -43,8 +45,8 @@ const Header = () => {
   useEffect(() => {
     if (userAddress) {
       closeWalletsModal()
-      dispatch(getProfileInformation())
-      dispatch(getProfileInformationTest())
+      // dispatch(getProfileInformation())
+      // dispatch(getProfileInformationTest())
       dispatch(getDepositedBalance())
     }
   }, [userAddress])
@@ -54,6 +56,16 @@ const Header = () => {
       dispatch(getSwapTokenBalances())
     }
   }, [userAddress])
+
+  useEffect(() => {
+    dispatch(checkAndAddNetwork())
+  }, [])
+
+  useEffect(() => {
+    if (userAddress) {
+      dispatch(sharesTotal())
+    }
+  }, [userAddress, reserves, reserves?._reserve0])
 
   useEffect(() => {
     if (pathname != '/') {
@@ -70,7 +82,7 @@ const Header = () => {
 
   return (
     <>
-      <Navbar collapseOnSelect expand='xl' fixed='top' variant='dark'>
+      <Navbar collapseOnSelect expand='md' fixed='top' variant='dark'>
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>
@@ -86,7 +98,7 @@ const Header = () => {
           <Navbar.Collapse id='responsive-navbar-nav'>
             <Nav className='m-auto nav__ mx-auto'>
               <div className='navbar__left'>
-                <LinkContainer to='/'  className='main'>
+                <LinkContainer to='/' className='main'>
                   <Nav.Link>Vault</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to='/swap'>
