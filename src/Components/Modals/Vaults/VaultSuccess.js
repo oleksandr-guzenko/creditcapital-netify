@@ -80,10 +80,10 @@ const VaultSuccess = ({show, handleClose}) => {
               <a
                 target='_blank'
                 style={{color: '#ffffff'}}
-                href={`https://testnet.bscscan.com/tx/${vaultHash}`}
+                href={`https://polygonscan.com/tx/${vaultHash}`}
                 className='btn_brand'
               >
-                View on BSC Scan
+                View on Polygon Scan
               </a>
             </>
           ) : (

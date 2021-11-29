@@ -83,10 +83,10 @@ const SwapSuccess = ({show, handleClose}) => {
               <a
                 target='_blank'
                 style={{color: '#ffffff'}}
-                href={`https://testnet.bscscan.com/tx/${swapHash}`}
+                href={`https://polygonscan.com/tx/${swapHash}`}
                 className='btn_brand'
               >
-                View on BSC Scan
+                View on Polygon Scan
               </a>
             </>
           ) : (
