@@ -44,16 +44,8 @@ const Header = () => {
 
   useEffect(() => {
     if (userAddress) {
-      closeWalletsModal()
-      // dispatch(getProfileInformation())
-      // dispatch(getProfileInformationTest())
-      dispatch(getDepositedBalance())
-    }
-  }, [userAddress])
-
-  useEffect(() => {
-    if (userAddress) {
       dispatch(getSwapTokenBalances())
+      dispatch(getDepositedBalance())
     }
   }, [userAddress])
 
@@ -66,6 +58,14 @@ const Header = () => {
       dispatch(sharesTotal())
     }
   }, [userAddress, reserves, reserves?._reserve0])
+
+  useEffect(() => {
+    if (userAddress) {
+      closeWalletsModal()
+      // dispatch(getProfileInformation())
+      // dispatch(getProfileInformationTest())
+    }
+  }, [userAddress])
 
   useEffect(() => {
     if (pathname != '/') {
@@ -104,9 +104,9 @@ const Header = () => {
                 <LinkContainer to='/swap'>
                   <Nav.Link>Swap</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to='/liquidity'>
+                {/* <LinkContainer to='/liquidity'>
                   <Nav.Link>Liquidity</Nav.Link>
-                </LinkContainer>
+                </LinkContainer> */}
 
                 {/* <LinkContainer to='/creditPool'>
                   <Nav.Link>Capital Pool</Nav.Link>

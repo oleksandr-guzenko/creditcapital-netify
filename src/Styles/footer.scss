@@ -52,10 +52,21 @@ footer {
   }
   .footer__bottom {
     color: $font__black;
+    padding: 25px 15px;
     background-color: #74ebd5;
     background-image: linear-gradient(239deg, #74ebd5 0%, #9face6 100%);
+    // background: #ffafbd; /* fallback for old browsers */
+    // background: -webkit-linear-gradient(
+    //   to right,
+    //   #ffc3a0,
+    //   #ffafbd
+    // ); /* Chrome 10-25, Safari 5.1-6 */
+    // background: linear-gradient(
+    //   to right,
+    //   #ffc3a0,
+    //   #ffafbd
+    // ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-    padding: 25px 15px;
     &__left {
       p,
       a {

@@ -217,25 +217,28 @@ export const clearHashValues = () => async (dispatch) => {
 }
 
 export const sharesTotal = () => async (dispatch, getState) => {
-  const {
-    profile: {walletType, userAddress},
-    vault: {reserves},
-  } = getState()
+  try {
+    const {
+      profile: {walletType, userAddress},
+      vault: {reserves},
+    } = getState()
 
-  if (reserves?._reserve0 && reserves?._reserve1) {
-    const {APY_VAULT, web3} = getContracts(walletType)
-    const res = await APY_VAULT.methods.sharesTotal().call()
+    if (reserves?._reserve0 && reserves?._reserve1) {
+      const {APY_VAULT, web3} = getContracts(walletType)
+      const res = await APY_VAULT.methods.sharesTotal().call()
 
-    const totalLp = Number(priceConversion('fromWei', 'ether', res, web3))
-    console.log(res, totalLp)
+      const totalLp = Number(priceConversion('fromWei', 'ether', res, web3))
 
-    const trans =
-      (5000 * 12 * 30 * 10 ** 8) / Number(reserves?._reserve0) +
-      Number(reserves?._reserve1)
+      const trans =
+        (5000 * 12 * 30 * 10 ** 8) / Number(reserves?._reserve0) +
+        Number(reserves?._reserve1)
 
-    dispatch({
-      type: SHARES_TOTAL,
-      payload: {trans, totalLp},
-    })
+      dispatch({
+        type: SHARES_TOTAL,
+        payload: {trans, totalLp},
+      })
+    }
+  } catch (error) {
+    console.log(error?.message)
   }
 }

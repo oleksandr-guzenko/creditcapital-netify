@@ -1,4 +1,4 @@
-export const Rewards_Address = '0xef5FF5b55c1bDe6ABDb4833b489440A245206632'
+export const Rewards_Address = '0xb74C7A5155b82c2cF36Ba28ff246965E9D01E550'
 export const Rewards_ABI = [
   {
     anonymous: false,

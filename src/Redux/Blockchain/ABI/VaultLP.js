@@ -1,4 +1,4 @@
-export const vaultLPAddress = '0x1F280Fa41be62bEc499CFe28ca4d58c328bBA1Ed'
+export const vaultLPAddress = '0x6b7833765822B00c6e2c7622dBdfC8cafE6D9404'
 export const vaultLPABI = [
   {
     inputs: [
@@ -58,11 +58,6 @@ export const vaultLPABI = [
       {
         internalType: 'uint256',
         name: 'tokenAmountcapl',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'tokenAmountUsdc',
         type: 'uint256',
       },
       {
@@ -202,31 +197,22 @@ export const vaultLPABI = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'tokenAmount',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'aToken',
+        type: 'address',
       },
-    ],
-    name: 'getCaplAmount',
-    outputs: [
+      {
+        internalType: 'address',
+        name: 'bToken',
+        type: 'address',
+      },
       {
         internalType: 'uint256',
-        name: '',
+        name: 'aAmount',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'tokenAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getUSDCAmount',
+    name: 'getOutputAmount',
     outputs: [
       {
         internalType: 'uint256',
@@ -319,19 +305,6 @@ export const vaultLPABI = [
         internalType: 'uint256',
         name: '',
         type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'swapAndLiquifyEnabled',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
       },
     ],
     stateMutability: 'view',

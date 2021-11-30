@@ -176,23 +176,21 @@ const SwapPool = () => {
   // }, [usdcBNBBalance, ccptBNBBalance, userAddress, price])
 
   useEffect(() => {
-    if (toggle === true) {
+    if (!toggle) {
       if (
-        Number(price) > Number(ccptBNBBalance) ||
+        Number(price) > Number(usdcBNBBalance) ||
         price === '' ||
         usdcBNBBalance === '0' ||
-        ccptBNBBalance === '0' ||
         !userAddress
       ) {
         setErrors(true)
       } else {
         setErrors(false)
       }
-    } else if (toggle === false) {
+    } else if (toggle) {
       if (
-        Number(price) > Number(usdcBNBBalance) ||
+        Number(price) > Number(ccptBNBBalance) ||
         price === '' ||
-        usdcBNBBalance === '0' ||
         ccptBNBBalance === '0' ||
         !userAddress
       ) {
@@ -213,11 +211,11 @@ const SwapPool = () => {
                 <h6>Swap</h6>
               </div>
             </Link>
-            <Link to='/liquidity'>
+            {/* <Link to='/liquidity'>
               <div className='toggle_wrapper'>
                 <h6>Liquidity</h6>
               </div>
-            </Link>
+            </Link> */}
           </div>
           <div className='box_wrapper'>
             <div className='box_wrapper_header'>
@@ -227,7 +225,7 @@ const SwapPool = () => {
               </div>
               <div className='box_wrapper_header_right'>
                 <RiListSettingsLine onClick={() => setOpenSet(true)} />
-                <VscHistory onClick={() => setOpenTrans(true)} />
+                {/* <VscHistory onClick={() => setOpenTrans(true)} /> */}
               </div>
             </div>
             <div className='box_wrapper_container'>

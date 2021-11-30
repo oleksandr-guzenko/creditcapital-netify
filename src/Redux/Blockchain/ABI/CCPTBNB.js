@@ -1,4 +1,4 @@
-export const CCPTBnbAddress = '0x5D6DeecC575535DB438847D968A798Ea611e54F8'
+export const CCPTBnbAddress = '0xfcc35cf7e9DffD196932204bEB6dCAdDE8cc9b76'
 export const CCPTBnbABI = [
   {
     inputs: [

@@ -162,7 +162,7 @@ const TransformModal = ({show, handleClose}) => {
                     </div>
                     <div className='box_wrapper_header_right'>
                       <RiListSettingsLine onClick={() => setOpenSet(true)} />
-                      <VscHistory onClick={() => setOpenTrans(true)} />
+                      {/* <VscHistory onClick={() => setOpenTrans(true)} /> */}
                     </div>
                   </div>
                   <div className='box_wrapper_container'>
@@ -235,7 +235,7 @@ const TransformModal = ({show, handleClose}) => {
                       </h4>
                     </div>
                   </div>
-                  <div className='box_wrapper_container'>
+                  {/* <div className='box_wrapper_container'>
                     <div className='box_wrapper_container_top'>
                       <h4>
                         <span>
@@ -245,13 +245,11 @@ const TransformModal = ({show, handleClose}) => {
                         USDC-CAPL
                       </h4>
                       <h4>
-                        {/* {Number(totalSup) *
-                          (Number(ccptPrice) / Number(reserves?._reserve0))} */}
-                        {/* Totals supply of lp *(token deposited/token reserve) */}
+                        
                         {price === '' ? 0 : numberFormate(usdc_capl)}
                       </h4>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className='box_wrapper_button'>
                     <button

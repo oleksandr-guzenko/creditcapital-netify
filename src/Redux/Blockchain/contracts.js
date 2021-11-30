@@ -41,7 +41,7 @@ const BuyCCPTAddress = '0xE980E4C09366072fBDc2946443e1a8dEb21fb578'
 const testCAPLAddress = '0x495338aE49F7F4e69a2C31541A41f9eAcA0f4839'
 const testCRETAddress = '0xC4e0f9781af34c49DAD23257fb58aE124bDB4b4B'
 const dummyUSDCAddress = '0x046bC6cBc4B74F75Fdd71fa71495fb6d125283C3'
-const swapAddress = '0x4e801632155B5739862666AdC3abB37dAB6D7260'
+const swapAddress = '0x74091500B1aDcCb7a67C52787c8bCC9271B0f789'
 
 // const testCCPTAddress = '0xc4046A423b0e1DBF12E3a6bB786fFa1bDC0b1A72'
 // const cretStakingAddress = '0xaf8E1ADEEe81c00aa701100850000c8D50745d35'
@@ -3922,308 +3922,309 @@ const getContracts = (walletType) => {
     ],
     liquidityPoolCRETAddress
   )
-  const swap = new web3.eth.Contract([
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_capl",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_usdc",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "previousOwner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "newOwner",
-          "type": "address"
-        }
-      ],
-      "name": "OwnershipTransferred",
-      "type": "event"
-    },
-    {
-      "inputs": [],
-      "name": "_index",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "capl",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "caplUsdcPair",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "geUnlockTime",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "duration",
-          "type": "uint256"
-        }
-      ],
-      "name": "getCapl",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenAmount",
-          "type": "uint256"
-        }
-      ],
-      "name": "getCaplAmount",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "duration",
-          "type": "uint256"
-        }
-      ],
-      "name": "getUSDC",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenAmount",
-          "type": "uint256"
-        }
-      ],
-      "name": "getUSDCAmount",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_token",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_to",
-          "type": "address"
-        }
-      ],
-      "name": "inCaseTokensGetStuck",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "owner",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "renounceOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "reserves",
-      "outputs": [
-        {
-          "internalType": "uint112",
-          "name": "",
-          "type": "uint112"
-        },
-        {
-          "internalType": "uint112",
-          "name": "",
-          "type": "uint112"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "slippage",
-          "type": "uint256"
-        }
-      ],
-      "name": "setSlippageTolerance",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "slippageTolerance",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "swapAndLiquifyEnabled",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "newOwner",
-          "type": "address"
-        }
-      ],
-      "name": "transferOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "uniswapV2Router",
-      "outputs": [
-        {
-          "internalType": "contract IUniswapV2Router02",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "usdc",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ],
+  const swap = new web3.eth.Contract(
+    [
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '_capl',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_usdc',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'previousOwner',
+            type: 'address',
+          },
+          {
+            indexed: true,
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'OwnershipTransferred',
+        type: 'event',
+      },
+      {
+        inputs: [],
+        name: '_index',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'capl',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'caplUsdcPair',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'geUnlockTime',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'tokenAmount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'duration',
+            type: 'uint256',
+          },
+        ],
+        name: 'getCapl',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'tokenAmount',
+            type: 'uint256',
+          },
+        ],
+        name: 'getCaplAmount',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'tokenAmount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'duration',
+            type: 'uint256',
+          },
+        ],
+        name: 'getUSDC',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'tokenAmount',
+            type: 'uint256',
+          },
+        ],
+        name: 'getUSDCAmount',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '_token',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: '_amount',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: '_to',
+            type: 'address',
+          },
+        ],
+        name: 'inCaseTokensGetStuck',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'owner',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'renounceOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'reserves',
+        outputs: [
+          {
+            internalType: 'uint112',
+            name: '',
+            type: 'uint112',
+          },
+          {
+            internalType: 'uint112',
+            name: '',
+            type: 'uint112',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'slippage',
+            type: 'uint256',
+          },
+        ],
+        name: 'setSlippageTolerance',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'slippageTolerance',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'swapAndLiquifyEnabled',
+        outputs: [
+          {
+            internalType: 'bool',
+            name: '',
+            type: 'bool',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'transferOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'uniswapV2Router',
+        outputs: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'usdc',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
     swapAddress
   )
 
