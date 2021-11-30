@@ -45,7 +45,7 @@ const Header = () => {
   useEffect(() => {
     if (userAddress) {
       dispatch(getSwapTokenBalances())
-      dispatch(getDepositedBalance())
+      // dispatch(getDepositedBalance())
     }
   }, [userAddress])
 

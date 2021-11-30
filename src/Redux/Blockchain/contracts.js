@@ -52,7 +52,7 @@ const liquidityPoolCRETAddress = '0x74B253769187dB633657ef7D70846fFbcFE210Ce'
 // const BuyCRETAddress = '0xEF8697ecd6463d4a20CA20DC90e8644e096aC127'
 
 const getContracts = (walletType) => {
-  let web3
+  let web3 = RPC_URL
   switch (walletType) {
     case 'MetaMask':
       web3 = new Web3(window.ethereum)
@@ -6360,5 +6360,7 @@ const getContracts = (walletType) => {
     APY_VAULT,
   }
 }
+
+
 
 export default getContracts

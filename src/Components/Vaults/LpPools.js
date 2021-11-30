@@ -4,6 +4,7 @@ import {BiPlay} from 'react-icons/bi'
 import {GoChevronDown, GoChevronUp} from 'react-icons/go'
 import TransformModal from '../Modals/Vaults/TransformModal'
 import VaultInput from './VaultInput'
+import ReactLoading from 'react-loading'
 
 // svgs
 import USDCSVG from '../../Assets/money/usdc.svg'
@@ -11,7 +12,6 @@ import CCPTSVG from '../../Assets/portfolio/card_three.svg'
 import {useDispatch, useSelector} from 'react-redux'
 import {
   clearHashValues,
-  getDepositedBalance,
   vaultDepositAndWithdrawTokens,
 } from '../../Redux/Vault/action'
 import {numberFormate} from '../../Utilities/Util'
@@ -22,7 +22,9 @@ const LpPools = () => {
   //redux
   const dispatch = useDispatch()
   const {userAddress} = useSelector((state) => state.profile)
-  const {usdcBNBBalance, ccptBNBBalance} = useSelector((state) => state.swap)
+  const {usdcBNBBalance, balanceLoading, ccptBNBBalance} = useSelector(
+    (state) => state.swap
+  )
   const {
     vaultHash,
     vaultLoading,
@@ -214,6 +216,9 @@ const LpPools = () => {
             </div>
             <Collapse in={open}>
               <div className='lpWrapper' id='collapse-div'>
+                <h6 style={{color: 'white'}}>
+                  1 LP Token = 100,000,000 Shares
+                </h6>
                 <Row>
                   <Col className='mb-3' sm={12} md={12} lg={5} xl={4}>
                     <div className='liquidity__pool__box'>
@@ -227,17 +232,23 @@ const LpPools = () => {
                         <div>
                           <p className='txt__gray'>Available balance</p>
                           <h6 className='lolsscsd'>
-                            {typeOfDeposit === 'USDC-CAPL'
-                              ? `${depositedLpBalance} LP $(0.0000)`
-                              : typeOfDeposit === 'USDC'
-                              ? `${numberFormate(
-                                  usdcBNBBalance
-                                )} USDC $(0.0000)`
-                              : typeOfDeposit === 'CAPL'
-                              ? `${numberFormate(
-                                  ccptBNBBalance
-                                )} CAPL $(0.0000)`
-                              : ''}
+                            {balanceLoading ? (
+                              <ReactLoading
+                                type='bars'
+                                color='#ffffff'
+                                height={0}
+                                width={30}
+                                className='_one'
+                              />
+                            ) : typeOfDeposit === 'USDC-CAPL' ? (
+                              `${depositedLpBalance} LP $(0.0000)`
+                            ) : typeOfDeposit === 'USDC' ? (
+                              `${numberFormate(usdcBNBBalance)} USDC $(0.0000)`
+                            ) : typeOfDeposit === 'CAPL' ? (
+                              `${numberFormate(ccptBNBBalance)} CAPL $(0.0000)`
+                            ) : (
+                              ''
+                            )}
                             {/* {profileLoading ? (
                             <ReactLoading
                               type='bars'
@@ -327,7 +338,18 @@ const LpPools = () => {
                         <div>
                           <p className='txt__gray'>USDC-CAPL LP Shares</p>
                           <h6 className='lolsscsd'>
-                            {withdrawLpBalance} LP $(0.0000)
+                            {balanceLoading ? (
+                              <ReactLoading
+                                type='bars'
+                                color='#ffffff'
+                                height={0}
+                                width={30}
+                                className='_one'
+                              />
+                            ) : (
+                              `${withdrawLpBalance} LP $(0.0000)`
+                            )}
+
                             {/* {profileLoading ? (
                             <ReactLoading
                               type='bars'
@@ -401,7 +423,18 @@ const LpPools = () => {
                       ) : (
                         `${numberFormate(caplRewards)}`
                       )}{' '} */}
-                        {numberFormate(vaultRewards)} <span>CAPL</span>
+                        {balanceLoading ? (
+                          <ReactLoading
+                            type='bars'
+                            color='#ffffff'
+                            height={0}
+                            width={30}
+                            className='m-auto mt-4'
+                          />
+                        ) : (
+                          `${numberFormate(vaultRewards)} CAPL`
+                        )}
+                       
                       </h4>
                       {/* <p className='price txt__gray'>~$19,214.261</p> */}
                       {/* <p className='txt__gray'>
@@ -423,7 +456,6 @@ const LpPools = () => {
                     </div>
                   </Col>
                 </Row>
-
                 <Row>
                   <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
                     <div className='liquidity__pool__box'>
@@ -441,7 +473,7 @@ const LpPools = () => {
                           <p>Farm Contract</p>
                           <a href='#'>View</a>
                         </div> */}
-                        <div className='info_part'>
+                        {/* <div className='info_part'>
                           <p>Vault Contract</p>
                           <a
                             target='_blank'
@@ -449,7 +481,7 @@ const LpPools = () => {
                           >
                             View
                           </a>
-                        </div>
+                        </div> */}
                         <div className='info_part'>
                           <p>Vault Rewards</p>
                           <p>5000 CAPL/day</p>

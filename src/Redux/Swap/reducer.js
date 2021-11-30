@@ -1,3 +1,4 @@
+import {PROFILE_FAIL} from '../Profile/constants'
 import {
   GET_CONVERTED_CCPT_VALUES_SUCCESS,
   GET_CONVERTED_USDC_VALUES_SUCCESS,
@@ -6,6 +7,8 @@ import {
   SWAPPING_REQUEST,
   REMOVE_HASH,
   SWAPPING_SUCCESS,
+  PROFILE_REQ,
+  PROFILE_SUCC,
 } from './constans'
 
 const initialState = {
@@ -17,9 +20,26 @@ const initialState = {
   swapingType: '',
   usdcBNBBalance: 0,
   ccptBNBBalance: 0,
+  balanceLoading: true,
+  balanceError: false,
 }
 export const swapReducer = (state = initialState, action) => {
   switch (action.type) {
+    case PROFILE_REQ:
+      return {
+        ...state,
+        balanceLoading: true,
+      }
+    case PROFILE_SUCC:
+      return {
+        ...state,
+        balanceLoading: false,
+      }
+    case PROFILE_FAIL:
+      return {
+        ...state,
+        balanceLoading: false,
+      }
     case GET_SWAP_TOKENS_BALANCE:
       return {
         ...state,

@@ -3,6 +3,7 @@ import {Col, Container, Image, Row} from 'react-bootstrap'
 import PortfolioCard from './PortfolioCard'
 import {exactNumberFormate, numberFormate} from '../../Utilities/Util'
 import {useHistory} from 'react-router-dom'
+import ReactLoading from 'react-loading'
 
 // Svgs
 import card_one from '../../Assets/portfolio/card_one.svg'
@@ -43,7 +44,7 @@ const MyPortfolio = () => {
   const {apy, withdrawLpBalance, vaultRewards} = useSelector(
     (state) => state.vault
   )
-  const {ccptBNBBalance} = useSelector((state) => state.swap)
+  const {ccptBNBBalance, balanceLoading} = useSelector((state) => state.swap)
   useEffect(() => {
     if (userAddress) {
       dispatch(getProfileInformation())
@@ -94,7 +95,20 @@ const MyPortfolio = () => {
               <div className='upBox sfds'>
                 <Image src={Logo} alt='' />
                 <h6>CAPL</h6>
-                <p>{numberFormate(ccptBNBBalance)}</p>
+
+                <p>
+                  {balanceLoading ? (
+                    <ReactLoading
+                      type='bars'
+                      color='#ffffff'
+                      height={0}
+                      width={30}
+                      className='load'
+                    />
+                  ) : (
+                    numberFormate(ccptBNBBalance)
+                  )}
+                </p>
               </div>
             </Col>
             <Col className='mb-3' sm={12} md={12} lg={4} xl={5}>
@@ -104,7 +118,19 @@ const MyPortfolio = () => {
                   <div className='hleft text-start '>
                     <p>Balance In Vaults</p>
                     {/* <h5 className='redd'>{numberFormate(withdrawLpBalance)}</h5> */}
-                    <h5 className='redd'>{withdrawLpBalance}</h5>
+                    <h5 className='redd'>
+                      {balanceLoading ? (
+                        <ReactLoading
+                          type='bars'
+                          color='#ffffff'
+                          height={0}
+                          width={30}
+                          className='load'
+                        />
+                      ) : (
+                        numberFormate(withdrawLpBalance)
+                      )}
+                    </h5>
                   </div>
                   <div className='hright text-lg-end text-sm-start'>
                     <p>Current APY</p>
@@ -114,12 +140,34 @@ const MyPortfolio = () => {
                 <div className='d-flex align-items-center justify-content-between flex-wrap'>
                   <div className='hleft text-start'>
                     <p>Pending Earnings</p>
-                    <h5 className='redd'>{numberFormate(vaultRewards)}</h5>
+                    <h5 className='redd'>
+                      {balanceLoading ? (
+                        <ReactLoading
+                          type='bars'
+                          color='#ffffff'
+                          height={0}
+                          width={30}
+                          className='load'
+                        />
+                      ) : (
+                        numberFormate(vaultRewards)
+                      )}
+                    </h5>
                   </div>
                   <div className='hright text-lg-end text-sm-start'>
                     <p>CAPL Share</p>
                     <h5 className='redd'>
-                      {(Number(ccptBNBBalance) / 100000000)?.toFixed(18)} %
+                      {balanceLoading ? (
+                        <ReactLoading
+                          type='bars'
+                          color='#ffffff'
+                          height={0}
+                          width={30}
+                          className='load'
+                        />
+                      ) : (
+                        `${(Number(ccptBNBBalance) / 100000000)?.toFixed(18)} %`
+                      )}
                     </h5>
                   </div>
                 </div>

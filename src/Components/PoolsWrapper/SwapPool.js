@@ -4,6 +4,7 @@ import {RiListSettingsLine} from 'react-icons/ri'
 import {VscHistory} from 'react-icons/vsc'
 import {BiChevronDown} from 'react-icons/bi'
 import {BsArrowDown} from 'react-icons/bs'
+import ReactLoading from 'react-loading'
 
 import {Link} from 'react-router-dom'
 import RecentTransactions from '../Modals/RecentTransactions/RecentTransactions'
@@ -30,6 +31,7 @@ const SwapPool = () => {
     ccptPrice,
     usdcPrice,
     usdcBNBBalance,
+    balanceLoading,
     ccptBNBBalance,
   } = useSelector((state) => state.swap)
   const {userAddress} = useSelector((state) => state.profile)
@@ -231,13 +233,21 @@ const SwapPool = () => {
             <div className='box_wrapper_container'>
               <div className='box_wrapper_container_top'>
                 <h4>Send</h4>
-                <h4>
+                <h4 className='d-flex align-items-start'>
                   Balance:{' '}
-                  {firstToken === 'USDC'
-                    ? numberFormate(usdcBNBBalance)
-                    : firstToken === 'CAPL'
-                    ? numberFormate(ccptBNBBalance)
-                    : null}
+                  {balanceLoading ? (
+                    <ReactLoading
+                      type='bars'
+                      color='#ffffff'
+                      height={0}
+                      width={30}
+                      className='load'
+                    />
+                  ) : firstToken === 'USDC' ? (
+                    numberFormate(usdcBNBBalance)
+                  ) : firstToken === 'CAPL' ? (
+                    numberFormate(ccptBNBBalance)
+                  ) : null}
                 </h4>
               </div>
               <div className='box_wrapper_container_bottom'>
@@ -286,13 +296,21 @@ const SwapPool = () => {
             <div className='box_wrapper_container'>
               <div className='box_wrapper_container_top'>
                 <h4>Receive (estimated)</h4>
-                <h4>
+                <h4 className='d-flex align-items-start'>
                   Balance:{' '}
-                  {secondToken === 'CAPL'
-                    ? numberFormate(ccptBNBBalance)
-                    : secondToken === 'USDC'
-                    ? numberFormate(usdcBNBBalance)
-                    : null}
+                  {balanceLoading ? (
+                    <ReactLoading
+                      type='bars'
+                      color='#ffffff'
+                      height={0}
+                      width={30}
+                      className='load'
+                    />
+                  ) : secondToken === 'CAPL' ? (
+                    numberFormate(ccptBNBBalance)
+                  ) : secondToken === 'USDC' ? (
+                    numberFormate(usdcBNBBalance)
+                  ) : null}
                 </h4>
               </div>
               <div className='box_wrapper_container_bottom'>

@@ -9,6 +9,7 @@ import RecentTransactions from '../RecentTransactions/RecentTransactions'
 import SettingsModal from '../SettingsModal/SettingsModal'
 import SwapLoading from '../SwapModals/SwapLoading'
 import SwapSuccess from '../SwapModals/SwapSuccess'
+import ReactLoading from 'react-loading'
 
 // svgs
 import USDCSVG from '../../../Assets/money/usdc.svg'
@@ -21,7 +22,9 @@ import {convertTokenValue} from '../../../Redux/Swap/actions'
 const TransformModal = ({show, handleClose}) => {
   // Redux State
   const dispatch = useDispatch()
-  const {usdcBNBBalance, ccptBNBBalance} = useSelector((state) => state.swap)
+  const {usdcBNBBalance, balanceLoading, ccptBNBBalance} = useSelector(
+    (state) => state.swap
+  )
   const {usdcPrice, ccptPrice} = useSelector((state) => state.swap)
   const {vaultHash, vaultLoading} = useSelector((state) => state.vault)
   const {userAddress} = useSelector((state) => state.profile)
@@ -168,13 +171,23 @@ const TransformModal = ({show, handleClose}) => {
                   <div className='box_wrapper_container'>
                     <div className='box_wrapper_container_top'>
                       <h4>Send</h4>
-                      <h4>
+                      <h4 className='d-flex align-items-start'>
                         Balance:{' '}
-                        {tokenType === 'usdcToken'
-                          ? numberFormate(usdcBNBBalance)
-                          : tokenType === 'ccptToken'
-                          ? numberFormate(ccptBNBBalance)
-                          : 0}
+                        {balanceLoading ? (
+                          <ReactLoading
+                            type='bars'
+                            color='#ffffff'
+                            height={0}
+                            width={30}
+                            className='load'
+                          />
+                        ) : tokenType === 'usdcToken' ? (
+                          numberFormate(usdcBNBBalance)
+                        ) : tokenType === 'ccptToken' ? (
+                          numberFormate(ccptBNBBalance)
+                        ) : (
+                          0
+                        )}
                       </h4>
                     </div>
                     <div className='box_wrapper_container_bottom'>

@@ -11,3 +11,9 @@ export const GET_SWAP_TOKENS_BALANCE = 'GET_SWAP_TOKENS_BALANCE'
 
 
 export const REMOVE_HASH = 'REMOVE_HASH'
+
+
+
+export const PROFILE_REQ = 'PROFILE_REQ'
+export const PROFILE_SUCC = 'PROFILE_SUCC'
+export const PROFILE_FAIL = 'REMOVE_HASH'

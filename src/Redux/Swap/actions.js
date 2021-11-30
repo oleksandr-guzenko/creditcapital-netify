@@ -1,10 +1,14 @@
 import {gasPrice, priceConversion} from '../../Utilities/Util'
 import getContracts from '../Blockchain/contracts'
 import {checkAndAddNetwork} from '../Profile/actions'
+import {GET_DEPOSITED_BALANCE_SUCCESS} from '../Vault/constants'
 import {
   GET_CONVERTED_CCPT_VALUES_SUCCESS,
   GET_CONVERTED_USDC_VALUES_SUCCESS,
   GET_SWAP_TOKENS_BALANCE,
+  PROFILE_FAIL,
+  PROFILE_REQ,
+  PROFILE_SUCC,
   REMOVE_HASH,
   SWAPPING_FAIL,
   SWAPPING_REQUEST,
@@ -114,7 +118,6 @@ export const convertTokenValue =
       const {swap, web3} = getContracts(walletType)
       const price = priceConversion('toWei', 'Mwei', amount, web3)
 
-
       if (tokenType === 'USDC') {
         const ccptAmount = await swap.methods.getCaplAmount(price).call()
         const ccptPrice = Number(
@@ -143,11 +146,15 @@ export const convertTokenValue =
 
 export const getSwapTokenBalances = () => async (dispatch, getState) => {
   try {
+    dispatch({
+      type: PROFILE_REQ,
+    })
     const {
       profile: {walletType, userAddress},
     } = getState()
 
-    const {USDCBNB, CCPTBNB, web3} = getContracts(walletType)
+    const {USDCBNB, CCPTBNB, web3, REWARDS_VAULT, USDC_CCPT_TOKEN} =
+      getContracts(walletType)
 
     if (userAddress) {
       // available Balance
@@ -155,12 +162,62 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
       const usdcBNBBalance = web3.utils.fromWei(usdcbalance.toString(), 'Mwei')
       const ccptbalance = await CCPTBNB.methods.balanceOf(userAddress).call()
       const ccptBNBBalance = web3.utils.fromWei(ccptbalance.toString(), 'Mwei')
+
+      // ##############
+
+      const deposit = await USDC_CCPT_TOKEN.methods
+        .balanceOf(userAddress)
+        .call()
+      const depositedLpBal = Number(deposit) * 100000000
+      const depositedLpBalance = web3.utils.fromWei(
+        depositedLpBal.toString(),
+        'ether'
+      )
+
+      const withDraw = await REWARDS_VAULT.methods
+        .userInfo(0, userAddress)
+        .call()
+      const withdrawLpBal = Number(withDraw?.shares) * 100000000
+
+      const withdrawLpBalance = web3.utils.fromWei(
+        withdrawLpBal.toString(),
+        'ether'
+      )
+
+      const vaultR = await REWARDS_VAULT.methods
+        .pendingCAPL(0, userAddress)
+        .call()
+      const vaultRewards = web3.utils.fromWei(vaultR.toString(), 'ether')
+
+      // total Supply
+      const totalSup = await USDC_CCPT_TOKEN.methods.totalSupply().call()
+      const reserves = await USDC_CCPT_TOKEN.methods.getReserves().call()
+      // const depositedLpBalance = web3.utils.fromWei(deposit.toString(), 'ether')
+
+      // ##############
+
       dispatch({
         type: GET_SWAP_TOKENS_BALANCE,
         payload: {usdcBNBBalance, ccptBNBBalance},
       })
+      dispatch({
+        type: GET_DEPOSITED_BALANCE_SUCCESS,
+        payload: {
+          depositedLpBalance,
+          withdrawLpBalance,
+          vaultRewards,
+          totalSup,
+          reserves,
+        },
+      })
+      dispatch({
+        type: PROFILE_SUCC,
+      })
     }
   } catch (error) {
+    dispatch({
+      type: PROFILE_FAIL,
+    })
     console.log(error?.message)
   }
 }

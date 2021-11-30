@@ -46,7 +46,7 @@ export const vaultDepositAndWithdrawTokens =
           type: VAULT_DEPOSIT_SUCCESS,
           payload: tranHash,
         })
-        dispatch(getDepositedBalance())
+        dispatch(getSwapTokenBalances())
       } else if (type === 'withdraw') {
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, price)
@@ -57,7 +57,7 @@ export const vaultDepositAndWithdrawTokens =
           type: VAULT_DEPOSIT_SUCCESS,
           payload: tranHash,
         })
-        dispatch(getDepositedBalance())
+        dispatch(getSwapTokenBalances())
       } else if (type === 'rewards') {
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, 0)
@@ -68,7 +68,7 @@ export const vaultDepositAndWithdrawTokens =
           type: VAULT_DEPOSIT_SUCCESS,
           payload: tranHash,
         })
-        dispatch(getDepositedBalance())
+        dispatch(getSwapTokenBalances())
       } else if (type === 'usdcDeposit') {
         const priceUSDC = priceConversion('toWei', 'Mwei', amount, web3)
         await USDCBNB.methods
@@ -83,7 +83,7 @@ export const vaultDepositAndWithdrawTokens =
           type: VAULT_DEPOSIT_SUCCESS,
           payload: tranHash,
         })
-        dispatch(getDepositedBalance())
+        dispatch(getSwapTokenBalances())
       } else if (type === 'caplDeposit') {
         const priceCAPL = priceConversion('toWei', 'Mwei', amount, web3)
         await CCPTBNB.methods
@@ -98,7 +98,7 @@ export const vaultDepositAndWithdrawTokens =
           type: VAULT_DEPOSIT_SUCCESS,
           payload: tranHash,
         })
-        dispatch(getDepositedBalance())
+        dispatch(getSwapTokenBalances())
       }
       // dispatch(getUSDCAndCCPTBalance())
     } catch (error) {
@@ -139,7 +139,6 @@ export const transformTokens =
           payload: tranHash,
         })
         dispatch(getSwapTokenBalances())
-        dispatch(getDepositedBalance())
       }
 
       if (tokenType === 'ccptToken') {
@@ -155,7 +154,6 @@ export const transformTokens =
           payload: tranHash,
         })
         dispatch(getSwapTokenBalances())
-        dispatch(getDepositedBalance())
       }
     } catch (error) {
       dispatch({
@@ -164,51 +162,51 @@ export const transformTokens =
       })
     }
   }
-export const getDepositedBalance = () => async (dispatch, getState) => {
-  try {
-    const {
-      profile: {walletType, userAddress},
-    } = getState()
+// export const getSwapTokenBalances = () => async (dispatch, getState) => {
+//   try {
+//     const {
+//       profile: {walletType, userAddress},
+//     } = getState()
 
-    const {REWARDS_VAULT, USDC_CCPT_TOKEN, web3} = getContracts(walletType)
+//     const {REWARDS_VAULT, USDC_CCPT_TOKEN, web3} = getContracts(walletType)
 
-    if (userAddress) {
-      const deposit = await USDC_CCPT_TOKEN.methods
-        .balanceOf(userAddress)
-        .call()
-      const depositedLpBalance = web3.utils.fromWei(deposit.toString(), 'ether')
-      const withDraw = await REWARDS_VAULT.methods
-        .userInfo(0, userAddress)
-        .call()
-      const withdrawLpBalance = web3.utils.fromWei(
-        withDraw?.shares.toString(),
-        'ether'
-      )
-      const vaultR = await REWARDS_VAULT.methods
-        .pendingCAPL(0, userAddress)
-        .call()
-      const vaultRewards = web3.utils.fromWei(vaultR.toString(), 'ether')
+//     if (userAddress) {
+//       const deposit = await USDC_CCPT_TOKEN.methods
+//         .balanceOf(userAddress)
+//         .call()
+//       const depositedLpBalance = web3.utils.fromWei(deposit.toString(), 'ether')
+//       const withDraw = await REWARDS_VAULT.methods
+//         .userInfo(0, userAddress)
+//         .call()
+//       const withdrawLpBalance = web3.utils.fromWei(
+//         withDraw?.shares.toString(),
+//         'ether'
+//       )
+//       const vaultR = await REWARDS_VAULT.methods
+//         .pendingCAPL(0, userAddress)
+//         .call()
+//       const vaultRewards = web3.utils.fromWei(vaultR.toString(), 'ether')
 
-      // total Supply
-      const totalSup = await USDC_CCPT_TOKEN.methods.totalSupply().call()
-      const reserves = await USDC_CCPT_TOKEN.methods.getReserves().call()
-      // const depositedLpBalance = web3.utils.fromWei(deposit.toString(), 'ether')
+//       // total Supply
+//       const totalSup = await USDC_CCPT_TOKEN.methods.totalSupply().call()
+//       const reserves = await USDC_CCPT_TOKEN.methods.getReserves().call()
+//       // const depositedLpBalance = web3.utils.fromWei(deposit.toString(), 'ether')
 
-      dispatch({
-        type: GET_DEPOSITED_BALANCE_SUCCESS,
-        payload: {
-          depositedLpBalance,
-          withdrawLpBalance,
-          vaultRewards,
-          totalSup,
-          reserves,
-        },
-      })
-    }
-  } catch (error) {
-    console.error(error?.message)
-  }
-}
+//       dispatch({
+//         type: GET_DEPOSITED_BALANCE_SUCCESS,
+//         payload: {
+//           depositedLpBalance,
+//           withdrawLpBalance,
+//           vaultRewards,
+//           totalSup,
+//           reserves,
+//         },
+//       })
+//     }
+//   } catch (error) {
+//     console.error(error?.message)
+//   }
+// }
 
 export const clearHashValues = () => async (dispatch) => {
   dispatch({
@@ -226,8 +224,9 @@ export const sharesTotal = () => async (dispatch, getState) => {
     if (reserves?._reserve0 && reserves?._reserve1) {
       const {APY_VAULT, web3} = getContracts(walletType)
       const res = await APY_VAULT.methods.sharesTotal().call()
+      const mul = Number(res) * 100000000
 
-      const totalLp = Number(priceConversion('fromWei', 'ether', res, web3))
+      const totalLp = Number(priceConversion('fromWei', 'ether', mul, web3))
 
       const trans =
         (5000 * 12 * 30 * 10 ** 8) / Number(reserves?._reserve0) +
