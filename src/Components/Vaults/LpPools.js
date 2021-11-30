@@ -194,7 +194,7 @@ const LpPools = () => {
                   <Image src={CCPTSVG} alt='' className='img_sec' />
                 </div>
                 <div className='header_wrapper_right'>
-                  <h4>USDC-CAPL</h4>
+                  <h4>USDC-CAPL Liquidity Pool</h4>
                 </div>
               </div>
               <div className='header_wrapper'>
@@ -203,7 +203,7 @@ const LpPools = () => {
               </div>
               <div className='header_wrapper'>
                 <h4>{numberFormate(totalLp)}</h4>
-                <p>Total LP</p>
+                <p>Total LP Locked in Vault</p>
               </div>
               {/* <div className='header_wrapper'>
                 <h4>$0.00</h4>
@@ -218,7 +218,12 @@ const LpPools = () => {
                   <Col className='mb-3' sm={12} md={12} lg={5} xl={4}>
                     <div className='liquidity__pool__box'>
                       <div className='liquidity__pool__box__top'>
-                        <h5>{typeOfDeposit} Wallet</h5>
+                        <h5>
+                          {typeOfDeposit}{' '}
+                          {typeOfDeposit === 'USDC-CAPL'
+                            ? 'LP Shares'
+                            : 'Token Balance'}
+                        </h5>
                         <div>
                           <p className='txt__gray'>Available balance</p>
                           <h6 className='lolsscsd'>
@@ -318,9 +323,9 @@ const LpPools = () => {
                   <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
                     <div className='liquidity__pool__box'>
                       <div className='liquidity__pool__box__top'>
-                        <h5>In Vault</h5>
+                        <h5>USDC-CAPL Vault</h5>
                         <div>
-                          <p className='txt__gray'>Available balance</p>
+                          <p className='txt__gray'>USDC-CAPL LP Shares</p>
                           <h6 className='lolsscsd'>
                             {withdrawLpBalance} LP $(0.0000)
                             {/* {profileLoading ? (
@@ -399,9 +404,9 @@ const LpPools = () => {
                         {numberFormate(vaultRewards)} <span>CAPL</span>
                       </h4>
                       {/* <p className='price txt__gray'>~$19,214.261</p> */}
-                      <p className='txt__gray'>
+                      {/* <p className='txt__gray'>
                         *Note: Rewards will get deposited to your Wallet
-                      </p>
+                      </p> */}
                       <div className='liquidity__pool__box__btn justify-content-center mt-5'>
                         <button
                           disabled={vaultRewards === '0' || !userAddress}
@@ -412,7 +417,7 @@ const LpPools = () => {
                           }
                           onClick={claimVaultRewards}
                         >
-                          Collect
+                          Claim
                         </button>
                       </div>
                     </div>
@@ -422,12 +427,12 @@ const LpPools = () => {
                 <Row>
                   <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
                     <div className='liquidity__pool__box'>
-                      <h5>In Wallet</h5>
+                      <h5>Liquidity Pool Details</h5>
                       <div className='info'>
-                        <div className='info_part'>
-                          <p>LP Token Price</p>
+                        {/* <div className='info_part'>
+                          <p>LP Share Price</p>
                           <>$66.00</>
-                        </div>
+                        </div> */}
                         <div className='info_part'>
                           <p>Pool Name</p>
                           <p>USDC-CAPL</p>
@@ -446,8 +451,8 @@ const LpPools = () => {
                           </a>
                         </div>
                         <div className='info_part'>
-                          <p>Vault Multiplier</p>
-                          <p>110X</p>
+                          <p>Vault Rewards</p>
+                          <p>5000 CAPL/day</p>
                         </div>
                       </div>
                     </div>

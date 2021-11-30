@@ -25,10 +25,10 @@ const SwapPool = () => {
   // Redux State
   const dispatch = useDispatch()
   const {
-    usdcPrice,
     swapHash,
     swapLoading,
     ccptPrice,
+    usdcPrice,
     usdcBNBBalance,
     ccptBNBBalance,
   } = useSelector((state) => state.swap)

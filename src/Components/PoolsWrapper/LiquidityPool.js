@@ -12,7 +12,11 @@ import {useDispatch, useSelector} from 'react-redux'
 import USDC from '../../Assets/money/usdc.svg'
 import RecentTransactions from '../Modals/RecentTransactions/RecentTransactions'
 import SettingsModal from '../Modals/SettingsModal/SettingsModal'
-import {addLiquidityTokens, REMOVE_hash} from '../../Redux/Swap/actions'
+import {
+  addLiquidityTokens,
+  convertTokenValue,
+  REMOVE_hash,
+} from '../../Redux/Swap/actions'
 import {numberFormate} from '../../Utilities/Util'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
 import SwapSuccess from '../Modals/SwapModals/SwapSuccess'
@@ -36,6 +40,9 @@ const LiquidityPool = () => {
   const [errors, setErrors] = useState(false)
   const [swapSucc, setSwapSucc] = useState(false)
   const {userAddress} = useSelector((state) => state.profile)
+
+  const [firstInp, setFirstInp] = useState(false)
+  const [secondInp, setSecondInp] = useState(false)
 
   useEffect(() => {
     if (time === '') {
@@ -62,22 +69,30 @@ const LiquidityPool = () => {
   }, [swapHash])
 
   const handlePriceChange = (e) => {
+    setFirstInp(true)
+    setSecondInp(false)
     const {value} = e.target
     const priceRegex = /^[0-9]*\.?[0-9]*$/
     if (value === '') {
-      setPrice('')
+      // setPrice('')
+      // setSecondPrice('')
     } else if (priceRegex.test(value)) {
       setPrice(value)
+      dispatch(convertTokenValue(value, 'USDC'))
     }
   }
 
   const handlePriceChangeTwo = (e) => {
+    setFirstInp(false)
+    setSecondInp(true)
     const {value} = e.target
     const priceRegex = /^[0-9]*\.?[0-9]*$/
     if (value === '') {
-      setSecondPrice('')
+      // setPrice('')
+      // setSecondPrice('')
     } else if (priceRegex.test(value)) {
       setSecondPrice(value)
+      dispatch(convertTokenValue(value, 'CAPL'))
     }
   }
   const handleTimeChange = (number) => {
@@ -87,6 +102,26 @@ const LiquidityPool = () => {
   const makeLiquidity = () => {
     dispatch(addLiquidityTokens(secondPrice, price, time))
   }
+
+  useEffect(() => {
+    if (setFirstInp) {
+      if (price === '') {
+        setSecondPrice('')
+      } else {
+        setSecondPrice(ccptPrice)
+      }
+    }
+  }, [price, ccptPrice, setFirstInp])
+
+  useEffect(() => {
+    if (setSecondInp) {
+      if (secondPrice === '') {
+        setSecondPrice('')
+      } else {
+        setSecondPrice(usdcPrice)
+      }
+    }
+  }, [secondPrice, usdcPrice, setSecondInp])
 
   useEffect(() => {
     if (

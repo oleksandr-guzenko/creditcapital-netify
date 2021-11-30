@@ -50,15 +50,14 @@ const Header = () => {
   }, [userAddress])
 
   useEffect(() => {
-    dispatch(checkAndAddNetwork())
-  }, [])
-
-  useEffect(() => {
     if (userAddress) {
       dispatch(sharesTotal())
     }
   }, [userAddress, reserves, reserves?._reserve0])
 
+  useEffect(() => {
+    dispatch(checkAndAddNetwork())
+  }, [])
   useEffect(() => {
     if (userAddress) {
       closeWalletsModal()
