@@ -13,7 +13,11 @@
     border: 1px solid rgba(28, 33, 45, 0.12) !important;
     @include displayCenter(center, space-between);
     @include neonEffectTwo(33px);
-    background: $secondary;
+    background-color: #2428319d;
+    &::after {
+      filter: blur(300px) !important;
+    }
+
     .toggle_wrapper {
       color: $primary;
       // background: $brand__color;
@@ -33,11 +37,15 @@
   .box_wrapper {
     max-width: 500px;
     margin: auto;
-    background: $secondary;
+    background-color: #2428319d;
     padding: 20px;
     border: 1px solid rgba(28, 33, 45, 0.12) !important;
     border-radius: 10px;
     @include neonEffectTwo(10px);
+    // @include neonEffectModal(10px , $neon_background_seven);
+    &::after {
+      filter: blur(300px) !important;
+    }
     color: $primary;
 
     &_header {
@@ -60,7 +68,7 @@
       padding: 20px;
       border: 1px solid rgba(255, 255, 255, 0.466) !important;
       border-radius: 10px;
-      background: $secondary;
+      background-color: transparent;
       &_top {
         @include displayCenter(center, space-between);
         h4 {
@@ -88,6 +96,10 @@
             font-size: 25px;
             margin-top: -5px;
           }
+          select option {
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+          }
         }
       }
     }
@@ -95,7 +107,7 @@
       border: 1px solid rgba(255, 255, 255, 0.723) !important;
       width: 40px;
       height: 40px;
-      background-color: $secondary;
+      background-color: transparent;
       border-radius: 50%;
       display: grid;
       place-items: center;

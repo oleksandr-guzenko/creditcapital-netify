@@ -13,9 +13,9 @@
   padding: 0;
   margin-bottom: 50px;
   .main_wrapper {
-    background-color: $secondary;
+    background-color: #2428319d;
     border-radius: 5px;
-    @include neonEffectModal(5px, $neon_background_eight);
+    // @include neonEffectModal(5px, $neon_background_eight);
     &_header {
       padding: 15px;
       border-radius: 10px 10px 0 0;
@@ -43,7 +43,7 @@
           height: 40px;
           padding: 5px;
           border-radius: 10px;
-          background: $secondary;
+          background-color: transparent;
           border: 1px solid;
           cursor: pointer;
         }
@@ -55,13 +55,13 @@
   }
 
   .lpWrapper {
-    background-color: $secondary;
+    background-color: transparent;
     // @include neonEffectModal(0, $neon_background_seven);
     border-radius: 0 0 10px 10px;
     padding: 15px;
     margin-top: 20px;
     .liquidity__pool__box {
-      background-color: $secondary !important;
+      background-color: transparent;
       color: $primary;
       border-color: #b4a66e !important;
       input {

@@ -7,9 +7,24 @@
 body {
   font-family: 'Circular Std', sans-serif !important;
   font-weight: normal !important;
+  background-attachment: fixed;
   font-style: normal;
-  background: #242831 !important;
-  scroll-behavior: smooth;
+  // background: #242831 !important;
+  background-image: linear-gradient(45deg, #000850 0%, #000320 100%),
+    radial-gradient(100% 225% at 100% 0%, #ff6928 0%, #000000 100%),
+    linear-gradient(225deg, #ff7a00 0%, #000000 100%),
+    linear-gradient(
+      135deg,
+      #cdffeb 10%,
+      #cdffeb 35%,
+      #009f9d 35%,
+      #009f9d 60%,
+      #07456f 60%,
+      #07456f 67%,
+      #0f0a3c 67%,
+      #0f0a3c 100%
+    );
+  background-blend-mode: screen, overlay, hard-light, normal;
 }
 .container-fluid {
   padding: 0 50px !important;
@@ -140,7 +155,7 @@ svg {
   border-radius: 10px !important;
 }
 .btn_brand_disabled {
-  background-color: #acbdd4 !important;
+  background-color: #acbdd479 !important;
   color: $white__color !important;
   cursor: not-allowed !important;
   box-shadow: none !important;

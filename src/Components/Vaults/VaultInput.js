@@ -16,7 +16,7 @@ const VaultInput = ({
   setTypeOfDeposit,
   deposit,
   typeOfDeposit,
-  digits
+  digits,
 }) => {
   // const [selectedValue, setSelectedValue] = useState('')
 
@@ -60,7 +60,10 @@ const VaultInput = ({
       value: 'USDC-CAPL',
       label: (
         <div className='d-flex align-items-center justify-content-between'>
-          <h6 className='mb-0' style={{fontSize: '12px', marginLeft: '3px', color: "#fff"}}>
+          <h6
+            className='mb-0'
+            style={{fontSize: '12px', marginLeft: '3px', color: '#fff'}}
+          >
             USDC-CAPL
           </h6>
         </div>
@@ -70,7 +73,10 @@ const VaultInput = ({
       value: 'USDC',
       label: (
         <div className='d-flex align-items-center justify-content-between'>
-          <h6 className='mb-0' style={{fontSize: '12px', marginLeft: '3px', color: "#fff"}}>
+          <h6
+            className='mb-0'
+            style={{fontSize: '12px', marginLeft: '3px', color: '#fff'}}
+          >
             USDC
           </h6>
         </div>
@@ -80,7 +86,10 @@ const VaultInput = ({
       value: 'CAPL',
       label: (
         <div className='d-flex align-items-center justify-content-between'>
-          <h6 className='mb-0' style={{fontSize: '12px', marginLeft: '3px', color: "#fff"}}>
+          <h6
+            className='mb-0'
+            style={{fontSize: '12px', marginLeft: '3px', color: '#fff'}}
+          >
             CAPL
           </h6>
         </div>
@@ -88,10 +97,25 @@ const VaultInput = ({
     },
   ]
 
+  const customStyles = {
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: 'black',
+      cursor: 'pointer'
+    }),
+
+    // menu: (provided, state) => ({
+    //   background: 'red',
+    //   backgroundColor: 'blue',
+    //   color: 'red',
+    // }),
+  }
+
   return (
     <div className='liquidity__pool__box__middle  vault__input'>
       {deposit && (
         <Select
+          styles={customStyles}
           placeholder={'USDC'}
           components={{DropdownIndicator}}
           value={typeOfDeposit}

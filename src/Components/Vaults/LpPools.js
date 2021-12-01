@@ -226,7 +226,7 @@ const LpPools = () => {
                         <h5>
                           {typeOfDeposit}{' '}
                           {typeOfDeposit === 'USDC-CAPL'
-                            ? 'LP Shares'
+                            ? 'LP'
                             : 'Token Balance'}
                         </h5>
                         <div>
@@ -241,7 +241,7 @@ const LpPools = () => {
                                 className='_one'
                               />
                             ) : typeOfDeposit === 'USDC-CAPL' ? (
-                              `${depositedLpBalance} LP $(0.0000)`
+                              `${depositedLpBalance} LP Share $(0.0000)`
                             ) : typeOfDeposit === 'USDC' ? (
                               `${numberFormate(usdcBNBBalance)} USDC $(0.0000)`
                             ) : typeOfDeposit === 'CAPL' ? (
@@ -347,7 +347,7 @@ const LpPools = () => {
                                 className='_one'
                               />
                             ) : (
-                              `${withdrawLpBalance} LP $(0.0000)`
+                              `${withdrawLpBalance} LP Share $(0.0000)`
                             )}
 
                             {/* {profileLoading ? (
@@ -434,7 +434,6 @@ const LpPools = () => {
                         ) : (
                           `${numberFormate(vaultRewards)} CAPL`
                         )}
-                       
                       </h4>
                       {/* <p className='price txt__gray'>~$19,214.261</p> */}
                       {/* <p className='txt__gray'>
@@ -473,15 +472,15 @@ const LpPools = () => {
                           <p>Farm Contract</p>
                           <a href='#'>View</a>
                         </div> */}
-                        {/* <div className='info_part'>
+                        <div className='info_part'>
                           <p>Vault Contract</p>
                           <a
                             target='_blank'
-                            href='https://polygonscan.com/address/0xef5FF5b55c1bDe6ABDb4833b489440A245206632'
+                            href='https://polygonscan.com/address/0xFcB66EEDa88865B0d8aa9c3b51E7db6078E8c948'
                           >
                             View
                           </a>
-                        </div> */}
+                        </div>
                         <div className='info_part'>
                           <p>Vault Rewards</p>
                           <p>5000 CAPL/day</p>

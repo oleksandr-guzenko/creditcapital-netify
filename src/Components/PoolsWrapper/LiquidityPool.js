@@ -20,6 +20,8 @@ import {
 import {numberFormate} from '../../Utilities/Util'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
 import SwapSuccess from '../Modals/SwapModals/SwapSuccess'
+import ReactLoading from 'react-loading'
+
 const LiquidityPool = () => {
   // Redux State
   const dispatch = useDispatch()
@@ -30,6 +32,7 @@ const LiquidityPool = () => {
     ccptPrice,
     usdcBNBBalance,
     ccptBNBBalance,
+    balanceLoading,
   } = useSelector((state) => state.swap)
   const [price, setPrice] = useState('')
   const [secondPrice, setSecondPrice] = useState('')
@@ -40,9 +43,8 @@ const LiquidityPool = () => {
   const [errors, setErrors] = useState(false)
   const [swapSucc, setSwapSucc] = useState(false)
   const {userAddress} = useSelector((state) => state.profile)
-
-  const [firstInp, setFirstInp] = useState(false)
-  const [secondInp, setSecondInp] = useState(false)
+  const [first, setFirst] = useState(false)
+  const [second, setSecond] = useState(false)
 
   useEffect(() => {
     if (time === '') {
@@ -69,13 +71,13 @@ const LiquidityPool = () => {
   }, [swapHash])
 
   const handlePriceChange = (e) => {
-    setFirstInp(true)
-    setSecondInp(false)
+    setSecond(true)
+    setFirst(false)
     const {value} = e.target
     const priceRegex = /^[0-9]*\.?[0-9]*$/
     if (value === '') {
-      // setPrice('')
-      // setSecondPrice('')
+      setSecondPrice('')
+      setPrice('')
     } else if (priceRegex.test(value)) {
       setPrice(value)
       dispatch(convertTokenValue(value, 'USDC'))
@@ -83,13 +85,13 @@ const LiquidityPool = () => {
   }
 
   const handlePriceChangeTwo = (e) => {
-    setFirstInp(false)
-    setSecondInp(true)
+    setSecond(false)
+    setFirst(true)
     const {value} = e.target
     const priceRegex = /^[0-9]*\.?[0-9]*$/
     if (value === '') {
-      // setPrice('')
-      // setSecondPrice('')
+      setPrice('')
+      setSecondPrice('')
     } else if (priceRegex.test(value)) {
       setSecondPrice(value)
       dispatch(convertTokenValue(value, 'CAPL'))
@@ -100,38 +102,44 @@ const LiquidityPool = () => {
   }
 
   const makeLiquidity = () => {
-    dispatch(addLiquidityTokens(secondPrice, price, time))
+    if (second) {
+      dispatch(addLiquidityTokens(ccptPrice, price, time))
+    }
+    if (first) {
+      dispatch(addLiquidityTokens(secondPrice, usdcPrice, time))
+    }
   }
 
-  useEffect(() => {
-    if (setFirstInp) {
-      if (price === '') {
-        setSecondPrice('')
-      } else {
-        setSecondPrice(ccptPrice)
-      }
-    }
-  }, [price, ccptPrice, setFirstInp])
+  // useEffect(() => {
+  //   if (setFirstInp) {
+  //     if (price === '') {
+  //       setSecondPrice('')
+  //     } else {
+  //       setSecondPrice(ccptPrice)
+  //     }
+  //   }
+  // }, [price, ccptPrice, setFirstInp])
 
-  useEffect(() => {
-    if (setSecondInp) {
-      if (secondPrice === '') {
-        setSecondPrice('')
-      } else {
-        setSecondPrice(usdcPrice)
-      }
-    }
-  }, [secondPrice, usdcPrice, setSecondInp])
+  // useEffect(() => {
+  //   if (setSecondInp) {
+  //     if (secondPrice === '') {
+  //       setSecondPrice('')
+  //     } else {
+  //       setSecondPrice(usdcPrice)
+  //     }
+  //   }
+  // }, [secondPrice, usdcPrice, setSecondInp])
 
   useEffect(() => {
     if (
-      price === '' ||
-      secondPrice === '' ||
+      // price === '' ||
+      // secondPrice === '' ||
+      // price === '0' ||
+      // secondPrice === '0' ||
       usdcBNBBalance === '0' ||
       ccptBNBBalance === '0' ||
       !userAddress ||
-      Number(price) > Number(usdcBNBBalance) ||
-      Number(secondPrice) > Number(usdcBNBBalance)
+      balanceLoading
     ) {
       setErrors(true)
     } else {
@@ -163,20 +171,37 @@ const LiquidityPool = () => {
               </div>
               <div className='box_wrapper_header_right'>
                 <RiListSettingsLine onClick={() => setOpenSet(true)} />
-                <VscHistory onClick={() => setOpenTrans(true)} />
+                {/* <VscHistory onClick={() => setOpenTrans(true)} /> */}
               </div>
             </div>
             <div className='box_wrapper_container'>
               <div className='box_wrapper_container_top'>
                 <h4>Amount</h4>
-                <h4>Balance: {numberFormate(usdcBNBBalance)}</h4>
+                <h4 className='d-flex align-items-start'>
+                  Balance:{' '}
+                  {balanceLoading ? (
+                    <ReactLoading
+                      type='bars'
+                      color='#ffffff'
+                      height={0}
+                      width={30}
+                      className='load'
+                    />
+                  ) : (
+                    numberFormate(usdcBNBBalance)
+                  )}
+                </h4>
               </div>
               <div className='box_wrapper_container_bottom'>
                 <div className='box_wrapper_container_bottom_left'>
                   <input
                     placeholder='0.0000'
                     className='shadow-none form-control'
-                    value={price}
+                    value={
+                      first && (price != '' || secondPrice != '')
+                        ? usdcPrice
+                        : price
+                    }
                     onChange={handlePriceChange}
                   />
                   {/* <NumberFormat
@@ -197,7 +222,7 @@ const LiquidityPool = () => {
                   /> */}
                 </div>
                 <div className='box_wrapper_container_bottom_right'>
-                  <h4>MAX</h4>
+                  {/* <h4>MAX</h4> */}
                   <Image src={USDC} alt='' />
                   <h4>USDC </h4>
                 </div>
@@ -210,14 +235,31 @@ const LiquidityPool = () => {
             <div className='box_wrapper_container'>
               <div className='box_wrapper_container_top'>
                 <h4>Amount</h4>
-                <h4>Balance: {numberFormate(ccptBNBBalance)}</h4>
+                <h4 className='d-flex align-items-start'>
+                  Balance:{' '}
+                  {balanceLoading ? (
+                    <ReactLoading
+                      type='bars'
+                      color='#ffffff'
+                      height={0}
+                      width={30}
+                      className='load'
+                    />
+                  ) : (
+                    numberFormate(ccptBNBBalance)
+                  )}
+                </h4>
               </div>
               <div className='box_wrapper_container_bottom'>
                 <div className='box_wrapper_container_bottom_left'>
                   <input
                     placeholder='0.0000'
                     className='shadow-none form-control'
-                    value={secondPrice}
+                    value={
+                      second && (price != '' || secondPrice != '')
+                        ? ccptPrice
+                        : secondPrice
+                    }
                     onChange={handlePriceChangeTwo}
                   />
                   {/* <NumberFormat
@@ -238,7 +280,6 @@ const LiquidityPool = () => {
                   /> */}
                 </div>
                 <div className='box_wrapper_container_bottom_right'>
-                  <h4>MAX</h4>
                   {/* <Image src={USDC} alt='' /> */}
                   <h4>CAPL </h4>
                 </div>

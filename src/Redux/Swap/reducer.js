@@ -20,7 +20,7 @@ const initialState = {
   swapingType: '',
   usdcBNBBalance: 0,
   ccptBNBBalance: 0,
-  balanceLoading: true,
+  balanceLoading: false,
   balanceError: false,
 }
 export const swapReducer = (state = initialState, action) => {

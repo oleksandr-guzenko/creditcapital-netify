@@ -6,7 +6,7 @@ import {useLocation} from 'react-router-dom'
 import {BiWalletAlt} from 'react-icons/bi'
 
 // images
-import Logo from '../Assets/CC_Logo.svg'
+import Logo from '../Assets/Logo.svg'
 import MetaMask from '../Assets/MetaMask.svg'
 import Coinbase from '../Assets/coinbase_Wallet.svg'
 import Wallet from '../Assets/wallet.svg'
@@ -58,6 +58,7 @@ const Header = () => {
   useEffect(() => {
     dispatch(checkAndAddNetwork())
   }, [])
+
   useEffect(() => {
     if (userAddress) {
       closeWalletsModal()
@@ -90,7 +91,7 @@ const Header = () => {
                 className='d-inline-block align-top'
                 alt='Credit Capital'
               />
-              CreditCapital
+              {/* CreditCapital */}
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />

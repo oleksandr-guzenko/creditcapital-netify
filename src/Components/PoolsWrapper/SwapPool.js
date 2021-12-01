@@ -177,13 +177,14 @@ const SwapPool = () => {
   //   }
   // }, [usdcBNBBalance, ccptBNBBalance, userAddress, price])
 
-  useEffect(() => {
+useEffect(() => {
     if (!toggle) {
       if (
         Number(price) > Number(usdcBNBBalance) ||
         price === '' ||
         usdcBNBBalance === '0' ||
-        !userAddress
+        !userAddress ||
+        balanceLoading
       ) {
         setErrors(true)
       } else {
@@ -192,6 +193,7 @@ const SwapPool = () => {
     } else if (toggle) {
       if (
         Number(price) > Number(ccptBNBBalance) ||
+        balanceLoading ||
         price === '' ||
         ccptBNBBalance === '0' ||
         !userAddress
