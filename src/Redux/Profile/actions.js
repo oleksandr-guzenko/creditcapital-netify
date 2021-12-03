@@ -144,11 +144,29 @@ export const connToCoinbase = () => async (dispatch) => {
   } catch (error) {
     console.error(error?.message)
   }
+
 }
-export const disConnectWallet = () => async () => {
-  // web3.currentProvider._handleDisconnect();
+
+
+
+
+
+export const disConnectWallet = () => async (dispatch, getState) => {
+  const {
+    profile: {userAddress, walletType},
+  } = getState()
+
+  const {web3} = getContracts(walletType)
+  await web3.currentProvider._handleDisconnect()
   walletLink.disconnect()
 }
+
+
+
+
+
+
+
 export const getProfileInformation = () => async (dispatch, getState) => {
   try {
     const {

@@ -11,7 +11,7 @@ import card_two from '../../Assets/portfolio/card_two.svg'
 import card_three from '../../Assets/portfolio/card_three.svg'
 import card_four from '../../Assets/portfolio/card_four.svg'
 import card_five from '../../Assets/portfolio/card_five.svg'
-import Logo from '../../Assets/CC_Logo.svg'
+import Logo from '../../Assets/cc_white.svg'
 
 // Redux Imports
 import {useDispatch, useSelector} from 'react-redux'

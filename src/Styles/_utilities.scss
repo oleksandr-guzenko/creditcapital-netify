@@ -291,7 +291,7 @@ svg {
 }
 
 .modal-content {
-  @include neonEffectTwo(0.3rem);
+  // @include neonEffectTwo(0.3rem);
   background-color: #000000 !important;
   border: transparent;
   border-radius: 0rem;
@@ -299,6 +299,7 @@ svg {
 
 .modal-dialog {
   margin: 5rem auto !important;
+  border: 1px solid rgb(76, 243, 255);
 
   @include mQ($sm) {
     margin: 5rem 1.3rem !important;

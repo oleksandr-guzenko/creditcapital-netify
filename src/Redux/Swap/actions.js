@@ -82,11 +82,17 @@ export const addLiquidityTokens =
       const {VAULTLP, USDCBNB, CCPTBNB, web3} = getContracts(walletType)
       const newGasPrice = await gasPrice(web3)
 
-      const cap = Number(capl)?.toFixed(0)
-      const usd = Number(usdc)?.toFixed(0)
-      console.log(cap, usd, minutes)
-      const priceCAPL = priceConversion('toWei', 'Mwei', cap, web3)
-      const priceUSDC = priceConversion('toWei', 'Mwei', usd, web3)
+      const cap = Number(capl) * 10 ** 6
+      const usd = Number(usdc) * 10 ** 6
+
+      // const priceCAPL = priceConversion('toWei', 'Mwei', capl, web3)
+      // const priceUSDC = priceConversion('toWei', 'Mwei', usdc, web3)
+      
+      const priceCAPL = cap
+      const priceUSDC = usd
+
+      console.log(priceCAPL, priceUSDC)
+      // console.log(cap, usd)
 
       await USDCBNB.methods
         .approve(VAULTLP._address, priceUSDC)

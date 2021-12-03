@@ -6,7 +6,7 @@ import {useLocation} from 'react-router-dom'
 import {BiWalletAlt} from 'react-icons/bi'
 
 // images
-import Logo from '../Assets/Logo.svg'
+import Logo from '../Assets/cc_white.svg'
 import MetaMask from '../Assets/MetaMask.svg'
 import Coinbase from '../Assets/coinbase_Wallet.svg'
 import Wallet from '../Assets/wallet.svg'
@@ -88,10 +88,10 @@ const Header = () => {
             <Navbar.Brand>
               <Image
                 src={Logo}
-                className='d-inline-block align-top'
+                className='d-inline-block align-top me-2'
                 alt='Credit Capital'
               />
-              {/* CreditCapital */}
+              CreditCapital
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
@@ -104,9 +104,9 @@ const Header = () => {
                 <LinkContainer to='/swap'>
                   <Nav.Link>Swap</Nav.Link>
                 </LinkContainer>
-                {/* <LinkContainer to='/liquidity'>
+                <LinkContainer to='/liquidity'>
                   <Nav.Link>Liquidity</Nav.Link>
-                </LinkContainer> */}
+                </LinkContainer>
 
                 {/* <LinkContainer to='/creditPool'>
                   <Nav.Link>Capital Pool</Nav.Link>

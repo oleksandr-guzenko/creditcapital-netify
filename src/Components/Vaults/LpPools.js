@@ -227,7 +227,7 @@ const LpPools = () => {
                           {typeOfDeposit}{' '}
                           {typeOfDeposit === 'USDC-CAPL'
                             ? 'LP'
-                            : 'Token Balance'}
+                            : ''}
                         </h5>
                         <div>
                           <p className='txt__gray'>Available balance</p>
@@ -243,9 +243,13 @@ const LpPools = () => {
                             ) : typeOfDeposit === 'USDC-CAPL' ? (
                               `${depositedLpBalance} LP Share $(0.0000)`
                             ) : typeOfDeposit === 'USDC' ? (
-                              `${numberFormate(usdcBNBBalance)} USDC $(0.0000)`
+                              `${numberFormate(
+                                usdcBNBBalance
+                              )} USDC Token Balance $(0.0000)`
                             ) : typeOfDeposit === 'CAPL' ? (
-                              `${numberFormate(ccptBNBBalance)} CAPL $(0.0000)`
+                              `${numberFormate(
+                                ccptBNBBalance
+                              )} CAPL Token Balance $(0.0000)`
                             ) : (
                               ''
                             )}

@@ -34,7 +34,7 @@ function App() {
           {/* <Route path='/farming' component={Farming} /> */}
           <Route path='/portfolio' component={Portfolio} />
           <Route path='/swap' component={Swap} />
-          {/* <Route path='/liquidity' component={Liquidity} /> */}
+          <Route path='/liquidity' component={Liquidity} />
           {/* <Route path='/creditPool' component={LandingPage} /> */}
 
           <Route path='*' component={NotFound} />

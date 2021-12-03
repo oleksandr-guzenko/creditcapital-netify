@@ -17,7 +17,7 @@
       }
     }
     &__close {
-      @include neonEffectTwo(50%);
+      border: 1px solid rgb(76, 243, 255);
       position: absolute !important;
       right: -15px;
       top: -12px !important;
