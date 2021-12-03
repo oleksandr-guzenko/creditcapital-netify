@@ -15,7 +15,7 @@ export const walletLink = new WalletLink({
 })
 
 // Production
-const RPC_URL = 'https://rpc-mainnet.maticvigil.com/'
+const RPC_URL = 'https://polygon-rpc.com/'
 // const RPC_URL = 'https://data-seed-prebsc-1-s1.binance.org:8545/'
 const CHAIN_ID = 137
 // const CHAIN_ID = 97

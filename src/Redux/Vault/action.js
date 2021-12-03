@@ -24,23 +24,21 @@ export const vaultDepositAndWithdrawTokens =
         profile: {walletType, userAddress},
       } = getState()
 
-      const newGasPrice = await gasPrice(web3)
       const {REWARDS_VAULT, USDC_CCPT_TOKEN, USDCBNB, CCPTBNB, web3} =
         getContracts(walletType)
-
+      const newGasPrice = await gasPrice(web3)
       const price = priceConversion('toWei', 'ether', amount, web3)
-      console.log(price)
 
       // const newGasPrice = await gasPrice(web3)
 
       if (type === 'deposit') {
         await USDC_CCPT_TOKEN.methods
           .approve(REWARDS_VAULT._address, price)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
 
         const transaction = await REWARDS_VAULT.methods
           .deposit(0, price)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
 
         const tranHash = transaction.transactionHash
         dispatch({
@@ -51,7 +49,7 @@ export const vaultDepositAndWithdrawTokens =
       } else if (type === 'withdraw') {
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, price)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
 
         const tranHash = transaction.transactionHash
         dispatch({
@@ -62,7 +60,7 @@ export const vaultDepositAndWithdrawTokens =
       } else if (type === 'rewards') {
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, 0)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
 
         const tranHash = transaction.transactionHash
         dispatch({
@@ -74,10 +72,10 @@ export const vaultDepositAndWithdrawTokens =
         const priceUSDC = priceConversion('toWei', 'Mwei', amount, web3)
         await USDCBNB.methods
           .approve(REWARDS_VAULT._address, priceUSDC)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
         const transaction = await REWARDS_VAULT.methods
           .depositWithUsdc(0, priceUSDC)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
 
         const tranHash = transaction.transactionHash
         dispatch({
@@ -90,11 +88,11 @@ export const vaultDepositAndWithdrawTokens =
 
         await CCPTBNB.methods
           .approve(REWARDS_VAULT._address, priceCAPL)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
 
         const transaction = await REWARDS_VAULT.methods
           .depositWithCapl(0, priceCAPL)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
 
         const tranHash = transaction.transactionHash
         dispatch({
@@ -131,10 +129,10 @@ export const transformTokens =
       if (tokenType === 'usdcToken') {
         await USDCBNB.methods
           .approve(VAULTLP._address, price)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
         const transaction = await VAULTLP.methods
           .addLiquidityUsdc(price, minutes * 60)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
         const tranHash = transaction.transactionHash
         dispatch({
           type: VAULT_DEPOSIT_SUCCESS,
@@ -146,10 +144,10 @@ export const transformTokens =
       if (tokenType === 'ccptToken') {
         await CCPTBNB.methods
           .approve(VAULTLP._address, price)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
         const transaction = await VAULTLP.methods
           .addLiquidityCapl(price, minutes * 60)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
         const tranHash = transaction.transactionHash
         dispatch({
           type: VAULT_DEPOSIT_SUCCESS,

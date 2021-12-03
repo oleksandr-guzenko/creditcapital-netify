@@ -34,10 +34,10 @@ export const swapTokens =
       if (tokenType === 'USDC') {
         await USDCBNB.methods
           .approve(swap._address, price)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
         const transaction = await swap.methods
           .getCapl(price, minutes * 60)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
         const tranHash = transaction.transactionHash
         dispatch({
           type: SWAPPING_SUCCESS,
@@ -49,10 +49,10 @@ export const swapTokens =
       if (tokenType === 'CAPL') {
         await CCPTBNB.methods
           .approve(swap._address, price)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
         const transaction = await swap.methods
           .getUSDC(price, minutes * 60)
-          .send({from: userAddress, newGasPrice: newGasPrice})
+          .send({from: userAddress, gasPrice: newGasPrice})
         const tranHash = transaction.transactionHash
         dispatch({
           type: SWAPPING_SUCCESS,
@@ -78,10 +78,10 @@ export const addLiquidityTokens =
       const {
         profile: {walletType, userAddress},
       } = getState()
-      
+
       const {VAULTLP, USDCBNB, CCPTBNB, web3} = getContracts(walletType)
       const newGasPrice = await gasPrice(web3)
-      
+
       const cap = Number(capl)?.toFixed(0)
       const usd = Number(usdc)?.toFixed(0)
       console.log(cap, usd, minutes)
@@ -90,16 +90,16 @@ export const addLiquidityTokens =
 
       await USDCBNB.methods
         .approve(VAULTLP._address, priceUSDC)
-        .send({from: userAddress, newGasPrice: newGasPrice})
+        .send({from: userAddress, gasPrice: newGasPrice})
 
       await CCPTBNB.methods
         .approve(VAULTLP._address, priceCAPL)
-        .send({from: userAddress, newGasPrice: newGasPrice})
+        .send({from: userAddress, gasPrice: newGasPrice})
 
       const transaction = await VAULTLP.methods
 
         .addLiquidityBoth(priceCAPL, minutes * 60)
-        .send({from: userAddress, newGasPrice: newGasPrice})
+        .send({from: userAddress, gasPrice: newGasPrice})
       const tranHash = transaction.transactionHash
 
       dispatch({
