@@ -12,12 +12,13 @@ import MetaMaskNotFound from './MetaMaskNotFound'
 
 import Coinbase_wallet from '../../Assets/coinbase_Wallet.svg'
 import getContracts from '../../Redux/Blockchain/contracts'
-import { useSelector } from 'react-redux'
+import {useSelector} from 'react-redux'
 
 const Wallets = ({show, handleClose}) => {
   const [meatMaskShow, setMeatMaskShow] = useState(false)
   const dispatch = useDispatch()
   const {walletType} = useSelector((state) => state.profile)
+
   const connectToMetaMask = () => {
     if (typeof window.ethereum !== 'undefined') {
       dispatch(connToMetaMask())
@@ -25,7 +26,6 @@ const Wallets = ({show, handleClose}) => {
       openMetaMaskModal()
     }
   }
-  
 
   //   Connecting to Coinbase
   const connectToCoinbase = () => {

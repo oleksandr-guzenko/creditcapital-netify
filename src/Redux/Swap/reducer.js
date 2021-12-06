@@ -1,4 +1,4 @@
-import {PROFILE_FAIL} from '../Profile/constants'
+import {PROFILE_FAIL} from './constans'
 import {
   GET_CONVERTED_CCPT_VALUES_SUCCESS,
   GET_CONVERTED_USDC_VALUES_SUCCESS,

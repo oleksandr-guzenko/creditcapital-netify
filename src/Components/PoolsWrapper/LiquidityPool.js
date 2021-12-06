@@ -145,7 +145,14 @@ const LiquidityPool = () => {
     } else {
       setErrors(false)
     }
-  }, [usdcBNBBalance, ccptBNBBalance, userAddress, price, secondPrice])
+  }, [
+    usdcBNBBalance,
+    ccptBNBBalance,
+    userAddress,
+    price,
+    secondPrice,
+    balanceLoading,
+  ])
 
   return (
     <>

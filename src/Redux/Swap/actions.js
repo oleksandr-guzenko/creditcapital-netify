@@ -87,20 +87,17 @@ export const addLiquidityTokens =
 
       // const priceCAPL = priceConversion('toWei', 'Mwei', capl, web3)
       // const priceUSDC = priceConversion('toWei', 'Mwei', usdc, web3)
-      
+
       const priceCAPL = cap
       const priceUSDC = usd
 
-      console.log(priceCAPL, priceUSDC)
-      // console.log(cap, usd)
-
       await USDCBNB.methods
         .approve(VAULTLP._address, priceUSDC)
-        .send({from: userAddress, gasPrice: newGasPrice})
+        .send({from: userAddress})
 
       await CCPTBNB.methods
         .approve(VAULTLP._address, priceCAPL)
-        .send({from: userAddress, gasPrice: newGasPrice})
+        .send({from: userAddress})
 
       const transaction = await VAULTLP.methods
 
@@ -113,6 +110,57 @@ export const addLiquidityTokens =
         payload: tranHash,
       })
       dispatch(getSwapTokenBalances())
+    } catch (error) {
+      dispatch({
+        type: SWAPPING_FAIL,
+        payload: error?.message,
+      })
+    }
+  }
+
+export const adminLpPool =
+  (capl, usdc, minutes) => async (dispatch, getState) => {
+    try {
+      dispatch(checkAndAddNetwork())
+      dispatch({
+        type: SWAPPING_REQUEST,
+      })
+      const {
+        profile: {walletType, userAddress, isAdmin},
+      } = getState()
+
+      const {adminLp, USDCBNB, CCPTBNB, web3} = getContracts(walletType)
+      const newGasPrice = await gasPrice(web3)
+
+      const cap = Number(capl) * 10 ** 6
+      const usd = Number(usdc) * 10 ** 6
+
+      // const priceCAPL = priceConversion('toWei', 'Mwei', capl, web3)
+      // const priceUSDC = priceConversion('toWei', 'Mwei', usdc, web3)
+
+      const priceCAPL = cap
+      const priceUSDC = usd
+
+      if (isAdmin) {
+        await USDCBNB.methods
+          .approve(adminLp._address, priceUSDC)
+          .send({from: userAddress, gasPrice: newGasPrice})
+
+        await CCPTBNB.methods
+          .approve(adminLp._address, priceCAPL)
+          .send({from: userAddress, gasPrice: newGasPrice})
+
+        const transaction = await adminLp.methods
+          .addLiquidityBoth(priceCAPL, priceUSDC, minutes * 60)
+          .send({from: userAddress, gasPrice: newGasPrice})
+        const tranHash = transaction.transactionHash
+
+        dispatch({
+          type: SWAPPING_SUCCESS,
+          payload: tranHash,
+        })
+        dispatch(getSwapTokenBalances())
+      }
     } catch (error) {
       dispatch({
         type: SWAPPING_FAIL,

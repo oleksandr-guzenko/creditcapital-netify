@@ -1,5 +1,4 @@
 import React from 'react'
-import LoanApplication from '../Components/LandingPage/LoanApplication'
 import MyPortfolio from '../Components/Portfolio/MyPortfolio'
 import {Redirect} from 'react-router-dom'
 

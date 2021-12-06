@@ -164,6 +164,7 @@ const LpPools = () => {
     depositedLpBalance,
     depositPrice,
     typeOfDeposit,
+    balanceLoading,
   ])
 
   useEffect(() => {
@@ -225,9 +226,7 @@ const LpPools = () => {
                       <div className='liquidity__pool__box__top'>
                         <h5>
                           {typeOfDeposit}{' '}
-                          {typeOfDeposit === 'USDC-CAPL'
-                            ? 'LP'
-                            : ''}
+                          {typeOfDeposit === 'USDC-CAPL' ? 'LP' : ''}
                         </h5>
                         <div>
                           <p className='txt__gray'>Available balance</p>

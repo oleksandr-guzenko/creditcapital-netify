@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {Col, Container, Image, Row} from 'react-bootstrap'
 import PortfolioCard from './PortfolioCard'
-import {exactNumberFormate, numberFormate} from '../../Utilities/Util'
+import {numberFormate} from '../../Utilities/Util'
 import {useHistory} from 'react-router-dom'
 import ReactLoading from 'react-loading'
 
@@ -15,42 +15,18 @@ import Logo from '../../Assets/cc_white.svg'
 
 // Redux Imports
 import {useDispatch, useSelector} from 'react-redux'
-import {
-  disConnectWallet,
-  getProfileInformation,
-  getProfileInformationTest,
-} from '../../Redux/Profile/actions'
-import NumberFormat from 'react-number-format'
+import {disConnectWallet} from '../../Redux/Profile/actions'
 
 const MyPortfolio = () => {
   // Redux State
   const dispatch = useDispatch()
-  const {
-    userAddress,
-    availableBalance,
-    CAPLBalance,
-    CRETBalance,
-    CCPTBalance,
-    totalRewards,
-    lpCAPLBalance,
-    lpCRETBalance,
-  } = useSelector((state) => state.profile)
+  const {userAddress} = useSelector((state) => state.profile)
   let history = useHistory()
-  const {
-    lpCRETBalance: a,
-    lpCAPLBalance: b,
-    testUSDC: c,
-  } = useSelector((state) => state.testProfile)
+
   const {apy, withdrawLpBalance, vaultRewards} = useSelector(
     (state) => state.vault
   )
   const {ccptBNBBalance, balanceLoading} = useSelector((state) => state.swap)
-  useEffect(() => {
-    if (userAddress) {
-      dispatch(getProfileInformation())
-      dispatch(getProfileInformationTest())
-    }
-  }, [userAddress])
 
   const handleDisconnect = () => {
     dispatch(disConnectWallet())

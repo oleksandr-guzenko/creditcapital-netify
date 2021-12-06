@@ -1,14 +1,5 @@
-import {
-  CONNECT_WALLET,
-  PROFILE_REQUEST,
-  PROFILE_SUCCESS,
-  PROFILE_FAIL,
-  TEST_PROFILE_SUCCESS,
-  TEST_PROFILE_FAIL,
-  TEST_PROFILE_REQ,
-} from './constants'
+import {CHECK_ADMIN, CONNECT_WALLET} from './constants'
 import getContracts, {ethereum, walletLink} from '../Blockchain/contracts'
-import {totalTreasuryAmount} from '../Root/actions'
 // Real Network
 
 const data = [
@@ -94,33 +85,13 @@ export const checkAndAddNetwork = () => async () => {
   }
 }
 
-// export const checkAndAddNetworkTest = () => async (dispatch) => {
-//   try {
-//     await window.ethereum.request({
-//       method: 'wallet_switchEthereumChain',
-//       params: [{chainId: Testdata[0]?.chainId}],
-//     })
-//   } catch (error) {
-//     console.log(error)
-//     if (error?.code === 4902) {
-//       try {
-//         await window.ethereum.request({
-//           method: 'wallet_addEthereumChain',
-//           params: Testdata,
-//         })
-//       } catch (addError) {
-//         console.error(addError?.message)
-//       }
-//     }
-//   }
-// }
-
 export const connToMetaMask = () => async (dispatch) => {
   try {
-    // dispatch(checkAndAddNetwork())
+    dispatch(checkAndAddNetwork())
     const userAddress = await window.ethereum.request({
       method: 'eth_requestAccounts',
     })
+    localStorage.setItem('walletType', 'Metamask')
     dispatch({
       type: CONNECT_WALLET,
       payload: userAddress[0],
@@ -133,9 +104,9 @@ export const connToMetaMask = () => async (dispatch) => {
 
 export const connToCoinbase = () => async (dispatch) => {
   try {
-    // dispatch(checkAndAddNetwork())
+    dispatch(checkAndAddNetwork())
     const accounts = await ethereum.enable()
-    // coinbaseWeb3.eth.defaultAccount = accounts[0]
+    localStorage.setItem('walletType', 'Coinbase')
     dispatch({
       type: CONNECT_WALLET,
       payload: accounts[0],
@@ -144,145 +115,42 @@ export const connToCoinbase = () => async (dispatch) => {
   } catch (error) {
     console.error(error?.message)
   }
-
 }
-
-
-
-
 
 export const disConnectWallet = () => async (dispatch, getState) => {
   const {
     profile: {userAddress, walletType},
   } = getState()
-
   const {web3} = getContracts(walletType)
+  localStorage.removeItem('walletType')
   await web3.currentProvider._handleDisconnect()
   walletLink.disconnect()
 }
 
+export const checkAdminAddress = () => async (dispatch, getState) => {
+  const {
+    profile: {userAddress},
+  } = getState()
 
+  const addresses = [
+    '0x40d3CFA64B8cFED2712B71cDc4e92935D395e415',
+    '0x54cf3933AB664051B52D0180D1fF25cB1A76f71e',
+  ]
 
-
-
-
-
-export const getProfileInformation = () => async (dispatch, getState) => {
-  try {
-    const {
-      profile: {userAddress, walletType},
-    } = getState()
-    dispatch({
-      type: PROFILE_REQUEST,
-    })
-    const {web3, usdc, capl, cret, ccpt, Staking, cretStaking} =
-      getContracts(walletType)
-
-    if (userAddress) {
-      // available Balance
-      const balance = await usdc.methods.balanceOf(userAddress).call()
-      const availableBalance = web3.utils.fromWei(balance.toString(), 'Mwei')
-
-      // CPT and CRT
-      const caplB = await capl.methods.balanceOf(userAddress).call()
-      const CAPLBalance = web3.utils.fromWei(caplB.toString(), 'ether')
-
-      const ccpftB = await ccpt.methods.balanceOf(userAddress).call()
-      const CCPTBalance = web3.utils.fromWei(ccpftB.toString(), 'ether')
-
-      const cretB = await cret.methods.balanceOf(userAddress).call()
-
-      const CRETBalance = web3.utils.fromWei(cretB.toString(), 'ether')
-
-      const ccptB = await Staking.methods._balancescapl(userAddress).call()
-      const CAPL_CCPTBalance = web3.utils.fromWei(ccptB.toString(), 'ether')
-
-      const ccptStakingCRET = await cretStaking.methods
-        ._balancescret(userAddress)
-        .call()
-      const CRET_CCPTBalance = web3.utils.fromWei(
-        ccptStakingCRET.toString(),
-        'ether'
-      )
-
-      // rewards
-      const rew = await Staking.methods._balancesccpt(userAddress).call()
-      const caplRewards = web3.utils.fromWei(rew.toString(), 'ether')
-
-      const rewss = await cretStaking.methods._balancesccpt(userAddress).call()
-      const cretRewards = web3.utils.fromWei(rewss.toString(), 'ether')
-
-      // total platform rewards
-      const platformCAPL = await Staking.methods._rewardDistributed().call()
-      const platformCRET = await cretStaking.methods._rewardDistributed().call()
-      const a = web3.utils.fromWei(platformCAPL.toString(), 'ether')
-      const b = web3.utils.fromWei(platformCRET.toString(), 'ether')
-      const totalPlatRewards = Number(a) + Number(b)
-
+  if (userAddress) {
+    const response = addresses.filter(
+      (item) => item?.toLowerCase() === userAddress
+    )
+    if (response?.length > 0) {
       dispatch({
-        type: PROFILE_SUCCESS,
-        payload: {
-          availableBalance: Number(availableBalance),
-          CAPLBalance,
-          CRETBalance,
-          CAPL_CCPTBalance,
-          CRET_CCPTBalance,
-          CCPTBalance,
-          caplRewards,
-          cretRewards,
-          totalRewards: Number(caplRewards) + Number(cretRewards),
-          totalPlatformRewards: Number(totalPlatRewards),
-        },
+        type: CHECK_ADMIN,
+        payload: true,
+      })
+    } else {
+      dispatch({
+        type: CHECK_ADMIN,
+        payload: false,
       })
     }
-  } catch (error) {
-    dispatch({
-      type: PROFILE_FAIL,
-      payload: error?.message,
-    })
-  }
-}
-
-export const getProfileInformationTest = () => async (dispatch, getState) => {
-  try {
-    const {
-      profile: {userAddress, walletType},
-    } = getState()
-    dispatch({
-      type: TEST_PROFILE_REQ,
-    })
-    const {web3, liquidityPoolCAPL, liquidityPoolCRET, dummyUSDC} =
-      getContracts(walletType)
-
-    if (userAddress) {
-      // available Balance
-      const balance = await dummyUSDC.methods.balanceOf(userAddress).call()
-      const availableBalance = web3.utils.fromWei(balance.toString(), 'Mwei')
-
-      // lp balance
-      const lpCAPL = await liquidityPoolCAPL.methods
-        ._balances(userAddress)
-        .call()
-      const lpCRET = await liquidityPoolCRET.methods
-        ._balances(userAddress)
-        .call()
-
-      const lpCAPLBalance = web3.utils.fromWei(lpCAPL.toString(), 'Mwei')
-      const lpCRETBalance = web3.utils.fromWei(lpCRET.toString(), 'Mwei')
-
-      dispatch({
-        type: TEST_PROFILE_SUCCESS,
-        payload: {
-          testUSDC: availableBalance,
-          lpCAPLBalance,
-          lpCRETBalance,
-        },
-      })
-    }
-  } catch (error) {
-    dispatch({
-      type: TEST_PROFILE_FAIL,
-      payload: error?.message,
-    })
   }
 }

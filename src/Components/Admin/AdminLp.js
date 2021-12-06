@@ -4,53 +4,44 @@ import {RiListSettingsLine} from 'react-icons/ri'
 import {VscHistory} from 'react-icons/vsc'
 import {BiChevronDown} from 'react-icons/bi'
 import {BsArrowDown} from 'react-icons/bs'
-import ReactLoading from 'react-loading'
-
+import NumberFormat from 'react-number-format'
 import {Link} from 'react-router-dom'
-import RecentTransactions from '../Modals/RecentTransactions/RecentTransactions'
-import SettingsModal from '../Modals/SettingsModal/SettingsModal'
 import {useDispatch, useSelector} from 'react-redux'
-import {
-  convertTokenValue,
-  REMOVE_hash,
-  swapTokens,
-} from '../../Redux/Swap/actions'
-import SwapLoading from '../Modals/SwapModals/SwapLoading'
-import SwapSuccess from '../Modals/SwapModals/SwapSuccess'
 
 // svgs
 import USDC from '../../Assets/money/usdc.svg'
+import RecentTransactions from '../Modals/RecentTransactions/RecentTransactions'
+import SettingsModal from '../Modals/SettingsModal/SettingsModal'
+import {
+  addLiquidityTokens,
+  adminLpPool,
+  convertTokenValue,
+  REMOVE_hash,
+} from '../../Redux/Swap/actions'
 import {numberFormate} from '../../Utilities/Util'
+import SwapLoading from '../Modals/SwapModals/SwapLoading'
+import SwapSuccess from '../Modals/SwapModals/SwapSuccess'
+import ReactLoading from 'react-loading'
 
-const SwapPool = () => {
+const AdminLp = () => {
   // Redux State
   const dispatch = useDispatch()
   const {
     swapHash,
     swapLoading,
-    ccptPrice,
-    usdcPrice,
     usdcBNBBalance,
-    balanceLoading,
     ccptBNBBalance,
+    balanceLoading,
   } = useSelector((state) => state.swap)
-  const {userAddress} = useSelector((state) => state.profile)
   const [price, setPrice] = useState('')
   const [secondPrice, setSecondPrice] = useState('')
   const [openTrans, setOpenTrans] = useState(false)
   const [openSet, setOpenSet] = useState(false)
   const [time, setTime] = useState(20)
-  const [firstToken, setFirstToken] = useState('USDC')
-  const [secondToken, setSecondToken] = useState('CAPL')
-
   const [swapLoad, setSwapLoad] = useState(false)
-  const [swapSucc, setSwapSucc] = useState(false)
   const [errors, setErrors] = useState(false)
-
-  const [firstAvailableForChange, setFirstAvailableForChange] = useState(false)
-  const [secondAvailableForChange, setSecondAvailableForChange] =
-    useState(false)
-  const [toggle, setToggle] = useState(false)
+  const [swapSucc, setSwapSucc] = useState(false)
+  const {userAddress} = useSelector((state) => state.profile)
 
   useEffect(() => {
     if (time === '') {
@@ -76,30 +67,13 @@ const SwapPool = () => {
     }
   }, [swapHash])
 
-  // const handlePriceChange = (number) => {
-  //   setPrice(number.value)
-  //   dispatch(convertTokenValue(number.value, firstToken))
-  //   setFirstAvailableForChange(false)
-  //   setSecondAvailableForChange(true)
-  // }
-
-  // const handlePriceChangeTwo = (number) => {
-  //   setSecondPrice(number.value)
-  //   dispatch(convertTokenValue(number.value, firstToken))
-  //   setFirstAvailableForChange(true)
-  //   setSecondAvailableForChange(false)
-  // }
   const handlePriceChange = (e) => {
     const {value} = e.target
     const priceRegex = /^[0-9]*\.?[0-9]*$/
     if (value === '') {
       setPrice('')
-      setSecondPrice('')
     } else if (priceRegex.test(value)) {
       setPrice(value)
-      dispatch(convertTokenValue(value, firstToken))
-      setFirstAvailableForChange(false)
-      setSecondAvailableForChange(true)
     }
   }
 
@@ -107,125 +81,84 @@ const SwapPool = () => {
     const {value} = e.target
     const priceRegex = /^[0-9]*\.?[0-9]*$/
     if (value === '') {
-      setPrice('')
       setSecondPrice('')
     } else if (priceRegex.test(value)) {
       setSecondPrice(value)
-      dispatch(convertTokenValue(value, secondToken))
-      setFirstAvailableForChange(true)
-      setSecondAvailableForChange(false)
     }
   }
   const handleTimeChange = (number) => {
     setTime(number.value)
   }
-  const toggleTokens = () => {
-    setFirstToken(secondToken)
-    setSecondToken(firstToken)
-    setToggle((prevState) => !prevState)
-    setPrice('')
-    setSecondPrice('')
-  }
-  // const setMaximumBalanceOfUSDC = () => {
-  //   const priceRegex = /^[0-9]*\.?[0-9]*$/
 
-  //   if (usdcBNBBalance === '') {
-  //     setPrice('')
-  //     setSecondPrice('')
-  //   } else if (priceRegex.test(usdcBNBBalance)) {
-  //     if (toggle) {
-  //       setSecondPrice(usdcBNBBalance)
-  //     } else {
-  //       setPrice(usdcBNBBalance)
-  //     }
-  //     dispatch(convertTokenValue(usdcBNBBalance, firstToken))
-  //     setFirstAvailableForChange(false)
-  //     setSecondAvailableForChange(true)
-  //   }
-  // }
-  // const setMaximumBalanceOfCCPT = () => {
-  //   const priceRegex = /^[0-9]*\.?[0-9]*$/
-  //   if (ccptBNBBalance === '') {
-  //     setPrice('')
-  //     setSecondPrice('')
-  //   } else if (priceRegex.test(ccptBNBBalance)) {
-  //     if (toggle) {
-  //       setPrice(ccptBNBBalance)
-  //     } else {
-  //       setSecondPrice(ccptBNBBalance)
-  //     }
-  //     dispatch(convertTokenValue(ccptBNBBalance, secondToken))
-  //     setFirstAvailableForChange(true)
-  //     setSecondAvailableForChange(false)
-  //   }
-  // }
-
-  const makeSwap = () => {
-    dispatch(swapTokens(price, toggle ? 'CAPL' : 'USDC', time))
+  const makeLiquidity = () => {
+    dispatch(adminLpPool(secondPrice, price, time))
   }
 
   // useEffect(() => {
-  //   if (
-  //     price === '' ||
-  //     usdcBNBBalance === '0' ||
-  //     ccptBNBBalance === '0' ||
-  //     !userAddress
-  //   ) {
-  //     setErrors(true)
-  //   } else {
-  //     setErrors(false)
+  //   if (setFirstInp) {
+  //     if (price === '') {
+  //       setSecondPrice('')
+  //     } else {
+  //       setSecondPrice(ccptPrice)
+  //     }
   //   }
-  // }, [usdcBNBBalance, ccptBNBBalance, userAddress, price])
+  // }, [price, ccptPrice, setFirstInp])
 
-useEffect(() => {
-    if (!toggle) {
-      if (
-        Number(price) > Number(usdcBNBBalance) ||
-        price === '' ||
-        usdcBNBBalance === '0' ||
-        !userAddress ||
-        balanceLoading
-      ) {
-        setErrors(true)
-      } else {
-        setErrors(false)
-      }
-    } else if (toggle) {
-      if (
-        Number(price) > Number(ccptBNBBalance) ||
-        balanceLoading ||
-        price === '' ||
-        ccptBNBBalance === '0' ||
-        !userAddress
-      ) {
-        setErrors(true)
-      } else {
-        setErrors(false)
-      }
+  // useEffect(() => {
+  //   if (setSecondInp) {
+  //     if (secondPrice === '') {
+  //       setSecondPrice('')
+  //     } else {
+  //       setSecondPrice(usdcPrice)
+  //     }
+  //   }
+  // }, [secondPrice, usdcPrice, setSecondInp])
+
+  useEffect(() => {
+    if (
+      price === '' ||
+      secondPrice === '' ||
+      price === '0' ||
+      secondPrice === '0' ||
+      usdcBNBBalance === '0' ||
+      ccptBNBBalance === '0' ||
+      !userAddress ||
+      balanceLoading
+    ) {
+      setErrors(true)
+    } else {
+      setErrors(false)
     }
-  }, [toggle, price, ccptBNBBalance, usdcBNBBalance, balanceLoading])
+  }, [
+    usdcBNBBalance,
+    ccptBNBBalance,
+    userAddress,
+    price,
+    secondPrice,
+    balanceLoading,
+  ])
 
   return (
     <>
       <div className='swap'>
         <Container>
-          <div className='toggle_buttons'>
+          {/* <div className='toggle_buttons'>
             <Link to='/swap'>
-              <div className='toggle_wrapper active'>
+              <div className='toggle_wrapper'>
                 <h6>Swap</h6>
               </div>
             </Link>
             <Link to='/liquidity'>
-              <div className='toggle_wrapper'>
+              <div className='toggle_wrapper active'>
                 <h6>Liquidity</h6>
               </div>
             </Link>
-          </div>
+          </div> */}
           <div className='box_wrapper'>
             <div className='box_wrapper_header'>
               <div className='box_wrapper_header_left'>
-                <h1>Swap</h1>
-                <p>Instantly swap tokens on Credit Capital</p>
+                <h1>Liquidity</h1>
+                <p>Add Liquidity to receive tokens</p>
               </div>
               <div className='box_wrapper_header_right'>
                 <RiListSettingsLine onClick={() => setOpenSet(true)} />
@@ -234,7 +167,7 @@ useEffect(() => {
             </div>
             <div className='box_wrapper_container'>
               <div className='box_wrapper_container_top'>
-                <h4>Send</h4>
+                <h4>Amount</h4>
                 <h4 className='d-flex align-items-start'>
                   Balance:{' '}
                   {balanceLoading ? (
@@ -245,15 +178,19 @@ useEffect(() => {
                       width={30}
                       className='load'
                     />
-                  ) : firstToken === 'USDC' ? (
+                  ) : (
                     numberFormate(usdcBNBBalance)
-                  ) : firstToken === 'CAPL' ? (
-                    numberFormate(ccptBNBBalance)
-                  ) : null}
+                  )}
                 </h4>
               </div>
               <div className='box_wrapper_container_bottom'>
                 <div className='box_wrapper_container_bottom_left'>
+                  <input
+                    placeholder='0.0000'
+                    className='shadow-none form-control'
+                    value={price}
+                    onChange={handlePriceChange}
+                  />
                   {/* <NumberFormat
                     disabled={false}
                     thousandsGroupStyle='thousand'
@@ -270,34 +207,21 @@ useEffect(() => {
                     placeholder='0.0000'
                     className='shadow-none form-control'
                   /> */}
-                  <input
-                    placeholder='0.0000'
-                    className='shadow-none form-control'
-                    value={
-                      firstAvailableForChange &&
-                      (price != '' || secondPrice != '')
-                        ? toggle
-                          ? ccptPrice
-                          : usdcPrice
-                        : price
-                    }
-                    onChange={handlePriceChange}
-                  />
                 </div>
                 <div className='box_wrapper_container_bottom_right'>
-                  {/* <h4 onClick={setMaximumBalanceOfUSDC}>MAX</h4> */}
-                  {firstToken === 'USDC' && <Image src={USDC} alt='' />}
-                  <h4>{firstToken} </h4>
+                  {/* <h4>MAX</h4> */}
+                  <Image src={USDC} alt='' />
+                  <h4>USDC </h4>
                 </div>
               </div>
             </div>
 
-            <div className='box_wrapper_circle' onClick={toggleTokens}>
+            {/* <div className='box_wrapper_circle'>
               <BsArrowDown />
-            </div>
+            </div> */}
             <div className='box_wrapper_container'>
               <div className='box_wrapper_container_top'>
-                <h4>Receive (estimated)</h4>
+                <h4>Amount</h4>
                 <h4 className='d-flex align-items-start'>
                   Balance:{' '}
                   {balanceLoading ? (
@@ -308,19 +232,23 @@ useEffect(() => {
                       width={30}
                       className='load'
                     />
-                  ) : secondToken === 'CAPL' ? (
+                  ) : (
                     numberFormate(ccptBNBBalance)
-                  ) : secondToken === 'USDC' ? (
-                    numberFormate(usdcBNBBalance)
-                  ) : null}
+                  )}
                 </h4>
               </div>
               <div className='box_wrapper_container_bottom'>
                 <div className='box_wrapper_container_bottom_left'>
+                  <input
+                    placeholder='0.0000'
+                    className='shadow-none form-control'
+                    value={secondPrice}
+                    onChange={handlePriceChangeTwo}
+                  />
                   {/* <NumberFormat
                     disabled={false}
                     thousandsGroupStyle='thousand'
-                    value={secondPrice}
+                    value={price}
                     decimalSeparator='.'
                     displayType='input'
                     type='text'
@@ -329,41 +257,26 @@ useEffect(() => {
                     fixedDecimalScale={true}
                     allowLeadingZeros={false}
                     decimalScale={4}
-                    onValueChange={handlePriceChangeTwo}
+                    onValueChange={handlePriceChange}
                     placeholder='0.0000'
                     className='shadow-none form-control'
                   /> */}
-                  <input
-                    placeholder='0.0000'
-                    className='shadow-none form-control'
-                    value={
-                      secondAvailableForChange &&
-                      (price != '' || secondPrice != '')
-                        ? toggle
-                          ? usdcPrice
-                          : ccptPrice
-                        : secondPrice
-                    }
-                    onChange={handlePriceChangeTwo}
-                  />
                 </div>
                 <div className='box_wrapper_container_bottom_right'>
-                  {/* <h4 onClick={setMaximumBalanceOfCCPT}>MAX</h4> */}
-                  {secondToken === 'USDC' && <Image src={USDC} alt='' />}
-                  <h4>{secondToken} </h4>
+                  {/* <Image src={USDC} alt='' /> */}
+                  <h4>CAPL </h4>
                 </div>
               </div>
             </div>
-
             <div className='box_wrapper_button'>
               <button
                 className={
                   errors ? 'btn_brand btn_brand_disabled' : 'btn_brand'
                 }
                 disabled={errors}
-                onClick={makeSwap}
+                onClick={makeLiquidity}
               >
-                Swap
+                Add Liquidity
               </button>
             </div>
           </div>
@@ -391,4 +304,4 @@ useEffect(() => {
   )
 }
 
-export default SwapPool
+export default AdminLp
