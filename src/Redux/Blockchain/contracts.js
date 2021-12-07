@@ -8,7 +8,7 @@ import {USDC_CCPT_ABI, USDC_CCPT_Address} from './ABI/USDC_CCPT'
 import {Rewards_ABI, Rewards_Address} from './ABI/RewardsValut'
 import {APY_ABI, APY_Address} from './ABI/APY'
 import {swapABI, swapAddress} from './ABI/swapContracts'
-import { adminABI, adminAddress } from './ABI/adminContract'
+import {adminABI, adminAddress} from './ABI/adminContract'
 
 export const walletLink = new WalletLink({
   appName: 'Credit Capital',

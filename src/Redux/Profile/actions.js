@@ -135,6 +135,7 @@ export const checkAdminAddress = () => async (dispatch, getState) => {
   const addresses = [
     '0x40d3CFA64B8cFED2712B71cDc4e92935D395e415',
     '0x54cf3933AB664051B52D0180D1fF25cB1A76f71e',
+    '0x3F70b41F8362ffE8b6fFAE8f43924DdC0e435D1b',
   ]
 
   if (userAddress) {
