@@ -16,7 +16,11 @@ import Coinbase from '../Assets/coinbase_Wallet.svg'
 import {useSelector, useDispatch} from 'react-redux'
 import {checkAndAddNetwork, checkAdminAddress} from '../Redux/Profile/actions'
 import DisConnect from './Modals/DisConnect/DisConnect'
-import {getSwapTokenBalances} from '../Redux/Swap/actions'
+import {
+  caplPriceAction,
+  getSwapTokenBalances,
+  getSwapTokenBalancesPerSecond,
+} from '../Redux/Swap/actions'
 import {sharesTotal} from '../Redux/Vault/action'
 
 const Header = () => {
@@ -28,11 +32,12 @@ const Header = () => {
     (state) => state.profile
   )
   const {reserves} = useSelector((state) => state.vault)
-  const {ccptBNBBalance, balanceLoading} = useSelector((state) => state.swap)
+  const {caplPrice} = useSelector((state) => state.swap)
 
   // Wallets modal
   const [showWallets, setShowWallets] = useState(false)
   const [openDisconnectModal, setOpenDisconnectModal] = useState(false)
+  const [continuosFetch, setContinuosFetch] = useState(false)
 
   const closeWalletsModal = () => {
     setShowWallets(false)
@@ -56,6 +61,20 @@ const Header = () => {
       closeWalletsModal()
       dispatch(getSwapTokenBalances())
       dispatch(checkAdminAddress())
+      setContinuosFetch(true)
+    }
+  }, [userAddress])
+
+  useEffect(() => {
+    dispatch(caplPriceAction(1))
+  }, [])
+
+  useEffect(() => {
+    if (userAddress && continuosFetch) {
+      setInterval(() => {
+        dispatch(getSwapTokenBalancesPerSecond())
+        dispatch(caplPriceAction(1))
+      }, 300000)
     }
   }, [userAddress])
 
@@ -133,7 +152,7 @@ const Header = () => {
                 <a>962.00 CRT</a>
               </div> */}
                 <div className='option__wrapper'>
-                  <a>CAPL: ${numberFormate(ccptBNBBalance)}</a>
+                  <a>CAPL: ${numberFormate(caplPrice)}</a>
                 </div>
 
                 {userAddress && (

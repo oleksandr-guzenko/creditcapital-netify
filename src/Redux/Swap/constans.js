@@ -13,3 +13,6 @@ export const REMOVE_HASH = 'REMOVE_HASH'
 export const PROFILE_REQ = 'PROFILE_REQ'
 export const PROFILE_SUCC = 'PROFILE_SUCC'
 export const PROFILE_FAIL = 'PROFILE_FAIL'
+
+export const GET_CAPL_PRICE = 'GET_CAPL_PRICE'
+

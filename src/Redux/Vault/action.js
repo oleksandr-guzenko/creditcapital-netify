@@ -1,4 +1,6 @@
 import {gasPrice, priceConversion} from '../../Utilities/Util'
+import {CCPTBnbAddress} from '../Blockchain/ABI/CCPTBNB'
+import {USDCBnbAddress} from '../Blockchain/ABI/USDCBNB'
 import getContracts from '../Blockchain/contracts'
 import {checkAndAddNetwork} from '../Profile/actions'
 import {getSwapTokenBalances} from '../Swap/actions'
@@ -162,6 +164,57 @@ export const transformTokens =
       })
     }
   }
+
+export const removeLpAction =
+  (amount, minutes) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: VAULT_DEPOSIT_REQUEST,
+      })
+      const {
+        profile: {walletType, userAddress},
+      } = getState()
+
+      const {USDC_CCPT_TOKEN, web3, quickSwapRouter} = getContracts(walletType)
+
+      const newAmount = parseFloat(amount) / 100000000
+
+      // const price = priceConversion('toWei', 'ether', newAmount, web3)
+
+      const price = (newAmount * 10 ** 18)?.toFixed(0)
+
+      const newGasPrice = await gasPrice(web3)
+
+      await USDC_CCPT_TOKEN.methods
+        .approve(quickSwapRouter._address, price)
+        .send({from: userAddress, gasPrice: newGasPrice})
+
+      const transaction = await quickSwapRouter.methods
+        .removeLiquidity(
+          USDCBnbAddress,
+          CCPTBnbAddress,
+          price,
+          0,
+          0,
+          userAddress,
+          Date.now() + minutes * 60
+        )
+        .send({from: userAddress, gasPrice: newGasPrice})
+
+      const tranHash = transaction.transactionHash
+      dispatch({
+        type: VAULT_DEPOSIT_SUCCESS,
+        payload: tranHash,
+      })
+      dispatch(getSwapTokenBalances())
+    } catch (error) {
+      dispatch({
+        type: VAULT_DEPOSIT_FAIL,
+        payload: error?.message,
+      })
+    }
+  }
+
 // export const getSwapTokenBalances = () => async (dispatch, getState) => {
 //   try {
 //     const {

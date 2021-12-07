@@ -26,7 +26,9 @@ const MyPortfolio = () => {
   const {apy, withdrawLpBalance, vaultRewards} = useSelector(
     (state) => state.vault
   )
-  const {ccptBNBBalance, balanceLoading} = useSelector((state) => state.swap)
+  const {ccptBNBBalance, caplPrice, balanceLoading} = useSelector(
+    (state) => state.swap
+  )
 
   const handleDisconnect = () => {
     dispatch(disConnectWallet())
@@ -56,6 +58,14 @@ const MyPortfolio = () => {
                 <div className='d-flex align-items-center justify-content-between'>
                   <p>Market Cap / TVL Ratio</p>
                   <p>1</p>
+                </div>
+                <div className='d-flex align-items-center justify-content-between'>
+                  <p>Total rewards/day</p>
+                  <p>5000 CAPL</p>
+                </div>
+                <div className='d-flex align-items-center justify-content-between'>
+                  <p>Total Value</p>
+                  <p>{ccptBNBBalance * caplPrice}</p>
                 </div>
                 <div className='mt-3 d-flex justify-content-center'>
                   <button
@@ -92,7 +102,7 @@ const MyPortfolio = () => {
                 <h3>Holdings</h3>
                 <div className='d-flex align-items-center justify-content-between flex-wrap'>
                   <div className='hleft text-start '>
-                    <p>Balance In Vaults</p>
+                    <p>Balance In Vault</p>
                     {/* <h5 className='redd'>{numberFormate(withdrawLpBalance)}</h5> */}
                     <h5 className='redd'>
                       {balanceLoading ? (
@@ -143,6 +153,28 @@ const MyPortfolio = () => {
                         />
                       ) : (
                         `${(Number(ccptBNBBalance) / 100000000)?.toFixed(18)} %`
+                      )}
+                    </h5>
+                  </div>
+                </div>
+                <div className='d-flex align-items-center justify-content-between flex-wrap'>
+                  <div className='hleft text-start'>
+                    <p>User expenses</p>
+                    <h5 className='redd'>$0</h5>
+                  </div>
+                  <div className='hright text-lg-end text-sm-start'>
+                    <p>User Income</p>
+                    <h5 className='redd'>
+                      {balanceLoading ? (
+                        <ReactLoading
+                          type='bars'
+                          color='#ffffff'
+                          height={0}
+                          width={30}
+                          className='load'
+                        />
+                      ) : (
+                        numberFormate(vaultRewards)
                       )}
                     </h5>
                   </div>

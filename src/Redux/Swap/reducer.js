@@ -1,4 +1,4 @@
-import {PROFILE_FAIL} from './constans'
+import {GET_CAPL_PRICE, PROFILE_FAIL} from './constans'
 import {
   GET_CONVERTED_CCPT_VALUES_SUCCESS,
   GET_CONVERTED_USDC_VALUES_SUCCESS,
@@ -22,9 +22,15 @@ const initialState = {
   ccptBNBBalance: 0,
   balanceLoading: false,
   balanceError: false,
+  caplPrice: '',
 }
 export const swapReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_CAPL_PRICE:
+      return {
+        ...state,
+        caplPrice: action.payload,
+      }
     case PROFILE_REQ:
       return {
         ...state,

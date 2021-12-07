@@ -10,6 +10,11 @@ export const numberFormate = (number) => {
     minimumFractionDigits: 4,
   })
 }
+export const numberFormateWithoutDecimals = (number) => {
+  return Number(number)?.toLocaleString(navigator.language, {
+    minimumFractionDigits: 0,
+  })
+}
 
 export const createBonus = (totalAmount, bonusRatio) => {
   const bonus = (Number(totalAmount) / 100) * bonusRatio

@@ -9,6 +9,7 @@ import {Rewards_ABI, Rewards_Address} from './ABI/RewardsValut'
 import {APY_ABI, APY_Address} from './ABI/APY'
 import {swapABI, swapAddress} from './ABI/swapContracts'
 import {adminABI, adminAddress} from './ABI/adminContract'
+import {QuicSwapABI, QuicSwapAddress} from './ABI/quickSwap'
 
 export const walletLink = new WalletLink({
   appName: 'Credit Capital',
@@ -52,6 +53,7 @@ const getContracts = (walletType) => {
   const REWARDS_VAULT = new web3.eth.Contract(Rewards_ABI, Rewards_Address)
   const APY_VAULT = new web3.eth.Contract(APY_ABI, APY_Address)
   const adminLp = new web3.eth.Contract(adminABI, adminAddress)
+  const quickSwapRouter = new web3.eth.Contract(QuicSwapABI, QuicSwapAddress)
 
   return {
     web3,
@@ -63,6 +65,7 @@ const getContracts = (walletType) => {
     REWARDS_VAULT,
     APY_VAULT,
     adminLp,
+    quickSwapRouter,
   }
 }
 

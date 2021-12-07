@@ -104,7 +104,6 @@ export const connToMetaMask = () => async (dispatch) => {
 
 export const connToCoinbase = () => async (dispatch) => {
   try {
-    dispatch(checkAndAddNetwork())
     const accounts = await ethereum.enable()
     localStorage.setItem('walletType', 'Coinbase')
     dispatch({

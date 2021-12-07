@@ -14,9 +14,10 @@ import {
   clearHashValues,
   vaultDepositAndWithdrawTokens,
 } from '../../Redux/Vault/action'
-import {numberFormate} from '../../Utilities/Util'
+import {numberFormate, numberFormateWithoutDecimals} from '../../Utilities/Util'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
 import VaultSuccess from '../Modals/Vaults/VaultSuccess'
+import ConvertLpModal from '../Modals/Vaults/ConvertLpModal'
 
 const LpPools = () => {
   //redux
@@ -122,6 +123,8 @@ const LpPools = () => {
   // transform
   const [transformModal, setTransformModal] = useState(false)
 
+  const [convertModal, setConvertModal] = useState(false)
+
   useEffect(() => {
     if (typeOfDeposit === 'USDC-CAPL') {
       if (
@@ -206,7 +209,7 @@ const LpPools = () => {
               </div>
               <div className='header_wrapper'>
                 <h4>{numberFormate(totalLp)}</h4>
-                <p>Total LP Locked in Vault</p>
+                <p>Total Value Locked in Vault</p>
               </div>
               {/* <div className='header_wrapper'>
                 <h4>$0.00</h4>
@@ -383,7 +386,7 @@ const LpPools = () => {
                           </p>
                         </div> */}
                         </div>
-                        <div className='liquidity__pool__box__btn  justify-content-center'>
+                        <div className='liquidity__pool__box__btn'>
                           {/* <button
                           disabled={depositErrors}
                           type='submit'
@@ -395,6 +398,14 @@ const LpPools = () => {
                         >
                           Deposit
                         </button> */}
+
+                          <a
+                            style={{cursor: 'pointer'}}
+                            onClick={() => setConvertModal(true)}
+                            className='btn_brand'
+                          >
+                            Convert
+                          </a>
 
                           <button
                             type='submit'
@@ -435,7 +446,7 @@ const LpPools = () => {
                             className='m-auto mt-4'
                           />
                         ) : (
-                          `${numberFormate(vaultRewards)} CAPL`
+                          `${vaultRewards} CAPL`
                         )}
                       </h4>
                       {/* <p className='price txt__gray'>~$19,214.261</p> */}
@@ -550,6 +561,10 @@ const LpPools = () => {
       <TransformModal
         show={transformModal}
         handleClose={() => setTransformModal(false)}
+      />
+      <ConvertLpModal
+        show={convertModal}
+        handleClose={() => setConvertModal(false)}
       />
       <SwapLoading show={swapLoad} handleClose={() => setSwapLoad(false)} />
       <VaultSuccess
