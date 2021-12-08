@@ -29,11 +29,12 @@ export const vaultDepositAndWithdrawTokens =
       const {REWARDS_VAULT, USDC_CCPT_TOKEN, USDCBNB, CCPTBNB, web3} =
         getContracts(walletType)
       const newGasPrice = await gasPrice(web3)
-      const price = priceConversion('toWei', 'ether', amount, web3)
 
       // const newGasPrice = await gasPrice(web3)
 
       if (type === 'deposit') {
+        const newAmount = parseFloat(amount) / 100000000
+        const price = (newAmount * 10 ** 18)?.toFixed(0)
         await USDC_CCPT_TOKEN.methods
           .approve(REWARDS_VAULT._address, price)
           .send({from: userAddress, gasPrice: newGasPrice})
@@ -49,6 +50,9 @@ export const vaultDepositAndWithdrawTokens =
         })
         dispatch(getSwapTokenBalances())
       } else if (type === 'withdraw') {
+        const newAmount = parseFloat(amount) / 100000000
+        const price = (newAmount * 10 ** 18)?.toFixed(0)
+        console.log(newAmount)
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, price)
           .send({from: userAddress, gasPrice: newGasPrice})
@@ -87,7 +91,6 @@ export const vaultDepositAndWithdrawTokens =
         dispatch(getSwapTokenBalances())
       } else if (type === 'caplDeposit') {
         const priceCAPL = priceConversion('toWei', 'Mwei', amount, web3)
-
         await CCPTBNB.methods
           .approve(REWARDS_VAULT._address, priceCAPL)
           .send({from: userAddress, gasPrice: newGasPrice})

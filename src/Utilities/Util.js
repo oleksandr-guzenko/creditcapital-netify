@@ -58,7 +58,7 @@ export const gasPrice = async (web3, number) => {
     const newGasPrice = web3.utils.toHex(Number(gasPrice * number)?.toFixed(0))
     return newGasPrice
   } else {
-    const newGasPrice = web3.utils.toHex(Number(gasPrice * 5)?.toFixed(0))
+    const newGasPrice = web3.utils.toHex(Number(gasPrice * 1)?.toFixed(0))
     return newGasPrice
   }
 }

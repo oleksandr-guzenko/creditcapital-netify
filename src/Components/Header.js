@@ -74,7 +74,7 @@ const Header = () => {
       setInterval(() => {
         dispatch(getSwapTokenBalancesPerSecond())
         dispatch(caplPriceAction(1))
-      }, 300000)
+      }, 12000)
     }
   }, [userAddress])
 
