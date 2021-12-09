@@ -31,6 +31,7 @@ const Dashboard = () => {
     depositedLpBalance,
     withdrawLpBalance,
     totalShares,
+    apy,
   } = useSelector((state) => state.vault)
   const handleDisconnect = () => {
     dispatch(disConnectWallet())
@@ -114,6 +115,22 @@ const Dashboard = () => {
                       <div className='list'>
                         <p>Daily Rewards</p>
                         <p>5000 CAPL</p>
+                      </div>
+                      <div className='list'>
+                        <p>Total APY</p>
+                        <p>
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='profile_loading'
+                            />
+                          ) : (
+                            `${numberFormate(apy)} %`
+                          )}
+                        </p>
                       </div>
                     </div>
                   </div>
