@@ -19,7 +19,7 @@ const Dashboard = () => {
   const [swapLoad, setSwapLoad] = useState(false)
   const [swapSucc, setSwapSucc] = useState(false)
   const {userAddress} = useSelector((state) => state.profile)
-  const {usdcBNBBalance, caplPrice, ccptBNBBalance} = useSelector(
+  const {balanceLoading, caplPrice, ccptBNBBalance} = useSelector(
     (state) => state.swap
   )
 
@@ -95,7 +95,21 @@ const Dashboard = () => {
                       </div>
                       <div className='list'>
                         <p>Circulating Supply</p>
-                        <p>{reserves?._reserve1 / 10 ** 6} CAPL</p>
+                        <p>
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='profile_loading'
+                            />
+                          ) : (
+                            `${numberFormate(
+                              reserves?._reserve1 / 10 ** 6
+                            )} CAPL`
+                          )}
+                        </p>
                       </div>
                       <div className='list'>
                         <p>Daily Rewards</p>
@@ -126,7 +140,19 @@ const Dashboard = () => {
                       </div>
                       <div className='db_bottom_right'>
                         <p>Daily Rewards</p>
-                        <p>{numberFormate(totalShares)} (CAPL)</p>
+                        <p>
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='ms-auto mb-4'
+                            />
+                          ) : (
+                            `${numberFormate(totalShares)} CAPL`
+                          )}
+                        </p>
                         <p className='green'>
                           +0.00%{' '}
                           <span>
@@ -151,19 +177,68 @@ const Dashboard = () => {
                       <div className='db_bottom_left'>
                         <p>Wallet Assets</p>
                         <p>USDC-CAPL Shares</p>
-                        <p>{numberFormate(depositedLpBalance)}($0 USD)</p>
+                        <p>
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='mb-4'
+                            />
+                          ) : (
+                            `${numberFormate(depositedLpBalance)} ($0 USD)`
+                          )}
+                        </p>
                         <p>CAPL Value</p>
                         <p>
-                          {numberFormate(ccptBNBBalance)}($
-                          {numberFormate(ccptBNBBalance * caplPrice)} USD)
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='mb-4'
+                            />
+                          ) : (
+                            `${numberFormate(
+                              ccptBNBBalance
+                            )} ($ ${numberFormate(
+                              ccptBNBBalance * caplPrice
+                            )} USD)`
+                          )}
                         </p>
                       </div>
                       <div className='db_bottom_right'>
                         <p>Vault Assets</p>
                         <p>USDC-CAPL Shares</p>
-                        <p>{numberFormate(withdrawLpBalance)}($0 USD)</p>
+                        <p>
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='ms-auto mb-4'
+                            />
+                          ) : (
+                            `${numberFormate(withdrawLpBalance)} ($0 USD)`
+                          )}
+                        </p>
                         <p>Pending Rewards</p>
-                        <p>{numberFormate(vaultRewards)}($0 USD)</p>
+                        <p>
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='ms-auto mb-4'
+                            />
+                          ) : (
+                            `${numberFormate(vaultRewards)} ($0 USD)`
+                          )}
+                        </p>
                         <div className='d-flex align-items-center justify-content-end btns'>
                           <button
                             onClick={() =>
@@ -186,7 +261,19 @@ const Dashboard = () => {
                 <div className='dashboard_card dashboard_card_four'>
                   <div className='db_bottom_top'>
                     <p>CAPL Price</p>
-                    <p>${numberFormate(caplPrice)}</p>
+                    <p>
+                      {balanceLoading ? (
+                        <ReactLoading
+                          type='bars'
+                          color='#ffffff'
+                          height={0}
+                          width={30}
+                          className='ms-auto mb-4'
+                        />
+                      ) : (
+                        `$ ${numberFormate(caplPrice)} ($0 USD)`
+                      )}
+                    </p>
                     <p className='green'>
                       +0.00%{' '}
                       <span>
