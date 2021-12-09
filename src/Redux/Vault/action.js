@@ -274,7 +274,7 @@ export const sharesTotal = () => async (dispatch, getState) => {
   try {
     const {
       profile: {walletType, userAddress},
-      vault: {reserves},
+      vault: {reserves, dailyRewards},
     } = getState()
 
     if (reserves?._reserve0 && reserves?._reserve1) {
@@ -288,9 +288,11 @@ export const sharesTotal = () => async (dispatch, getState) => {
         (5000 * 12 * 30 * 10 ** 8) / Number(reserves?._reserve0) +
         Number(reserves?._reserve1)
 
+      const totalShares = (dailyRewards?.shares / res) * 5000
+
       dispatch({
         type: SHARES_TOTAL,
-        payload: {trans, totalLp},
+        payload: {trans, totalLp, totalShares},
       })
     }
   } catch (error) {

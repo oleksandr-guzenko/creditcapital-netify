@@ -251,6 +251,9 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
       // available Balance
       const usdcbalance = await USDCBNB.methods.balanceOf(userAddress).call()
       const ccptbalance = await CCPTBNB.methods.balanceOf(userAddress).call()
+      const dailyRewards = await REWARDS_VAULT.methods
+        .userInfo(0, userAddress)
+        .call()
 
       const deposit = await USDC_CCPT_TOKEN.methods
         .balanceOf(userAddress)
@@ -269,7 +272,6 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
       const usdcBNBBalance = web3.utils.fromWei(usdcbalance.toString(), 'Mwei')
       const ccptBNBBalance = web3.utils.fromWei(ccptbalance.toString(), 'Mwei')
 
-    
       const depositedLpBal = Number(deposit) * 100000000
       const depositedLpBalance = web3.utils.fromWei(
         depositedLpBal.toString(),
@@ -296,6 +298,7 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
           vaultRewards,
           totalSup,
           reserves,
+          dailyRewards,
         },
       })
       dispatch({
@@ -322,6 +325,9 @@ export const getSwapTokenBalancesPerSecond =
         // available Balance
         const usdcbalance = await USDCBNB.methods.balanceOf(userAddress).call()
         const ccptbalance = await CCPTBNB.methods.balanceOf(userAddress).call()
+        const dailyRewards = await REWARDS_VAULT.methods
+          .userInfo(0, userAddress)
+          .call()
         const deposit = await USDC_CCPT_TOKEN.methods
           .balanceOf(userAddress)
           .call()
@@ -369,6 +375,7 @@ export const getSwapTokenBalancesPerSecond =
             vaultRewards,
             totalSup,
             reserves,
+            dailyRewards,
           },
         })
         dispatch({

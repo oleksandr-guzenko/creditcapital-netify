@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom'
 
 // redux imports
 import {useSelector} from 'react-redux'
+import Dashboard from '../Components/Portfolio/Dashboard'
 
 const Portfolio = () => {
   // Redux State
@@ -13,7 +14,8 @@ const Portfolio = () => {
   }
   return (
     <>
-      <MyPortfolio />
+      {/* <MyPortfolio /> */}
+      <Dashboard />
     </>
   )
 }

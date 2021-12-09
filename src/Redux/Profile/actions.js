@@ -134,7 +134,9 @@ export const checkAdminAddress = () => async (dispatch, getState) => {
   const addresses = [
     '0x40d3CFA64B8cFED2712B71cDc4e92935D395e415',
     '0x54cf3933AB664051B52D0180D1fF25cB1A76f71e',
-    '0x3F70b41F8362ffE8b6fFAE8f43924DdC0e435D1b',
+    '0x3F70b41F8362ffE8b6fFAE8f43924DdC0e435D1b', // Graham's Testing
+    '0x34527F7B6C46cF5493C3d7760c79848E6F28C967', // James' Main
+    '0x88a643a11D7319e32D35a9647d38Aad5cD4AEa34', // James' secondary
   ]
 
   if (userAddress) {

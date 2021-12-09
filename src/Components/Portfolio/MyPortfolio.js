@@ -1,16 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {Col, Container, Image, Row} from 'react-bootstrap'
-import PortfolioCard from './PortfolioCard'
 import {numberFormate} from '../../Utilities/Util'
 import {useHistory} from 'react-router-dom'
 import ReactLoading from 'react-loading'
 
 // Svgs
-import card_one from '../../Assets/portfolio/card_one.svg'
-import card_two from '../../Assets/portfolio/card_two.svg'
-import card_three from '../../Assets/portfolio/card_three.svg'
-import card_four from '../../Assets/portfolio/card_four.svg'
-import card_five from '../../Assets/portfolio/card_five.svg'
+
 import Logo from '../../Assets/cc_white.svg'
 
 // Redux Imports

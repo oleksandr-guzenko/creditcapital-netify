@@ -23,6 +23,9 @@ const initialState = {
   totalLp: 0,
   totalSup: 0,
   reserves: {},
+  userShares: 0,
+  dailyRewards: {},
+  totalShares: 0,
 }
 export const vaultReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -31,6 +34,7 @@ export const vaultReducer = (state = initialState, action) => {
         ...state,
         apy: action.payload.trans,
         totalLp: action.payload.totalLp,
+        totalShares: action.payload.totalShares,
       }
     case GET_DEPOSITED_BALANCE_SUCCESS:
       return {
@@ -40,6 +44,7 @@ export const vaultReducer = (state = initialState, action) => {
         vaultRewards: action.payload.vaultRewards,
         totalSup: action.payload.totalSup,
         reserves: action.payload.reserves,
+        dailyRewards: action.payload.dailyRewards,
       }
     case GET_CONVERTED_USDC_CCPT_VALUES_SUCCESS:
       return {

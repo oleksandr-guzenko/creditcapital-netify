@@ -1,0 +1,180 @@
+.dashboard {
+  padding: 100px 0 30px 0;
+  color: $white__color;
+  .green {
+    color: green;
+  }
+  .title_info {
+    @include displayCenter(center, center);
+    flex-direction: column;
+    h4 {
+      color: $white__color;
+    }
+    .btn_brand {
+      margin-top: 10px;
+      border-radius: 33px;
+      padding: 12px 35px;
+    }
+  }
+  .dashboard_wrapper {
+    padding-top: 50px;
+    .dashboard_card {
+      border: 1px solid $white__color;
+      border-radius: 5px;
+      padding: 20px;
+      height: 100%;
+    }
+    .dashboard_card_one {
+      .db_top {
+        @include displayCenter(center, flex-stretch);
+        &_left {
+          width: 100%;
+          text-align: left;
+        }
+        &_right {
+          width: 100%;
+          text-align: left;
+          h6 {
+            @include normalFont(14px);
+            margin-bottom: 5px;
+          }
+        }
+        @include mQ($sm) {
+          flex-wrap: wrap;
+        }
+      }
+      .db_bottom {
+        margin-top: 20px;
+        @include displayCenter(center, space-between);
+        &_left {
+          @include displayCenter(flex-start, center);
+          width: 100%;
+          flex-direction: column;
+          img {
+            margin-bottom: 10px;
+          }
+          p {
+            color: green;
+          }
+        }
+        &_right {
+          width: 100%;
+          .list {
+            p {
+              @include normalFont(14px);
+              margin-bottom: 5px;
+            }
+            @include displayCenter(center, space-between);
+          }
+        }
+        @include mQ($sm) {
+          flex-wrap: wrap;
+
+          &_right {
+            flex-wrap: wrap;
+          }
+        }
+      }
+    }
+    .dashboard_card_two {
+      .db_top {
+        @include displayCenter(center, center);
+        flex-direction: column;
+        .btn_brand {
+          border-radius: 33px;
+          padding: 9px 20px;
+          font-size: 14px;
+        }
+      }
+      .db_bottom {
+        p {
+          margin-bottom: 5px;
+          @include normalFont(14px);
+        }
+        .green {
+          color: green;
+        }
+        margin-top: 20px;
+        .Massin {
+          text-align: center;
+        }
+        .Db_lol {
+          margin-top: 20px;
+          @include displayCenter(center, stretch);
+          .db_bottom_left {
+            text-align: left;
+            width: 100%;
+            border-right: 1px solid $primary;
+          }
+          .db_bottom_right {
+            text-align: right;
+            width: 100%;
+          }
+        }
+      }
+    }
+    .dashboard_card_three {
+      .btn_brand {
+        // border-radius: 33px;
+        padding: 5px 20px;
+        font-size: 14px;
+      }
+      .id {
+        @include userAddress(400px);
+        padding: 10px 5px;
+        border: 2px solid $white__color;
+        @include mQ($sm) {
+          @include userAddress(250px);
+        }
+      }
+      .db_bottom_left {
+        p {
+          &:first-child {
+            font-size: 20px;
+          }
+        }
+      }
+      .db_bottom_right {
+        p {
+          &:first-child {
+            font-size: 20px;
+          }
+        }
+      }
+      @include mQ($sm) {
+        .db_bottom {
+          text-align: center;
+          .Db_lol {
+            flex-wrap: wrap;
+            justify-content: space-between !important;
+            .db_bottom_left {
+              border-right: 0 !important;
+              text-align: center !important;
+              margin-bottom: 15px;
+            }
+            .db_bottom_right {
+              text-align: center !important;
+              .btns {
+                margin-top: 10px;
+                justify-content: center !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    .dashboard_card_four {
+      .db_bottom_top {
+        @include displayCenter(center, space-between);
+      }
+      .db_bottom {
+        .item {
+          @include displayCenter(center, space-between);
+          @include mQ($sm) {
+            flex-wrap: wrap !important;
+          }
+        }
+      }
+    }
+  }
+}
