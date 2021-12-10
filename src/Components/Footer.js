@@ -18,19 +18,22 @@ const Footer = () => {
             <Col xs={12} sm={12} md={12} lg={7} xl={7}>
               <div className='footer__bottom__left'>
                 <p>
-                  &copy; Copyright {new Date().getFullYear()} All rights
-                  reserved |{' '}
-                  <span>
+                  &copy; {new Date().getFullYear()} CreditCapital All rights
+                  reserved
+                  {/*
+		  <span>
                     <Link to=''>Privacy Policy</Link>
                   </span>
                   |{' '}
                   <span>
                     <Link to=''>Terms of Services</Link>
                   </span>
+		  */}
                 </p>
               </div>
             </Col>
             <Col xs={12} sm={12} md={12} lg={5} xl={5}>
+	      {/*
               <div className='footer__bottom__right'>
                 <Link to=''>
                   <Image src={PaperIcon} alt='' />
@@ -49,6 +52,7 @@ const Footer = () => {
                   <Image src={MediumIcon} alt='' />
                 </Link>
               </div>
+	      */}
             </Col>
           </Row>
         </Container>
