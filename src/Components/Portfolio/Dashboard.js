@@ -193,9 +193,9 @@ const Dashboard = () => {
                           }
                           className='btn_brand me-2'
                         >
-                          Claim
+                          Claim Rewards
                         </button>
-                        <button className='btn_brand'>Compound</button>
+                        {/*<button className='btn_brand'>Compound</button>*/}
                       </div>
                     </div>
                   </div>
