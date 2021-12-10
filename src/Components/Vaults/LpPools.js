@@ -229,7 +229,7 @@ const LpPools = () => {
                       <div className='liquidity__pool__box__top'>
                         <h5>
                           {typeOfDeposit}{' '}
-                          {typeOfDeposit === 'USDC-CAPL' ? 'LP' : ''}
+                          {typeOfDeposit === 'USDC-CAPL' ? 'Liquidity Pool' : ''}
                         </h5>
                         <div>
                           <p className='txt__gray'>Available balance</p>
@@ -243,7 +243,7 @@ const LpPools = () => {
                                 className='_one'
                               />
                             ) : typeOfDeposit === 'USDC-CAPL' ? (
-                              `${depositedLpBalance} LP Share $(${numberFormate(
+                              `${depositedLpBalance} LP Shares $(${numberFormate(
                                 (depositedLpBalance * LpTokenPrice) / 100000000
                               )})`
                             ) : typeOfDeposit === 'USDC' ? (
@@ -346,7 +346,7 @@ const LpPools = () => {
                   <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
                     <div className='liquidity__pool__box'>
                       <div className='liquidity__pool__box__top'>
-                        <h5>USDC-CAPL Vault</h5>
+                        <h5>USDC-CAPL Reward Vault</h5>
                         <div>
                           <p className='txt__gray'>USDC-CAPL LP Shares</p>
                           <h6 className='lolsscsd'>
@@ -359,7 +359,7 @@ const LpPools = () => {
                                 className='_one'
                               />
                             ) : (
-                              `${withdrawLpBalance} LP Share $(${numberFormate(
+                              `${withdrawLpBalance} LP Shares $(${numberFormate(
                                 (withdrawLpBalance * LpTokenPrice) / 100000000
                               )})`
                             )}
@@ -432,7 +432,7 @@ const LpPools = () => {
                   </Col>
                   <Col className='mb-3' sm={12} md={12} lg={3} xl={4}>
                     <div className='liquidity__pool__box reward__section'>
-                      <h5>Rewards</h5>
+                      <h5>My Rewards</h5>
                       <h4 className='text-center'>
                         {/* {profileLoading ? (
                         <ReactLoading
@@ -539,7 +539,7 @@ const LpPools = () => {
                   </Col>
                   <Col className='mb-3' sm={12} md={12} lg={4} xl={4}>
                     <div className='liquidity__pool__box'>
-                      <h5>APY Calculations</h5>
+                      <h5>Reward Vault Yield</h5>
                       <div className='info'>
                         {/* <div className='info_part'>
                           <p>Total APY</p>
