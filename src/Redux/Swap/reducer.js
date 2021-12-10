@@ -89,8 +89,6 @@ export const swapReducer = (state = initialState, action) => {
         swapError: false,
         swapHash: '',
         swapingType: '',
-        usdcBNBBalance: 0,
-        ccptBNBBalance: 0,
       }
 
     default:

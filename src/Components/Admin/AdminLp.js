@@ -123,7 +123,9 @@ const AdminLp = () => {
       usdcBNBBalance === '0' ||
       ccptBNBBalance === '0' ||
       !userAddress ||
-      balanceLoading
+      balanceLoading ||
+      Number(price) > Number(usdcBNBBalance) ||
+      Number(secondPrice) > Number(ccptBNBBalance)
     ) {
       setErrors(true)
     } else {

@@ -12,11 +12,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import USDC from '../../Assets/money/usdc.svg'
 import RecentTransactions from '../Modals/RecentTransactions/RecentTransactions'
 import SettingsModal from '../Modals/SettingsModal/SettingsModal'
-import {
-  addLiquidityTokens,
-  convertTokenValue,
-  REMOVE_hash,
-} from '../../Redux/Swap/actions'
+import {addLiquidityTokens, REMOVE_hash} from '../../Redux/Swap/actions'
 import {numberFormate} from '../../Utilities/Util'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
 import SwapSuccess from '../Modals/SwapModals/SwapSuccess'
@@ -43,8 +39,6 @@ const LiquidityPool = () => {
   const [errors, setErrors] = useState(false)
   const [swapSucc, setSwapSucc] = useState(false)
   const {userAddress} = useSelector((state) => state.profile)
-  const [first, setFirst] = useState(false)
-  const [second, setSecond] = useState(false)
 
   useEffect(() => {
     if (time === '') {
@@ -71,43 +65,31 @@ const LiquidityPool = () => {
   }, [swapHash])
 
   const handlePriceChange = (e) => {
-    setSecond(true)
-    setFirst(false)
     const {value} = e.target
     const priceRegex = /^[0-9]*\.?[0-9]*$/
     if (value === '') {
-      setSecondPrice('')
       setPrice('')
     } else if (priceRegex.test(value)) {
       setPrice(value)
-      dispatch(convertTokenValue(value, 'USDC'))
     }
   }
 
   const handlePriceChangeTwo = (e) => {
-    setSecond(false)
-    setFirst(true)
     const {value} = e.target
     const priceRegex = /^[0-9]*\.?[0-9]*$/
     if (value === '') {
-      setPrice('')
       setSecondPrice('')
     } else if (priceRegex.test(value)) {
       setSecondPrice(value)
-      dispatch(convertTokenValue(value, 'CAPL'))
     }
   }
+
   const handleTimeChange = (number) => {
     setTime(number.value)
   }
 
   const makeLiquidity = () => {
-    if (second) {
-      dispatch(addLiquidityTokens(ccptPrice, price, time))
-    }
-    if (first) {
-      dispatch(addLiquidityTokens(secondPrice, usdcPrice, time))
-    }
+    dispatch(addLiquidityTokens(secondPrice, price, time))
   }
 
   // useEffect(() => {
@@ -132,14 +114,16 @@ const LiquidityPool = () => {
 
   useEffect(() => {
     if (
-      // price === '' ||
-      // secondPrice === '' ||
-      // price === '0' ||
-      // secondPrice === '0' ||
+      price === '' ||
+      secondPrice === '' ||
+      price === '0' ||
+      secondPrice === '0' ||
       usdcBNBBalance === '0' ||
       ccptBNBBalance === '0' ||
       !userAddress ||
-      balanceLoading
+      balanceLoading ||
+      Number(price) > Number(usdcBNBBalance) ||
+      Number(secondPrice) > Number(ccptBNBBalance)
     ) {
       setErrors(true)
     } else {
@@ -204,11 +188,7 @@ const LiquidityPool = () => {
                   <input
                     placeholder='0.0000'
                     className='shadow-none form-control'
-                    value={
-                      first && (price != '' || secondPrice != '')
-                        ? usdcPrice
-                        : price
-                    }
+                    value={price}
                     onChange={handlePriceChange}
                   />
                   {/* <NumberFormat
@@ -262,11 +242,7 @@ const LiquidityPool = () => {
                   <input
                     placeholder='0.0000'
                     className='shadow-none form-control'
-                    value={
-                      second && (price != '' || secondPrice != '')
-                        ? ccptPrice
-                        : secondPrice
-                    }
+                    value={secondPrice}
                     onChange={handlePriceChangeTwo}
                   />
                   {/* <NumberFormat
