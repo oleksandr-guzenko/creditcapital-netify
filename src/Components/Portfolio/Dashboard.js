@@ -61,13 +61,6 @@ const Dashboard = () => {
           <h4>PORTFOLIO</h4>
           <Container>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia
-              amet reiciendis totam ullam, mollitia dolorem voluptas provident
-              debitis quasi facilis deleniti aperiam deserunt ab iure aut id
-              corrupti cum. Perspiciatis. Lorem ipsum, dolor sit amet
-              consectetur adipisicing elit. Eaque sit eius ab quo doloribus
-              perferendis cumque dolor placeat illo. Amet, natus? Dignissimos
-              sapiente dolorum minima doloremque minus, et veritatis molestiae?
             </p>
           </Container>
           {/* <button className='btn_brand' onClick={handleDisconnect}>
@@ -279,14 +272,6 @@ const Dashboard = () => {
             <div className='title_info platform'>
               <h4>PLATFORM</h4>
               <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Officia amet reiciendis totam ullam, mollitia dolorem voluptas
-                provident debitis quasi facilis deleniti aperiam deserunt ab
-                iure aut id corrupti cum. Perspiciatis. Lorem ipsum, dolor sit
-                amet consectetur adipisicing elit. Eaque sit eius ab quo
-                doloribus perferendis cumque dolor placeat illo. Amet, natus?
-                Dignissimos sapiente dolorum minima doloremque minus, et
-                veritatis molestiae?
               </p>
             </div>
             <Row>
