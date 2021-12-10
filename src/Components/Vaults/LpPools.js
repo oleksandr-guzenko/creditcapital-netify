@@ -23,9 +23,8 @@ const LpPools = () => {
   //redux
   const dispatch = useDispatch()
   const {userAddress} = useSelector((state) => state.profile)
-  const {usdcBNBBalance, balanceLoading, ccptBNBBalance} = useSelector(
-    (state) => state.swap
-  )
+  const {usdcBNBBalance, caplPrice, balanceLoading, ccptBNBBalance} =
+    useSelector((state) => state.swap)
   const {
     vaultHash,
     vaultLoading,
@@ -34,6 +33,7 @@ const LpPools = () => {
     withdrawLpBalance,
     apy,
     totalLp,
+    LpTokenPrice,
   } = useSelector((state) => state.vault)
 
   const [open, setOpen] = useState(true)
@@ -243,15 +243,21 @@ const LpPools = () => {
                                 className='_one'
                               />
                             ) : typeOfDeposit === 'USDC-CAPL' ? (
-                              `${depositedLpBalance} LP Share $(0.0000)`
+                              `${depositedLpBalance} LP Share $(${numberFormate(
+                                (depositedLpBalance * LpTokenPrice) / 100000000
+                              )})`
                             ) : typeOfDeposit === 'USDC' ? (
                               `${numberFormate(
                                 usdcBNBBalance
-                              )} USDC Token Balance $(0.0000)`
+                              )} USDC Token Balance $(${numberFormate(
+                                usdcBNBBalance * caplPrice
+                              )})`
                             ) : typeOfDeposit === 'CAPL' ? (
                               `${numberFormate(
                                 ccptBNBBalance
-                              )} CAPL Token Balance $(0.0000)`
+                              )} CAPL Token Balance $(${numberFormate(
+                                ccptBNBBalance * caplPrice
+                              )})`
                             ) : (
                               ''
                             )}
@@ -353,7 +359,9 @@ const LpPools = () => {
                                 className='_one'
                               />
                             ) : (
-                              `${withdrawLpBalance} LP Share $(0.0000)`
+                              `${withdrawLpBalance} LP Share $(${numberFormate(
+                                (withdrawLpBalance * LpTokenPrice) / 100000000
+                              )})`
                             )}
 
                             {/* {profileLoading ? (

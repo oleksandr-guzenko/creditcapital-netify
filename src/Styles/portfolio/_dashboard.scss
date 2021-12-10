@@ -9,12 +9,20 @@
     flex-direction: column;
     h4 {
       color: $white__color;
+      font-size: xx-large;
     }
+    p {
+      @include normalFont(14px);
+    }
+
     .btn_brand {
       margin-top: 10px;
       border-radius: 33px;
       padding: 12px 35px;
     }
+  }
+  .platform {
+    margin: 40px 0;
   }
   .dashboard_wrapper {
     padding-top: 50px;
@@ -23,8 +31,17 @@
       border-radius: 5px;
       padding: 20px;
       height: 100%;
+      @include mQ($sm) {
+        padding: 10px;
+      }
     }
     .dashboard_card_one {
+      .btn_brand {
+        // border-radius: 33px;
+        padding: 5px 20px;
+        font-size: 14px;
+        margin-left: auto;
+      }
       .db_top {
         @include displayCenter(center, flex-stretch);
         &_left {
@@ -34,18 +51,25 @@
         &_right {
           width: 100%;
           text-align: left;
+          h5 {
+            font-size: 20px;
+          }
           h6 {
-            @include normalFont(14px);
+            @include normalFont(12px);
             margin-bottom: 5px;
           }
         }
         @include mQ($sm) {
-          flex-wrap: wrap;
+          // flex-wrap: wrap;
         }
       }
       .db_bottom {
-        margin-top: 20px;
+        // margin-top: 20px;
         @include displayCenter(center, space-between);
+        border: 1px solid $white__color;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 10px;
         &_left {
           @include displayCenter(flex-start, center);
           width: 100%;
@@ -60,6 +84,8 @@
         &_right {
           width: 100%;
           .list {
+            border-bottom: 1px solid $white__color;
+            margin-bottom: 15px;
             p {
               @include normalFont(14px);
               margin-bottom: 5px;
@@ -69,49 +95,70 @@
         }
         @include mQ($sm) {
           flex-wrap: wrap;
-
           &_right {
             flex-wrap: wrap;
           }
         }
       }
+      .tokenomics {
+        font-size: large;
+        margin-top: 35px;
+        margin-bottom: 0;
+      }
     }
     .dashboard_card_two {
-      .db_top {
-        @include displayCenter(center, center);
-        flex-direction: column;
-        .btn_brand {
-          border-radius: 33px;
-          padding: 9px 20px;
-          font-size: 14px;
-        }
+      .tresury {
+        margin-top: 20px;
+        font-size: large;
+        margin-bottom: 5px;
       }
       .db_bottom {
+        margin-top: 0;
+      }
+      .totalLiquidty {
+        @include displayCenter(center, space-between);
+        border: 1px solid $white__color;
+        border-radius: 5px;
+        padding: 10px;
         p {
-          margin-bottom: 5px;
-          @include normalFont(14px);
-        }
-        .green {
-          color: green;
-        }
-        margin-top: 20px;
-        .Massin {
-          text-align: center;
-        }
-        .Db_lol {
-          margin-top: 20px;
-          @include displayCenter(center, stretch);
-          .db_bottom_left {
-            text-align: left;
-            width: 100%;
-            border-right: 1px solid $primary;
-          }
-          .db_bottom_right {
-            text-align: right;
-            width: 100%;
-          }
+          margin: 0;
         }
       }
+      // .db_top {
+      //   @include displayCenter(center, center);
+      //   flex-direction: column;
+      //   .btn_brand {
+      //     border-radius: 33px;
+      //     padding: 9px 20px;
+      //     font-size: 14px;
+      //   }
+      // }
+      // .db_bottom {
+      //   p {
+      //     margin-bottom: 5px;
+      //     @include normalFont(14px);
+      //   }
+      //   .green {
+      //     color: green;
+      //   }
+      //   margin-top: 20px;
+      //   .Massin {
+      //     text-align: center;
+      //   }
+      //   .Db_lol {
+      //     margin-top: 20px;
+      //     @include displayCenter(center, stretch);
+      //     .db_bottom_left {
+      //       text-align: left;
+      //       width: 100%;
+      //       border-right: 1px solid $primary;
+      //     }
+      //     .db_bottom_right {
+      //       text-align: right;
+      //       width: 100%;
+      //     }
+      //   }
+      // }
     }
     .dashboard_card_three {
       .btn_brand {
@@ -119,25 +166,67 @@
         padding: 5px 20px;
         font-size: 14px;
       }
-      .id {
-        @include userAddress(400px);
-        padding: 10px 5px;
-        border: 2px solid $white__color;
-        @include mQ($sm) {
-          @include userAddress(250px);
+      .db_top {
+        @include displayCenter(center, center);
+        flex-direction: row !important;
+        justify-content: space-between;
+        .id {
+          @include userAddress(300px);
+          padding: 10px 5px;
+          border: 1px solid $white__color;
+          border-radius: 5px;
         }
-      }
-      .db_bottom_left {
-        p {
-          &:first-child {
-            font-size: 20px;
+        @include mQ($sm) {
+          flex-wrap: wrap;
+          text-align: center;
+          justify-content: center;
+          .id {
+            @include userAddress(200px);
           }
         }
       }
-      .db_bottom_right {
-        p {
-          &:first-child {
-            font-size: 20px;
+      .db_bottom {
+        margin-top: 0 !important;
+        .Db_lol {
+          flex-direction: column !important;
+          justify-content: space-between !important;
+          .heads {
+            font-size: large;
+            width: 100%;
+          }
+          .db_bottom_left {
+            text-align: center !important;
+            // border-right: 0 !important;
+            border: 1px solid $white__color;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            div {
+              @include displayCenter(center, space-between);
+              margin-bottom: 0px !important;
+              p {
+                margin-bottom: 5px !important;
+                &:first-child {
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+          .db_bottom_right {
+            text-align: center !important;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid $white__color;
+            div {
+              @include displayCenter(center, space-between);
+              margin-bottom: 0 !important;
+              p {
+                margin-bottom: 5px !important;
+                &:first-child {
+                  font-size: 14px;
+                }
+              }
+            }
           }
         }
       }
@@ -148,7 +237,6 @@
             flex-wrap: wrap;
             justify-content: space-between !important;
             .db_bottom_left {
-              border-right: 0 !important;
               text-align: center !important;
               margin-bottom: 15px;
             }
@@ -168,8 +256,16 @@
         @include displayCenter(center, space-between);
       }
       .db_bottom {
+        border: 1px solid $white__color;
+        border-radius: 5px;
+        padding: 10px;
         .item {
           @include displayCenter(center, space-between);
+          border-bottom: 1px solid $white__color;
+          margin-bottom: 10px;
+          &:last-child {
+            border-bottom: 0;
+          }
           @include mQ($sm) {
             flex-wrap: wrap !important;
           }

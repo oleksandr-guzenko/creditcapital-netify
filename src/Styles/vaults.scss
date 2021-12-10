@@ -4,7 +4,7 @@
     @include displayCenter(center, center);
     margin-bottom: 40px;
     h4 {
-      @include textGradients();
+      color: $white__color;
       font-size: 30px;
     }
   }

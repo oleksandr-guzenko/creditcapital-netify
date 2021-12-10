@@ -274,14 +274,14 @@ export const sharesTotal = () => async (dispatch, getState) => {
   try {
     const {
       profile: {walletType, userAddress},
-      vault: {reserves, dailyRewards},
+      vault: {reserves, dailyRewards, totalSup},
+      swap: {caplPrice},
     } = getState()
 
     if (reserves?._reserve0 && reserves?._reserve1) {
       const {APY_VAULT, web3} = getContracts(walletType)
       const res = await APY_VAULT.methods.sharesTotal().call()
       const mul = Number(res) * 100000000
-
       const totalLp = Number(priceConversion('fromWei', 'ether', mul, web3))
 
       const trans =
@@ -289,10 +289,13 @@ export const sharesTotal = () => async (dispatch, getState) => {
         Number(reserves?._reserve1)
 
       const totalShares = (dailyRewards?.shares / res) * 5000
+      const LpTokenPrice =
+        (reserves?._reserve0 + reserves?._reserve1 * caplPrice) /
+        totalSup 
 
       dispatch({
         type: SHARES_TOTAL,
-        payload: {trans, totalLp, totalShares},
+        payload: {trans, totalLp, totalShares, LpTokenPrice},
       })
     }
   } catch (error) {

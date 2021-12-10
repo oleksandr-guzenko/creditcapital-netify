@@ -332,6 +332,7 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
       const ccptBNBBalance = web3.utils.fromWei(ccptbalance.toString(), 'Mwei')
 
       const depositedLpBal = Number(deposit) * 100000000
+
       const depositedLpBalance = web3.utils.fromWei(
         depositedLpBal.toString(),
         'ether'

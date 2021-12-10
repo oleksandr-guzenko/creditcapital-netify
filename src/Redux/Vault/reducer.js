@@ -26,6 +26,7 @@ const initialState = {
   userShares: 0,
   dailyRewards: {},
   totalShares: 0,
+  LpTokenPrice: 0,
 }
 export const vaultReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -35,6 +36,7 @@ export const vaultReducer = (state = initialState, action) => {
         apy: action.payload.trans,
         totalLp: action.payload.totalLp,
         totalShares: action.payload.totalShares,
+        LpTokenPrice: action.payload.LpTokenPrice,
       }
     case GET_DEPOSITED_BALANCE_SUCCESS:
       return {
