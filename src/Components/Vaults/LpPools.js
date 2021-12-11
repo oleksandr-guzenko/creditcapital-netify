@@ -232,7 +232,7 @@ const LpPools = () => {
                           {typeOfDeposit === 'USDC-CAPL' ? 'Liquidity Pool' : ''}
                         </h5>
                         <div>
-                          <p className='txt__gray'>Available balance</p>
+                          <p className='txt__gray'>Available Balance</p>
                           <h6 className='lolsscsd'>
                             {balanceLoading ? (
                               <ReactLoading
