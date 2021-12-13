@@ -152,7 +152,11 @@ const ConvertLpModal = ({show, handleClose}) => {
                   <div className='box_wrapper_container'>
                     <div className='box_wrapper_container_top'>
                       <h4>Convert</h4>
-                      <h4 className='d-flex align-items-start'>
+                      <h4
+                        className='d-flex align-items-start'
+                        style={{cursor: 'pointer'}}
+                        onClick={() => setPrice(depositedLpBalance)}
+                      >
                         Balance:{' '}
                         {balanceLoading ? (
                           <ReactLoading

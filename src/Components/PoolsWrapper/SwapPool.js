@@ -126,6 +126,31 @@ const SwapPool = () => {
     setPrice('')
     setSecondPrice('')
   }
+
+  const MaxValue = (value) => {
+    const priceRegex = /^[0-9]*\.?[0-9]*$/
+    if (value === '') {
+      setPrice('')
+      setSecondPrice('')
+    } else if (priceRegex.test(value)) {
+      setPrice(value)
+      dispatch(convertTokenValue(value, firstToken))
+      setFirstAvailableForChange(false)
+      setSecondAvailableForChange(true)
+    }
+  }
+  const MaxCAPLValue = (value) => {
+    const priceRegex = /^[0-9]*\.?[0-9]*$/
+    if (value === '') {
+      setPrice('')
+      setSecondPrice('')
+    } else if (priceRegex.test(value)) {
+      setSecondPrice(value)
+      dispatch(convertTokenValue(value, secondToken))
+      setFirstAvailableForChange(true)
+      setSecondAvailableForChange(false)
+    }
+  }
   // const setMaximumBalanceOfUSDC = () => {
   //   const priceRegex = /^[0-9]*\.?[0-9]*$/
 
@@ -177,7 +202,7 @@ const SwapPool = () => {
   //   }
   // }, [usdcBNBBalance, ccptBNBBalance, userAddress, price])
 
-useEffect(() => {
+  useEffect(() => {
     if (!toggle) {
       if (
         Number(price) > Number(usdcBNBBalance) ||
@@ -235,7 +260,19 @@ useEffect(() => {
             <div className='box_wrapper_container'>
               <div className='box_wrapper_container_top'>
                 <h4>Send</h4>
-                <h4 className='d-flex align-items-start'>
+                <h4
+                  className='d-flex align-items-start'
+                  style={{cursor: 'pointer'}}
+                  onClick={() =>
+                    MaxValue(
+                      firstToken === 'USDC'
+                        ? usdcBNBBalance
+                        : firstToken === 'CAPL'
+                        ? ccptBNBBalance
+                        : 0
+                    )
+                  }
+                >
                   Balance:{' '}
                   {balanceLoading ? (
                     <ReactLoading
@@ -298,7 +335,19 @@ useEffect(() => {
             <div className='box_wrapper_container'>
               <div className='box_wrapper_container_top'>
                 <h4>Receive (estimated)</h4>
-                <h4 className='d-flex align-items-start'>
+                <h4
+                  className='d-flex align-items-start'
+                  style={{cursor: 'pointer'}}
+                  onClick={() =>
+                    MaxCAPLValue(
+                      secondToken === 'CAPL'
+                        ? ccptBNBBalance
+                        : secondToken === 'USDC'
+                        ? usdcBNBBalance
+                        : 0
+                    )
+                  }
+                >
                   Balance:{' '}
                   {balanceLoading ? (
                     <ReactLoading

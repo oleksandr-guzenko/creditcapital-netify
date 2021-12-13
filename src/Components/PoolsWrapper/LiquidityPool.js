@@ -168,7 +168,11 @@ const LiquidityPool = () => {
             <div className='box_wrapper_container'>
               <div className='box_wrapper_container_top'>
                 <h4>Amount</h4>
-                <h4 className='d-flex align-items-start'>
+                <h4
+                  className='d-flex align-items-start'
+                  style={{cursor: 'pointer'}}
+                  onClick={() => setPrice(usdcBNBBalance)}
+                >
                   Balance:{' '}
                   {balanceLoading ? (
                     <ReactLoading
@@ -222,7 +226,11 @@ const LiquidityPool = () => {
             <div className='box_wrapper_container'>
               <div className='box_wrapper_container_top'>
                 <h4>Amount</h4>
-                <h4 className='d-flex align-items-start'>
+                <h4
+                  className='d-flex align-items-start'
+                  style={{cursor: 'pointer'}}
+                  onClick={() => setSecondPrice(ccptBNBBalance)}
+                >
                   Balance:{' '}
                   {balanceLoading ? (
                     <ReactLoading

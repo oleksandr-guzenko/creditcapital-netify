@@ -1,5 +1,4 @@
 import React from 'react'
-import MyPortfolio from '../Components/Portfolio/MyPortfolio'
 import {Redirect} from 'react-router-dom'
 
 // redux imports
@@ -14,7 +13,6 @@ const Portfolio = () => {
   // }
   return (
     <>
-      {/* <MyPortfolio /> */}
       <Dashboard />
     </>
   )

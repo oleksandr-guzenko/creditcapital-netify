@@ -1,6 +1,52 @@
 .dashboard {
   padding: 100px 0 30px 0;
   color: $white__color;
+  .dashboard_header {
+    margin-bottom: 30px;
+    &_left {
+      border: 1px solid $white__color;
+      border-radius: 5px;
+      padding: 10px;
+      height: 100%;
+    }
+    &_right {
+      border: 1px solid $white__color;
+      border-radius: 5px;
+      padding: 10px;
+      height: 100%;
+    }
+    .main_card {
+      text-align: center;
+      @include displayCenter(center, space-between);
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid $white__color;
+      border-radius: 5px;
+      padding: 10px;
+      p {
+        // @include normalFont(13px);
+        font-size: 14px;
+        margin: 0;
+      }
+      h3 {
+        margin: 0 !important;
+      }
+      h6 {
+        margin: 0;
+        font-size: 12px;
+      }
+      div {
+        &:first-child {
+          margin-bottom: 10px;
+        }
+      }
+      
+    }
+    .last_Card {
+      @include displayCenter(center, center);
+      border: 0;
+    }
+  }
   .green {
     color: green;
   }

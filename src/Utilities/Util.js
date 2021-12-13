@@ -52,15 +52,27 @@ export const priceConversion = (type, formate, amount, web3) => {
   }
 }
 
-export const gasPrice = async (web3, number) => {
-  const gasPrice = await web3.eth.getGasPrice()
-  if (number) {
-    const newGasPrice = web3.utils.toHex(Number(gasPrice * number)?.toFixed(0))
-    return newGasPrice
-  } else {
-    const newGasPrice = web3.utils.toHex(Number(gasPrice * 1)?.toFixed(0))
-    return newGasPrice
-  }
+export const gasPrice = async (web3) => {
+  // const gasPrice = await web3.eth.getGasPrice()
+  // if (number) {
+  //   const newGasPrice = web3.utils.toHex(Number(gasPrice * number)?.toFixed(0))
+  //   return newGasPrice
+  // } else {
+  //   const newGasPrice = web3.utils.toHex(Number(gasPrice * 1)?.toFixed(0))
+  //   return newGasPrice
+
+  let newGasPrice = 20000000000
+  let gasPrice
+  const gasFee2 = await fetch('https://gasstation-mainnet.matic.network')
+    .then((response) => response.json())
+    .then((json) => {
+      gasPrice = json['fast'] * 10 ** 9
+      // if (gasPrice > newGasPrice) {
+      //   gasPrice = newGasPrice
+      // }
+      newGasPrice = gasPrice
+    })
+  return newGasPrice
 }
 
 export const getTheTimeDifference = (sec) => {

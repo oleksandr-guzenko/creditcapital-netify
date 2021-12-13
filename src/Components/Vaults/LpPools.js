@@ -229,11 +229,27 @@ const LpPools = () => {
                       <div className='liquidity__pool__box__top'>
                         <h5>
                           {typeOfDeposit}{' '}
-                          {typeOfDeposit === 'USDC-CAPL' ? 'Liquidity Pool' : ''}
+                          {typeOfDeposit === 'USDC-CAPL'
+                            ? 'Liquidity Pool'
+                            : ''}
                         </h5>
                         <div>
                           <p className='txt__gray'>Available Balance</p>
-                          <h6 className='lolsscsd'>
+                          <h6
+                            className='lolsscsd'
+                            style={{cursor: 'pointer'}}
+                            onClick={() =>
+                              setDepositPrice(
+                                typeOfDeposit === 'USDC-CAPL'
+                                  ? depositedLpBalance
+                                  : typeOfDeposit === 'USDC'
+                                  ? usdcBNBBalance
+                                  : typeOfDeposit === 'CAPL'
+                                  ? ccptBNBBalance
+                                  : ''
+                              )
+                            }
+                          >
                             {balanceLoading ? (
                               <ReactLoading
                                 type='bars'
@@ -349,7 +365,11 @@ const LpPools = () => {
                         <h5>USDC-CAPL Reward Vault</h5>
                         <div>
                           <p className='txt__gray'>USDC-CAPL LP Shares</p>
-                          <h6 className='lolsscsd'>
+                          <h6
+                            className='lolsscsd'
+                            style={{cursor: 'pointer'}}
+                            onClick={() => setWithdrawPrice(withdrawLpBalance)}
+                          >
                             {balanceLoading ? (
                               <ReactLoading
                                 type='bars'
@@ -433,18 +453,7 @@ const LpPools = () => {
                   <Col className='mb-3' sm={12} md={12} lg={3} xl={4}>
                     <div className='liquidity__pool__box reward__section'>
                       <h5>My Rewards</h5>
-                      <h4 className='text-center'>
-                        {/* {profileLoading ? (
-                        <ReactLoading
-                          type='bars'
-                          color='#06397e'
-                          height={30}
-                          width={30}
-                          className='m-auto'
-                        />
-                      ) : (
-                        `${numberFormate(caplRewards)}`
-                      )}{' '} */}
+                      <h4 className='text-center' style={{fontSize: '14px'}}>
                         {balanceLoading ? (
                           <ReactLoading
                             type='bars'
@@ -455,6 +464,19 @@ const LpPools = () => {
                           />
                         ) : (
                           `${vaultRewards} CAPL`
+                        )}
+                      </h4>
+                      <h4 className='text-center' style={{fontSize: '14px'}}>
+                        {balanceLoading ? (
+                          <ReactLoading
+                            type='bars'
+                            color='#ffffff'
+                            height={0}
+                            width={30}
+                            className='m-auto mt-4'
+                          />
+                        ) : (
+                          `$ ${vaultRewards * caplPrice} USD`
                         )}
                       </h4>
                       {/* <p className='price txt__gray'>~$19,214.261</p> */}

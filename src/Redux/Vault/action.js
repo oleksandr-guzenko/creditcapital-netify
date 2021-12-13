@@ -52,7 +52,6 @@ export const vaultDepositAndWithdrawTokens =
       } else if (type === 'withdraw') {
         const newAmount = parseFloat(amount) / 100000000
         const price = (newAmount * 10 ** 18)?.toFixed(0)
-        console.log(newAmount)
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, price)
           .send({from: userAddress, gasPrice: newGasPrice})
@@ -289,9 +288,14 @@ export const sharesTotal = () => async (dispatch, getState) => {
         Number(reserves?._reserve1)
 
       const totalShares = (dailyRewards?.shares / res) * 5000
+
+      // const LpTokenPrice =
+      //   (reserves?._reserve0 + reserves?._reserve1 * caplPrice) / totalSup
+      // 10 ** 12
+      
       const LpTokenPrice =
-        (reserves?._reserve0 + reserves?._reserve1 * caplPrice) /
-        totalSup 
+        ((reserves?._reserve0 / 10 ** 6) + ((reserves?._reserve1) /10**6) * caplPrice) /
+        (totalSup / 10**18)
 
       dispatch({
         type: SHARES_TOTAL,

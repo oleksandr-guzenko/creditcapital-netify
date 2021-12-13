@@ -57,11 +57,69 @@ const Dashboard = () => {
   return (
     <>
       <section className='dashboard'>
+        <Container>
+          <div className='dashboard_header'>
+            <Row>
+              <Col className='mb-3' sm={12} md={12} lg={8} xl={8} xxl={8}>
+                <div className='dashboard_header_left'>
+                  <Row>
+                    <Col className='mb-1' sm={12} md={12} lg={4} xl={4} xxl={4}>
+                      <div className='main_card'>
+                        <div>
+                          <p>Your Locked CAPL</p>
+                          <h3>0 CAPL</h3>
+                        </div>
+                        <div>
+                          <p>Your Staked CAPL</p>
+                          <h3>0 CAPL</h3>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col className='mb-1' sm={12} md={12} lg={4} xl={4} xxl={4}>
+                      <div className='main_card'>
+                        <div>
+                          <p>Your Daily Revenue</p>
+                          <h3>$0.00 USD</h3>
+                        </div>
+                        <div>
+                          <p>Your Weekly CAPL</p>
+                          <h3>$0.00 USD</h3>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col className='mb-1' sm={12} md={12} lg={4} xl={4} xxl={4}>
+                      <div className='main_card'>
+                        <div>
+                          <p>Revenue Projected</p>
+                          <h3>$0.00 USD</h3>
+                          <h6>/month</h6>
+                        </div>
+                        <div>
+                          <p>Revenue Projected</p>
+                          <h3>$0.00 USD</h3>
+                          <h6>/year</h6>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </Col>
+              <Col className='mb-3' sm={12} md={12} lg={4} xl={4} xxl={4}>
+                <div className='dashboard_header_right'>
+                  <div className='main_card last_Card'>
+                    <p>Your Daily Platform Fees</p>
+                    <h3>1.00 CAPL</h3>
+                    <h3>$0.00 USD</h3>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        </Container>
         <div className='title_info'>
           <h4>PORTFOLIO</h4>
           <Container>
-            <p>
-            </p>
+            <p></p>
           </Container>
           {/* <button className='btn_brand' onClick={handleDisconnect}>
             Disconnect
@@ -271,8 +329,7 @@ const Dashboard = () => {
             </Row>
             <div className='title_info platform'>
               <h4>PLATFORM</h4>
-              <p>
-              </p>
+              <p></p>
             </div>
             <Row>
               <Col className='mb-3' sm={12} md={12} lg={6} xl={6} xxl={6}>
