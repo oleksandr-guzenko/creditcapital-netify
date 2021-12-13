@@ -27,8 +27,8 @@
         &_left {
           margin-right: 30px;
           img {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             // @include image(contain);
           }
         }
@@ -37,6 +37,9 @@
         h4,
         p {
           margin: 0;
+        }
+        h4{
+          font-size: 20px;
         }
         svg {
           width: 40px;
@@ -67,6 +70,9 @@
       input {
         background-color: transparent !important;
         color: $primary !important;
+      }
+      h5 {
+        font-size: 16px;
       }
     }
     .info {

@@ -454,9 +454,12 @@ const LpPools = () => {
                     </div>
                   </Col>
                   <Col className='mb-3' sm={12} md={12} lg={3} xl={4}>
-                    <div className='liquidity__pool__box reward__section'>
+                    <div className='liquidity__pool__box reward__section h-100 d-flex align-items-center justify-content-center flex-column'>
                       <h5>My Rewards</h5>
-                      <h4 className='text-center' style={{fontSize: '14px'}}>
+                      <h4
+                        className='text-center m-0'
+                        style={{fontSize: '14px'}}
+                      >
                         {balanceLoading ? (
                           <ReactLoading
                             type='bars'
@@ -469,7 +472,10 @@ const LpPools = () => {
                           `${vaultRewards} CAPL`
                         )}
                       </h4>
-                      <h4 className='text-center' style={{fontSize: '14px'}}>
+                      <h4
+                        className='text-center m-0'
+                        style={{fontSize: '14px'}}
+                      >
                         {balanceLoading ? (
                           <ReactLoading
                             type='bars'
@@ -479,14 +485,14 @@ const LpPools = () => {
                             className='m-auto mt-4'
                           />
                         ) : (
-                          `$ ${vaultRewards * caplPrice} USD`
+                          `($ ${vaultRewards * caplPrice} USD)`
                         )}
                       </h4>
                       {/* <p className='price txt__gray'>~$19,214.261</p> */}
                       {/* <p className='txt__gray'>
                         *Note: Rewards will get deposited to your Wallet
                       </p> */}
-                      <div className='liquidity__pool__box__btn justify-content-center mt-5'>
+                      <div className='liquidity__pool__box__btn justify-content-center mt-4'>
                         <button
                           disabled={vaultRewards === '0' || !userAddress}
                           className={
