@@ -1,4 +1,4 @@
-import {gasPrice, priceConversion} from '../../Utilities/Util'
+import {gasLimit, gasPrice, priceConversion} from '../../Utilities/Util'
 import {CCPTBnbAddress} from '../Blockchain/ABI/CCPTBNB'
 import {USDCBnbAddress} from '../Blockchain/ABI/USDCBNB'
 import getContracts from '../Blockchain/contracts'
@@ -35,12 +35,17 @@ export const swapTokens =
       const newGasPrice = await gasPrice(web3)
 
       if (tokenType === 'USDC') {
+        const allowance = await USDCBNB.methods
+          .allowance(userAddress, swap._address)
+          .call()
+
         await USDCBNB.methods
           .approve(swap._address, price)
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+
         const transaction = await swap.methods
           .getCapl(price, minutes * 60)
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
         const tranHash = transaction.transactionHash
         dispatch({
           type: SWAPPING_SUCCESS,
@@ -52,10 +57,10 @@ export const swapTokens =
       if (tokenType === 'CAPL') {
         await CCPTBNB.methods
           .approve(swap._address, price)
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
         const transaction = await swap.methods
           .getUSDC(price, minutes * 60)
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
         const tranHash = transaction.transactionHash
         dispatch({
           type: SWAPPING_SUCCESS,
@@ -104,7 +109,7 @@ export const swapTokens =
 
 //       const transaction = await VAULTLP.methods
 //         .addLiquidityBoth(priceCAPL, minutes * 60)
-//         .send({from: userAddress, gasPrice: newGasPrice})
+//         .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
 
 //       const tranHash = transaction.transactionHash
 
@@ -144,13 +149,17 @@ export const addLiquidityTokens =
       const priceCAPL = cap
       const priceUSDC = usd
 
+      // const allowance = await USDCBNB.methods
+      //   .allowance(userAddress, quickSwapRouter._address)
+      //   .call()
+
       await USDCBNB.methods
         .approve(quickSwapRouter._address, priceUSDC)
-        .send({from: userAddress, gasPrice: newGasPrice})
+        .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
 
       await CCPTBNB.methods
         .approve(quickSwapRouter._address, priceCAPL)
-        .send({from: userAddress, gasPrice: newGasPrice})
+        .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
 
       const transaction = await quickSwapRouter.methods
         .addLiquidity(
@@ -163,7 +172,7 @@ export const addLiquidityTokens =
           userAddress,
           Date.now() + minutes * 60
         )
-        .send({from: userAddress, gasPrice: newGasPrice})
+        .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
 
       const tranHash = transaction.transactionHash
 
@@ -206,11 +215,11 @@ export const adminLpPool =
       if (isAdmin) {
         await USDCBNB.methods
           .approve(quickSwapRouter._address, priceUSDC)
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
 
         await CCPTBNB.methods
           .approve(quickSwapRouter._address, priceCAPL)
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
 
         const transaction = await quickSwapRouter.methods
           .addLiquidity(
@@ -223,7 +232,7 @@ export const adminLpPool =
             userAddress,
             Date.now() + minutes * 60
           )
-          .send({from: userAddress, gasPrice: newGasPrice})
+          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
 
         const tranHash = transaction.transactionHash
 

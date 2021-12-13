@@ -451,7 +451,9 @@ const Dashboard = () => {
                           className='mb-4'
                         />
                       ) : (
-                        `${numberFormate(totalLp)} LP`
+                        `${numberFormate(totalLp)} LP ($ ${numberFormate(
+                          (totalLp / 100000000) * LpTokenPrice
+                        )} USD)`
                       )}
                     </p>
                   </div>

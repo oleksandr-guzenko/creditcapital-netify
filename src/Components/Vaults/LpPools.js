@@ -208,7 +208,10 @@ const LpPools = () => {
                 <p>APY</p>
               </div>
               <div className='header_wrapper'>
-                <h4>{numberFormate(totalLp)}</h4>
+                <h4>
+                  {numberFormate(totalLp)} (${' '}
+                  {numberFormate((totalLp / 100000000) * LpTokenPrice)} USD)
+                </h4>
                 <p>Total Value Locked in Vault</p>
               </div>
               {/* <div className='header_wrapper'>

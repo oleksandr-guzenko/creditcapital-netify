@@ -27,6 +27,7 @@ const initialState = {
   dailyRewards: {},
   totalShares: 0,
   LpTokenPrice: 0,
+  
 }
 export const vaultReducer = (state = initialState, action) => {
   switch (action.type) {
