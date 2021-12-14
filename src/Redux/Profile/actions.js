@@ -12,7 +12,7 @@ const data = [
       decimals: 18,
     },
     rpcUrls: ['https://polygon-rpc.com/'],
-    blockExplorerUrls: ['https://www.polygonscan.com/'],
+    blockExplorerUrls: ['https://polygonscan.com'],
   },
 ]
 

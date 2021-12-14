@@ -38,9 +38,9 @@ const SwapSuccess = ({show, handleClose}) => {
             <>
               <Image src={Tick} alt='' className='mb-3 loader' />
               <h3>Transaction success</h3>
-              <h6 className='mb-3'>
+              {/* <h6 className='mb-3'>
                 You have been successfully Swapped tokens
-              </h6>
+              </h6> */}
               {/* {swapingType === 'USDC' ? (
                 <h6 className='m-0'>
                   <span className='big'>

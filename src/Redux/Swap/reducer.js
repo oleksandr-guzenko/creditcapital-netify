@@ -1,4 +1,4 @@
-import {GET_CAPL_PRICE, PROFILE_FAIL} from './constans'
+import {CANCEL_LOADING, GET_CAPL_PRICE, PROFILE_FAIL} from './constans'
 import {
   GET_CONVERTED_CCPT_VALUES_SUCCESS,
   GET_CONVERTED_USDC_VALUES_SUCCESS,
@@ -90,7 +90,10 @@ export const swapReducer = (state = initialState, action) => {
         swapHash: '',
         swapingType: '',
       }
-
+    case CANCEL_LOADING:
+      return {
+        swapLoading: false,
+      }
     default:
       return state
   }

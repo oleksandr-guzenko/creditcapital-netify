@@ -1,3 +1,4 @@
+import { CANCEL_LOADING } from '../Swap/constans'
 import {
   CLEAR_VALUES,
   GET_CONVERTED_USDC_CCPT_VALUES_SUCCESS,
@@ -27,10 +28,13 @@ const initialState = {
   dailyRewards: {},
   totalShares: 0,
   LpTokenPrice: 0,
-  
 }
 export const vaultReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CANCEL_LOADING:
+      return {
+        vaultLoading: false,
+      }
     case SHARES_TOTAL:
       return {
         ...state,

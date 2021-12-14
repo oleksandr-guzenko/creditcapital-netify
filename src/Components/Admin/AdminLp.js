@@ -12,12 +12,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import USDC from '../../Assets/money/usdc.svg'
 import RecentTransactions from '../Modals/RecentTransactions/RecentTransactions'
 import SettingsModal from '../Modals/SettingsModal/SettingsModal'
-import {
-  addLiquidityTokens,
-  adminLpPool,
-  convertTokenValue,
-  REMOVE_hash,
-} from '../../Redux/Swap/actions'
+import {addLiquidityTokens, REMOVE_hash} from '../../Redux/Swap/actions'
 import {numberFormate} from '../../Utilities/Util'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
 import SwapSuccess from '../Modals/SwapModals/SwapSuccess'
@@ -91,7 +86,7 @@ const AdminLp = () => {
   }
 
   const makeLiquidity = () => {
-    dispatch(adminLpPool(secondPrice, price, time))
+    dispatch(addLiquidityTokens(secondPrice, price, time))
   }
 
   // useEffect(() => {

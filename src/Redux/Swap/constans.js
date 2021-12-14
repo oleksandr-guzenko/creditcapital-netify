@@ -15,4 +15,5 @@ export const PROFILE_SUCC = 'PROFILE_SUCC'
 export const PROFILE_FAIL = 'PROFILE_FAIL'
 
 export const GET_CAPL_PRICE = 'GET_CAPL_PRICE'
+export const CANCEL_LOADING = 'CANCEL_LOADING'
 

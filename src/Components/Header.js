@@ -74,9 +74,9 @@ const Header = () => {
       setInterval(() => {
         dispatch(getSwapTokenBalancesPerSecond())
         dispatch(caplPriceAction(1))
-      }, 12000)
+      }, 120000)
     }
-  }, [userAddress])
+  }, [userAddress, continuosFetch])
 
   useEffect(() => {
     if (pathname != '/') {
