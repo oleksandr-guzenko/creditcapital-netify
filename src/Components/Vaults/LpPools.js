@@ -209,8 +209,8 @@ const LpPools = () => {
               </div>
               <div className='header_wrapper'>
                 <h4>
-                  {numberFormate(totalLp)} (${' '}
-                  {numberFormate((totalLp / 100000000) * LpTokenPrice)} USD)
+                  {numberFormate(totalLp)} LP Shares (
+                  {numberFormate((totalLp / 100000000) * LpTokenPrice)}USD)
                 </h4>
                 <p>Total Value Locked in Vault</p>
               </div>
@@ -237,7 +237,7 @@ const LpPools = () => {
                             : ''}
                         </h5>
                         <div>
-                          <p className='txt__gray'>Available Balance</p>
+                          <p className='txt__gray'>Wallet Balance</p>
                           <h6
                             className='lolsscsd'
                             style={{cursor: 'pointer'}}
@@ -262,21 +262,21 @@ const LpPools = () => {
                                 className='_one'
                               />
                             ) : typeOfDeposit === 'USDC-CAPL' ? (
-                              `${depositedLpBalance} LP Shares $(${numberFormate(
+                              `${depositedLpBalance} LP Shares (${numberFormate(
                                 (depositedLpBalance * LpTokenPrice) / 100000000
-                              )})`
+                              )}USD)`
                             ) : typeOfDeposit === 'USDC' ? (
                               `${numberFormate(
                                 usdcBNBBalance
-                              )} USDC Token Balance $(${numberFormate(
+                              )} USDC (${numberFormate(
                                 usdcBNBBalance * caplPrice
-                              )})`
+                              )}USD)`
                             ) : typeOfDeposit === 'CAPL' ? (
                               `${numberFormate(
                                 ccptBNBBalance
-                              )} CAPL Token Balance $(${numberFormate(
+                              )} CAPL (${numberFormate(
                                 ccptBNBBalance * caplPrice
-                              )})`
+                              )}USD)`
                             ) : (
                               ''
                             )}
@@ -367,7 +367,7 @@ const LpPools = () => {
                       <div className='liquidity__pool__box__top'>
                         <h5>USDC-CAPL Reward Vault</h5>
                         <div>
-                          <p className='txt__gray'>USDC-CAPL LP Shares</p>
+                          <p className='txt__gray'>Deposited Assets</p>
                           <h6
                             className='lolsscsd'
                             style={{cursor: 'pointer'}}
@@ -382,9 +382,9 @@ const LpPools = () => {
                                 className='_one'
                               />
                             ) : (
-                              `${withdrawLpBalance} LP Shares $(${numberFormate(
+                              `${withdrawLpBalance} LP Shares (${numberFormate(
                                 (withdrawLpBalance * LpTokenPrice) / 100000000
-                              )})`
+                              )}USD)`
                             )}
 
                             {/* {profileLoading ? (
@@ -485,7 +485,7 @@ const LpPools = () => {
                             className='m-auto mt-4'
                           />
                         ) : (
-                          `($ ${vaultRewards * caplPrice} USD)`
+                          `(${vaultRewards * caplPrice}USD)`
                         )}
                       </h4>
                       {/* <p className='price txt__gray'>~$19,214.261</p> */}

@@ -108,7 +108,7 @@ const Dashboard = () => {
                 <div className='dashboard_header_right'>
                   <div className='main_card last_Card'>
                     <p>Your Daily Platform Fees</p>
-                    <h3>1.00 CAPL</h3>
+                    <h3>0.00 CAPL</h3>
                     <h3>$0.00 USD</h3>
                   </div>
                 </div>
@@ -156,9 +156,9 @@ const Dashboard = () => {
                             ) : (
                               `${numberFormate(
                                 depositedLpBalance
-                              )} ($${numberFormate(
+                              )} (${numberFormate(
                                 (depositedLpBalance * LpTokenPrice) / 100000000
-                              )} USD)`
+                              )}USD)`
                             )}
                           </p>
                         </div>
@@ -176,9 +176,9 @@ const Dashboard = () => {
                             ) : (
                               `${numberFormate(
                                 ccptBNBBalance
-                              )} ($ ${numberFormate(
+                              )} (${numberFormate(
                                 ccptBNBBalance * caplPrice
-                              )} USD)`
+                              )}USD)`
                             )}
                           </p>
                         </div>
@@ -196,7 +196,7 @@ const Dashboard = () => {
                             ) : (
                               `${numberFormate(
                                 usdcBNBBalance
-                              )} ($${numberFormate(usdcBNBBalance)} USD)`
+                              )} (${numberFormate(usdcBNBBalance)}USD)`
                             )}
                           </p>
                         </div>
@@ -217,9 +217,9 @@ const Dashboard = () => {
                             ) : (
                               `${numberFormate(
                                 withdrawLpBalance
-                              )} ($${numberFormate(
+                              )} (${numberFormate(
                                 (withdrawLpBalance * LpTokenPrice) / 100000000
-                              )} USD)`
+                              )}USD)`
                             )}
                           </p>
                         </div>
@@ -235,9 +235,9 @@ const Dashboard = () => {
                                 className='ms-auto mb-4'
                               />
                             ) : (
-                              `${numberFormate(vaultRewards)} ($${numberFormate(
+                              `${numberFormate(vaultRewards)} (${numberFormate(
                                 vaultRewards * caplPrice
-                              )} USD)`
+                              )}USD)`
                             )}
                           </p>
                         </div>
@@ -429,7 +429,7 @@ const Dashboard = () => {
                       ) : (
                         `${numberFormate(
                           (totalLp * LpTokenPrice) / 100000000
-                        )} USD`
+                        )}USD`
                       )}
                     </p>
                     <p className='green'>
@@ -451,9 +451,9 @@ const Dashboard = () => {
                           className='mb-4'
                         />
                       ) : (
-                        `${numberFormate(totalLp)} LP ($ ${numberFormate(
+                        `${numberFormate(totalLp)} LP (${numberFormate(
                           (totalLp / 100000000) * LpTokenPrice
-                        )} USD)`
+                        )}USD)`
                       )}
                     </p>
                   </div>
