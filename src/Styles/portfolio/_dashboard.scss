@@ -3,6 +3,51 @@
   color: $white__color;
   .dashboard_header {
     margin-bottom: 30px;
+    .dd_card {
+      border: 1px solid $white__color;
+      border-radius: 5px;
+      padding: 10px;
+      @include displayCenter(center, center);
+      flex-direction: column;
+      text-align: center;
+      height: 100%;
+      h3 {
+        text-transform: uppercase;
+        margin: 0;
+      }
+      p {
+        margin: 0;
+      }
+    }
+    .first {
+      div {
+        margin-bottom: 10px;
+      }
+    }
+    .second {
+      text-align: left;
+      div {
+        width: 100%;
+        @include displayCenter(center, space-between);
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid $white__color;
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+    .credentials {
+      border: 1px solid $white__color;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 30px 0;
+      h4 {
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+    }
     &_left {
       border: 1px solid $white__color;
       border-radius: 5px;
@@ -40,7 +85,6 @@
           margin-bottom: 10px;
         }
       }
-      
     }
     .last_Card {
       @include displayCenter(center, center);

@@ -190,9 +190,9 @@ const LpPools = () => {
           <section className='main_wrapper'>
             <div
               className='main_wrapper_header'
-              onClick={() => setOpen(!open)}
-              aria-controls='collapse-div'
-              aria-expanded={open}
+              // onClick={() => setOpen(!open)}
+              // aria-controls='collapse-div'
+              // aria-expanded={open}
             >
               <div className='header_wrapper wefwe'>
                 <div className='header_wrapper_left'>
@@ -217,9 +217,9 @@ const LpPools = () => {
               {/* <div className='header_wrapper'>
                 <h4>$0.00</h4>
               </div> */}
-              <div className='header_wrapper'>
+              {/* <div className='header_wrapper'>
                 {open ? <GoChevronUp /> : <GoChevronDown />}
-              </div>
+              </div> */}
             </div>
             <Collapse in={open}>
               <div className='lpWrapper' id='collapse-div'>

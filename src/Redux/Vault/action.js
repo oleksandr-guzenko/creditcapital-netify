@@ -81,6 +81,7 @@ export const vaultDepositAndWithdrawTokens =
         const allowance = await USDCBNB.methods
           .allowance(userAddress, REWARDS_VAULT._address)
           .call()
+        console.log(allowance)
         if (allowance < priceUSDC) {
           await USDCBNB.methods
             .approve(REWARDS_VAULT._address, priceUSDC)
@@ -98,9 +99,15 @@ export const vaultDepositAndWithdrawTokens =
         dispatch(getSwapTokenBalances())
       } else if (type === 'caplDeposit') {
         const priceCAPL = priceConversion('toWei', 'Mwei', amount, web3)
+
         const allowance = await CCPTBNB.methods
-          .allowance(userAddress, REWARDS_VAULT._address)
+          .allowance(
+            '0xb74c7a5155b82c2cf36ba28ff246965e9d01e550',
+            '0x6b7833765822b00c6e2c7622dbdfc8cafe6d9404'
+          )
           .call()
+        console.log(allowance)
+
         if (allowance < priceCAPL) {
           await CCPTBNB.methods
             .approve(REWARDS_VAULT._address, priceCAPL)

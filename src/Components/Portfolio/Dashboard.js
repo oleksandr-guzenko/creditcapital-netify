@@ -60,7 +60,7 @@ const Dashboard = () => {
         <Container>
           <div className='dashboard_header'>
             <Row>
-              <Col className='mb-3' sm={12} md={12} lg={8} xl={8} xxl={8}>
+              {/* <Col className='mb-3' sm={12} md={12} lg={8} xl={8} xxl={8}>
                 <div className='dashboard_header_left'>
                   <Row>
                     <Col className='mb-1' sm={12} md={12} lg={4} xl={4} xxl={4}>
@@ -112,8 +112,138 @@ const Dashboard = () => {
                     <h3>$0.00 USD</h3>
                   </div>
                 </div>
+              </Col> */}
+            </Row>
+            <Row>
+              <Col className='mb-3' sm={12} md={12} lg={4} xl={4} xxl={4}>
+                <div className='dd_card first'>
+                  <div>
+                    <h3>Earnings</h3>
+                    <h6>/day</h6>
+                    <p>0.00 USD</p>
+                    <p className='green'>
+                      +0.00%{' '}
+                      <span>
+                        <AiOutlineCaretUp />
+                      </span>
+                    </p>
+                  </div>
+                  <div>
+                    <h3>Apy</h3>
+                    <p className='green'>
+                      +0.00%{' '}
+                      <span>
+                        <AiOutlineCaretUp />
+                      </span>
+                    </p>
+                  </div>
+                  <div>
+                    <h3>Tvl</h3>
+                    <p className='green'>
+                      +0.00%{' '}
+                      <span>
+                        <AiOutlineCaretUp />
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </Col>
+              <Col className='mb-3' sm={12} md={12} lg={4} xl={4} xxl={4}>
+                <div className='dd_card second'>
+                  <div>
+                    <p>Your Balance</p>
+                    <p>264 CAPL(0.00 USD)</p>
+                  </div>
+                  <div>
+                    <p>Your Staked Balance</p>
+                    <p>USDC-CAPL Shares(0.00 USD)</p>
+                  </div>
+                  <div>
+                    <p>Daily Revenue</p>
+                    <p>200CAPL(0.00 USD)</p>
+                  </div>
+                  <div>
+                    <p>Daily Yield</p>
+                    <p>0.00%</p>
+                  </div>
+                </div>
+              </Col>
+
+              <Col className='mb-3' sm={12} md={12} lg={4} xl={4} xxl={4}>
+                <div className='dd_card third'>
+                  <div>
+                    <Image src={Logo} alt='' />
+                    <h3>CAPL</h3>
+                    <p className='green'>+0.00%</p>
+                    <p>0.00USD</p>
+                    <p>CAPL Price</p>
+                  </div>
+                </div>
               </Col>
             </Row>
+            <div className='credentials'>
+              <h4>Revenue Projections</h4>
+              <Row>
+                <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                  <div className='main_card'>
+                    <div>
+                      <p>Your Daily Revenue</p>
+                      <h3>0.00 USD</h3>
+                      <h6>/day</h6>
+                      <p className='green'>
+                        +0.00%{' '}
+                        <span>
+                          <AiOutlineCaretUp />
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </Col>
+                <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                  <div className='main_card'>
+                    <div>
+                      <p>Your Weekly Revenue</p>
+                      <h3>0.00 USD</h3>
+                      <h6>/week</h6>
+                      <p className='green'>
+                        +0.00%{' '}
+                        <span>
+                          <AiOutlineCaretUp />
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </Col>
+                <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                  <div className='main_card'>
+                    <p>Revenue Projected</p>
+                    <h3>0.00 USD</h3>
+                    <h6>/month</h6>
+                    <p className='green'>
+                      +0.00%{' '}
+                      <span>
+                        <AiOutlineCaretUp />
+                      </span>
+                    </p>
+                  </div>
+                </Col>
+                <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                  <div className='main_card'>
+                    <div>
+                      <p>Revenue Projected</p>
+                      <h3>0.00 USD</h3>
+                      <h6>/year</h6>
+                      <p className='green'>
+                        +0.00%{' '}
+                        <span>
+                          <AiOutlineCaretUp />
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </div>
           </div>
         </Container>
         <div className='title_info'>
