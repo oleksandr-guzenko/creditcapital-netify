@@ -40,13 +40,9 @@ export const vaultDepositAndWithdrawTokens =
           .call()
         if (allowance < price) {
           await USDC_CCPT_TOKEN.methods
-            .approve(
-              REWARDS_VAULT._address,
-              '1000000000000000000000000000000000000000000000000'
-            )
+            .approve(REWARDS_VAULT._address, price)
             .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
         }
-
         const transaction = await REWARDS_VAULT.methods
           .deposit(0, price)
           .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
@@ -87,7 +83,7 @@ export const vaultDepositAndWithdrawTokens =
           .call()
         if (allowance < priceUSDC) {
           await USDCBNB.methods
-            .approve(REWARDS_VAULT._address, '1000000000000000000000000000000')
+            .approve(REWARDS_VAULT._address, priceUSDC)
             .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
         }
         const transaction = await REWARDS_VAULT.methods
@@ -107,7 +103,7 @@ export const vaultDepositAndWithdrawTokens =
           .call()
         if (allowance < priceCAPL) {
           await CCPTBNB.methods
-            .approve(REWARDS_VAULT._address, '1000000000000000000000000000000')
+            .approve(REWARDS_VAULT._address, priceCAPL)
             .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
         }
         const transaction = await REWARDS_VAULT.methods
@@ -152,7 +148,7 @@ export const transformTokens =
           .call()
         if (allowance < price) {
           await USDCBNB.methods
-            .approve(VAULTLP._address, '1000000000000000000000000000000')
+            .approve(VAULTLP._address, price)
             .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
         }
         const transaction = await VAULTLP.methods
@@ -172,7 +168,7 @@ export const transformTokens =
           .call()
         if (allowance < price) {
           await CCPTBNB.methods
-            .approve(VAULTLP._address, '1000000000000000000000000000000')
+            .approve(VAULTLP._address, price)
             .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
         }
         const transaction = await VAULTLP.methods
@@ -211,10 +207,7 @@ export const removeLpAction =
         .call()
       if (allowance < price) {
         await USDC_CCPT_TOKEN.methods
-          .approve(
-            quickSwapRouter._address,
-            '1000000000000000000000000000000000000000000000000'
-          )
+          .approve(quickSwapRouter._address, price)
           .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
       }
 

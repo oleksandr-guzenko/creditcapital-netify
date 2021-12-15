@@ -41,7 +41,7 @@ export const swapTokens =
           .call()
         if (allowance < price) {
           await USDCBNB.methods
-            .approve(swap._address, '1000000000000000000000000000000')
+            .approve(swap._address, price)
             .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
         }
         const transaction = await swap.methods
@@ -61,7 +61,7 @@ export const swapTokens =
           .call()
         if (allowance < price) {
           await CCPTBNB.methods
-            .approve(swap._address, '1000000000000000000000000000000')
+            .approve(swap._address, price)
             .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
         }
         const transaction = await swap.methods
@@ -113,12 +113,12 @@ export const addLiquidityTokens =
 
       if (allowance < priceUSDC) {
         await USDCBNB.methods
-          .approve(quickSwapRouter._address, '1000000000000000000000000000000')
+          .approve(quickSwapRouter._address, priceUSDC)
           .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
       }
-      if (CAPLallowance <= priceCAPL) {
+      if (CAPLallowance < priceCAPL) {
         await CCPTBNB.methods
-          .approve(quickSwapRouter._address, '1000000000000000000000000000000')
+          .approve(quickSwapRouter._address, priceCAPL)
           .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
       }
 
