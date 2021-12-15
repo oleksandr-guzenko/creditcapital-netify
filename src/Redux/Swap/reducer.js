@@ -92,6 +92,7 @@ export const swapReducer = (state = initialState, action) => {
       }
     case CANCEL_LOADING:
       return {
+        ...state,
         swapLoading: false,
       }
     default:

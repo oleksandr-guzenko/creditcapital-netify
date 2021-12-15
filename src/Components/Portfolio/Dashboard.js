@@ -34,6 +34,7 @@ const Dashboard = () => {
     totalShares,
     apy,
     LpTokenPrice,
+    dailyRewards,
   } = useSelector((state) => state.vault)
   const handleDisconnect = () => {
     dispatch(disConnectWallet())
@@ -120,7 +121,19 @@ const Dashboard = () => {
                   <div>
                     <h3>Earnings</h3>
                     <h6>/day</h6>
-                    <p>0.00 USD</p>
+                    <p>
+                      {balanceLoading ? (
+                        <ReactLoading
+                          type='bars'
+                          color='#ffffff'
+                          height={0}
+                          width={30}
+                          className='mb-4'
+                        />
+                      ) : (
+                        `${numberFormate(5000 * dailyRewards?.shares)}USD`
+                      )}
+                    </p>
                     <p className='green'>
                       +0.00%{' '}
                       <span>
@@ -152,7 +165,21 @@ const Dashboard = () => {
                 <div className='dd_card second'>
                   <div>
                     <p>Your Balance</p>
-                    <p>264 CAPL(0.00 USD)</p>
+                    <p>
+                      {balanceLoading ? (
+                        <ReactLoading
+                          type='bars'
+                          color='#ffffff'
+                          height={0}
+                          width={30}
+                          className='mb-4'
+                        />
+                      ) : (
+                        `${numberFormate(ccptBNBBalance)} (${numberFormate(
+                          ccptBNBBalance * caplPrice
+                        )}USD)`
+                      )}
+                    </p>
                   </div>
                   <div>
                     <p>Your Staked Balance</p>
@@ -160,11 +187,35 @@ const Dashboard = () => {
                   </div>
                   <div>
                     <p>Daily Revenue</p>
-                    <p>200CAPL(0.00 USD)</p>
+                    <p>
+                      {balanceLoading ? (
+                        <ReactLoading
+                          type='bars'
+                          color='#ffffff'
+                          height={0}
+                          width={30}
+                          className='mb-4'
+                        />
+                      ) : (
+                        `${numberFormate(5000 * dailyRewards?.shares)}USD`
+                      )}
+                    </p>
                   </div>
                   <div>
                     <p>Daily Yield</p>
-                    <p>0.00%</p>
+                    <p>
+                      {balanceLoading ? (
+                        <ReactLoading
+                          type='bars'
+                          color='#ffffff'
+                          height={0}
+                          width={30}
+                          className='mb-4'
+                        />
+                      ) : (
+                        `${numberFormate(apy / 365)}%`
+                      )}
+                    </p>
                   </div>
                 </div>
               </Col>
@@ -175,7 +226,19 @@ const Dashboard = () => {
                     <Image src={Logo} alt='' />
                     <h3>CAPL</h3>
                     <p className='green'>+0.00%</p>
-                    <p>0.00USD</p>
+                    <p>
+                      {balanceLoading ? (
+                        <ReactLoading
+                          type='bars'
+                          color='#ffffff'
+                          height={0}
+                          width={30}
+                          className='ms-auto mb-4'
+                        />
+                      ) : (
+                        `$ ${numberFormate(caplPrice)}`
+                      )}
+                    </p>
                     <p>CAPL Price</p>
                   </div>
                 </div>

@@ -5,7 +5,7 @@
 //   return finalAdd
 // }
 
-export const gasLimit = 300000
+export const gasLimit = 1000000
 
 export const numberFormate = (number) => {
   return Number(number)?.toLocaleString(navigator.language, {
@@ -69,7 +69,7 @@ export const gasPrice = async (web3) => {
   // const gasFee2 = await fetch('https://polygonscan.com/gastracker')
     .then((response) => response.json())
     .then((json) => {
-      gasPrice = json['standard'] * 10 ** 9
+      gasPrice = json['fast'] * 10 ** 9
       // if (gasPrice > newGasPrice) {
       //   gasPrice = newGasPrice
       // }

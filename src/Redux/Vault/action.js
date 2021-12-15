@@ -30,8 +30,6 @@ export const vaultDepositAndWithdrawTokens =
         getContracts(walletType)
       const newGasPrice = await gasPrice(web3)
 
-      // const newGasPrice = await gasPrice(web3)
-
       if (type === 'deposit') {
         const newAmount = parseFloat(amount) / 100000000
         const price = (newAmount * 10 ** 18)?.toFixed(0)
@@ -101,12 +99,8 @@ export const vaultDepositAndWithdrawTokens =
         const priceCAPL = priceConversion('toWei', 'Mwei', amount, web3)
 
         const allowance = await CCPTBNB.methods
-          .allowance(
-            '0xb74c7a5155b82c2cf36ba28ff246965e9d01e550',
-            '0x6b7833765822b00c6e2c7622dbdfc8cafe6d9404'
-          )
+          .allowance(userAddress, REWARDS_VAULT._address)
           .call()
-        console.log(allowance)
 
         if (allowance < priceCAPL) {
           await CCPTBNB.methods
@@ -306,7 +300,6 @@ export const sharesTotal = () => async (dispatch, getState) => {
 
     if (reserves?._reserve0 && reserves?._reserve1) {
       const {APY_VAULT, web3} = getContracts(walletType)
-
       const res = await APY_VAULT.methods.sharesTotal().call()
       const mul = Number(res) * 100000000
       const totalLp = Number(priceConversion('fromWei', 'ether', mul, web3))

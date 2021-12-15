@@ -1,4 +1,4 @@
-import { CANCEL_LOADING } from '../Swap/constans'
+import {CANCEL_LOADING} from '../Swap/constans'
 import {
   CLEAR_VALUES,
   GET_CONVERTED_USDC_CCPT_VALUES_SUCCESS,
@@ -33,6 +33,7 @@ export const vaultReducer = (state = initialState, action) => {
   switch (action.type) {
     case CANCEL_LOADING:
       return {
+        ...state,
         vaultLoading: false,
       }
     case SHARES_TOTAL:

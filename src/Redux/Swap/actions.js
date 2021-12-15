@@ -235,12 +235,9 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
       // total Supply
       const totalSup = await USDC_CCPT_TOKEN.methods.totalSupply().call()
       const reserves = await USDC_CCPT_TOKEN.methods.getReserves().call()
-
       const usdcBNBBalance = web3.utils.fromWei(usdcbalance.toString(), 'Mwei')
       const ccptBNBBalance = web3.utils.fromWei(ccptbalance.toString(), 'Mwei')
-
       const depositedLpBal = Number(deposit) * 100000000
-
       const depositedLpBalance = web3.utils.fromWei(
         depositedLpBal.toString(),
         'ether'
@@ -296,9 +293,11 @@ export const getSwapTokenBalancesPerSecond =
         const dailyRewards = await REWARDS_VAULT.methods
           .userInfo(0, userAddress)
           .call()
+
         const deposit = await USDC_CCPT_TOKEN.methods
           .balanceOf(userAddress)
           .call()
+
         const withDraw = await REWARDS_VAULT.methods
           .userInfo(0, userAddress)
           .call()
@@ -317,7 +316,9 @@ export const getSwapTokenBalancesPerSecond =
           ccptbalance.toString(),
           'Mwei'
         )
+
         const depositedLpBal = Number(deposit) * 100000000
+
         const depositedLpBalance = web3.utils.fromWei(
           depositedLpBal.toString(),
           'ether'
