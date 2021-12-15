@@ -17,9 +17,7 @@ import VaultSuccess from './VaultSuccess'
 const ConvertLpModal = ({show, handleClose}) => {
   // Redux State
   const dispatch = useDispatch()
-  const {usdcBNBBalance, balanceLoading, ccptBNBBalance} = useSelector(
-    (state) => state.swap
-  )
+  const {balanceLoading} = useSelector((state) => state.swap)
   const {vaultHash, vaultLoading} = useSelector((state) => state.vault)
   const {userAddress} = useSelector((state) => state.profile)
   const {depositedLpBalance, totalSup, reserves} = useSelector(
@@ -103,21 +101,13 @@ const ConvertLpModal = ({show, handleClose}) => {
 
   const [errorOne, setErrorOne] = useState(false)
 
-  //   useEffect(() => {
-  //     if (tokenType === 'usdcToken') {
-  //       if (Number(price) > Number(usdcBNBBalance)) {
-  //         setErrorOne(true)
-  //       } else {
-  //         setErrorOne(false)
-  //       }
-  //     } else if (tokenType === 'ccptToken') {
-  //       if (Number(price) > Number(ccptBNBBalance)) {
-  //         setErrorOne(true)
-  //       } else {
-  //         setErrorOne(false)
-  //       }
-  //     }
-  //   }, [price, usdcBNBBalance, ccptBNBBalance, tokenType])
+  useEffect(() => {
+    if (Number(price) > Number(depositedLpBalance) || balanceLoading) {
+      setErrorOne(true)
+    } else {
+      setErrorOne(false)
+    }
+  }, [price, depositedLpBalance, balanceLoading])
 
   return (
     <Modal
