@@ -469,7 +469,7 @@ const LpPools = () => {
                             className='m-auto mt-4'
                           />
                         ) : (
-                          `${vaultRewards} CAPL`
+                          `${numberFormate(vaultRewards)} CAPL`
                         )}
                       </h4>
                       <h4
@@ -485,7 +485,7 @@ const LpPools = () => {
                             className='m-auto mt-4'
                           />
                         ) : (
-                          `(${vaultRewards * caplPrice}USD)`
+                          `(${numberFormate(vaultRewards * caplPrice)}USD)`
                         )}
                       </h4>
                       {/* <p className='price txt__gray'>~$19,214.261</p> */}

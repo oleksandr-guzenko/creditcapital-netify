@@ -156,7 +156,7 @@ svg {
 }
 .btn_brand_disabled {
   background-color: #acbdd479 !important;
-  color: $white__color !important;
+  color: $secondary !important;
   cursor: not-allowed !important;
   box-shadow: none !important;
   &:hover {
@@ -305,6 +305,6 @@ svg {
     margin: 5rem 1.3rem !important;
   }
 }
-.profile_loading{
+.profile_loading {
   margin-top: -13px;
 }

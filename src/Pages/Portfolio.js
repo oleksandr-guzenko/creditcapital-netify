@@ -8,9 +8,9 @@ import Dashboard from '../Components/Portfolio/Dashboard'
 const Portfolio = () => {
   // Redux State
   const {userAddress} = useSelector((state) => state.profile)
-  // if (!userAddress) {
-  //   return <Redirect to='/' />
-  // }
+  if (!userAddress) {
+    return <Redirect to='/' />
+  }
   return (
     <>
       <Dashboard />

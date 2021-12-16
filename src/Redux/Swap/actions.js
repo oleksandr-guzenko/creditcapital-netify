@@ -288,8 +288,10 @@ export const getSwapTokenBalancesPerSecond =
         getContracts(walletType)
       if (userAddress) {
         // available Balance
+
         const usdcbalance = await USDCBNB.methods.balanceOf(userAddress).call()
         const ccptbalance = await CCPTBNB.methods.balanceOf(userAddress).call()
+
         const dailyRewards = await REWARDS_VAULT.methods
           .userInfo(0, userAddress)
           .call()
