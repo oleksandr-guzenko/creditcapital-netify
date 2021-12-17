@@ -138,6 +138,11 @@ const TransformModal = ({show, handleClose}) => {
     }
   }, [price, usdcBNBBalance, ccptBNBBalance, tokenType])
 
+  const validateField = () => {
+    const isValidField = !userAddress || price === '' || parseFloat(price) === 0 || errorOne ;
+    return isValidField;
+   }
+
   return (
     <Modal
       className='buy__token__modal successModal'
@@ -279,11 +284,11 @@ const TransformModal = ({show, handleClose}) => {
                   <div className='box_wrapper_button'>
                     <button
                       className={
-                        !userAddress || price === '' || errorOne
+                        validateField()
                           ? 'btn_brand btn_brand_disabled'
                           : 'btn_brand'
                       }
-                      disabled={!userAddress || price === '' || errorOne}
+                      disabled={validateField()}
                       onClick={makeTransform}
                     >
                       Create LP
