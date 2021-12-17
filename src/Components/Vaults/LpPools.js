@@ -128,8 +128,8 @@ const LpPools = () => {
   const handleDepositErrors = useCallback(() => {
     if (
       depositPrice === '' ||
-      parseInt(depositPrice) === 0 ||
-      parseInt(depositedLpBalance) === 0 ||
+      parseFloat(depositPrice) === 0 ||
+      parseFloat(depositedLpBalance) === 0 ||
       !userAddress ||
       Number(depositPrice) > Number(depositedLpBalance)
     ) {
@@ -142,8 +142,8 @@ const LpPools = () => {
   const handleDepositUSDCErrors = useCallback(() => {
     if (
       depositPrice === '' ||
-      parseInt(depositPrice) === 0 ||
-      parseInt(usdcBNBBalance) === 0 ||
+      parseFloat(depositPrice) === 0 ||
+      parseFloat(usdcBNBBalance) === 0 ||
       !userAddress ||
       Number(depositPrice) > Number(usdcBNBBalance)
     ) {
@@ -156,8 +156,8 @@ const LpPools = () => {
   const handleDepositCAPLErrors = useCallback(() => {
     if (
       depositPrice === '' ||
-      parseInt(depositPrice) === 0 ||
-      parseInt(ccptBNBBalance) === 0 ||
+      parseFloat(depositPrice) === 0 ||
+      parseFloat(ccptBNBBalance) === 0 ||
       !userAddress ||
       Number(depositPrice) > Number(ccptBNBBalance)
     ) {
@@ -201,7 +201,6 @@ const LpPools = () => {
     }
   }, [userAddress, withdrawLpBalance, withdrawPrice]);
 
-  const Open
 
   return (
     <>

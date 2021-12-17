@@ -139,7 +139,7 @@ const TransformModal = ({show, handleClose}) => {
   }, [price, usdcBNBBalance, ccptBNBBalance, tokenType])
 
   const validateField = () => {
-    const isValidField = !userAddress || price === '' || parseInt(price) === 0 || errorOne ;
+    const isValidField = !userAddress || price === '' || parseFloat(price) === 0 || errorOne ;
     return isValidField;
    }
 

@@ -110,7 +110,7 @@ const ConvertLpModal = ({show, handleClose}) => {
   }, [price, depositedLpBalance, balanceLoading])
 
   const validateConvertField = () => {
-   const isValidField = !userAddress || price === '' || parseInt(price) === 0 || errorOne ;
+   const isValidField = !userAddress || price === '' || parseFloat(price) === 0 || errorOne ;
    return isValidField;
   }
 
