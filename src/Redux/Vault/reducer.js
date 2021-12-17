@@ -49,7 +49,7 @@ export const vaultReducer = (state = initialState, action) => {
         ...state,
         depositedLpBalance: action.payload.depositedLpBalance,
         withdrawLpBalance: action.payload.withdrawLpBalance,
-        vaultRewards: action.payload.vaultRewards,
+        vaultRewards: action.payload.vaultRewards*10000,
         totalSup: action.payload.totalSup,
         reserves: action.payload.reserves,
         dailyRewards: action.payload.dailyRewards,
