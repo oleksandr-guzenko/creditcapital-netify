@@ -109,6 +109,11 @@ const ConvertLpModal = ({show, handleClose}) => {
     }
   }, [price, depositedLpBalance, balanceLoading])
 
+  const validateConvertField = () => {
+   const isValidField = !userAddress || price === '' || parseFloat(price) === 0 || errorOne ;
+   return isValidField;
+  }
+
   return (
     <Modal
       className='buy__token__modal successModal'
@@ -178,11 +183,11 @@ const ConvertLpModal = ({show, handleClose}) => {
                   <div className='box_wrapper_button'>
                     <button
                       className={
-                        !userAddress || price === '' || errorOne
+                        validateConvertField()
                           ? 'btn_brand btn_brand_disabled'
                           : 'btn_brand'
                       }
-                      disabled={!userAddress || price === '' || errorOne}
+                      disabled={validateConvertField()}
                       onClick={submitConvertLp}
                     >
                       Convert LP

@@ -207,7 +207,8 @@ const SwapPool = () => {
       if (
         Number(price) > Number(usdcBNBBalance) ||
         price === '' ||
-        usdcBNBBalance === '0' ||
+        parseFloat(price) === 0 ||
+        parseFloat(usdcBNBBalance) === 0 ||
         !userAddress ||
         balanceLoading
       ) {
@@ -220,7 +221,8 @@ const SwapPool = () => {
         Number(price) > Number(ccptBNBBalance) ||
         balanceLoading ||
         price === '' ||
-        ccptBNBBalance === '0' ||
+        parseFloat(price) === 0 ||
+        parseFloat(ccptBNBBalance) === 0 ||
         !userAddress
       ) {
         setErrors(true)
@@ -228,7 +230,7 @@ const SwapPool = () => {
         setErrors(false)
       }
     }
-  }, [toggle, price, ccptBNBBalance, usdcBNBBalance, balanceLoading])
+  }, [toggle, price, ccptBNBBalance, usdcBNBBalance, balanceLoading, userAddress])
 
   return (
     <>
