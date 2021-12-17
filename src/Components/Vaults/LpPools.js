@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {Col, Collapse, Container, Image, Row} from 'react-bootstrap'
 import {BiPlay} from 'react-icons/bi'
 import {GoChevronDown, GoChevronUp} from 'react-icons/go'
@@ -125,49 +125,67 @@ const LpPools = () => {
 
   const [convertModal, setConvertModal] = useState(false)
 
+  const handleDepositErrors = useCallback(() => {
+    if (
+      depositPrice === '' ||
+      parseInt(depositPrice) === 0 ||
+      parseInt(depositedLpBalance) === 0 ||
+      !userAddress ||
+      Number(depositPrice) > Number(depositedLpBalance)
+    ) {
+      setDepositErrors(true)
+    } else {
+      setDepositErrors(false)
+    }
+  }, [depositPrice, depositedLpBalance, userAddress]);
+
+  const handleDepositUSDCErrors = useCallback(() => {
+    if (
+      depositPrice === '' ||
+      parseInt(depositPrice) === 0 ||
+      parseInt(usdcBNBBalance) === 0 ||
+      !userAddress ||
+      Number(depositPrice) > Number(usdcBNBBalance)
+    ) {
+      setDepositUSDCErrors(true)
+    } else {
+      setDepositUSDCErrors(false)
+    }
+  }, [depositPrice, usdcBNBBalance, userAddress]);
+
+  const handleDepositCAPLErrors = useCallback(() => {
+    if (
+      depositPrice === '' ||
+      parseInt(depositPrice) === 0 ||
+      parseInt(ccptBNBBalance) === 0 ||
+      !userAddress ||
+      Number(depositPrice) > Number(ccptBNBBalance)
+    ) {
+      setDepositCAPLErrors(true)
+    } else {
+      setDepositCAPLErrors(false)
+    }
+  }, [depositPrice, ccptBNBBalance, userAddress])
+
   useEffect(() => {
-    if (typeOfDeposit === 'USDC-CAPL') {
-      if (
-        depositPrice === '' ||
-        depositedLpBalance === '0' ||
-        !userAddress ||
-        Number(depositPrice) > Number(depositedLpBalance)
-      ) {
-        setDepositErrors(true)
-      } else {
-        setDepositErrors(false)
-      }
-    } else if (typeOfDeposit === 'USDC') {
-      if (
-        depositPrice === '' ||
-        usdcBNBBalance === '0' ||
-        !userAddress ||
-        Number(depositPrice) > Number(usdcBNBBalance)
-      ) {
-        setDepositUSDCErrors(true)
-      } else {
-        setDepositUSDCErrors(false)
-      }
-    } else if (typeOfDeposit === 'CAPL') {
-      if (
-        depositPrice === '' ||
-        ccptBNBBalance === '0' ||
-        !userAddress ||
-        Number(depositPrice) > Number(ccptBNBBalance)
-      ) {
-        setDepositCAPLErrors(true)
-      } else {
-        setDepositCAPLErrors(false)
-      }
+    switch(typeOfDeposit) {
+      case 'USDC-CAPL': 
+        handleDepositErrors();
+        break;
+      case 'USDC': 
+        handleDepositUSDCErrors();
+        break;
+      case 'CAPL':
+        handleDepositCAPLErrors();
+        break;
+      default: return;
     }
   }, [
-    usdcBNBBalance,
-    ccptBNBBalance,
-    userAddress,
-    depositedLpBalance,
-    depositPrice,
     typeOfDeposit,
     balanceLoading,
+    handleDepositUSDCErrors,
+    handleDepositErrors,
+    handleDepositCAPLErrors
   ])
 
   useEffect(() => {
@@ -181,7 +199,9 @@ const LpPools = () => {
     } else {
       setWithdrawErrors(false)
     }
-  }, [userAddress, withdrawLpBalance, withdrawPrice])
+  }, [userAddress, withdrawLpBalance, withdrawPrice]);
+
+  const Open
 
   return (
     <>
