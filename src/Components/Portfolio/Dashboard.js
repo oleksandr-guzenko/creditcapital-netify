@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
-import {Col, Container, Image, Row} from 'react-bootstrap'
-import {numberFormate} from '../../Utilities/Util'
+import React, { useEffect, useState } from 'react'
+import { Col, Container, Image, Row } from 'react-bootstrap'
+import { numberFormate } from '../../Utilities/Util'
 import ReactLoading from 'react-loading'
-import {disConnectWallet} from '../../Redux/Profile/actions'
-import {useDispatch, useSelector} from 'react-redux'
-import {AiOutlineCaretDown, AiOutlineCaretUp} from 'react-icons/ai'
+import { disConnectWallet } from '../../Redux/Profile/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai'
 import Logo from '../../Assets/cc_white.svg'
 import {
   clearHashValues,
@@ -12,7 +12,7 @@ import {
 } from '../../Redux/Vault/action'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
 import VaultSuccess from '../Modals/Vaults/VaultSuccess'
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const Dashboard = () => {
   const dispatch = useDispatch()
@@ -20,8 +20,8 @@ const Dashboard = () => {
   // loading
   const [swapLoad, setSwapLoad] = useState(false)
   const [swapSucc, setSwapSucc] = useState(false)
-  const {userAddress} = useSelector((state) => state.profile)
-  const {balanceLoading, usdcBNBBalance, caplPrice, ccptBNBBalance} =
+  const { userAddress } = useSelector((state) => state.profile)
+  const { balanceLoading, usdcBNBBalance, caplPrice, ccptBNBBalance } =
     useSelector((state) => state.swap)
   const {
     reserves,
@@ -161,148 +161,195 @@ const Dashboard = () => {
                   </div>
                 </div>
               </Col>
-              <Col className='mb-3' sm={12} md={12} lg={4} xl={4} xxl={4}>
-                <div className='dd_card second'>
-                  <div>
-                    <p>Your Balance</p>
-                    <p>
-                      {balanceLoading ? (
-                        <ReactLoading
-                          type='bars'
-                          color='#ffffff'
-                          height={0}
-                          width={30}
-                          className='mb-4'
-                        />
-                      ) : (
-                        `${numberFormate(ccptBNBBalance)} (${numberFormate(
-                          ccptBNBBalance * caplPrice
-                        )}USD)`
-                      )}
-                    </p>
-                  </div>
-                  <div>
-                    <p>Your Staked Balance</p>
-                    <p>USDC-CAPL Shares(0.00 USD)</p>
-                  </div>
-                  <div>
-                    <p>Daily Revenue</p>
-                    <p>
-                      {balanceLoading ? (
-                        <ReactLoading
-                          type='bars'
-                          color='#ffffff'
-                          height={0}
-                          width={30}
-                          className='mb-4'
-                        />
-                      ) : (
-                        `${numberFormate(5000 * dailyRewards?.shares)}USD`
-                      )}
-                    </p>
-                  </div>
-                  <div>
-                    <p>Daily Yield</p>
-                    <p>
-                      {balanceLoading ? (
-                        <ReactLoading
-                          type='bars'
-                          color='#ffffff'
-                          height={0}
-                          width={30}
-                          className='mb-4'
-                        />
-                      ) : (
-                        `${numberFormate(apy / 365)}%`
-                      )}
-                    </p>
-                  </div>
-                </div>
+
+              <Col className='mb-3' sm={12} md={12} lg={8} xl={8} xxl={8}>
+                <Row>
+                  <Col className='mb-3' sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <div className='dd_card third'>
+                      <div>
+                        <div className='logo'>
+                          <Image src={Logo} alt='' />
+                          <h3>CAPL</h3>
+                        </div>
+                        <div>
+                          <p className='green'>+0.00%</p>
+                        </div>
+                        <div className='price'>
+                          <p>CAPL Price</p>
+                          <p>
+                            {balanceLoading ? (
+                              <ReactLoading
+                                type='bars'
+                                color='#ffffff'
+                                height={0}
+                                width={30}
+                                className='ms-auto mb-4'
+                              />
+                            ) : (
+                              `$ ${numberFormate(caplPrice)}`
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className='mb-3' sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <div className='dd_card second'>
+                      <div>
+                        <p>Your Balance</p>
+                        <p>
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='mb-4'
+                            />
+                          ) : (
+                            `${numberFormate(ccptBNBBalance)} (${numberFormate(
+                              ccptBNBBalance * caplPrice
+                            )}USD)`
+                          )}
+                        </p>
+                      </div>
+                      <div>
+                        <p>Your Staked Balance</p>
+                        <p>USDC-CAPL Shares(0.00 USD)</p>
+                      </div>
+                      <div>
+                        <p>Daily Revenue</p>
+                        <p>
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='mb-4'
+                            />
+                          ) : (
+                            `${numberFormate(5000 * dailyRewards?.shares)}USD`
+                          )}
+                        </p>
+                      </div>
+                      <div>
+                        <p>Daily Yield</p>
+                        <p>
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='mb-4'
+                            />
+                          ) : (
+                            `${numberFormate(apy / 365)}%`
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+
+
               </Col>
 
-              <Col className='mb-3' sm={12} md={12} lg={4} xl={4} xxl={4}>
-                <div className='dd_card third'>
-                  <div>
-                    <Image src={Logo} alt='' />
-                    <h3>CAPL</h3>
-                    <p className='green'>+0.00%</p>
-                    <p>
-                      {balanceLoading ? (
-                        <ReactLoading
-                          type='bars'
-                          color='#ffffff'
-                          height={0}
-                          width={30}
-                          className='ms-auto mb-4'
-                        />
-                      ) : (
-                        `$ ${numberFormate(caplPrice)}`
-                      )}
-                    </p>
-                    <p>CAPL Price</p>
-                  </div>
-                </div>
-              </Col>
+
             </Row>
             <div className='credentials'>
-              <h4>Revenue Projections</h4>
-              <Row>
-                <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
-                  <div className='main_card'>
-                    <div>
-                      <p>Your Daily Revenue</p>
-                      <h3>0.00 USD</h3>
-                      <h6>/day</h6>
-                      <p className='green'>
-                        +0.00%{' '}
-                        <span>
-                          <AiOutlineCaretUp />
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </Col>
-                <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
-                  <div className='main_card'>
-                    <div>
-                      <p>Your Weekly Revenue</p>
-                      <h3>0.00 USD</h3>
-                      <h6>/week</h6>
-                      <p className='green'>
-                        +0.00%{' '}
-                        <span>
-                          <AiOutlineCaretUp />
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </Col>
-                <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
-                  <div className='main_card'>
-                    <p>Revenue Projected</p>
+              <Row className='row'>
+                <Col sm={12} md={6} lg={3} xl={3} xxl={3}>
+                  <div className='first_div'>
+                    <div className='main_card vault'>
+                      <h3 className='heading'>VAULT</h3>
+                      <div className='capl'>
+                        <p>Staked USDC-CAPL Shares</p>
+                        <h3>
+                          {numberFormate(totalLp)} LP Shares (
+                          {numberFormate((totalLp / 100000000) * LpTokenPrice)}USD)
+                        </h3>
+                      </div>
+                      {/* <div>
+                    <p>Your Daily Revenue</p>
                     <h3>0.00 USD</h3>
-                    <h6>/month</h6>
+                    <h6>/day</h6>
                     <p className='green'>
                       +0.00%{' '}
                       <span>
                         <AiOutlineCaretUp />
                       </span>
                     </p>
+                  </div> */}
+                    </div>
                   </div>
                 </Col>
-                <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
-                  <div className='main_card'>
-                    <div>
-                      <p>Revenue Projected</p>
-                      <h3>0.00 USD</h3>
-                      <h6>/year</h6>
-                      <p className='green'>
-                        +0.00%{' '}
-                        <span>
-                          <AiOutlineCaretUp />
-                        </span>
-                      </p>
-                    </div>
+                <Col sm={12} md={6} lg={9} xl={9} xxl={9}>
+                  <div className='second_div'>
+                    <h4>Revenue Projections</h4>
+                    <Row>
+                      <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                        <div className='main_card'>
+                          <div>
+                            <p>Your Daily Revenue</p>
+                            <h3>0.00 USD</h3>
+                            <h6>/day</h6>
+                            <p className='green'>
+                              +0.00%{' '}
+                              <span>
+                                <AiOutlineCaretUp />
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      </Col>
+                      <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                        <div className='main_card'>
+                          <div>
+                            <p>Your Weekly Revenue</p>
+                            <h3>0.00 USD</h3>
+                            <h6>/week</h6>
+                            <p className='green'>
+                              +0.00%{' '}
+                              <span>
+                                <AiOutlineCaretUp />
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      </Col>
+                      <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                        <div className='main_card'>
+                          <p>Revenue Projected</p>
+                          <h3>0.00 USD</h3>
+                          <h6>/month</h6>
+                          <p className='green'>
+                            +0.00%{' '}
+                            <span>
+                              <AiOutlineCaretUp />
+                            </span>
+                          </p>
+                        </div>
+                      </Col>
+                      <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                        <div className='main_card'>
+                          <div>
+                            <p>Revenue Projected</p>
+                            <h3>0.00 USD</h3>
+                            <h6>/year</h6>
+                            <p className='green'>
+                              +0.00%{' '}
+                              <span>
+                                <AiOutlineCaretUp />
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
                   </div>
                 </Col>
               </Row>
