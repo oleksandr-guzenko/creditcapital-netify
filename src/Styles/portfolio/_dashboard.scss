@@ -37,7 +37,45 @@
         }
       }
     }
+    .third {
+      div {
+        width: 100%;
+        @include displayCenter(center, space-evenly);
+        .logo {
+          @include displayCenter(center, flex-start);
+          img {
+            margin-right: 8px;
+          }
+        }
+        .price {
+          display: flex;
+          flex-direction: column;
+          @include displayCenter(flex-end, flex-end);
+        }
+      }
+    }
     .credentials {
+      @include displayCenter(flex-start, center);
+      .row {
+        width: 100%;
+        @include displayCenter(center, center);
+      }
+      .first_div {
+        flex: 0 0 20%;
+        .vault {
+          // margin-left: 16px;
+          margin-right: 16px;
+          .heading {
+            padding-bottom: 16px;
+          }
+          .capl {
+            padding-bottom: 12px;
+          }
+        }
+      }
+      .second_div {
+        flex: 0 0 77%;
+      }
       border: 1px solid $white__color;
       border-radius: 5px;
       padding: 10px;
