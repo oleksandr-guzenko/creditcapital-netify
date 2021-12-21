@@ -308,6 +308,10 @@ export const sharesTotal = () => async (dispatch, getState) => {
         (5000 * 12 * 30 * 10 ** 8) / Number(reserves?._reserve0) +
         Number(reserves?._reserve1)
 
+      // const trans =
+      // (5000 * 12 * 30 * 10 ** 6) / Number(reserves?._reserve0) +
+      // Number(reserves?._reserve1) / 10 ** 6
+
       const totalShares = (dailyRewards?.shares / res) * 5000
 
       // const LpTokenPrice =

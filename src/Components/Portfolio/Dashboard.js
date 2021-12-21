@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Container, Image, Row } from 'react-bootstrap'
-import { numberFormate } from '../../Utilities/Util'
+import React, {useEffect, useState} from 'react'
+import {Col, Container, Image, Row} from 'react-bootstrap'
+import {numberFormate} from '../../Utilities/Util'
 import ReactLoading from 'react-loading'
-import { disConnectWallet } from '../../Redux/Profile/actions'
-import { useDispatch, useSelector } from 'react-redux'
-import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai'
-import Logo from '../../Assets/cc_white.svg'
+import {disConnectWallet} from '../../Redux/Profile/actions'
+import {useDispatch, useSelector} from 'react-redux'
+import {AiOutlineCaretDown, AiOutlineCaretUp} from 'react-icons/ai'
+import Logo from '../../Assets/CAPL.svg'
 import {
   clearHashValues,
   vaultDepositAndWithdrawTokens,
 } from '../../Redux/Vault/action'
 import SwapLoading from '../Modals/SwapModals/SwapLoading'
 import VaultSuccess from '../Modals/Vaults/VaultSuccess'
-import { useHistory } from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 
 const Dashboard = () => {
   const dispatch = useDispatch()
@@ -20,8 +20,8 @@ const Dashboard = () => {
   // loading
   const [swapLoad, setSwapLoad] = useState(false)
   const [swapSucc, setSwapSucc] = useState(false)
-  const { userAddress } = useSelector((state) => state.profile)
-  const { balanceLoading, usdcBNBBalance, caplPrice, ccptBNBBalance } =
+  const {userAddress} = useSelector((state) => state.profile)
+  const {balanceLoading, usdcBNBBalance, caplPrice, ccptBNBBalance} =
     useSelector((state) => state.swap)
   const {
     reserves,
@@ -164,7 +164,14 @@ const Dashboard = () => {
 
               <Col className='mb-3' sm={12} md={12} lg={8} xl={8} xxl={8}>
                 <Row>
-                  <Col className='mb-3' sm={12} md={12} lg={12} xl={12} xxl={12}>
+                  <Col
+                    className='mb-3'
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    xxl={12}
+                  >
                     <div className='dd_card third'>
                       <div>
                         <div className='logo'>
@@ -195,7 +202,14 @@ const Dashboard = () => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col className='mb-3' sm={12} md={12} lg={12} xl={12} xxl={12}>
+                  <Col
+                    className='mb-3'
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    xxl={12}
+                  >
                     <div className='dd_card second'>
                       <div>
                         <p>Your Balance</p>
@@ -254,11 +268,7 @@ const Dashboard = () => {
                     </div>
                   </Col>
                 </Row>
-
-
               </Col>
-
-
             </Row>
             <div className='credentials'>
               <Row className='row'>
@@ -270,20 +280,21 @@ const Dashboard = () => {
                         <p>Staked USDC-CAPL Shares</p>
                         <h3>
                           {numberFormate(totalLp)} LP Shares (
-                          {numberFormate((totalLp / 100000000) * LpTokenPrice)}USD)
+                          {numberFormate((totalLp / 100000000) * LpTokenPrice)}
+                          USD)
                         </h3>
                       </div>
-                      {/* <div>
-                    <p>Your Daily Revenue</p>
-                    <h3>0.00 USD</h3>
-                    <h6>/day</h6>
-                    <p className='green'>
-                      +0.00%{' '}
-                      <span>
-                        <AiOutlineCaretUp />
-                      </span>
-                    </p>
-                  </div> */}
+                      <div className='mt-4'>
+                        <p>Your Daily Revenue</p>
+                        <h3>0.00 USD</h3>
+                        <h6>/day</h6>
+                        <p className='green'>
+                          +0.00%{' '}
+                          <span>
+                            <AiOutlineCaretUp />
+                          </span>
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </Col>
@@ -291,7 +302,7 @@ const Dashboard = () => {
                   <div className='second_div'>
                     <h4>Revenue Projections</h4>
                     <Row>
-                      <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                      {/* <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
                         <div className='main_card'>
                           <div>
                             <p>Your Daily Revenue</p>
@@ -305,8 +316,15 @@ const Dashboard = () => {
                             </p>
                           </div>
                         </div>
-                      </Col>
-                      <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                      </Col> */}
+                      <Col
+                        className='mb-3'
+                        sm={12}
+                        md={6}
+                        lg={4}
+                        xl={4}
+                        xxl={4}
+                      >
                         <div className='main_card'>
                           <div>
                             <p>Your Weekly Revenue</p>
@@ -321,7 +339,14 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </Col>
-                      <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                      <Col
+                        className='mb-3'
+                        sm={12}
+                        md={6}
+                        lg={4}
+                        xl={4}
+                        xxl={4}
+                      >
                         <div className='main_card'>
                           <p>Revenue Projected</p>
                           <h3>0.00 USD</h3>
@@ -334,7 +359,14 @@ const Dashboard = () => {
                           </p>
                         </div>
                       </Col>
-                      <Col className='mb-3' sm={12} md={6} lg={3} xl={3} xxl={3}>
+                      <Col
+                        className='mb-3'
+                        sm={12}
+                        md={6}
+                        lg={4}
+                        xl={4}
+                        xxl={4}
+                      >
                         <div className='main_card'>
                           <div>
                             <p>Revenue Projected</p>
