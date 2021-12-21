@@ -35,6 +35,9 @@ const Dashboard = () => {
     apy,
     LpTokenPrice,
     dailyRewards,
+    treasuryUSDC,
+    treasuryCAPL,
+    treasuryUSDC_CAPL,
   } = useSelector((state) => state.vault)
   const handleDisconnect = () => {
     dispatch(disConnectWallet())
@@ -872,7 +875,7 @@ const Dashboard = () => {
                             className='mb-4'
                           />
                         ) : (
-                          `${numberFormate(0)} USDC`
+                          `${numberFormate(treasuryUSDC)} USDC`
                         )}
                       </p>
                     </div>
@@ -888,7 +891,7 @@ const Dashboard = () => {
                             className='mb-4'
                           />
                         ) : (
-                          `${numberFormate(0)} CAPL`
+                          `${numberFormate(treasuryCAPL)} CAPL`
                         )}
                       </p>
                     </div>
@@ -904,7 +907,8 @@ const Dashboard = () => {
                             className='mb-4'
                           />
                         ) : (
-                          `${numberFormate(0)} USDC-CAPL`
+                          // `${numberFormate(treasuryUSDC_CAPL)} USDC-CAPL`
+                          `${treasuryUSDC_CAPL} USDC-CAPL`
                         )}
                       </p>
                     </div>

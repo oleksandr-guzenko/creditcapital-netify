@@ -215,6 +215,24 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
     const {USDCBNB, CCPTBNB, web3, REWARDS_VAULT, USDC_CCPT_TOKEN} =
       getContracts(walletType)
     if (userAddress) {
+      // treasury wallet
+      const treasuryWalletAddress = '0x42C48D6212a697825d8648D5101ADC104f81ec51'
+      const treasuryusdc = await USDCBNB.methods
+        .balanceOf(treasuryWalletAddress)
+        .call()
+      const treasurycapl = await CCPTBNB.methods
+        .balanceOf(treasuryWalletAddress)
+        .call()
+      const treasuryusdc_capl = await USDC_CCPT_TOKEN.methods
+        .balanceOf(treasuryWalletAddress)
+        .call()
+      const treasuryUSDC = web3.utils.fromWei(treasuryusdc.toString(), 'Mwei')
+      const treasuryCAPL = web3.utils.fromWei(treasurycapl.toString(), 'Mwei')
+      const treasuryUSDC_CAPL = web3.utils.fromWei(
+        treasuryusdc_capl.toString(),
+        'ether'
+      )
+
       // available Balance
       const usdcbalance = await USDCBNB.methods.balanceOf(userAddress).call()
       const ccptbalance = await CCPTBNB.methods.balanceOf(userAddress).call()
@@ -266,6 +284,9 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
           totalSup,
           reserves,
           dailyRewards,
+          treasuryUSDC,
+          treasuryCAPL,
+          treasuryUSDC_CAPL,
         },
       })
       dispatch({
@@ -289,6 +310,25 @@ export const getSwapTokenBalancesPerSecond =
       const {USDCBNB, CCPTBNB, web3, REWARDS_VAULT, USDC_CCPT_TOKEN} =
         getContracts(walletType)
       if (userAddress) {
+        // treasury wallet
+        const treasuryWalletAddress =
+          '0x42C48D6212a697825d8648D5101ADC104f81ec51'
+        const treasuryusdc = await USDCBNB.methods
+          .balanceOf(treasuryWalletAddress)
+          .call()
+        const treasurycapl = await CCPTBNB.methods
+          .balanceOf(treasuryWalletAddress)
+          .call()
+        const treasuryusdc_capl = await USDC_CCPT_TOKEN.methods
+          .balanceOf(treasuryWalletAddress)
+          .call()
+        const treasuryUSDC = web3.utils.fromWei(treasuryusdc.toString(), 'Mwei')
+        const treasuryCAPL = web3.utils.fromWei(treasurycapl.toString(), 'Mwei')
+        const treasuryUSDC_CAPL = web3.utils.fromWei(
+          treasuryusdc_capl.toString(),
+          'ether'
+        )
+
         // available Balance
 
         const usdcbalance = await USDCBNB.methods.balanceOf(userAddress).call()
@@ -350,6 +390,9 @@ export const getSwapTokenBalancesPerSecond =
             totalSup,
             reserves,
             dailyRewards,
+            treasuryUSDC,
+            treasuryCAPL,
+            treasuryUSDC_CAPL,
           },
         })
         dispatch({

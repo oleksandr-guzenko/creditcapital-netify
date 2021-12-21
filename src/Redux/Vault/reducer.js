@@ -28,6 +28,9 @@ const initialState = {
   dailyRewards: {},
   totalShares: 0,
   LpTokenPrice: 0,
+  treasuryUSDC: 0,
+  treasuryCAPL: 0,
+  treasuryUSDC_CAPL: 0,
 }
 export const vaultReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -53,6 +56,9 @@ export const vaultReducer = (state = initialState, action) => {
         totalSup: action.payload.totalSup,
         reserves: action.payload.reserves,
         dailyRewards: action.payload.dailyRewards,
+        treasuryUSDC: action.payload.treasuryUSDC,
+        treasuryCAPL: action.payload.treasuryCAPL,
+        treasuryUSDC_CAPL: action.payload.treasuryUSDC_CAPL,
       }
     case GET_CONVERTED_USDC_CCPT_VALUES_SUCCESS:
       return {
