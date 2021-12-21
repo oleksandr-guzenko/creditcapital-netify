@@ -248,7 +248,9 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
         'ether'
       )
       const vaultRssss = Number(vaultR) * 100000000
-      const vaultRewards = web3.utils.fromWei(vaultRssss.toString(), 'ether')
+      const valutRew = web3.utils.fromWei(vaultRssss.toString(), 'ether')
+      const vaultRewards = valutRew * 10000
+
       // const depositedLpBalance = web3.utils.fromWei(deposit.toString(), 'ether')
       // ##############
       dispatch({
@@ -331,7 +333,8 @@ export const getSwapTokenBalancesPerSecond =
           'ether'
         )
         const vaultRssss = Number(vaultR) * 100000000
-        const vaultRewards = web3.utils.fromWei(vaultRssss.toString(), 'ether')
+        const valutRew = web3.utils.fromWei(vaultRssss.toString(), 'ether')
+        const vaultRewards = valutRew * 10000
         // const depositedLpBalance = web3.utils.fromWei(deposit.toString(), 'ether')
         // ##############
         dispatch({
