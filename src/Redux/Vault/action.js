@@ -294,7 +294,7 @@ export const sharesTotal = () => async (dispatch, getState) => {
   try {
     const {
       profile: {walletType, userAddress},
-      vault: {reserves, dailyRewards, totalSup},
+      vault: {reserves, dailyRewards, totalSup, LpTokenPrice},
       swap: {caplPrice},
     } = getState()
 
@@ -304,28 +304,24 @@ export const sharesTotal = () => async (dispatch, getState) => {
       const mul = Number(res) * 100000000
       const totalLp = Number(priceConversion('fromWei', 'ether', mul, web3))
 
-      const trans =
-        (5000 * 12 * 30 * 10 ** 8) / Number(reserves?._reserve0) +
-        Number(reserves?._reserve1)
-
-      // const trans =
-      // (5000 * 12 * 30 * 10 ** 6) / Number(reserves?._reserve0) +
-      // Number(reserves?._reserve1) / 10 ** 6
-
       const totalShares = (dailyRewards?.shares / res) * 5000
-
-      // const LpTokenPrice =
-      //   (reserves?._reserve0 + reserves?._reserve1 * caplPrice) / totalSup
-      // 10 ** 12
-
       const LpTokenPrice =
         (reserves?._reserve0 / 10 ** 6 +
           (reserves?._reserve1 / 10 ** 6) * caplPrice) /
         (totalSup / 10 ** 18)
 
+      const apr =
+        ((5000 * caplPrice) / ((totalLp / 100000000) * LpTokenPrice)) *
+        100 *
+        365
+
+      // const trans =
+      // (5000 * 12 * 30 * 10 ** 8) / Number(reserves?._reserve0) +
+      // Number(reserves?._reserve1)
+      const trans = (apr / 365 + 1) * 365 - 1
       dispatch({
         type: SHARES_TOTAL,
-        payload: {trans, totalLp, totalShares, LpTokenPrice},
+        payload: {trans, totalLp, totalShares, LpTokenPrice, apr},
       })
     }
   } catch (error) {

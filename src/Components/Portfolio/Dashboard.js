@@ -38,6 +38,7 @@ const Dashboard = () => {
     treasuryUSDC,
     treasuryCAPL,
     treasuryUSDC_CAPL,
+    apr,
   } = useSelector((state) => state.vault)
   const handleDisconnect = () => {
     dispatch(disConnectWallet())
@@ -139,26 +140,11 @@ const Dashboard = () => {
                         )} USD`
                       )}
                     </h4>
-                    {/*
-                    <p className='green'>
-                      +0.00%{' '}
-                      <span>
-                        <AiOutlineCaretUp />
-                      </span>
-                    </p>
-                    */}
                   </div>
                   <div>
                     <h3>APR</h3>
                     <p className='green'>
-                      {totalLp &&
-                        numberFormate(
-                          ((5000 * caplPrice) /
-                            ((totalLp / 100000000) * LpTokenPrice)) *
-                            100 *
-                            365
-                        )}
-                      %
+                      {numberFormate(apr)}%
                       <span>
                         <AiOutlineCaretUp />
                       </span>
@@ -718,12 +704,7 @@ const Dashboard = () => {
                             className='profile_loading'
                           />
                         ) : (
-                          `${numberFormate(
-                            ((5000 * caplPrice) /
-                              ((totalLp / 100000000) * LpTokenPrice)) *
-                              100 *
-                              365
-                          )}%`
+                          `${numberFormate(apr)}%`
                         )}
                       </p>
                     </div>
