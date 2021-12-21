@@ -148,12 +148,13 @@ const Dashboard = () => {
                   <div>
                     <h3>APR</h3>
                     <p className='green'>
-                      {numberFormate(
-                        ((5000 * caplPrice) /
-                          ((totalLp / 100000000) * LpTokenPrice)) *
-                          100 *
-                          365
-                      )}
+                      {totalLp &&
+                        numberFormate(
+                          ((5000 * caplPrice) /
+                            ((totalLp / 100000000) * LpTokenPrice)) *
+                            100 *
+                            365
+                        )}
                       %
                       <span>
                         <AiOutlineCaretUp />
@@ -199,7 +200,7 @@ const Dashboard = () => {
                                 color='#ffffff'
                                 height={0}
                                 width={30}
-                                className='ms-auto mb-4'
+                                className='ms-auto mt-3'
                               />
                             ) : (
                               `${numberFormate(caplPrice)} USD`
@@ -222,7 +223,7 @@ const Dashboard = () => {
                               color='#ffffff'
                               height={0}
                               width={30}
-                              className='mb-4'
+                              className='mt-3'
                             />
                           ) : (
                             `${numberFormate(
@@ -236,11 +237,27 @@ const Dashboard = () => {
                       <div>
                         <p>Your Staked Balance</p>
                         <p>
-                          {numberFormate(withdrawLpBalance)} USDC-CAPL Shares (
+                          {balanceLoading ? (
+                            <ReactLoading
+                              type='bars'
+                              color='#ffffff'
+                              height={0}
+                              width={30}
+                              className='mt-3'
+                            />
+                          ) : (
+                            `${numberFormate(
+                              withdrawLpBalance
+                            )} USDC-CAPL Shares (${numberFormate(
+                              (withdrawLpBalance / 100000000) * LpTokenPrice
+                            )} USD)`
+                          )}
+
+                          {/* {numberFormate(withdrawLpBalance)} USDC-CAPL Shares (
                           {numberFormate(
                             (withdrawLpBalance / 100000000) * LpTokenPrice
                           )}{' '}
-                          USD)
+                          USD) */}
                         </p>
                       </div>
                       <div>
@@ -252,7 +269,7 @@ const Dashboard = () => {
                               color='#ffffff'
                               height={0}
                               width={30}
-                              className='mb-4'
+                              className='mt-3'
                             />
                           ) : (
                             `${numberFormate(
@@ -272,7 +289,7 @@ const Dashboard = () => {
                               color='#ffffff'
                               height={0}
                               width={30}
-                              className='mb-4'
+                              className='mt-3'
                             />
                           ) : (
                             `${numberFormate(
