@@ -41,7 +41,7 @@ const LpPools = () => {
   const [depositErrors, setDepositErrors] = useState(false)
   const [depositUSDCErrors, setDepositUSDCErrors] = useState(false)
   const [depositCAPLErrors, setDepositCAPLErrors] = useState(false)
-  const [typeOfDeposit, setTypeOfDeposit] = useState('USDC')
+  const [typeOfDeposit, setTypeOfDeposit] = useState('USDC-CAPL')
   const [digit, setDigits] = useState(18)
 
   // ErrorState

@@ -1,0 +1,109 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 80px;
+  height: 80vh;  
+  background-color: #000000;
+  .body {
+    width: calc(70%);
+    // height: calc(90%);
+    padding: 20px;
+    border-radius: 10px;
+    background-color:#101729;
+    border-color:#4F5293;
+    .content {
+      .card {
+        color: #ffffff;
+        border-radius: 10px;
+        h5 {
+          margin: 0px;
+          color: rgb(216, 212, 212);
+        }
+        .amountInputGroup {
+          width: calc(50%);
+        }
+        .duration {
+          width: calc(25%);
+        }
+        .IVFS {
+          font-size: 25px;
+        }
+        .endValue {
+          text-align: end;
+        }
+      }
+      .border-color {
+        border-color: rgb(139, 134, 134);
+      }
+      .btn-confirm {
+        width: calc(100%);
+        margin: 0px;
+        padding: 15px;
+        border-radius: 12px;
+        background: linear-gradient(to right, #5E68D1, #60298B);
+      }      
+    }
+    .icon {
+      font-size: 30px;
+    }
+  }
+  .margin0 {
+    margin: 0px;
+  }
+  .df_jsb_ac {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .df_jc_ac {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .whiteColor {
+    color: #ffffff;
+  }
+  .stepCircleButton {
+    width: calc(100%);
+
+  }
+  .btn.btn-outline {
+    width: 60px;
+    height:60px;
+    border-radius: 50%;
+    border-width: 2px;
+    border-color:#ffffff;
+    color:#ffffff;
+  }
+  .btn.btn-outline.click {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border-width: 10px;
+    border-color:#A552E8;
+    color:#A552E8;
+  }
+  .btn.btn-outline.lastBotton {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border-width: 10px;
+    border-color:#2cbe2c;
+    color:#2cbe2c;
+  }
+  .clickedIcon {
+    color:#2cbe2c;
+    font-size: 60px;
+  }
+  // padding: 100px 0 30px 0;
+  // .tisdfsdfsdtle {
+  //   @include displayCenter(center, center);
+  //   margin-bottom: 40px;
+  //   h4 {
+  //     color: $white__color;
+  //     font-size: 30px;
+  //   }
+  // }
+}

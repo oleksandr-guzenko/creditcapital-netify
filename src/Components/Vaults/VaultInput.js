@@ -57,19 +57,6 @@ const VaultInput = ({
   }
   const options = [
     {
-      value: 'USDC',
-      label: (
-        <div className='d-flex align-items-center justify-content-between'>
-          <h6
-            className='mb-0'
-            style={{fontSize: '12px', marginLeft: '3px', color: '#fff'}}
-          >
-            USDC
-          </h6>
-        </div>
-      ),
-    },
-    {
       value: 'USDC-CAPL',
       label: (
         <div className='d-flex align-items-center justify-content-between'>
@@ -78,6 +65,19 @@ const VaultInput = ({
             style={{fontSize: '12px', marginLeft: '3px', color: '#fff'}}
           >
             USDC-CAPL
+          </h6>
+        </div>
+      ),
+    },
+    {
+      value: 'USDC',
+      label: (
+        <div className='d-flex align-items-center justify-content-between'>
+          <h6
+            className='mb-0'
+            style={{fontSize: '12px', marginLeft: '3px', color: '#fff'}}
+          >
+            USDC
           </h6>
         </div>
       ),
@@ -162,7 +162,7 @@ const VaultInput = ({
           allowLeadingZeros={false}
           decimalScale={digits}
           onValueChange={handlePriceChange}
-          placeholder='0.0000'
+          placeholder='0.0001'
           className='shadow-none form-control'
         />
         {/* <InputGroup.Text>MAX</InputGroup.Text> */}
