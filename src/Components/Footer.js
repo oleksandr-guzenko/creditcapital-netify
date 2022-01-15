@@ -1,6 +1,6 @@
 import React from 'react'
-import {Col, Container, Image, Row} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import { Col, Container, Image, Row } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 // SVgs
 import PaperIcon from '../Assets/social_icons/rocket.svg'
@@ -20,39 +20,10 @@ const Footer = () => {
                 <p>
                   &copy; {new Date().getFullYear()} CreditCapital All rights
                   reserved
-                  {/*
-		  <span>
-                    <Link to=''>Privacy Policy</Link>
-                  </span>
-                  |{' '}
-                  <span>
-                    <Link to=''>Terms of Services</Link>
-                  </span>
-		  */}
                 </p>
               </div>
             </Col>
             <Col xs={12} sm={12} md={12} lg={5} xl={5}>
-	      {/*
-              <div className='footer__bottom__right'>
-                <Link to=''>
-                  <Image src={PaperIcon} alt='' />
-                </Link>
-                <Link to=''>
-                  <Image src={DiscordIcon} alt='' />
-                </Link>
-                <Link to=''>
-                  <Image src={TwitterIcon} alt='' />
-                </Link>
-
-                <Link to=''>
-                  <Image src={FbIcon} alt='' />
-                </Link>
-                <Link to=''>
-                  <Image src={MediumIcon} alt='' />
-                </Link>
-              </div>
-	      */}
             </Col>
           </Row>
         </Container>

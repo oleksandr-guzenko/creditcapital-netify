@@ -7,6 +7,11 @@
 
 export const gasLimit = 1000000
 
+export const numberFormate_2 = (number) => {
+  return Number(number)?.toLocaleString(navigator.language, {
+    minimumFractionDigits: 2,
+  })
+}
 export const numberFormate = (number) => {
   return Number(number)?.toLocaleString(navigator.language, {
     minimumFractionDigits: 4,

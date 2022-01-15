@@ -1,11 +1,56 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { checkAndAddNetwork } from '../../../Redux/Profile/actions';
+import getContracts from '../../../Redux/Blockchain/contracts';
+import { convertTokenValue } from '../../../Redux/Swap/actions';
+import { gasLimit, gasPrice, priceConversion, numberFormate_2 } from '../../../Utilities/Util';
+import {
+    USDC_CAPLAPPROVE_SUCCESS,
+    APPROVING_FAIL,
+} from '../../../Redux/Swap/constans';
+
 const ApproveUSDC_CAPLAmount = ({ onFinish }) => {
+    const dispatch = useDispatch();
+    const {
+        ccptPrice,
+    } = useSelector((state) => state.swap)
 
     const handleProcess = () => {
-        // TODO: validation process
-        onFinish();
+        dispatch(approveUSDC_CAPL(ccptPrice, 'CAPL', 20))
+    }
+
+    const approveUSDC_CAPL = (ccptPrice, tokenType, minutes) => async (dispatch, getState) => {
+        try {
+            dispatch(checkAndAddNetwork());
+            const {
+                profile: { walletType, userAddress },
+            } = getState()
+
+            const { swap, USDC_CCPT_TOKEN, web3 } = getContracts(walletType)
+            const price = priceConversion('toWei', 'Mwei', ccptPrice, web3)
+            const newGasPrice = await gasPrice(web3)
+
+            const allowance = await USDC_CCPT_TOKEN.methods
+                .allowance(userAddress, swap._address)
+                .call()
+            if (allowance < price) {
+                await USDC_CCPT_TOKEN.methods
+                    .approve(swap._address, price)
+                    .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
+            }
+            dispatch({
+                type: USDC_CAPLAPPROVE_SUCCESS,
+                payload: 'CAPL_APPROVED',
+            })
+            onFinish();
+        } catch (error) {
+            dispatch({
+                type: APPROVING_FAIL,
+                payload: error?.message,
+            })
+        }
     }
     return (
         <div>

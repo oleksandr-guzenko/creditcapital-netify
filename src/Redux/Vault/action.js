@@ -1,9 +1,9 @@
-import {gasLimit, gasPrice, priceConversion} from '../../Utilities/Util'
-import {CCPTBnbAddress} from '../Blockchain/ABI/CCPTBNB'
-import {USDCBnbAddress} from '../Blockchain/ABI/USDCBNB'
+import { gasLimit, gasPrice, priceConversion } from '../../Utilities/Util'
+import { CCPTBnbAddress } from '../Blockchain/ABI/CCPTBNB'
+import { USDCBnbAddress } from '../Blockchain/ABI/USDCBNB'
 import getContracts from '../Blockchain/contracts'
-import {checkAndAddNetwork} from '../Profile/actions'
-import {getSwapTokenBalances} from '../Swap/actions'
+import { checkAndAddNetwork } from '../Profile/actions'
+import { getSwapTokenBalances } from '../Swap/actions'
 import {
   GET_CONVERTED_USDC_CCPT_VALUES_SUCCESS,
   GET_DEPOSITED_BALANCE_SUCCESS,
@@ -23,10 +23,10 @@ export const vaultDepositAndWithdrawTokens =
         type: VAULT_DEPOSIT_REQUEST,
       })
       const {
-        profile: {walletType, userAddress},
+        profile: { walletType, userAddress },
       } = getState()
 
-      const {REWARDS_VAULT, USDC_CCPT_TOKEN, USDCBNB, CCPTBNB, web3} =
+      const { REWARDS_VAULT, USDC_CCPT_TOKEN, USDCBNB, CCPTBNB, web3 } =
         getContracts(walletType)
       const newGasPrice = await gasPrice(web3)
 
@@ -36,14 +36,15 @@ export const vaultDepositAndWithdrawTokens =
         const allowance = await USDC_CCPT_TOKEN.methods
           .allowance(userAddress, REWARDS_VAULT._address)
           .call()
+        console.log('Deposit allowance', allowance, price)
         if (allowance < price) {
           await USDC_CCPT_TOKEN.methods
             .approve(REWARDS_VAULT._address, price)
-            .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+            .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
         }
         const transaction = await REWARDS_VAULT.methods
           .deposit(0, price)
-          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+          .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
 
         const tranHash = transaction.transactionHash
         dispatch({
@@ -56,7 +57,7 @@ export const vaultDepositAndWithdrawTokens =
         const price = (newAmount * 10 ** 18)?.toFixed(0)
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, price)
-          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+          .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
 
         const tranHash = transaction.transactionHash
         dispatch({
@@ -67,7 +68,7 @@ export const vaultDepositAndWithdrawTokens =
       } else if (type === 'rewards') {
         const transaction = await REWARDS_VAULT.methods
           .withdraw(0, 0)
-          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+          .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
         const tranHash = transaction.transactionHash
         dispatch({
           type: VAULT_DEPOSIT_SUCCESS,
@@ -79,15 +80,14 @@ export const vaultDepositAndWithdrawTokens =
         const allowance = await USDCBNB.methods
           .allowance(userAddress, REWARDS_VAULT._address)
           .call()
-        console.log(allowance)
         if (allowance < priceUSDC) {
           await USDCBNB.methods
             .approve(REWARDS_VAULT._address, priceUSDC)
-            .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+            .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
         }
         const transaction = await REWARDS_VAULT.methods
           .depositWithUsdc(0, priceUSDC)
-          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+          .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
 
         const tranHash = transaction.transactionHash
         dispatch({
@@ -105,11 +105,11 @@ export const vaultDepositAndWithdrawTokens =
         if (allowance < priceCAPL) {
           await CCPTBNB.methods
             .approve(REWARDS_VAULT._address, priceCAPL)
-            .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+            .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
         }
         const transaction = await REWARDS_VAULT.methods
           .depositWithCapl(0, priceCAPL)
-          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+          .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
 
         const tranHash = transaction.transactionHash
         dispatch({
@@ -136,10 +136,10 @@ export const transformTokens =
         payload: tokenType,
       })
       const {
-        profile: {walletType, userAddress},
+        profile: { walletType, userAddress },
       } = getState()
 
-      const {VAULTLP, USDCBNB, CCPTBNB, web3} = getContracts(walletType)
+      const { VAULTLP, USDCBNB, CCPTBNB, web3 } = getContracts(walletType)
       const price = priceConversion('toWei', 'Mwei', amount, web3)
       const newGasPrice = await gasPrice(web3)
 
@@ -150,11 +150,11 @@ export const transformTokens =
         if (allowance < price) {
           await USDCBNB.methods
             .approve(VAULTLP._address, price)
-            .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+            .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
         }
         const transaction = await VAULTLP.methods
           .addLiquidityUsdc(price, minutes * 60)
-          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+          .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
         const tranHash = transaction.transactionHash
         dispatch({
           type: VAULT_DEPOSIT_SUCCESS,
@@ -170,11 +170,11 @@ export const transformTokens =
         if (allowance < price) {
           await CCPTBNB.methods
             .approve(VAULTLP._address, price)
-            .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+            .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
         }
         const transaction = await VAULTLP.methods
           .addLiquidityCapl(price, minutes * 60)
-          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+          .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
         const tranHash = transaction.transactionHash
         dispatch({
           type: VAULT_DEPOSIT_SUCCESS,
@@ -197,9 +197,9 @@ export const removeLpAction =
         type: VAULT_DEPOSIT_REQUEST,
       })
       const {
-        profile: {walletType, userAddress},
+        profile: { walletType, userAddress },
       } = getState()
-      const {USDC_CCPT_TOKEN, web3, quickSwapRouter} = getContracts(walletType)
+      const { USDC_CCPT_TOKEN, web3, quickSwapRouter } = getContracts(walletType)
       const newAmount = parseFloat(amount) / 100000000
       const newGasPrice = await gasPrice(web3)
       const price = (newAmount * 10 ** 18)?.toFixed(0)
@@ -209,7 +209,7 @@ export const removeLpAction =
       if (allowance < price) {
         await USDC_CCPT_TOKEN.methods
           .approve(quickSwapRouter._address, price)
-          .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+          .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
       }
 
       const transaction = await quickSwapRouter.methods
@@ -222,7 +222,7 @@ export const removeLpAction =
           userAddress,
           Date.now() + minutes * 60
         )
-        .send({from: userAddress, gas: gasLimit, gasPrice: newGasPrice})
+        .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
 
       const tranHash = transaction.transactionHash
       dispatch({
@@ -293,13 +293,13 @@ export const clearHashValues = () => async (dispatch) => {
 export const sharesTotal = () => async (dispatch, getState) => {
   try {
     const {
-      profile: {walletType, userAddress},
-      vault: {reserves, dailyRewards, totalSup, LpTokenPrice},
-      swap: {caplPrice},
+      profile: { walletType, userAddress },
+      vault: { reserves, dailyRewards, totalSup, LpTokenPrice },
+      swap: { caplPrice },
     } = getState()
 
     if (reserves?._reserve0 && reserves?._reserve1) {
-      const {APY_VAULT, web3} = getContracts(walletType)
+      const { APY_VAULT, web3 } = getContracts(walletType)
       const res = await APY_VAULT.methods.sharesTotal().call()
       const mul = Number(res) * 100000000
       const totalLp = Number(priceConversion('fromWei', 'ether', mul, web3))
@@ -321,7 +321,7 @@ export const sharesTotal = () => async (dispatch, getState) => {
       const trans = (apr / 365 + 1) * 365 - 1
       dispatch({
         type: SHARES_TOTAL,
-        payload: {trans, totalLp, totalShares, LpTokenPrice, apr},
+        payload: { trans, totalLp, totalShares, LpTokenPrice, apr },
       })
     }
   } catch (error) {

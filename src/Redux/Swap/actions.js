@@ -226,7 +226,6 @@ export const convertTokenValue =
         profile: { walletType },
       } = getState()
       const { swap, web3 } = getContracts(walletType)
-      console.log('amount', amount)
       const price = priceConversion('toWei', 'Mwei', amount, web3)
 
       if (tokenType == 'USDC') {
@@ -234,7 +233,6 @@ export const convertTokenValue =
         const ccptPrice = Number(
           priceConversion('fromWei', 'Mwei', ccptAmount, web3)
         )?.toFixed(18)
-        console.log('ccptPrice', ccptPrice)
         dispatch({
           type: GET_CONVERTED_CCPT_VALUES_SUCCESS,
           payload: { ccptPrice },
@@ -368,7 +366,6 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
     dispatch({
       type: PROFILE_FAIL,
     })
-    console.log(error?.message)
   }
 }
 export const getSwapTokenBalancesPerSecond =
@@ -474,7 +471,6 @@ export const getSwapTokenBalancesPerSecond =
       dispatch({
         type: PROFILE_FAIL,
       })
-      console.log(error?.message)
     }
   }
 

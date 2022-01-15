@@ -1,4 +1,4 @@
-import {CANCEL_LOADING, GET_CAPL_PRICE, PROFILE_FAIL} from './constans'
+import { CANCEL_LOADING, GET_CAPL_PRICE, PROFILE_FAIL } from './constans'
 import {
   GET_CONVERTED_CCPT_VALUES_SUCCESS,
   GET_CONVERTED_USDC_VALUES_SUCCESS,
@@ -9,6 +9,8 @@ import {
   SWAPPING_SUCCESS,
   PROFILE_REQ,
   PROFILE_SUCC,
+  USDCAPPROVE_REQUEST,
+  APPROVING_FAIL,
 } from './constans'
 
 const initialState = {
@@ -23,6 +25,7 @@ const initialState = {
   balanceLoading: false,
   balanceError: false,
   caplPrice: '',
+  approveLoading: false,
 }
 export const swapReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -94,6 +97,17 @@ export const swapReducer = (state = initialState, action) => {
       return {
         ...state,
         swapLoading: false,
+      }
+    case USDCAPPROVE_REQUEST:
+      return {
+        ...state,
+        approveLoading: true,
+      }
+    case APPROVING_FAIL:
+      return {
+        ...state,
+        approveLoading: false,
+        approveError: action.payload,
       }
     default:
       return state

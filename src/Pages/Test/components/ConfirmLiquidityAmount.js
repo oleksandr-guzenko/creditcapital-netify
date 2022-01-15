@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addLiquidityTokens_New, REMOVE_hash } from '../../../Redux/Swap/actions';
+import { addLiquidityTokens, REMOVE_hash } from '../../../Redux/Swap/actions';
 import SwapLoading from '../../../Components/Modals/SwapModals/SwapLoading';
 import SwapSuccess from '../../../Components/Modals/SwapModals/SwapSuccess';
 
-const ConfirmLiquidityAmount = ({ onFinish }) => {
+const ConfirmLiquidityAmount = ({ onFinish, usdcAmount }) => {
     const dispatch = useDispatch();
     const {
         ccptPrice,
@@ -14,7 +14,7 @@ const ConfirmLiquidityAmount = ({ onFinish }) => {
 
     } = useSelector((state) => state.swap)
     const { userAddress } = useSelector((state) => state.profile)
-    const [price, setUsdc_CaplPrice] = useState(0);
+    const [price, setUsdc_CaplPrice] = useState('');
     const [swapLoad, setSwapLoad] = useState(false)
     const [swapSucc, setSwapSucc] = useState(false)
 
@@ -45,7 +45,8 @@ const ConfirmLiquidityAmount = ({ onFinish }) => {
     }
 
     const makeLiquidity = () => {
-        dispatch(addLiquidityTokens_New(ccptPrice, price, 20))
+        // dispatch(addLiquidityTokens_New(ccptPrice, price, 20))
+        dispatch(addLiquidityTokens(ccptPrice, price, 20))
     }
 
     const handleProcess = () => {
@@ -80,14 +81,14 @@ const ConfirmLiquidityAmount = ({ onFinish }) => {
                     <h4 className='margin0 whiteColor'>Confirm the Liquidity Amount</h4>
                 </button>
             </div>
-            {/* <SwapLoading show={swapLoad} handleClose={() => setSwapLoad(false)} />
+            <SwapLoading show={swapLoad} handleClose={() => setSwapLoad(false)} />
             <SwapSuccess
                 show={swapSucc}
                 handleClose={() => {
                     setSwapSucc(false)
-                    // dispatch(REMOVE_hash())
+                    dispatch(REMOVE_hash())
                 }}
-            /> */}
+            />
         </>
 
     )

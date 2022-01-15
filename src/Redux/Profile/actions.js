@@ -1,5 +1,5 @@
-import {CHECK_ADMIN, CONNECT_WALLET} from './constants'
-import getContracts, {ethereum, walletLink} from '../Blockchain/contracts'
+import { CHECK_ADMIN, CONNECT_WALLET } from './constants'
+import getContracts, { ethereum, walletLink } from '../Blockchain/contracts'
 // Real Network
 
 const data = [
@@ -68,10 +68,9 @@ export const checkAndAddNetwork = () => async () => {
   try {
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{chainId: data[0]?.chainId}],
+      params: [{ chainId: data[0]?.chainId }],
     })
   } catch (error) {
-    console.log(error)
     if (error?.code === 4902) {
       try {
         await window.ethereum.request({
@@ -79,7 +78,7 @@ export const checkAndAddNetwork = () => async () => {
           params: data,
         })
       } catch (addError) {
-        console.error(addError?.message)
+        console.error('CheckAndAnddNetwork', addError?.message)
       }
     }
   }
@@ -118,9 +117,9 @@ export const connToCoinbase = () => async (dispatch) => {
 
 export const disConnectWallet = () => async (dispatch, getState) => {
   const {
-    profile: {userAddress, walletType},
+    profile: { userAddress, walletType },
   } = getState()
-  const {web3} = getContracts(walletType)
+  const { web3 } = getContracts(walletType)
   localStorage.removeItem('walletType')
   await web3.currentProvider._handleDisconnect()
   walletLink.disconnect()
@@ -128,7 +127,7 @@ export const disConnectWallet = () => async (dispatch, getState) => {
 
 export const checkAdminAddress = () => async (dispatch, getState) => {
   const {
-    profile: {userAddress},
+    profile: { userAddress },
   } = getState()
 
   const addresses = [

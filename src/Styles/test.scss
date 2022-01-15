@@ -5,7 +5,6 @@
   align-items: center;
   top: 80px;
   height: 80vh;  
-  background-color: #000000;
   .body {
     width: calc(70%);
     // height: calc(90%);
@@ -62,12 +61,24 @@
     justify-content: center;
     align-items: center;
   }
+  .bg_c_translate {
+    background-color: transparent;
+  }
   .whiteColor {
     color: #ffffff;
   }
+  .logoImgWH {
+    width: 40px;
+    height: 40px;
+  }
   .stepCircleButton {
     width: calc(100%);
-
+  }
+  .disabledBtn {
+    cursor: not-allowed !important;
+    &:hover {
+      transform: translateY(0) !important;
+    }
   }
   .btn.btn-outline {
     width: 60px;

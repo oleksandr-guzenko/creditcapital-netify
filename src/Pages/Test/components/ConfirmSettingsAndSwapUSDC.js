@@ -1,40 +1,48 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types';
-// import { ethers } from 'ethers';
-// import Web3Modal from 'web3modal'
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import NumberFormat from 'react-number-format'
-import { gasLimit, gasPrice, priceConversion } from '../../../Utilities/Util'
-import { checkAndAddNetwork } from '../../../Redux/Profile/actions'
-import getContracts from '../../../Redux/Blockchain/contracts'
-import { convertTokenValue } from '../../../Redux/Swap/actions'
+import { InputGroup, Image } from 'react-bootstrap';
+import NumberFormat from 'react-number-format';
+import PropTypes from 'prop-types';
+import { gasLimit, gasPrice, priceConversion, numberFormate_2 } from '../../../Utilities/Util';
+import { checkAndAddNetwork } from '../../../Redux/Profile/actions';
+import getContracts from '../../../Redux/Blockchain/contracts';
+import { convertTokenValue } from '../../../Redux/Swap/actions';
+import { APPROVING_FAIL, } from '../../../Redux/Swap/constans';
+
 import {
-    APPROVING_FAIL,
-    USDCAPPROVE_SUCCESS,
-} from '../../../Redux/Swap/constans'
-import { FiRefreshCcw } from "react-icons/fi";
+    Card, CardHeader, CardBody, CardBodyJbAc,
+    InputGroupDiv,
+    DIV_JBAC, DIV_JCAC,
+    ConfirmButton, DisableConfirmButton,
+    H2CardTitle, H5Margin0,
+    USDCSPAN
+} from '../Layout';
+import Logo from '../../../Assets/CAPL.svg';
 
 const ConfirmSettingsAndSwapUSDC = ({ onFinish, setUsdcAmout }) => {
     const dispatch = useDispatch();
     const {
+        swapHash,
+        swapLoading,
         ccptPrice,
-    } = useSelector((state) => state.swap)
-    const [Usdc_Price, setUsdcPrice] = useState(0);
+        usdcPrice,
+        usdcBNBBalance,
+        balanceLoading,
+        ccptBNBBalance,
+    } = useSelector((state) => state.swap);
+    const { userAddress } = useSelector((state) => state.profile);
 
-    const handlePriceChange = (e) => {
-        const { value } = e.target;
-        const priceRegex = /^[0-9]*\.?[0-9]*$/
+    const [errors, setErrors] = useState(false);
+    const [Usdc_Price, setUsdcPrice] = useState('');
 
-        if (priceRegex.test(value)) {
-            setUsdcPrice(value)
-            dispatch(convertTokenValue(value, 'USDC'))
-        }
+    const handlePriceChange = (number) => {
+        setUsdcPrice(number.value)
+        dispatch(convertTokenValue(number.value, 'USDC'))
     }
 
     const handleProcess = () => {
         setUsdcAmout(Usdc_Price)
         dispatch(approveUSDC(Usdc_Price, 'USDC', 20))
-        onFinish();
     }
 
     const approveUSDC = (Usdc_Price, tokenType, minutes) => async (dispatch, getState) => {
@@ -43,94 +51,107 @@ const ConfirmSettingsAndSwapUSDC = ({ onFinish, setUsdcAmout }) => {
             const {
                 profile: { walletType, userAddress },
             } = getState()
-            console.log('profile', walletType, userAddress);
             const { swap, USDCBNB, CCPTBNB, web3 } = getContracts(walletType)
-            console.log('Usdc_Price', Usdc_Price);
             const price = priceConversion('toWei', 'Mwei', Usdc_Price, web3)
-            console.log('price', price);
             const newGasPrice = await gasPrice(web3)
-            console.log('newGasPrice', newGasPrice);
 
             const allowance = await USDCBNB.methods
                 .allowance(userAddress, swap._address)
                 .call()
             if (allowance < price) {
-                console.log('allowance', allowance);
                 await USDCBNB.methods
                     .approve(swap._address, price)
                     .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
+
             }
-
-            dispatch({
-                type: USDCAPPROVE_SUCCESS,
-                payload: 'USDC_APPROVED',
-            })
-
-            console.log('USDCAPPROVE_SUCCESS', USDCAPPROVE_SUCCESS)
+            onFinish();
         } catch (error) {
             dispatch({
                 type: APPROVING_FAIL,
                 payload: error?.message,
             })
         }
-
-        // const web3Modal = new Web3Modal();
-        // const connection = await web3Modal.connect();
-        // const provider = new ethers.providers.Web3Provider(connection);
-        // const signer = provider.getSigner();
-
-        // const priceApprove = ethers.utils.parseUnits(Usdc_Price.toString(), 'ether');
-        // console.log('proveApprove', priceApprove)
-        // const usdcContract = new ethers.Contract('TokenAddress', 'BUSD/abi', singer);
-
-        // await usdcContract.approve(vintagetokenaddress, priceApprove)
-
-        // TODO: validation process
-        // onFinish();
     }
+    useEffect(() => {
+        if (
+            Number(Usdc_Price) > Number(usdcBNBBalance) ||
+            Usdc_Price === '' || parseFloat(Usdc_Price) === 0 ||
+            parseFloat(usdcBNBBalance) === 0 || !userAddress
+        ) {
+            setErrors(true)
+        } else {
+            setErrors(false)
+        }
+    }, [Usdc_Price, ccptBNBBalance, usdcBNBBalance, userAddress])
 
     return (
         <div>
             <div className='step'>
-                <div className="card bg-transparent mb-3 border-color" >
-                    <div className="card-header bg-transparent border-color">
-                        <h2 className="card-title margin0">Step 1: Approve USDC</h2>
-                    </div>
-                    <div className="card-body text-light df_jsb_ac color">
-                        <h5 className='margin0'>Choose USDC Amount</h5>
-                        <div className="input-group amountInputGroup">
-                            <input type="number" className="form-control bg-transparent border-color IVFS whiteColor endValue" placeholder="0.0000" aria-label="0.0000" aria-describedby="basic-addon2"
-                                onChange={handlePriceChange}
-                            />
-                            <span className="input-group-text bg-transparent border-color whiteColor" id="basic-addon2">USDC</span>
-                        </div>
-                    </div>
-                </div>
+                <Card>
+                    <CardHeader>
+                        <H2CardTitle>
+                            Step 1: Approve USDC
+                        </H2CardTitle>
+                    </CardHeader>
+                    <CardBodyJbAc>
+                        <H5Margin0>
+                            Choose USDC Amount
+                        </H5Margin0>
+                        <InputGroupDiv>
+                            <InputGroup >
+                                <NumberFormat
+                                    thousandsGroupStyle='thousand'
+                                    value={Usdc_Price}
+                                    decimalSeparator='.'
+                                    displayType='input'
+                                    type='text'
+                                    thousandSeparator={true}
+                                    allowNegative={false}
+                                    fixedDecimalScale={true}
+                                    allowLeadingZeros={false}
+                                    decimalScale={4}
+                                    onValueChange={handlePriceChange}
+                                    placeholder='0.00'
+                                    className='shadow-none form-control border-color IVFS endValue'
+                                    style={{ backgroundColor: 'transparent', color: 'white' }}
+                                />
+                                <USDCSPAN id="basic-addon2">USDC</USDCSPAN>
+                            </InputGroup>
+                        </InputGroupDiv>
+                    </CardBodyJbAc>
+                </Card>
             </div>
             <div className='summary'>
-                <div className="card bg-transparent mb-4 border-color" >
-                    <div className="card-header  bg-transparent border-color">
-                        <h2 className="card-title margin0">Summary</h2>
-                    </div>
-                    <div className="card-body text-light color">
-                        <div className='mb-3 df_jsb_ac'>
-                            <h5 className='margin0'>Total</h5>
-                            <h5 className='margin0 whiteColor'>${ccptPrice}</h5>
-                        </div>
-                        <div className='df_jsb_ac'>
+                <Card className='mb-4'>
+                    <CardHeader>
+                        <H2CardTitle>
+                            Summary
+                        </H2CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                        <DIV_JBAC className='mb-3'>
+                            <H5Margin0>
+                                Total
+                            </H5Margin0>
+                            <H5Margin0 style={{ color: '#ffffff' }}>
+                                ${numberFormate_2(Usdc_Price * 0.999)}
+                            </H5Margin0>
+                        </DIV_JBAC>
+                        <DIV_JBAC>
                             <h5>Potential Weekly Yield</h5>
-                            <div className='df_jc_ac'>
-                                <h5 className='margin0 whiteColor'>500 CAPL</h5>
-                                &nbsp;&nbsp;<FiRefreshCcw className='IVFS' />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            <DIV_JCAC>
+                                <H5Margin0 style={{ color: '#ffffff' }}>500 CAPL</H5Margin0>
+                                &nbsp;&nbsp;<Image src={Logo} alt='' className='logoImgWH' />
+                            </DIV_JCAC>
+                        </DIV_JBAC>
+                    </CardBody>
+                </Card>
             </div>
-            <button className="btn btn-confirm mb-4" type="button" onClick={handleProcess}>
+            <button className={`btn-confirm mb-4 ${errors ? 'disabledBtn' : 'btn'}`}
+                disabled={errors} type="button" onClick={handleProcess}>
                 <h4 className='margin0 whiteColor'>Confirm Settings & Swap USDC</h4>
             </button>
-        </div>
+        </div >
     )
 }
 

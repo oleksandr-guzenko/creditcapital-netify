@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import { Image, Modal } from 'react-bootstrap'
-import { CgClose } from 'react-icons/cg'
-import { useSelector, useDispatch } from 'react-redux'
-import { cancelLoading } from '../../../Redux/Swap/actions'
+import React, {useEffect, useState} from 'react'
+import {Image, Modal} from 'react-bootstrap'
+import {CgClose} from 'react-icons/cg'
+import {useSelector, useDispatch} from 'react-redux'
+import {cancelLoading} from '../../../Redux/Swap/actions'
 
 // image
 import Loader from '../../../Assets/Loader.svg'
 
 // redux import
-const SwapLoading = ({ show, handleClose }) => {
+const SwapLoading = ({show, handleClose}) => {
   const dispatch = useDispatch()
   const [visibleCloseModal, setVisibleCloseModal] = useState(false)
-  const { swapLoading, approveLoading } = useSelector((state) => state.swap)
-  const { vaultLoading } = useSelector((state) => state.vault)
+  const {swapLoading} = useSelector((state) => state.swap)
+  const {vaultLoading} = useSelector((state) => state.vault)
 
   useEffect(() => {
-    if (swapLoading || vaultLoading || approveLoading) {
+    if (swapLoading || vaultLoading) {
       setTimeout(() => {
         setVisibleCloseModal(true)
       }, 60000)
     }
-  }, [swapLoading, vaultLoading, approveLoading])
+  }, [swapLoading, vaultLoading])
 
   const cancelLoadingModal = () => {
     dispatch(cancelLoading())

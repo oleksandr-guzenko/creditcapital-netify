@@ -28,8 +28,8 @@ const Test = () => {
         <div className='content'>
           {step === 1 && <ConfirmSettingsAndSwapUSDC onFinish={increaseStep} setUsdcAmout={setUsdcAmout} />}
           {step === 2 && <ConfirmSwapUSDCForCAPL onFinish={increaseStep} usdcAmount={usdcAmount} />}
-          {step === 3 && <ApproveCAPLConversion onFinish={increaseStep} />}
-          {step === 4 && <ConfirmLiquidityAmount onFinish={increaseStep} />}
+          {step === 3 && <ApproveCAPLConversion onFinish={increaseStep} usdcAmount={usdcAmount} />}
+          {step === 4 && <ConfirmLiquidityAmount onFinish={increaseStep} usdcAmount={usdcAmount} />}
           {step === 5 && <ApproveUSDC_CAPLAmount onFinish={increaseStep} />}
           {step === 6 && <ApproveStakingOfUSDC_CAPL onFinish={increaseStep} />}
           {step === 7 && <ConfirmStakingWizard />}

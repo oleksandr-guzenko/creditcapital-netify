@@ -115,8 +115,6 @@ const SwapPool = () => {
   }
 
   const MaxValue = (value) => {
-    console.log('firstToken', firstToken)
-    console.log('usdcBNBBalance', value)
     const priceRegex = /^[0-9]*\.?[0-9]*$/
     if (value === '') {
       setPrice('')
@@ -146,8 +144,6 @@ const SwapPool = () => {
   }
 
   useEffect(() => {
-    console.log('toggle', toggle)
-    console.log('###', toggle, price, ccptBNBBalance, usdcBNBBalance, balanceLoading, userAddress)
     if (!toggle) {
       if (
         Number(price) > Number(usdcBNBBalance) ||
@@ -157,7 +153,6 @@ const SwapPool = () => {
         !userAddress ||
         balanceLoading
       ) {
-        console.log('!!!!!!!!!')
         setErrors(true)
       } else {
         setErrors(false)

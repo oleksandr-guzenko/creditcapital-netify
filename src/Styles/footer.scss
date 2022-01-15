@@ -51,6 +51,9 @@ footer {
     }
   }
   .footer__bottom {
+    position: fixed;
+    width: calc(100%);
+    bottom: 0px;
     color: $white__color !important;
     padding: 25px 15px;
     background: linear-gradient(90deg, #000850 0%, #000320 100%),
@@ -67,19 +70,7 @@ footer {
         #0f0a3c 67%,
         #0f0a3c 100%
       );
-    // background-image: linear-gradient(239deg, #74ebd5 0%, #9face6 100%);
-    // background: #ffafbd; /* fallback for old browsers */
-    // background: -webkit-linear-gradient(
-    //   to right,
-    //   #ffc3a0,
-    //   #ffafbd
-    // ); /* Chrome 10-25, Safari 5.1-6 */
-    // background: linear-gradient(
-    //   to right,
-    //   #ffc3a0,
-    //   #ffafbd
-    // ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    
     &__left {
       p,
       a {
