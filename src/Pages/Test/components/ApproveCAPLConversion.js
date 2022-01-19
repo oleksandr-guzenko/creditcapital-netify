@@ -20,9 +20,10 @@ import {
     H2CardTitle, H5Margin0,
     USDCSPAN
 } from '../Layout';
-const ApproveCAPLConversion = ({ onFinish, usdcAmount }) => {
+const ApproveCAPLConversion = ({ onFinish }) => {
     const dispatch = useDispatch();
     const {
+        token,
         swapHash,
         swapLoading,
         ccptPrice,
@@ -36,28 +37,37 @@ const ApproveCAPLConversion = ({ onFinish, usdcAmount }) => {
     const [errors, setErrors] = useState(false);
 
     const handleProcess = () => {
-        dispatch(approveUSDC(ccptPrice, 'CAPL', 20));
-        onFinish();
+        dispatch(approveCAPL(token === 'USDC' ? ccptPrice : usdcPrice, token === 'USDC' ? 'CAPL' : 'USDC', 20));
     }
 
-    const approveUSDC = (ccptPrice, tokenType, minutes) => async (dispatch, getState) => {
+    const approveCAPL = (amount, tokenType, minutes) => async (dispatch, getState) => {
         try {
-            dispatch(checkAndAddNetwork());
+            dispatch(checkAndAddNetwork())
             const {
                 profile: { walletType, userAddress },
-            } = getState();
+            } = getState()
+            const { swap, USDCBNB, CCPTBNB, web3 } = getContracts(walletType)
+            const newGasPrice = await gasPrice(web3)
+            if (tokenType === 'USDC') {
+                const allowance = await USDCBNB.methods
+                    .allowance(userAddress, swap._address)
+                    .call()
+                if (allowance < amount) {
+                    await USDCBNB.methods
+                        .approve(swap._address, amount)
+                        .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
+                }
+            }
 
-            const { swap, USDCBNB, CCPTBNB, web3 } = getContracts(walletType);
-            const price = priceConversion('toWei', 'Mwei', ccptPrice, web3);
-            const newGasPrice = await gasPrice(web3);
-
-            const allowance = await CCPTBNB.methods
-                .allowance(userAddress, swap._address)
-                .call();
-            if (allowance < price) {
-                await CCPTBNB.methods
-                    .approve(swap._address, price)
-                    .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice });
+            if (tokenType === 'CAPL') {
+                const allowance = await CCPTBNB.methods
+                    .allowance(userAddress, swap._address)
+                    .call()
+                if (allowance < amount) {
+                    await CCPTBNB.methods
+                        .approve(swap._address, amount)
+                        .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
+                }
             }
             onFinish();
         } catch (error) {
@@ -67,18 +77,36 @@ const ApproveCAPLConversion = ({ onFinish, usdcAmount }) => {
             })
         }
     }
-    useEffect(() => {
-        if (
-            Number(usdcAmount) > Number(usdcBNBBalance) ||
-            usdcAmount === '' || parseFloat(usdcAmount) === 0 ||
-            parseFloat(usdcBNBBalance) === 0 || !userAddress
-        ) {
-            setErrors(true)
-        } else {
-            setErrors(false)
-        }
-    }, [usdcAmount, ccptBNBBalance, usdcBNBBalance, userAddress])
 
+    useEffect(() => {
+        if (token === 'USDC') {
+            if (
+                Number(usdcPrice) > Number(usdcBNBBalance) ||
+                usdcPrice === '' ||
+                parseFloat(usdcPrice) === 0 ||
+                parseFloat(usdcBNBBalance) === 0 ||
+                !userAddress ||
+                balanceLoading
+            ) {
+                setErrors(true)
+            } else {
+                setErrors(false)
+            }
+        } else if (token === 'CAPL') {
+            if (
+                Number(ccptPrice) > Number(ccptBNBBalance) ||
+                balanceLoading ||
+                ccptPrice === '' ||
+                parseFloat(ccptPrice) === 0 ||
+                parseFloat(ccptBNBBalance) === 0 ||
+                !userAddress
+            ) {
+                setErrors(true)
+            } else {
+                setErrors(false)
+            }
+        }
+    }, [token, usdcPrice, ccptPrice, ccptBNBBalance, usdcBNBBalance, balanceLoading, userAddress])
 
     return (
         <div>
@@ -86,21 +114,21 @@ const ApproveCAPLConversion = ({ onFinish, usdcAmount }) => {
                 <Card>
                     <CardHeader>
                         <H2CardTitle>
-                            Step 3: Approve CAPL
+                            Step 3: Approve {token === 'USDC' ? 'CAPL' : 'USDC'}
                         </H2CardTitle>
                     </CardHeader>
                     <CardBody>
                         <DIV_JBAC className='mb-4'>
-                            <H5Margin0>USDC AMount to Swap for CAPL</H5Margin0>
+                            <H5Margin0>{token} Amount to Swap for {token === 'USDC' ? 'CAPL' : 'USDC'}</H5Margin0>
                             <InputGroupDiv>
-                                <input type="number" className="form-control bg-transparent border-color IVFS whiteColor endValue" value={usdcAmount} readOnly aria-label="" aria-describedby="basic-addon2" />
-                                <USDCSPAN id="basic-addon2">USDC</USDCSPAN>
+                                <input type="number" className="form-control bg-transparent border-color IVFS whiteColor endValue" value={token === 'USDC' ? usdcPrice : ccptPrice} readOnly aria-label="" aria-describedby="basic-addon2" />
+                                <USDCSPAN id="basic-addon2">{token}</USDCSPAN>
                             </InputGroupDiv>
                         </DIV_JBAC>
                         <DIV_JBAC>
-                            <h5>CAPL Amount to Receive</h5>
+                            <h5> {token === 'USDC' ? 'CAPL' : 'USDC'} Amount to Receive</h5>
                             <DIV_JCAC>
-                                <H5Margin0>{numberFormate_2(ccptPrice)}</H5Margin0>
+                                <H5Margin0>{numberFormate_2(token === 'USDC' ? ccptPrice : usdcPrice)}</H5Margin0>
                                 &nbsp;&nbsp;<Image src={Logo} alt='' className='logoImgWH' />
                             </DIV_JCAC>
                         </DIV_JBAC>
@@ -109,7 +137,7 @@ const ApproveCAPLConversion = ({ onFinish, usdcAmount }) => {
             </div>
             <button className={`btn-confirm mb-4 ${errors ? 'disabledBtn' : 'btn'}`}
                 disabled={errors} type="button" onClick={handleProcess}>
-                <h4 className='margin0 whiteColor'>Approve CAPL Conversion</h4>
+                <h4 className='margin0 whiteColor'>Approve {token === 'USDC' ? 'CAPL' : 'USDC'} Conversion</h4>
             </button>
         </div>
     )

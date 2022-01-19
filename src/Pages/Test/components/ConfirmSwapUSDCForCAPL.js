@@ -14,6 +14,10 @@ import {
 } from '../../../Redux/Swap/actions';
 
 import {
+    SWAPPING_FAIL,
+} from '../../../Redux/Swap/constans'
+
+import {
     Card, CardHeader, CardBody, CardBodyJbAc,
     InputGroupDiv,
     DIV_JBAC, DIV_JCAC,
@@ -25,11 +29,13 @@ import {
 import SwapLoading from '../../../Components/Modals/SwapModals/SwapLoading'
 import SwapSuccess from '../../../Components/Modals/SwapModals/SwapSuccess'
 
-const ConfirmSwapUSDCForCAPL = ({ onFinish, usdcAmount }) => {
+const ConfirmSwapUSDCForCAPL = ({ onFinish }) => {
     const dispatch = useDispatch();
     const {
+        token,
         swapHash,
         swapLoading,
+        swapError,
         ccptPrice,
         usdcPrice,
         usdcBNBBalance,
@@ -37,7 +43,6 @@ const ConfirmSwapUSDCForCAPL = ({ onFinish, usdcAmount }) => {
         ccptBNBBalance,
     } = useSelector((state) => state.swap)
     const { userAddress } = useSelector((state) => state.profile)
-
     const [errors, setErrors] = useState(false);
     const [swapLoad, setSwapLoad] = useState(false)
     const [swapSucc, setSwapSucc] = useState(false)
@@ -59,20 +64,47 @@ const ConfirmSwapUSDCForCAPL = ({ onFinish, usdcAmount }) => {
     }, [swapHash])
 
     useEffect(() => {
-        if (
-            Number(usdcAmount) > Number(usdcBNBBalance) ||
-            usdcAmount === '' || parseFloat(usdcAmount) === 0 ||
-            parseFloat(usdcBNBBalance) === 0 || !userAddress
-        ) {
-            setErrors(true)
-        } else {
-            setErrors(false)
+        if (token === 'USDC') {
+            if (
+                Number(usdcPrice) > Number(usdcBNBBalance) ||
+                usdcPrice === '' ||
+                parseFloat(usdcPrice) === 0 ||
+                parseFloat(usdcBNBBalance) === 0 ||
+                !userAddress ||
+                balanceLoading
+            ) {
+                setErrors(true)
+            } else {
+                setErrors(false)
+            }
+        } else if (token === 'CAPL') {
+            if (
+                Number(ccptPrice) > Number(ccptBNBBalance) ||
+                balanceLoading ||
+                ccptPrice === '' ||
+                parseFloat(ccptPrice) === 0 ||
+                parseFloat(ccptBNBBalance) === 0 ||
+                !userAddress
+            ) {
+                setErrors(true)
+            } else {
+                setErrors(false)
+            }
         }
-    }, [ccptPrice, ccptBNBBalance, usdcBNBBalance, userAddress])
+    }, [token, usdcPrice, ccptPrice, ccptBNBBalance, usdcBNBBalance, balanceLoading, userAddress])
 
     const handleProcess = () => {
-        // dispatch(swapTokens(usdcAmount, 'USDC', 20))
-        onFinish();
+        try {
+            dispatch(swapTokens(token === 'USDC' ? usdcPrice : ccptPrice, token, 20))
+        } catch (error) {
+            dispatch({
+                type: SWAPPING_FAIL,
+                payload: error?.message,
+            })
+        }
+        if (swapHash) {
+            onFinish();
+        }
     }
     return (
         <>
@@ -81,21 +113,21 @@ const ConfirmSwapUSDCForCAPL = ({ onFinish, usdcAmount }) => {
                     <Card>
                         <CardHeader>
                             <H2CardTitle>
-                                Step 2: Swap USDC for CAPL
+                                Step 2: Swap {token} for {token === 'USDC' ? 'CAPL' : 'USDC'}
                             </H2CardTitle>
                         </CardHeader>
                         <CardBody>
                             <DIV_JBAC className='mb-4'>
-                                <H5Margin0>USDC AMount to Swap for CAPL</H5Margin0>
+                                <H5Margin0>{token} AMount to Swap for {token === 'USDC' ? 'CAPL' : 'USDC'}</H5Margin0>
                                 <InputGroupDiv>
-                                    <input type="number" className="form-control bg-transparent border-color IVFS whiteColor endValue" value={usdcAmount} readOnly aria-label="" aria-describedby="basic-addon2" />
-                                    <USDCSPAN id="basic-addon2">USDC</USDCSPAN>
+                                    <input type="number" className="form-control bg-transparent border-color IVFS whiteColor endValue" value={token === 'USDC' ? usdcPrice : ccptPrice} readOnly aria-label="" aria-describedby="basic-addon2" />
+                                    <USDCSPAN id="basic-addon2">{token}</USDCSPAN>
                                 </InputGroupDiv>
                             </DIV_JBAC>
                             <DIV_JBAC>
-                                <h5>CAPL Amount to Receive</h5>
+                                <h5>{token === 'USDC' ? 'CAPL' : 'USDC'} Amount to Receive</h5>
                                 <DIV_JCAC>
-                                    <H5Margin0>{numberFormate_2(ccptPrice)}</H5Margin0>
+                                    <H5Margin0>{numberFormate_2(token === 'USDC' ? ccptPrice : usdcPrice)}</H5Margin0>
                                     &nbsp;&nbsp;<Image src={Logo} alt='' className='logoImgWH' />
                                 </DIV_JCAC>
                             </DIV_JBAC>
@@ -104,7 +136,7 @@ const ConfirmSwapUSDCForCAPL = ({ onFinish, usdcAmount }) => {
                 </div>
                 <button className={`btn-confirm mb-4 ${errors ? 'disabledBtn' : 'btn'}`}
                     disabled={errors} type="button" onClick={handleProcess}>
-                    <h4 className='margin0 whiteColor'>Confirm Swap USDC for CAPL</h4>
+                    <h4 className='margin0 whiteColor'>Confirm Swap {token} for {token === 'USDC' ? 'CAPL' : 'USDC'}</h4>
                 </button>
             </div>
             <SwapLoading show={swapLoad} handleClose={() => setSwapLoad(false)} />

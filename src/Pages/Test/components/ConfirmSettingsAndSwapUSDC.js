@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputGroup, Image } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
@@ -7,7 +7,7 @@ import { gasLimit, gasPrice, priceConversion, numberFormate_2 } from '../../../U
 import { checkAndAddNetwork } from '../../../Redux/Profile/actions';
 import getContracts from '../../../Redux/Blockchain/contracts';
 import { convertTokenValue } from '../../../Redux/Swap/actions';
-import { APPROVING_FAIL, } from '../../../Redux/Swap/constans';
+import { TOKEN, APPROVING_FAIL, GET_CONVERTED_CCPT_VALUES_SUCCESS, GET_CONVERTED_USDC_VALUES_SUCCESS } from '../../../Redux/Swap/constans';
 
 import {
     Card, CardHeader, CardBody, CardBodyJbAc,
@@ -19,9 +19,11 @@ import {
 } from '../Layout';
 import Logo from '../../../Assets/CAPL.svg';
 
-const ConfirmSettingsAndSwapUSDC = ({ onFinish, setUsdcAmout }) => {
+const ConfirmSettingsAndSwapUSDC = ({ onFinish }) => {
     const dispatch = useDispatch();
     const {
+        token,
+        usdcApprove,
         swapHash,
         swapLoading,
         ccptPrice,
@@ -33,36 +35,69 @@ const ConfirmSettingsAndSwapUSDC = ({ onFinish, setUsdcAmout }) => {
     const { userAddress } = useSelector((state) => state.profile);
 
     const [errors, setErrors] = useState(false);
-    const [Usdc_Price, setUsdcPrice] = useState('');
+    const [amount, setAmount] = useState('');
+
+    const handleChooseToken = () => {
+        var changeToken = token === 'USDC' ? 'CAPL' : 'USDC';
+        dispatch(dispatchToken(changeToken))
+    }
+
+    const dispatchToken = (changeToken) => async (dispatch, getState) => {
+        dispatch({
+            type: TOKEN,
+            payload: { changeToken },
+        })
+    }
 
     const handlePriceChange = (number) => {
-        setUsdcPrice(number.value)
-        dispatch(convertTokenValue(number.value, 'USDC'))
+        setAmount(number.value)
     }
 
     const handleProcess = () => {
-        setUsdcAmout(Usdc_Price)
-        dispatch(approveUSDC(Usdc_Price, 'USDC', 20))
+        dispatch(approveUSDC(amount / 2, token, 20))
     }
 
-    const approveUSDC = (Usdc_Price, tokenType, minutes) => async (dispatch, getState) => {
+    const approveUSDC = (amount, tokenType, minutes) => async (dispatch, getState) => {
         try {
             dispatch(checkAndAddNetwork())
             const {
                 profile: { walletType, userAddress },
             } = getState()
             const { swap, USDCBNB, CCPTBNB, web3 } = getContracts(walletType)
-            const price = priceConversion('toWei', 'Mwei', Usdc_Price, web3)
+            const price = priceConversion('toWei', 'Mwei', amount, web3)
             const newGasPrice = await gasPrice(web3)
+            if (tokenType === 'USDC') {
+                const allowance = await USDCBNB.methods
+                    .allowance(userAddress, swap._address)
+                    .call()
+                if (allowance < price) {
+                    await USDCBNB.methods
+                        .approve(swap._address, price)
+                        .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
+                }
+                dispatch(convertTokenValue(amount, 'USDC'))
+                const usdcPrice = amount;
+                dispatch({
+                    type: GET_CONVERTED_USDC_VALUES_SUCCESS,
+                    payload: { usdcPrice },
+                })
+            }
 
-            const allowance = await USDCBNB.methods
-                .allowance(userAddress, swap._address)
-                .call()
-            if (allowance < price) {
-                await USDCBNB.methods
-                    .approve(swap._address, price)
-                    .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
-
+            if (tokenType === 'CAPL') {
+                const allowance = await CCPTBNB.methods
+                    .allowance(userAddress, swap._address)
+                    .call()
+                if (allowance < price) {
+                    await CCPTBNB.methods
+                        .approve(swap._address, price)
+                        .send({ from: userAddress, gas: gasLimit, gasPrice: newGasPrice })
+                }
+                dispatch(convertTokenValue(price, 'CAPL'))
+                const ccptPrice = amount;
+                dispatch({
+                    type: GET_CONVERTED_CCPT_VALUES_SUCCESS,
+                    payload: { ccptPrice },
+                })
             }
             onFinish();
         } catch (error) {
@@ -72,17 +107,36 @@ const ConfirmSettingsAndSwapUSDC = ({ onFinish, setUsdcAmout }) => {
             })
         }
     }
+
     useEffect(() => {
-        if (
-            Number(Usdc_Price) > Number(usdcBNBBalance) ||
-            Usdc_Price === '' || parseFloat(Usdc_Price) === 0 ||
-            parseFloat(usdcBNBBalance) === 0 || !userAddress
-        ) {
-            setErrors(true)
-        } else {
-            setErrors(false)
+        if (token === 'USDC') {
+            if (
+                Number(amount) > Number(usdcBNBBalance) ||
+                amount === '' ||
+                parseFloat(amount) === 0 ||
+                parseFloat(usdcBNBBalance) === 0 ||
+                !userAddress ||
+                balanceLoading
+            ) {
+                setErrors(true)
+            } else {
+                setErrors(false)
+            }
+        } else if (token === 'CAPL') {
+            if (
+                Number(amount) > Number(ccptBNBBalance) ||
+                balanceLoading ||
+                amount === '' ||
+                parseFloat(amount) === 0 ||
+                parseFloat(ccptBNBBalance) === 0 ||
+                !userAddress
+            ) {
+                setErrors(true)
+            } else {
+                setErrors(false)
+            }
         }
-    }, [Usdc_Price, ccptBNBBalance, usdcBNBBalance, userAddress])
+    }, [token, amount, ccptBNBBalance, usdcBNBBalance, balanceLoading, userAddress])
 
     return (
         <div>
@@ -90,18 +144,18 @@ const ConfirmSettingsAndSwapUSDC = ({ onFinish, setUsdcAmout }) => {
                 <Card>
                     <CardHeader>
                         <H2CardTitle>
-                            Step 1: Approve USDC
+                            Step 1: Approve {token}
                         </H2CardTitle>
                     </CardHeader>
                     <CardBodyJbAc>
                         <H5Margin0>
-                            Choose USDC Amount
+                            Choose {token} Amount
                         </H5Margin0>
                         <InputGroupDiv>
                             <InputGroup >
                                 <NumberFormat
                                     thousandsGroupStyle='thousand'
-                                    value={Usdc_Price}
+                                    value={amount}
                                     decimalSeparator='.'
                                     displayType='input'
                                     type='text'
@@ -115,7 +169,7 @@ const ConfirmSettingsAndSwapUSDC = ({ onFinish, setUsdcAmout }) => {
                                     className='shadow-none form-control border-color IVFS endValue'
                                     style={{ backgroundColor: 'transparent', color: 'white' }}
                                 />
-                                <USDCSPAN id="basic-addon2">USDC</USDCSPAN>
+                                <USDCSPAN id="basic-addon2" onClick={handleChooseToken} style={{ cursor: 'pointer' }}>{token}</USDCSPAN>
                             </InputGroup>
                         </InputGroupDiv>
                     </CardBodyJbAc>
@@ -134,7 +188,7 @@ const ConfirmSettingsAndSwapUSDC = ({ onFinish, setUsdcAmout }) => {
                                 Total
                             </H5Margin0>
                             <H5Margin0 style={{ color: '#ffffff' }}>
-                                ${numberFormate_2(Usdc_Price * 0.999)}
+                                ${numberFormate_2(amount * 0.999)}
                             </H5Margin0>
                         </DIV_JBAC>
                         <DIV_JBAC>
@@ -149,7 +203,7 @@ const ConfirmSettingsAndSwapUSDC = ({ onFinish, setUsdcAmout }) => {
             </div>
             <button className={`btn-confirm mb-4 ${errors ? 'disabledBtn' : 'btn'}`}
                 disabled={errors} type="button" onClick={handleProcess}>
-                <h4 className='margin0 whiteColor'>Confirm Settings & Swap USDC</h4>
+                <h4 className='margin0 whiteColor'>Confirm Settings & Swap {token}</h4>
             </button>
         </div >
     )

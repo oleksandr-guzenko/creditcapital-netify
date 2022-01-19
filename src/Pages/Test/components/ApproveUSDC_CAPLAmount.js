@@ -11,17 +11,35 @@ import {
     APPROVING_FAIL,
 } from '../../../Redux/Swap/constans';
 
+import {
+    Card, CardHeader, CardBody, CardBodyJbAc,
+    InputGroupDiv,
+    DIV_JBAC, DIV_JCAC,
+    ConfirmButton, DisableConfirmButton,
+    H2CardTitle, H5Margin0,
+    USDCSPAN
+} from '../Layout';
+
 const ApproveUSDC_CAPLAmount = ({ onFinish }) => {
     const dispatch = useDispatch();
     const {
+        token,
+        usdcPrice,
         ccptPrice,
+        swapLoading,
+        swapHash,
     } = useSelector((state) => state.swap)
+    const {
+        depositedLpBalance,
+        totalSup,
+        reserves } =
+        useSelector((state) => state.vault)
 
     const handleProcess = () => {
-        dispatch(approveUSDC_CAPL(ccptPrice, 'CAPL', 20))
+        dispatch(approveUSDC_CAPL(depositedLpBalance))
     }
 
-    const approveUSDC_CAPL = (ccptPrice, tokenType, minutes) => async (dispatch, getState) => {
+    const approveUSDC_CAPL = (depositedLpBalance) => async (dispatch, getState) => {
         try {
             dispatch(checkAndAddNetwork());
             const {
@@ -29,7 +47,7 @@ const ApproveUSDC_CAPLAmount = ({ onFinish }) => {
             } = getState()
 
             const { swap, USDC_CCPT_TOKEN, web3 } = getContracts(walletType)
-            const price = priceConversion('toWei', 'Mwei', ccptPrice, web3)
+            const price = priceConversion('toWei', 'Mwei', depositedLpBalance, web3)
             const newGasPrice = await gasPrice(web3)
 
             const allowance = await USDC_CCPT_TOKEN.methods
@@ -55,24 +73,24 @@ const ApproveUSDC_CAPLAmount = ({ onFinish }) => {
     return (
         <div>
             <div className='step'>
-                <div className="card bg-transparent mb-3 border-color" >
-                    <div className="card-header bg-transparent border-color">
-                        <h2 className="card-title margin0">Step 5: Approve USDC-CAPL</h2>
-                    </div>
-                    <div className="card-body text-light color">
-                        <div className='mb-4 df_jsb_ac'>
-                            <h5 className='margin0'>Amount of USDC-CAPL</h5>
-                            <div className="input-group amountInputGroup">
-                                <input type="number" className="form-control bg-transparent border-color IVFS whiteColor endValue" placeholder="" aria-label="" aria-describedby="basic-addon2" />
-                                <span className="input-group-text bg-transparent border-color whiteColor" id="basic-addon2">USDC</span>
-                            </div>
-                        </div>
-                        <div className='df_jsb_ac'>
+                <Card>
+                    <CardHeader>
+                        <H2CardTitle>Step 5: Approve USDC-CAPL</H2CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                        <DIV_JBAC className='mb-4'>
+                            <H5Margin0>Amount of USDC-CAPL</H5Margin0>
+                            <InputGroupDiv>
+                                <input type="number" className="form-control bg-transparent border-color IVFS whiteColor endValue" value={depositedLpBalance} readOnly placeholder="" aria-label="" aria-describedby="basic-addon2" />
+                                <USDCSPAN>{token}</USDCSPAN>
+                            </InputGroupDiv>
+                        </DIV_JBAC>
+                        <DIV_JBAC>
                             <h5>USDC-CAPL Amount to Recieve</h5>
-                            <h5 className='margin0 whiteColor'>200,000.00 CAPL</h5>
-                        </div>
-                    </div>
-                </div>
+                            <H5Margin0>{numberFormate_2(ccptPrice)} CAPL</H5Margin0>
+                        </DIV_JBAC>
+                    </CardBody>
+                </Card>
             </div>
             <button className="btn btn-confirm mb-4" type="button" onClick={handleProcess}>
                 <h4 className='margin0 whiteColor'>Approve USDC-CAPL Amount</h4>

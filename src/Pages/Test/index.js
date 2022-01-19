@@ -1,10 +1,5 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { BsDashLg, BsCheckCircle } from "react-icons/bs";
-import { gasLimit, gasPrice, priceConversion } from '../../Utilities/Util'
-import { useDispatch, useSelector } from 'react-redux';
-import { checkAndAddNetwork } from '../../Redux/Profile/actions'
-import getContracts from '../../Redux/Blockchain/contracts'
-
 
 import ConfirmSettingsAndSwapUSDC from './components/ConfirmSettingsAndSwapUSDC'
 import ConfirmSwapUSDCForCAPL from './components/ConfirmSwapUSDCForCAPL'
@@ -15,21 +10,20 @@ import ApproveStakingOfUSDC_CAPL from './components/ApproveStakingOfUSDC_CAPL'
 import ConfirmStakingWizard from './components/ConfirmStakingWizard'
 
 const Test = () => {
-
   const [step, setStep] = React.useState(1);
-  const [usdcAmount, setUsdcAmout] = React.useState(0);
 
   const increaseStep = useCallback(() => {
     setStep(prev => prev + 1);
   }, []);
+
   return (
     <div className='wrapper'>
       <div className='card body'>
         <div className='content'>
-          {step === 1 && <ConfirmSettingsAndSwapUSDC onFinish={increaseStep} setUsdcAmout={setUsdcAmout} />}
-          {step === 2 && <ConfirmSwapUSDCForCAPL onFinish={increaseStep} usdcAmount={usdcAmount} />}
-          {step === 3 && <ApproveCAPLConversion onFinish={increaseStep} usdcAmount={usdcAmount} />}
-          {step === 4 && <ConfirmLiquidityAmount onFinish={increaseStep} usdcAmount={usdcAmount} />}
+          {step === 1 && <ConfirmSettingsAndSwapUSDC onFinish={increaseStep} />}
+          {step === 2 && <ConfirmSwapUSDCForCAPL onFinish={increaseStep} />}
+          {step === 3 && <ApproveCAPLConversion onFinish={increaseStep} />}
+          {step === 4 && <ConfirmLiquidityAmount onFinish={increaseStep} />}
           {step === 5 && <ApproveUSDC_CAPLAmount onFinish={increaseStep} />}
           {step === 6 && <ApproveStakingOfUSDC_CAPL onFinish={increaseStep} />}
           {step === 7 && <ConfirmStakingWizard />}

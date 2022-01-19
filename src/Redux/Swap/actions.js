@@ -161,13 +161,11 @@ export const addLiquidityTokens =
       const {
         profile: { walletType, userAddress },
       } = getState()
-
       const { quickSwapRouter, USDCBNB, CCPTBNB, web3 } = getContracts(walletType)
 
       const allowance = await USDCBNB.methods
         .allowance(userAddress, quickSwapRouter._address)
         .call()
-
       const CAPLallowance = await CCPTBNB.methods
         .allowance(userAddress, quickSwapRouter._address)
         .call()
@@ -312,7 +310,6 @@ export const getSwapTokenBalances = () => async (dispatch, getState) => {
       const deposit = await USDC_CCPT_TOKEN.methods
         .balanceOf(userAddress)
         .call()
-
       const withDraw = await REWARDS_VAULT.methods
         .userInfo(0, userAddress)
         .call()
