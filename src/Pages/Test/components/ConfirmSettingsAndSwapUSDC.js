@@ -107,11 +107,10 @@ const ConfirmSettingsAndSwapUSDC = ({ onFinish }) => {
             })
         }
     }
-
     useEffect(() => {
         if (token === 'USDC') {
             if (
-                Number(amount) > Number(usdcBNBBalance) ||
+                Number(amount/2) > Number(usdcBNBBalance) ||
                 amount === '' ||
                 parseFloat(amount) === 0 ||
                 parseFloat(usdcBNBBalance) === 0 ||

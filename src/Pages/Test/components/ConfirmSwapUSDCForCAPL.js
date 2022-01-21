@@ -58,11 +58,11 @@ const ConfirmSwapUSDCForCAPL = ({ onFinish }) => {
     useEffect(() => {
         if (swapHash) {
             setSwapSucc(true)
+            onFinish();
         } else {
             setSwapSucc(false)
         }
     }, [swapHash])
-
     useEffect(() => {
         if (token === 'USDC') {
             if (
@@ -102,9 +102,7 @@ const ConfirmSwapUSDCForCAPL = ({ onFinish }) => {
                 payload: error?.message,
             })
         }
-        if (swapHash) {
-            onFinish();
-        }
+
     }
     return (
         <>

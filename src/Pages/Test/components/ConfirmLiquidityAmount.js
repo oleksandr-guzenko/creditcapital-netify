@@ -43,18 +43,18 @@ const ConfirmLiquidityAmount = ({ onFinish }) => {
     useEffect(() => {
         if (swapHash) {
             setSwapSucc(true)
+            onFinish();
         } else {
             setSwapSucc(false)
         }
     }, [swapHash])
-   
+
     const makeLiquidity = () => {
         dispatch(addLiquidityTokens(ccptPrice, usdcPrice, 20))
     }
 
     const handleProcess = () => {
         makeLiquidity();
-        onFinish();
     }
     return (
         <>
